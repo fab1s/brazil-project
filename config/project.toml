@@ -14,7 +14,8 @@ crs = 5880
 precision_grid = 0.000001
 inflation_2010 = 3200.06
 inflation_2022 = 6645.74
-# Routine runs reuse the archived correspondence. Recompute is explicit.
+# Routine runs validate archived links for positive area; originals remain unchanged.
+# Recompute is explicit and national before municipality selection.
 recompute_harmonisation = false
 
 [infrastructure]

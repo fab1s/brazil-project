@@ -28,6 +28,13 @@ class Context:
 
     def artifact(self, stage, name):
         path = self.intermediate / stage / name
+        if stage == 'harmonisation' and name.endswith('.parquet'):
+            pointer = self.intermediate / stage / 'current.json'
+            if pointer.exists():
+                generation = json.loads(pointer.read_text())['generation']
+                if len(generation) != 32 or any(c not in '0123456789abcdef' for c in generation):
+                    raise WorkflowError('Invalid harmonisation generation')
+                path = self.intermediate / stage / 'bundles' / generation / name
         path.parent.mkdir(parents=True, exist_ok=True)
         return path
 

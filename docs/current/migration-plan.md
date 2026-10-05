@@ -2,14 +2,14 @@
 
 Status: current
 Last updated: 2026-10-05
-Version: 0.1
+Version: 0.2
 Scope: Brazil Project Migration Plan
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-05 | 0.1 | Codex | Established the independent research project. |
+| 2026-10-05 | 0.2 | Codex | Separated the original migration from the later approved harmonisation policy. |
 
 ## Implemented project organization
 
@@ -29,10 +29,10 @@ The original workflow ordering and narrative are retained through Python-backed 
 
 Compare copies against original SHA256 checksums. Validate synthetic edge cases, complete common-area membership, original stored outputs, fresh R reference calculations, chart populations, cutoffs, and rendered figures. Store reference mismatches as evidence instead of changing the original files.
 
-Python correspondence recomputation is explicit; routine runs continue using the original crosswalk while national recomputation parity remains unverified.
+Python correspondence recomputation is explicit; routine runs validate the original crosswalk for positive polygon-area overlap while national recomputation parity remains unverified.
 
 ## Completion boundaries
 
 All existing research areas are represented. The property notebook's workbook and available geometry imports are implemented, but its exact cadastral CSV is missing from the original folder. Fresh infrastructure downloads are implemented with resumable caches and tested response handling; live external endpoint equivalence is not claimed without a recorded acquisition run.
 
-Published research methods are not corrected as part of restructuring. Data defects and differences between current source code and stored results are documented for scientific review.
+The later researcher-approved harmonisation policy is recorded separately in `docs/methods/harmonisation-policy.md`; it excludes contact-only matches and adds merged outputs. Data defects and differences between current source code and stored results are documented for scientific review.

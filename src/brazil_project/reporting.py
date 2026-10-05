@@ -16,7 +16,7 @@ def show_chunk(ctx,source,index):
         if path.exists(): display(json.loads(path.read_text()))
         else: display({'stage':stage,'status':'not generated','command':f'brazil-project run {stage}'})
     else:
-        path=folder/(artifact+'.parquet')
+        path=ctx.artifact(stage, artifact+'.parquet')
         if path.exists():
             frame=pd.read_parquet(path)
             display(frame.drop(columns='geometry',errors='ignore').head(20))

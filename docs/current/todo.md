@@ -2,17 +2,18 @@
 
 Status: current
 Last updated: 2026-10-05
-Version: 0.1
+Version: 0.3
 Scope: Remaining Research Tasks
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-05 | 0.1 | Codex | Established the independent research project. |
+| 2026-10-05 | 0.3 | Codex | Recorded completed harmonisation repairs and remaining research validation. |
 
+- Review the [harmonisation update](../verification/harmonisation-update.md) and its footprint/coverage diagnostics under the approved boundary-change assumption. The requested implementation corrections are complete.
 - Supply the exact `20220601_regional_barreiro_cadastro_imobiliario.csv` referenced by the property notebook, or approve a separate dated-input methodological change.
-- Review original duplicate tract IDs and decide scientifically whether an independently versioned correction is warranted.
+- Inspect the seven small overlapping-piece cases identified by the audit. Original pieces are preserved and unique part IDs are implemented.
 - Review the original stored density absolute-change discrepancy and the income prose/code discrepancy separately from translation.
 - Verify full national correspondence recomputation before replacing the original default crosswalk.
 - Record live IBAMA and Obrasgov acquisition comparisons against provider snapshots when acquisition is requested.

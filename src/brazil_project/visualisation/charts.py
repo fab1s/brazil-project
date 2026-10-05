@@ -106,6 +106,12 @@ def plot_income(box,annual22,cutoffs,path):
 
 
 def run(ctx):
+    import json
+    from brazil_project.harmonisation.census import load_bundle
+    _, manifest = load_bundle(ctx, names=[])
+    evidence = json.loads(ctx.require(ctx.artifact('indicators', 'report.json')).read_text())
+    if evidence.get('harmonisation_version') != manifest['version']:
+        raise WorkflowError('Indicators belong to another correspondence; rerun indicators before charts')
     frames={year:ctx.table('census',f'{year}_domicilio') for year in (2010,2022)}
     lookups={year:ctx.table('harmonisation',f'lookup_{year}') for year in (2010,2022)}
     race={year:ctx.table('indicators',f'black_brown_{year}_common') for year in (2010,2022)}

@@ -2,14 +2,14 @@
 
 Status: verified with explicit limitations
 Last updated: 2026-10-05
-Version: 0.2
+Version: 0.3
 Scope: Verification Results
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-05 | 0.2 | Codex | Established the project and recorded final tests and HTML report verification. |
+| 2026-10-05 | 0.3 | Codex | Recorded original migration checks and approved harmonisation verification. |
 
 ## File integrity
 
@@ -24,12 +24,12 @@ Independent evidence includes original stored-output comparisons and fresh R ref
 | Check | Result |
 | --- | --- |
 | Original file integrity | 344 source and copied file checksums match |
-| Python method and adapter tests | 18 pass |
+| Python method and adapter tests | 31 pass |
 | Indexed spherical intersection test | Matches original sf/S2 all-pairs results |
 | Package dependencies and build | pip check passes; wheel and source distribution build |
 | Fresh R indicator reference | All 13 calculations match on complete common areas intersecting Belo Horizonte |
 | Fresh R conference chart reference | Both populations, summaries, and income cutoffs match |
-| Projected correspondence reference | Same overlap pairs and connected groups for Belo Horizonte |
+| Historical local projected correspondence reference | Prepared geometry matches; one point-only R link and its connected partition intentionally differ under the approved positive-area rule |
 | Prepared geometry boundaries | Maximum difference 0.0000009993095565430106 m within the 0.000001 m precision grid |
 | National stored indicator results | 12 of 13 match; only stored density absolute-change values differ |
 | Obrasgov snapshot cleaning | 133,417 retained records matches original count |
@@ -40,7 +40,7 @@ Independent evidence includes original stored-output comparisons and fresh R ref
 
 The national density comparison covers 468,097 unique tract attribute records. Its population_density_change column differs in 463,254 records because the stored baseline repeats percentage change. Other compared density values, including area, annual densities, and percentage change, match. Current R code and Python agree on the absolute-difference calculation in the independent reference scope.
 
-The copied base contains 4,681 repeated tract IDs; they are retained and aggregation keys are deduplicated independently. The strict optional sanitation baseline is also preserved, but current temporal source code is compared against its matching standard baseline.
+The copied base contains 4,681 additional rows for repeated tract IDs; they are retained and aggregation keys are deduplicated independently. The strict optional sanitation baseline is also preserved, but current temporal source code is compared against its matching standard baseline.
 
 ## Limits
 
@@ -49,3 +49,7 @@ Missing property input prevents that exploratory workflow from completing. New l
 ## Report runtime
 
 Quarto 1.9.38 for macOS was downloaded from the [official release](https://github.com/quarto-dev/quarto-cli/releases/tag/v1.9.38). Its archive SHA256 matched the published checksum: `47089a5020cfb41981ba0d4b46e110edfa608722aea45ef248e14efba6d6b18a`. The portable runtime and rendered reports are excluded from Git.
+
+## Later harmonisation policy verification
+
+The researcher-approved [harmonisation update](harmonisation-update.md) supersedes the original tract-level display contract with merged common-area outputs and complete versioned bundles. National baseline memberships remain unchanged after positive-area validation. Fresh regional R calculations still match all 13 indicators and chart tables. The boundary-change assumption remains explicit and unverified against habitation data.

@@ -1,0 +1,237 @@
+{
+  "national": {
+    "base_rows": 472778,
+    "unique_2022_ids": 468097,
+    "groups": 287178,
+    "null_common_id_rows": 42,
+    "relationships": {
+      "1:1": 188105,
+      "2010_to_2022_split": 79455,
+      "many_to_many": 15189,
+      "2010_to_2022_merge": 4429
+    },
+    "multiple_2022_tract_groups": 94644,
+    "2010": {
+      "lookup_rows": 497490,
+      "tracts": 316558,
+      "missing_common_id": 0,
+      "conflicting_assignments": 0,
+      "size_mismatches": 0,
+      "cross_municipality_groups": 345,
+      "raw_unique_ids": 316574,
+      "raw_unmapped_ids": 16,
+      "lookup_ids_absent_raw": 0
+    },
+    "2022": {
+      "lookup_rows": 468073,
+      "tracts": 468073,
+      "missing_common_id": 0,
+      "conflicting_assignments": 0,
+      "size_mismatches": 0,
+      "cross_municipality_groups": 1343,
+      "raw_unique_ids": 468097,
+      "raw_unmapped_ids": 24,
+      "lookup_ids_absent_raw": 0
+    },
+    "duplicated_id_values": 914,
+    "duplicate_ids_with_different_geometry_bytes": 914
+  },
+  "boundary_only": {
+    "selected_edges": [
+      {
+        "id_2010": "a",
+        "id_2022": "b"
+      }
+    ],
+    "relationship": [
+      "1:1"
+    ],
+    "actual_overlap_area": 0.0
+  },
+  "method_example": {
+    "selected_edges": [
+      {
+        "id_2010": "a",
+        "id_2022": "x"
+      },
+      {
+        "id_2010": "a",
+        "id_2022": "y"
+      },
+      {
+        "id_2010": "b",
+        "id_2022": "x"
+      }
+    ],
+    "groups": [
+      {
+        "common_id": "1",
+        "n_2010": 2,
+        "n_2022": 2,
+        "relationship": "many_to_many"
+      }
+    ]
+  },
+  "footprint_example": {
+    "selected_edges": [
+      {
+        "id_2010": "a",
+        "id_2022": "x",
+        "common_id": "1"
+      },
+      {
+        "id_2010": "b",
+        "id_2022": "y",
+        "common_id": "2"
+      }
+    ],
+    "groups": [
+      {
+        "common_id": "1",
+        "n_2010": 1,
+        "n_2022": 1,
+        "relationship": "1:1"
+      },
+      {
+        "common_id": "2",
+        "n_2010": 1,
+        "n_2022": 1,
+        "relationship": "1:1"
+      }
+    ],
+    "unselected_positive_overlap_area": 10.0
+  },
+  "geometry": {
+    "scope": "complete national baseline groups touching Belo Horizonte 2022 display tracts",
+    "common_groups_compared": 3790,
+    "source_tract_rows": {
+      "2010": 3943,
+      "2022": 5182
+    },
+    "common_group_footprint_difference": {
+      "median_pct": 2.0076360621640026,
+      "p95_pct": 20.78039247653073,
+      "maximum_pct": 62.93331584316406,
+      "groups_above_1pct": 2441,
+      "groups_above_10pct": 502
+    },
+    "cross_group_intersections": {
+      "positive_area_pairs_above_1m2": 12283,
+      "total_area_km2": 5.655443904395743
+    },
+    "municipality_recomputation": {
+      "baseline_groups_split": 0,
+      "new_groups_merge_baseline_groups": 9,
+      "outside_municipality_contributors": {
+        "2010": 9,
+        "2022": 15
+      }
+    }
+  },
+  "duplicate_geometry": {
+    "duplicated_tract_ids": 914,
+    "duplicated_tract_rows": 5595,
+    "all_geometries_topologically_equal": 0,
+    "near_equal_within_0_0001m2": 0,
+    "nonidentical_parts_without_significant_overlap": 907,
+    "nonidentical_with_overlap": 7,
+    "examples": [
+      {
+        "tract": "130002905000010.0",
+        "rows": 5,
+        "overlap_fraction": 3.1102356163615463e-16,
+        "common_ids": [
+          3152
+        ]
+      },
+      {
+        "tract": "130006005000008.0",
+        "rows": 4,
+        "overlap_fraction": -2.1610311521391973e-16,
+        "common_ids": [
+          3177
+        ]
+      },
+      {
+        "tract": "130006005000054.0",
+        "rows": 3,
+        "overlap_fraction": 3.721993975195379e-16,
+        "common_ids": [
+          3199
+        ]
+      },
+      {
+        "tract": "130006005000055.0",
+        "rows": 2,
+        "overlap_fraction": -4.2205972650285294e-16,
+        "common_ids": [
+          3196
+        ]
+      }
+    ],
+    "overlapping_piece_examples": [
+      {
+        "id_2022": "150770605000051",
+        "overlap_fraction": 1.4540476576490258e-06,
+        "overlap_area_m2": 23.368049724027514,
+        "rows": 2
+      },
+      {
+        "id_2022": "150810005000221",
+        "overlap_fraction": 1.407841676282208e-06,
+        "overlap_area_m2": 74.72629272937775,
+        "rows": 64
+      },
+      {
+        "id_2022": "330010010000053",
+        "overlap_fraction": 4.093884978467895e-07,
+        "overlap_area_m2": 0.5062737620901316,
+        "rows": 26
+      },
+      {
+        "id_2022": "330010015000201",
+        "overlap_fraction": 9.831326307601786e-07,
+        "overlap_area_m2": 2.4143675942905247,
+        "rows": 5
+      },
+      {
+        "id_2022": "330023305000085",
+        "overlap_fraction": 1.5608613219568837e-05,
+        "overlap_area_m2": 3.0763578266487457,
+        "rows": 4
+      },
+      {
+        "id_2022": "330455705250403",
+        "overlap_fraction": 6.176516749697877e-05,
+        "overlap_area_m2": 2.6077949212194653,
+        "rows": 10
+      },
+      {
+        "id_2022": "330455705310478",
+        "overlap_fraction": 2.7300112392294143e-08,
+        "overlap_area_m2": 0.8891370110213757,
+        "rows": 20
+      }
+    ]
+  },
+  "boundary_length_parity": {
+    "python_selected": "short",
+    "R_sf_selected": "long",
+    "contact_lengths_m": {
+      "short": 1,
+      "long": 2
+    },
+    "area_m2": 0
+  },
+  "stale_comparison_geometry": {
+    "scope": "3106200",
+    "stored_baseline_groups": 3790,
+    "recomputed_reference_groups": 3781,
+    "common_id_intersection": 0,
+    "note": "Compared existing artifacts; production indicators were not rerun with incompatible inputs."
+  },
+  "existing_tests": {
+    "passed": 18,
+    "note": "These tests do not cover the identified mode-switching or common-footprint risks."
+  }
+}

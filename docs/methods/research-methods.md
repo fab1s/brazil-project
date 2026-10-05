@@ -2,22 +2,24 @@
 
 Status: current
 Last updated: 2026-10-05
-Version: 0.1
+Version: 0.2
 Scope: Research Processing Methods
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-05 | 0.1 | Codex | Established the independent research project. |
+| 2026-10-05 | 0.2 | Codex | Recorded the harmonisation corrections and approved research assumptions. |
 
 ## Census correspondence
 
-The original method transforms 2010 and 2022 tracts to EPSG:5880, sets precision at 1e6, and makes geometry valid. Each year selects its largest overlap in the other year. The union of both directional match sets forms an undirected graph; connected components define common comparison areas. Relations are classified as one to one, split, merge, or many to many.
+The original method transforms 2010 and 2022 tracts to EPSG:5880, sets precision at 1e6, and makes geometry valid. Each year selects its largest strictly positive polygon-area overlap in the other year. Edge-only and point-only contacts are excluded under the approved updated policy. The union of both directional match sets forms an undirected graph; connected components define common comparison areas. Relations are classified as one to one, split, merge, or many to many.
 
-The display base preserves prepared 2022 tract geometries. It is not dissolved or split for indicator display. Component numbers are labels; membership is the invariant. Imported correspondence remains the default while recomputation parity is verified separately.
+The reference tract base preserves all prepared 2022 geometry pieces. Active analytical spatial outputs dissolve the complete 2022 pieces by `common_id` and contain one feature per group. Disconnected pieces remain a MultiPolygon. Unmatched tracts are saved separately. Unchanged imported groups retain their original IDs; new or changed groups use member-derived identifiers. Membership remains the invariant. The default validates imported national correspondence edges for positive overlap; explicit recomputation matches nationally before any municipality selection.
 
-The original national base contains 4,681 duplicate IDs among 472,778 rows. These rows remain present. Aggregation deduplicates each tract-to-common-area key before summing, preventing those display duplicates from multiplying counts.
+The original national base contains 4,681 duplicate IDs among 472,778 rows. These geometry pieces remain present in reference outputs, with unique `part_id` values. They are not necessarily erroneous duplicates. Aggregation deduplicates each tract-to-common-area key before summing, preventing those display duplicates from multiplying counts.
+
+The researcher accepts the assumption that differences between yearly group footprints do not materially change the inhabited population being compared. This assumption has not been independently verified against habitation data. Footprint diagnostics remain available and are not used as automatic rejection thresholds. See the [policy change record](harmonisation-policy.md).
 
 ## Annual proportions
 

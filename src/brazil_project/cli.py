@@ -54,7 +54,7 @@ def main(argv=None):
     ctx=Context(args.config)
     os.environ.setdefault('MPLCONFIGDIR', str(ctx.root / '.cache/matplotlib'))
     if getattr(args,'municipality',None): ctx.municipality=args.municipality
-    if ctx.municipality and not ctx.municipality.isdigit(): parser.error('municipality must be numeric')
+    if ctx.municipality and (len(ctx.municipality)!=7 or not ctx.municipality.isdigit()): parser.error('municipality must be a seven-digit IBGE code')
     if getattr(args,'recompute_harmonisation',False): ctx.config['census']['recompute_harmonisation']=True
     # Scope-specific intermediates prevent subset results overwriting national artifacts.
     if ctx.municipality:

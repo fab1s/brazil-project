@@ -25,7 +25,7 @@ def artifact(stage,label,body):
                'brown_sf':'brown','black_brown_sf':'black_brown','income_sf':'income','houses_sf':'houses',
                'village_condo_sf':'village_condo','apartment_sf':'apartments','population_density_sf':'population_density'}
         return names.get(label,'report')
-    if stage=='harmonisation':return 'base_geometry_2022' if label=='harmonisation' else 'report'
+    if stage=='harmonisation':return 'common_geometry_2022' if label=='harmonisation' else 'report'
     if stage=='land-value':return 'annex_i' if label=='import_price_table' else 'report'
     if stage=='obrasgov':return 'type_subtype_counts' if label in ['subtype_frequency','count_charts'] else 'report'
     if stage=='ibama':return 'sector_counts' if label=='joining' else 'report'
@@ -72,6 +72,8 @@ ctx = Context(project / "config/project.toml")
             code=prelude+f'show_chunk(ctx, {str(rel)!r}, {count})\n'
             return '```{python}\n#| label: '+name[:-4]+'_'+str(count)+'\n'+code+'```'
         text=re.sub(r'```\{r\s*([^}]*)\}\n(.*?)\n```',replace,text,flags=re.S)
+        if stage=='harmonisation':
+            text=text.replace('The final layer keeps the 2022 census tract boundaries unchanged and records their relationship with the 2010 areas.', 'Original tract pieces remain reference geometry. Active outputs merge complete 2022 groups by common_id and exclude contact-only matches; see the approved harmonisation policy.')
         # Existing image references point to the copied original outputs, never OneDrive.
         def image(match):
             from urllib.parse import unquote,quote

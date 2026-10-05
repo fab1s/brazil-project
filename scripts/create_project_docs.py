@@ -1,3 +1,4 @@
+# Historical initial-migration scaffold. It skips maintained files; read current methods and workflow contracts.
 """Build the project navigation and migration documentation."""
 from pathlib import Path
 import csv

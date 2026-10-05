@@ -199,17 +199,20 @@
         }
       }
     ],
-    "generated_at": "2026-10-05T10:23:08.209643+00:00"
+    "generated_at": "2026-10-05T10:23:08.209643+00:00",
+    "verification_scope": "Original migration run before the approved harmonisation update; see harmonisation_update for current matching policy and regenerated outputs."
   },
   "national_stored_parity": {
     "passed": false,
-    "reference": "original stored GeoPackage results",
+    "reference": "original stored GeoPackage results (mapped back to reference tract IDs)",
+    "harmonisation_policy": "positive-area-common-geometry-v1",
+    "harmonisation_version": "8f67986ba3b1f50731be40dc11a183fdda6b8caecd893ed0d9ea5f83ddec1650",
     "scope": "Brazil",
     "indicators": {
       "black": {
         "passed": true,
         "compared_rows": 468097,
-        "compared_columns": 10,
+        "compared_columns": 8,
         "missing_actual": 0,
         "missing_expected": 0,
         "differences": {},
@@ -219,7 +222,7 @@
       "brown": {
         "passed": true,
         "compared_rows": 468097,
-        "compared_columns": 10,
+        "compared_columns": 8,
         "missing_actual": 0,
         "missing_expected": 0,
         "differences": {},
@@ -229,7 +232,7 @@
       "black_brown": {
         "passed": true,
         "compared_rows": 468097,
-        "compared_columns": 10,
+        "compared_columns": 8,
         "missing_actual": 0,
         "missing_expected": 0,
         "differences": {},
@@ -239,7 +242,7 @@
       "literacy": {
         "passed": true,
         "compared_rows": 468097,
-        "compared_columns": 10,
+        "compared_columns": 8,
         "missing_actual": 0,
         "missing_expected": 0,
         "differences": {},
@@ -249,7 +252,7 @@
       "rudimentary_sanitation": {
         "passed": true,
         "compared_rows": 468097,
-        "compared_columns": 10,
+        "compared_columns": 8,
         "missing_actual": 0,
         "missing_expected": 0,
         "differences": {},
@@ -259,7 +262,7 @@
       "water_network": {
         "passed": true,
         "compared_rows": 468097,
-        "compared_columns": 10,
+        "compared_columns": 8,
         "missing_actual": 0,
         "missing_expected": 0,
         "differences": {},
@@ -269,7 +272,7 @@
       "waste_collection": {
         "passed": true,
         "compared_rows": 468097,
-        "compared_columns": 10,
+        "compared_columns": 8,
         "missing_actual": 0,
         "missing_expected": 0,
         "differences": {},
@@ -279,7 +282,7 @@
       "sewer_septic": {
         "passed": true,
         "compared_rows": 468097,
-        "compared_columns": 10,
+        "compared_columns": 8,
         "missing_actual": 0,
         "missing_expected": 0,
         "differences": {},
@@ -289,7 +292,7 @@
       "income": {
         "passed": true,
         "compared_rows": 468097,
-        "compared_columns": 19,
+        "compared_columns": 17,
         "missing_actual": 0,
         "missing_expected": 0,
         "differences": {},
@@ -299,7 +302,7 @@
       "houses": {
         "passed": true,
         "compared_rows": 468097,
-        "compared_columns": 10,
+        "compared_columns": 8,
         "missing_actual": 0,
         "missing_expected": 0,
         "differences": {},
@@ -309,7 +312,7 @@
       "village_condo": {
         "passed": true,
         "compared_rows": 468097,
-        "compared_columns": 10,
+        "compared_columns": 8,
         "missing_actual": 0,
         "missing_expected": 0,
         "differences": {},
@@ -319,7 +322,7 @@
       "apartments": {
         "passed": true,
         "compared_rows": 468097,
-        "compared_columns": 10,
+        "compared_columns": 8,
         "missing_actual": 0,
         "missing_expected": 0,
         "differences": {},
@@ -329,7 +332,7 @@
       "population_density": {
         "passed": false,
         "compared_rows": 468097,
-        "compared_columns": 9,
+        "compared_columns": 7,
         "missing_actual": 0,
         "missing_expected": 0,
         "differences": {
@@ -341,7 +344,8 @@
         "rtol": 1e-08,
         "atol": 1e-07
       }
-    }
+    },
+    "generated_at": "2026-10-05T12:45:05.332283+00:00"
   },
   "fresh_R_parity": {
     "passed": true,
@@ -522,7 +526,8 @@
         "passed": true
       }
     },
-    "reference": "fresh original R calculations on complete groups intersecting Belo Horizonte"
+    "reference": "fresh original R calculations on complete groups intersecting Belo Horizonte",
+    "generated_at": "2026-10-05T12:35:46.658755+00:00"
   },
   "harmonisation_parity": {
     "crosswalk_matches": true,
@@ -594,7 +599,7 @@
     }
   ],
   "python_tests": {
-    "passed": 18
+    "passed": 31
   },
   "spherical_index_test": {
     "passed": true
@@ -616,5 +621,42 @@
     "missing_local_assets": 0,
     "browser_layout_inspected": false,
     "archive_sha256": "47089a5020cfb41981ba0d4b46e110edfa608722aea45ef248e14efba6d6b18a"
+  },
+  "harmonisation_update": {
+    "evidence": "harmonisation-update-evidence.json",
+    "policy": "positive-area-common-geometry-v1",
+    "national_common_geometry_features": 287178,
+    "regional_fresh_R_passed": true,
+    "full_national_recomputation_executed": false,
+    "historical_local_R_geometry_reference": {
+      "crosswalk_matches": false,
+      "python_only_edges": 0,
+      "R_only_edges": 1,
+      "partition_matches": false,
+      "geometry_boundary_tolerance_m": 1e-06,
+      "maximum_geometry_boundary_distance_m": 9.993095565430106e-07,
+      "geometry_matches": true,
+      "python_rows": 5167,
+      "R_rows": 5167,
+      "scope": "3106200",
+      "comparison_scope": "historical municipality-clipped R reference",
+      "policy_note": "Contact-only matches are intentionally excluded; production recomputation is national.",
+      "passed": false,
+      "generated_at": "2026-10-05T13:10:59.133712+00:00"
+    },
+    "intentional_rejected_local_R_contacts": [
+      {
+        "id_2010": "310620025610235",
+        "id_2022": "310620025610645",
+        "intersection_type": "Point",
+        "area_m2": 0.0,
+        "length_m": 0.0
+      }
+    ],
+    "quarto_rendering": {
+      "reports": 9,
+      "local_asset_references": 102,
+      "missing_local_assets": 0
+    }
   }
 }

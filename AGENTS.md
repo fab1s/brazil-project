@@ -2,14 +2,14 @@
 
 Status: current
 Last updated: 2026-10-05
-Version: 0.2
+Version: 0.3
 Scope: Agent Working Instructions
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-05 | 0.2 | Codex | Established the research contract and kept the main README descriptive. |
+| 2026-10-05 | 0.3 | Codex | Recorded the harmonisation corrections and approved research assumptions. |
 
 These rules apply to this independent research project. RISSI provided documentation patterns; its application architecture and deployment rules do not apply here.
 
@@ -33,6 +33,8 @@ Before nontrivial work, read `README.md`, `docs/index.md`, `docs/current/current
 - Use `rg` before moving or renaming files and inspect consumers of shared stage artifacts.
 
 ## Code And Verification
+
+Use the complete versioned harmonisation bundle. Never join lookup and geometry artifacts from different versions or use loose legacy geometry by file existence. Active analytical spatial outputs have one feature per `common_id`; original tract pieces are reference data.
 
 Use existing patterns and clear functions. Add `WHY`, `INVARIANT`, `COMPATIBILITY`, or `CONTRACT` comments for non-obvious constraints; do not narrate basic syntax.
 

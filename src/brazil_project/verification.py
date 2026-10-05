@@ -35,13 +35,17 @@ def compare_tables(actual,expected,key,rtol=1e-9,atol=1e-8):
 
 
 def verify(ctx):
+    from brazil_project.harmonisation.census import load_bundle
+    bundle, manifest = load_bundle(ctx, names=['base_geometry_2022'])
+    base = bundle['base_geometry_2022'].drop(columns='geometry')
     results={}
     for name,filename in BASELINES.items():
-        actual=ctx.table('indicators',name+'_sf').drop(columns='geometry')
+        values=ctx.table('indicators',name)
+        actual=base[['id_2022','common_id']].merge(values.drop(columns=['n_2010','n_2022','relationship'],errors='ignore'),on='common_id',how='left',validate='many_to_one')
         expected=gpd.read_file(ctx.root/'data/processed/ibge/Data'/(filename+'.gpkg'),ignore_geometry=True,where=scope_where(ctx,'id_2022'))
         for frame in (actual,expected):
             for column in ['id_2022','common_id']:
                 if column in frame: frame[column]=identifiers(frame[column])
         columns=['id_2022']+[c for c in actual if c in expected and pd.api.types.is_numeric_dtype(actual[c]) and pd.api.types.is_numeric_dtype(expected[c])]
         results[name]=compare_tables(actual[columns],expected[columns],'id_2022',rtol=1e-8 if name=='population_density' else 1e-9,atol=1e-7 if name=='population_density' else 1e-8)
-    return ctx.report('verification',{'passed':all(r['passed'] for r in results.values()),'reference':'original stored GeoPackage results','scope':ctx.municipality or 'Brazil','indicators':results})
+    return ctx.report('verification',{'passed':all(r['passed'] for r in results.values()),'reference':'original stored GeoPackage results (mapped back to reference tract IDs)', 'harmonisation_policy': manifest['policy'], 'harmonisation_version': manifest['version'],'scope':ctx.municipality or 'Brazil','indicators':results})

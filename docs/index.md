@@ -2,14 +2,14 @@
 
 Status: current
 Last updated: 2026-10-05
-Version: 0.1
+Version: 0.3
 Scope: Research Project Documentation
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-05 | 0.1 | Codex | Established the independent research project. |
+| 2026-10-05 | 0.3 | Codex | Recorded the harmonisation corrections and approved research assumptions. |
 
 This index is the starting point for maintaining the project and understanding the processing flow.
 
@@ -17,10 +17,13 @@ This index is the starting point for maintaining the project and understanding t
 - [Remaining tasks](current/todo.md)
 - [Migration plan](current/migration-plan.md)
 - [Research methods](methods/research-methods.md)
+- [Approved harmonisation policy](methods/harmonisation-policy.md)
 - [Workflow and commands](technical/workflow.md)
 - [R integration](technical/r-integration.md)
 - [Data provenance](reference/data-provenance.md)
 - [Verification results](verification/results.md)
+- [Harmonisation audit](verification/harmonisation-audit.md)
+- [Harmonisation update verification](verification/harmonisation-update.md)
 - [Source file migration manifest](reference/migration_manifest.csv)
 - [Original workflow chunk mapping](reference/workflow_mapping.csv)
 

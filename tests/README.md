@@ -2,14 +2,14 @@
 
 Status: current
 Last updated: 2026-10-05
-Version: 0.1
+Version: 0.2
 Scope: Scientific And Workflow Tests
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-05 | 0.1 | Codex | Established the independent research project. |
+| 2026-10-05 | 0.2 | Codex | Recorded the harmonisation corrections and approved research assumptions. |
 
 test_methods.py exercises meaningful analytical and acquisition edge cases. Run python -m pytest. Independent R and stored-result comparisons supplement synthetic tests.
 
@@ -20,3 +20,5 @@ Use the project CLI and documented setup from the root README. Read relevant met
 ## Update Rules
 
 Update this README when local responsibilities or artifact contracts change. Preserve source provenance and report verification scope.
+
+`test_harmonisation_contract.py` covers positive-area matching, stable group IDs, complete municipality groups, imported contact rejection, merged output uniqueness, retained unmatched geometry, coverage missingness, scope/source validation, mode switching, tampering, interrupted publication, and the original area operation order. Run `.venv/bin/python -m pytest tests/test_harmonisation_contract.py -q` for these contracts.

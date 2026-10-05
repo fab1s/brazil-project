@@ -2,14 +2,14 @@
 
 Status: current
 Last updated: 2026-10-05
-Version: 0.3
+Version: 0.4
 Scope: Workflow Commands And Artifacts
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-05 | 0.3 | Codex | Established the workflow, verified reports, and consolidated setup instructions here. |
+| 2026-10-05 | 0.4 | Codex | Recorded the harmonisation corrections and approved research assumptions. |
 
 ## Setup
 
@@ -37,7 +37,7 @@ Run commands from the project root using `.venv/bin/brazil-project`.
 | --- | --- | --- | --- |
 | overview | Original tract GeoPackage | Spherical intersections and comparison summaries | No |
 | census-exploration | Raw census and boundary snapshots | Original regional race maps and boxplots | No |
-| harmonisation | Original tracts or baseline lookup and geometry | Crosswalk lookups, group sizes, base geometry | No |
+| harmonisation | Original tracts or baseline lookup and geometry | Versioned lookups, merged common geometry, tract references, unmatched coverage | No |
 | indicators | Census Parquet and lookups | Annual common-area estimates and spatial indicator tables | No |
 | ibama | Copied or acquired licensed projects | Sector translations and interactive map | No |
 | obrasgov | Copied or acquired project records | Category counts, charts, cleaned geometry | No |
@@ -62,11 +62,13 @@ Indicators run harmonisation first; charts run both dependencies. `all` attempts
 
 `config/project.toml` resolves paths relative to its project root. The national scope is the default. `--municipality 3106200` selects Belo Horizonte display tracts, retains every contributing tract in their common areas, and writes independent subset intermediates under `data/intermediate/municipality_3106200/`.
 
-The overview retains its original Belo Horizonte scope when no municipality override is supplied. Correspondence recomputation uses the explicitly requested tract selection; its reference check must use the same selection.
+The overview retains its original Belo Horizonte scope when no municipality override is supplied. Explicit correspondence recomputation uses all national tract geometries and caches the result before selecting complete municipality groups. The historical local R comparison script checks its named reference scope; it does not validate production national recomputation.
 
 ## Artifact contracts
 
-Tables use Parquet and spatial artifacts use GeoParquet. Identifiers are normalized to strings without float suffixes. Lookup keys must be unique after deduplicating repeated tract-to-group records. Original display duplicate geometry rows are preserved and reported.
+Tables use Parquet and spatial artifacts use GeoParquet. Identifiers are normalized to strings without float suffixes. Lookup keys must be unique after deduplicating repeated tract-to-group records. Original geometry pieces are preserved as reference rows, with a unique part ID. Active `*_sf` indicator outputs use one feature per common group.
+
+Harmonisation publishes immutable complete generations under `harmonisation/bundles/` and atomically selects one through `current.json`. Use `Context.table`, `Context.geo`, or `load_bundle`; never hard-code the old loose Parquet paths. Lookups and full group geometry are replaced together in both modes. The source correspondence cache is validated against checksums and input/configuration fingerprints.
 
 Every stage writes a JSON report. Routine output publication uses temporary files and atomic replacement. Missing inputs produce actionable errors rather than empty results. National and municipality artifacts do not overwrite one another.
 
@@ -95,3 +97,15 @@ QUARTO_PYTHON="$PWD/.venv/bin/python" quarto render
 ```
 
 The Python report dependencies are included in `requirements.lock`. HTML outputs are under `outputs/reports/notebooks/`. Rendering reads saved artifacts, preserves explicit missing-input notices, and does not acquire data. The portable runtime is machine-local and excluded from Git.
+
+## Harmonisation products
+
+- `common_geometry_2022`: one full group feature, relationship counts, equal-area denominator, and footprint diagnostics.
+- `base_geometry_2022`: original tract pieces in the requested display scope, with unique part IDs.
+- `comparison_geometry`: every tract piece contributing to selected groups, plus reported unmatched pieces.
+- `lookup_2010`, `lookup_2022`, `crosswalk`, and `group_sizes`: unique tract assignments and exact group membership.
+- `unmatched_2010`, `unmatched_2022`, and corresponding `unmatched_geometry_*`: excluded source IDs, available counts, and preserved geometry.
+- `rejected_edges`: imported links rejected for having no positive polygon intersection.
+- `footprint_diagnostics` and `report.json`: geometric disagreement, coverage, missingness, and policy/source versions.
+
+The boundary-change assumption is recorded in [harmonisation policy](../methods/harmonisation-policy.md). Versioned source archives remain references for historical parity; positive-area rejection can intentionally change their memberships.

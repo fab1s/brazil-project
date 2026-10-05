@@ -1,4 +1,4 @@
-"""Compare the Python projected geometry engine to the original R reference."""
+"""Historical local-scope R regression, not production national-scope validation."""
 import argparse
 import geopandas as gpd
 import pandas as pd
@@ -30,10 +30,10 @@ def main():
     distance=shapely.hausdorff_distance(base.geometry.array,reference.geometry.array)
     grid=ctx.config['census']['precision_grid']
     report={'crosswalk_matches':a==b,'python_only_edges':len(a-b),'R_only_edges':len(b-a),
-            'partition_matches':partitions(l10)==partitions(old_groups),'geometry_boundary_tolerance_m':grid,
+            'partition_matches':partitions(cross)==partitions(old_groups),'geometry_boundary_tolerance_m':grid,
             'maximum_geometry_boundary_distance_m':float(np.nanmax(distance)),
             'geometry_matches':bool(np.isfinite(distance).all() and (distance<=grid).all()),
-            'python_rows':len(base),'R_rows':len(reference),'scope':args.municipality}
+            'python_rows':len(base),'R_rows':len(reference),'scope':args.municipality,'comparison_scope':'historical municipality-clipped R reference','policy_note':'Contact-only matches are intentionally excluded; production recomputation is national.'}
     report['passed']=report['crosswalk_matches'] and report['partition_matches'] and report['geometry_matches'] and len(base)==len(reference)
     print(ctx.report('verification-harmonisation',report))
     if not report['passed']: raise SystemExit(1)

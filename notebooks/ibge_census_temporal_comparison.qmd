@@ -4,7 +4,7 @@ format: html
 jupyter: python3
 ---
 
-#code in progress
+Spatial indicator outputs now contain one merged 2022 feature per `common_id`. Original tract pieces remain reference data. The [approved harmonisation policy](../docs/methods/harmonisation-policy.md) records the boundary-change assumption, complete-group scope, and explicit unmatched coverage.
 
 ```{python}
 #| label: ibge_census_temporal_comparison_1

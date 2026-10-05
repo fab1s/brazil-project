@@ -99,9 +99,11 @@ def source_columns(year, dataset):
 
 
 def run(ctx):
-    lookups = {year: ctx.table('harmonisation', f'lookup_{year}') for year in (2010,2022)}
-    sizes = ctx.table('harmonisation','group_sizes')
-    base = ctx.geo('harmonisation','base_geometry_2022')
+    from brazil_project.harmonisation.census import load_bundle
+    bundle, manifest = load_bundle(ctx, names=[])
+    lookups = {year: bundle[f'lookup_{year}'] for year in (2010, 2022)}
+    sizes = bundle['group_sizes']
+    base = bundle['common_geometry_2022']
     tables = {(year,dataset): read(ctx,year,dataset,source_columns(year,dataset))
               for year,dataset in [(2010,'Pessoa'),(2010,'Domicilio'),(2022,'Basico'),(2022,'Pessoas'),(2022,'Domicilio')]}
     for (year,dataset), table in tables.items():
@@ -109,7 +111,7 @@ def run(ctx):
         ctx.write_table(table,'census',f'{year}_{dataset.lower()}')
     pop10=tables[2010,'Pessoa']
     pop22=tables[2022,'Basico'].merge(tables[2022,'Pessoas'],on='code_tract',how='left',validate='one_to_one')
-    reports = {}
+    reports = {'harmonisation_version': manifest['version'], 'spatial_unit': 'common_id'}
     def save(name, annual, ratio=True):
         result=annual[2010].merge(annual[2022],on='common_id',how='outer',validate='one_to_one')
         if ratio:
@@ -166,16 +168,13 @@ def run(ctx):
     population={}
     for year,frame,den in [(2010,pop10,'pessoa03_V001'),(2022,pop22,'V0001')]:
         population[year]=aggregate(pd.DataFrame({f'id_{year}':frame.code_tract,f'pop_{year}':frame[den]}),lookups[year],year,[f'pop_{year}'])
-    area_source=ctx.geo('harmonisation','comparison_geometry') if ctx.municipality and ctx.artifact('harmonisation','comparison_geometry.parquet').exists() else base
-    geometry=area_source[['common_id','geometry']].dropna(subset=['common_id']).copy()
-    geometry.geometry=shapely.make_valid(geometry.geometry.array)
-    dissolved=geometry.to_crs(6933).dissolve(by='common_id')
-    areas=pd.DataFrame({'common_id':dissolved.index,'area_km2':dissolved.area.to_numpy()/1e6})
+    # CONTRACT: the saved area and group geometry belong to the validated active bundle.
+    areas = base[['common_id', 'area_km2']]
     density=population[2010].merge(population[2022],on='common_id',how='outer',validate='one_to_one').merge(areas,on='common_id',how='left',validate='one_to_one')
     for year in (2010,2022): density[f'population_density_{year}']=safe_ratio(density[f'pop_{year}'],density.area_km2)
     density['population_density_change']=density.population_density_2022-density.population_density_2010
     density['population_density_change_pct']=(100*(density.population_density_2022/density.population_density_2010-1)).where(density.population_density_2010>0)
     ctx.write_table(density,'indicators','population_density')
-    ctx.write_geo(base.merge(density,on='common_id',how='left',validate='many_to_one'),'indicators','population_density_sf')
+    ctx.write_geo(base.merge(density.drop(columns='area_km2'),on='common_id',how='left',validate='many_to_one'),'indicators','population_density_sf')
     reports['population_density']={'common_areas':len(density)}
     return ctx.report('indicators',reports)

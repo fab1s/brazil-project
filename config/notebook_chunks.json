@@ -93,7 +93,7 @@
       "artifact": "report",
       "notebook": "notebooks/ibge_census_tract_harmonisation.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented; R crosswalk and geometry-grid parity passes for Belo Horizonte; national recomputation unverified"
+      "status": "updated positive-area policy; complete-group scope and merged outputs; see harmonisation-update verification"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE - Census tract harmonisation.qmd",
@@ -106,7 +106,7 @@
       "artifact": "report",
       "notebook": "notebooks/ibge_census_tract_harmonisation.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented; R crosswalk and geometry-grid parity passes for Belo Horizonte; national recomputation unverified"
+      "status": "updated positive-area policy; complete-group scope and merged outputs; see harmonisation-update verification"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE - Census tract harmonisation.qmd",
@@ -116,10 +116,10 @@
       "original_sha256": "c361884b3cf768c7dd5f3d593f8b8efb49d0ec03cf27959ea77ffd318f883415",
       "stage": "harmonisation",
       "implementation": "src/brazil_project/harmonisation/census.py",
-      "artifact": "base_geometry_2022",
+      "artifact": "common_geometry_2022",
       "notebook": "notebooks/ibge_census_tract_harmonisation.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented; R crosswalk and geometry-grid parity passes for Belo Horizonte; national recomputation unverified"
+      "status": "updated positive-area policy; complete-group scope and merged outputs; see harmonisation-update verification"
     }
   ],
   "Scripts_Data/IBGE/IBGE - Dataset Overview.qmd": [
