@@ -6,6 +6,6 @@ The project harmonises census tracts across 2010 and 2022 so that demographic an
 
 [Research methods and documentation](docs/index.md) · [Setup and workflow instructions](docs/technical/workflow.md)
 
-![Brazil project website showing the interactive map and data layers](docs/assets/website-preview.jpg)
+![Brazil project website showing the interactive map and data layers](docs/assets/website-screenshot.png)
 
 [Website: interactive project data map](https://sandy-ivory-k65c.here.now/)
