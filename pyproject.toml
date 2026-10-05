@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "brazil-research-project"
+version = "0.1.0"
+description = "Reproducible Brazil census and infrastructure research workflows"
+requires-python = ">=3.9"
+dependencies = ["pandas>=2.2,<3", "geopandas>=1.0,<2", "shapely>=2,<3", "networkx>=3,<4", "pyarrow>=15", "requests>=2.32", "matplotlib>=3.8", "openpyxl>=3.1", "tomli>=2; python_version<'3.11'", "folium>=0.19", "mapclassify>=2.8"]
+
+[project.scripts]
+brazil-project = "brazil_project.cli:main"
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<9", "build"]
+reports = ["nbformat", "nbclient", "ipykernel", "nbconvert", "pyyaml"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,56 @@
+[
+  {
+    "report": "notebooks/brazil_poroject_charts.qmd",
+    "python_cells": 1,
+    "passed": true,
+    "error": null
+  },
+  {
+    "report": "notebooks/ibama_data_extraction.qmd",
+    "python_cells": 5,
+    "passed": true,
+    "error": null
+  },
+  {
+    "report": "notebooks/ibge_census_data_extraction.qmd",
+    "python_cells": 6,
+    "passed": true,
+    "error": null
+  },
+  {
+    "report": "notebooks/ibge_census_temporal_comparison.qmd",
+    "python_cells": 17,
+    "passed": true,
+    "error": null
+  },
+  {
+    "report": "notebooks/ibge_census_tract_harmonisation.qmd",
+    "python_cells": 3,
+    "passed": true,
+    "error": null
+  },
+  {
+    "report": "notebooks/ibge_dataset_overview.qmd",
+    "python_cells": 14,
+    "passed": true,
+    "error": null
+  },
+  {
+    "report": "notebooks/obrasgov_data_extraction.qmd",
+    "python_cells": 7,
+    "passed": true,
+    "error": null
+  },
+  {
+    "report": "notebooks/obrasgov_preprocessing.qmd",
+    "python_cells": 6,
+    "passed": true,
+    "error": null
+  },
+  {
+    "report": "notebooks/property_value.qmd",
+    "python_cells": 3,
+    "passed": true,
+    "error": null
+  }
+]

@@ -1,0 +1,9 @@
+* text=auto
+*.csv text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.R text eol=lf
+*.qmd text eol=lf
+
+# Original reference notes must retain their source bytes and formatting.
+docs/reference/original_notes/** -text -whitespace

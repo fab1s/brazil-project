@@ -1,0 +1,32 @@
+[project]
+root = ".."
+# Empty means the original national research scope. Validation can use a subset.
+municipality = ""
+
+[census]
+tracts = "data/raw/ibge/Data/ibge_census_tracts.gpkg"
+baseline_lookup = "data/processed/ibge/Data/lookup.gpkg"
+baseline_geometry = "data/processed/ibge/Data/base_geometry_2022.gpkg"
+baseline_group_sizes = "data/raw/ibge/Data/group_sizes.csv"
+tables = "data/raw/ibge/census"
+release = "v0.5.0"
+crs = 5880
+precision_grid = 0.000001
+inflation_2010 = 3200.06
+inflation_2022 = 6645.74
+# Routine runs reuse the archived correspondence. Recompute is explicit.
+recompute_harmonisation = false
+
+[infrastructure]
+ibama = "data/processed/ibama/licensed_projects_st.gpkg"
+obrasgov = "data/processed/obrasgov/projects_st.gpkg"
+
+ibama_snapshot = "data/raw/ibama/api_snapshot"
+obrasgov_snapshot = "data/raw/obrasgov/api_snapshot"
+
+[land_value]
+raw = "data/raw/land_value/Belo Horizonte/Data"
+workbook = "data/reference/land_value/Belo Horizonte/Data/lei9795-anexoI, II, III, IV e V - parsed.xlsx"
+# These exact inputs are referenced by the original notebook; never substitute another date.
+zone_file = "20220601_zona_homogenea_iptu.csv"
+property_file = "20220601_regional_barreiro_cadastro_imobiliario.csv"
