@@ -28,3 +28,5 @@ renv/bootstrap/
 
 /.quarto/
 **/*.quarto_ipynb
+
+.herenow/

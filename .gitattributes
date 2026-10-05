@@ -7,3 +7,7 @@
 
 # Original reference notes must retain their source bytes and formatting.
 docs/reference/original_notes/** -text -whitespace
+
+# Preserve imported browser modules and the original map source formatting.
+website/vendor/** -whitespace
+website/social-indicators.js -whitespace

@@ -2,14 +2,14 @@
 
 Status: verified with explicit limitations
 Last updated: 2026-10-05
-Version: 0.3
+Version: 0.4
 Scope: Verification Results
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-05 | 0.3 | Codex | Recorded original migration checks and approved harmonisation verification. |
+| 2026-10-05 | 0.4 | Codex | Recorded migration, harmonisation, and merged-area public map checks. |
 
 ## File integrity
 
@@ -24,7 +24,7 @@ Independent evidence includes original stored-output comparisons and fresh R ref
 | Check | Result |
 | --- | --- |
 | Original file integrity | 344 source and copied file checksums match |
-| Python method and adapter tests | 31 pass |
+| Python method, adapter, and map tests | 36 pass |
 | Indexed spherical intersection test | Matches original sf/S2 all-pairs results |
 | Package dependencies and build | pip check passes; wheel and source distribution build |
 | Fresh R indicator reference | All 13 calculations match on complete common areas intersecting Belo Horizonte |
@@ -53,3 +53,7 @@ Quarto 1.9.38 for macOS was downloaded from the [official release](https://githu
 ## Later harmonisation policy verification
 
 The researcher-approved [harmonisation update](harmonisation-update.md) supersedes the original tract-level display contract with merged common-area outputs and complete versioned bundles. National baseline memberships remain unchanged after positive-area validation. Fresh regional R calculations still match all 13 indicators and chart tables. The boundary-change assumption remains explicit and unverified against habitation data.
+
+## Public map verification
+
+The [here.now map update](web-map-update.md) exports one row per common ID, all 13 indicators, and complete-group summaries. All exported values match the corresponding research tables after existing map presentation exclusions. Browser checks cover overview/mid/detail loading, common-ID popups and search, density change, income, unmatched coverage, and desktop/mobile rendering.

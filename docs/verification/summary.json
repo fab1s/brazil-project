@@ -599,7 +599,7 @@
     }
   ],
   "python_tests": {
-    "passed": 31
+    "passed": 36
   },
   "spherical_index_test": {
     "passed": true
@@ -657,6 +657,29 @@
       "reports": 9,
       "local_asset_references": 102,
       "missing_local_assets": 0
+    }
+  },
+  "web_map_update": {
+    "evidence": "docs/verification/web-map-update-evidence.json",
+    "common_areas": 287178,
+    "indicators": 13,
+    "archives": 17,
+    "attribute_parity": "exact after existing presentation exclusions",
+    "web_map_tests": 5,
+    "browser_tiers": [
+      "overview",
+      "mid",
+      "detail"
+    ],
+    "publication": {
+      "site_url": "https://sandy-ivory-k65c.here.now/",
+      "version_id": "01M465TDBFC8ZXMSKM92V7HRJT",
+      "verified_at": "2026-10-05T14:01:49.231671+00:00",
+      "authentication": "authenticated",
+      "persistence": "permanent",
+      "file_count": 121,
+      "all_published_file_hashes_match_local": true,
+      "existing_site_updated": true
     }
   }
 }

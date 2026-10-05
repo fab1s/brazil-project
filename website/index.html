@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Interactive Brazilian public-investment, environmental licensing, and census map.">
+    <title>Brazil project map</title>
+    <link rel="preconnect" href="https://esm.sh">
+    <link rel="preconnect" href="https://tiles.openfreemap.org">
+    <link rel="stylesheet" href="vendor/maplibre-gl.css">
+    <link rel="stylesheet" href="styles.css?v=20261005-common-1">
+  <link rel="stylesheet" href="mobile.css?v=20261005-common-1">
+  </head>
+  <body>
+    <main>
+      <section class="map-workspace" aria-label="Brazil project map">
+        <div id="map" aria-label="Interactive map of Brazilian projects and census data"></div>
+        <header class="brand-card"><span>Spatial explorer</span><h1>Brazil project</h1><button id="panelCollapse" class="panel-collapse" type="button" aria-controls="panelContent" aria-expanded="true" title="Collapse layer controls"><i data-lucide="chevron-left" aria-hidden="true"></i><i data-lucide="chevron-right" aria-hidden="true"></i><span class="sr-only">Collapse layer controls</span></button></header>
+        <form id="locationSearch" class="location-search" role="search">
+          <label class="sr-only" for="locationSearchInput">Find a city, 2022 census tract or common ID</label>
+          <div class="location-search-row"><input id="locationSearchInput" type="search" minlength="1" autocomplete="off" placeholder="City, tract or common ID" aria-describedby="locationSearchStatus"><button type="submit" aria-label="Search Brazil"><i data-lucide="search" aria-hidden="true"></i></button></div>
+          <p id="locationSearchStatus" class="location-search-status" role="status" aria-live="polite"></p><div id="locationSearchResults" class="location-search-results" hidden></div>
+        </form>
+        <aside id="layerPanel" class="control-panel" aria-label="Map layers">
+          <div id="panelContent" class="panel-content">
+            <div class="panel-heading"><span>Explore</span><p>Choose what appears on the map.</p></div>
+            <div class="layer-list">
+              <section class="layer-control" data-layer-card="obras"><label class="layer-toggle"><input id="obrasToggle" type="checkbox"><i class="layer-icon layer-icon-obras" data-lucide="landmark" aria-hidden="true"></i><span><strong>Obras.gov projects</strong><small class="layer-meta"><span class="geometry-kinds" aria-label="Points, lines, and areas"><span class="geometry-kind" data-tooltip="Point" aria-label="Point"><i data-lucide="map-pin" aria-hidden="true"></i></span><span class="geometry-kind" data-tooltip="Line" aria-label="Line"><i data-lucide="route" aria-hidden="true"></i></span><span class="geometry-kind" data-tooltip="Area" aria-label="Area"><i data-lucide="hexagon" aria-hidden="true"></i></span></span><span id="obrasCount">134,929 records</span></small></span></label><div id="obrasLegend" class="type-key"></div></section>
+              <section class="layer-control" data-layer-card="ibama"><label class="layer-toggle"><input id="ibamaToggle" type="checkbox"><i class="layer-icon layer-icon-ibama" data-lucide="leaf" aria-hidden="true"></i><span><strong>IBAMA licensed projects</strong><small class="layer-meta"><span class="geometry-kinds" aria-label="Points, lines, and areas"><span class="geometry-kind" data-tooltip="Point" aria-label="Point"><i data-lucide="map-pin" aria-hidden="true"></i></span><span class="geometry-kind" data-tooltip="Line" aria-label="Line"><i data-lucide="route" aria-hidden="true"></i></span><span class="geometry-kind" data-tooltip="Area" aria-label="Area"><i data-lucide="hexagon" aria-hidden="true"></i></span></span><span id="ibamaCount">8,494 records</span></small></span></label><div id="ibamaLegend" class="type-key"></div></section>
+              <section class="layer-control" data-layer-card="favelas"><label class="layer-toggle"><input id="favelasToggle" type="checkbox"><i class="layer-icon layer-icon-favelas" data-lucide="house" aria-hidden="true"></i><span><strong>IBGE favelas and communities</strong><small class="layer-meta"><span class="geometry-kinds" aria-label="Areas"><span class="geometry-kind" data-tooltip="Area" aria-label="Area"><i data-lucide="hexagon" aria-hidden="true"></i></span></span><span id="favelasCount">12,348 communities</span></small></span></label></section>
+              <div id="indicatorSections"></div>
+              <div hidden aria-hidden="true">              <section class="layer-control census-control" data-layer-card="census"><label class="layer-toggle"><input id="censusToggle" type="checkbox"><i class="layer-icon layer-icon-census" data-lucide="map" aria-hidden="true"></i><span><strong>IBGE census tracts</strong><small class="layer-meta"><span class="geometry-kinds" aria-label="Areas"><span class="geometry-kind" data-tooltip="Area" aria-label="Area"><i data-lucide="hexagon" aria-hidden="true"></i></span></span><span id="censusCount">462,759 tracts · 2022</span></small></span></label><div class="census-settings" hidden><p>Fill shows the Black population ratio in each census area.</p><div class="ratio-ramp" aria-hidden="true"></div><div class="ratio-labels"><span>0%</span><span>10%</span><span>25%</span><span>50%+</span></div><label>Census year<select id="censusYear"><option value="2022" selected>2022</option><option value="2010">2010</option></select></label><label>Transparency <output id="censusOpacityValue">100%</output><input id="censusOpacity" type="range" min="15" max="100" value="100"></label></div></section>
+              <section class="layer-control census-control change-control" data-layer-card="change"><label class="layer-toggle"><input id="changeToggle" type="checkbox"><i class="layer-icon layer-icon-change" data-lucide="trending-up" aria-hidden="true"></i><span><strong>IBGE ratio change, 2010–2022</strong><small class="layer-meta"><span class="geometry-kinds" aria-label="Areas"><span class="geometry-kind" data-tooltip="Area" aria-label="Area"><i data-lucide="hexagon" aria-hidden="true"></i></span></span><span id="changeCount">468,142 comparison areas</span></small></span></label><div class="census-settings" hidden><p>Fill shows the change in Black population ratio between the two censuses.</p><div class="ratio-ramp change-ramp" aria-hidden="true"></div><div class="ratio-labels"><span>−25 pp</span><span>0</span><span>+25 pp</span></div><label>Transparency <output id="changeOpacityValue">100%</output><input id="changeOpacity" type="range" min="15" max="100" value="100"></label></div></section>
+</div>
+            </div>
+            <div class="basemap-control"><label>Background<select id="basemap"><option value="dark">Dark</option><option value="light">Light</option><option value="osm" selected>OpenStreetMap</option><option value="satellite">Satellite</option></select></label><div class="map-action-buttons"><button id="resetView" type="button" title="Reset Brazil view" aria-label="Reset Brazil view"><i data-lucide="rotate-ccw" aria-hidden="true"></i></button><button id="unselectLayers" type="button" title="Unselect all layers" aria-label="Unselect all layers"><!-- @license lucide-static v1.44.0 - ISC -->
+<svg aria-hidden="true"
+  class="lucide lucide-layers-minus"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 .83.18 2 2 0 0 0 .83-.18l8.58-3.9a1 1 0 0 0 0-1.832z" />
+  <path d="M16 17h6" />
+  <path d="M2.003 11.995a1 1 0 0 0 .597.915l8.58 3.91a2 2 0 0 0 .83.18" />
+  <path d="M2.003 16.995a1 1 0 0 0 .597.915l8.58 3.91a2 2 0 0 0 .83.18 2 2 0 0 0 .83-.18l2.11-.96" />
+  <path d="M22.018 12.004a1 1 0 0 1-.598.916l-.177.08" />
+</svg>
+</button></div></div>
+          </div>
+        </aside>
+        <div id="mapLoading" class="map-loading" role="status" aria-live="polite"><span class="loading-dot"></span><span id="mapLoadingText">Starting map…</span><button id="retryMap" type="button" hidden>Retry</button></div>
+        <p id="emptyMapHint" class="empty-map-hint">Select a layer to begin</p>
+        <button id="threeDToggle" class="map-view-toggle" type="button" aria-pressed="false" title="Switch to 3D view" hidden>3D</button>
+        <div id="zoomNotice" class="zoom-notice" role="status" aria-live="polite">Zoom 3.2 · Municipality overview</div>
+        <button id="openInsights" class="insight-cta" type="button" aria-controls="dataDrawer" aria-expanded="false">View data summaries</button>
+        <aside id="dataDrawer" class="data-drawer" aria-label="Data summaries" hidden>
+          <div class="data-drawer-header"><strong>Data summaries</strong><button id="closeInsights" type="button" aria-label="Close data summaries">×</button></div>
+          <section id="insights" class="insights" aria-labelledby="insightsTitle"><div class="section-intro"><span>Data profile</span><h2 id="insightsTitle">Counts and type frequencies</h2><p>Each dataset remains independently summarised, regardless of which map layers are selected.</p></div><div id="summaryCards" class="summary-grid"></div></section>
+          <section id="timeline" class="timeline-section" aria-labelledby="timelineTitle"><div class="section-intro"><span>Temporal profile</span><h2 id="timelineTitle">Obras.gov project dates</h2><p>Explore records by their reported registration, planned, and actual dates.</p></div><div class="timeline-card"><div class="timeline-controls"><label>Date basis<select id="timelineField" disabled></select></label><label>From<input id="timelineStart" type="date" disabled></label><label>To<input id="timelineEnd" type="date" disabled></label><button id="timelineReset" type="button" disabled>Full period</button></div><div class="timeline-summary"><strong id="timelineTitleLine">Loading date profile…</strong><span id="timelineCoverage"></span></div><div class="timeline-chart-shell"><svg id="timelineChart" role="img" aria-label="Obras.gov date distribution"></svg></div><p id="timelineNote">The date profile loads only when this section is near view.</p></div></section>
+          <section class="insights" aria-labelledby="censusSummaryTitle"><div class="section-intro"><span>Census data</span><h2 id="censusSummaryTitle">Population, housing and services</h2><p>All mapped areas in Brazil, regardless of zoom or selected layers. Each comparison area is counted once. Shares use total counts, not an average of area percentages. Population density divides total population by total included area in km². Yearly coverage can differ; change uses only areas with data in both years. Missing values are excluded. Matched census geography contains 287,178 merged common areas. The 16 unmatched 2010 tracts and 24 unmatched 2022 tracts are excluded from comparisons; their available population and missing-value coverage are reported below.</p></div><div id="censusSummaryCards" class="summary-grid">Loading census summaries…</div></section>
+        </aside>
+      </section>
+    </main>
+    <footer hidden>IBGE census data · Location search © <a href="https://open-meteo.com/en/docs/geocoding-api">Open-Meteo</a> · Basemap data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, <a href="https://openfreemap.org/">OpenFreeMap</a>, and <a href="https://openmaptiles.org/">OpenMapTiles</a>.</footer>
+    <script type="module" src="startup.js?v=20261005-common-1"></script>
+  <script type="module" src="mobile.js?v=20261005-common-1"></script>
+  </body>
+</html>
