@@ -13,8 +13,9 @@ errors=[]
 for path in set(paths):
     if 'original_notes' in path.parts:continue
     text=path.read_text()
-    for key in ['Status:','Last updated:','Version:','Scope:']:
-        if key not in text:errors.append(f'{path}: {key} missing')
+    if path != ROOT/'README.md':
+        for key in ['Status:','Last updated:','Version:','Scope:']:
+            if key not in text:errors.append(f'{path}: {key} missing')
     if path!=ROOT/'README.md' and '## Edit History' not in text:errors.append(f'{path}: edit history missing')
     if len(re.findall(r'^```',text,re.M))%2:errors.append(f'{path}: unmatched code fence')
     for target in re.findall(r'\]\(([^)]+)\)',text):

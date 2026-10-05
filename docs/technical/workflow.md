@@ -2,14 +2,32 @@
 
 Status: current
 Last updated: 2026-10-05
-Version: 0.2
+Version: 0.3
 Scope: Workflow Commands And Artifacts
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-05 | 0.2 | Codex | Established the project and recorded final tests and HTML report verification. |
+| 2026-10-05 | 0.3 | Codex | Established the workflow, verified reports, and consolidated setup instructions here. |
+
+## Setup
+
+The tested Python runtime is 3.9.6. Use a project environment and the exact dependency lock.
+
+```sh
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.lock
+.venv/bin/python -m pip install --no-build-isolation --no-deps -e .
+.venv/bin/brazil-project --help
+```
+
+For retained R workflows, install R matching `renv.lock`, then restore into the project library:
+
+```sh
+Rscript scripts/r/restore.R
+```
+
 
 ## Stage commands
 
