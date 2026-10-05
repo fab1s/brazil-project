@@ -2,14 +2,14 @@
 
 Status: implemented and validated with recorded limitations
 Last updated: 2026-10-05
-Version: 0.5
+Version: 0.6
 Scope: Current Project Progress
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-05 | 0.5 | Codex | Recorded harmonisation corrections and the merged-area here.now map update. |
+| 2026-10-05 | 0.6 | Codex | Recorded Obrasgov map display changes and location review. |
 
 The complete original file collection is copied, organized, and checksum verified. The Python package and CLI are installed locally. Python dependencies and retained R dependencies are locked.
 
@@ -22,3 +22,5 @@ The spherical overview preserves R sf/S2 and produces original comparison classi
 The [harmonisation update](../verification/harmonisation-update.md) addresses the audit findings: positive-area matching, complete groups, atomic versioned geometry/lookup bundles, merged analytical polygons, unique part IDs, and unmatched coverage inventories. The researcher accepts the documented boundary-change assumption; footprint diagnostics remain available and do not block groups automatically. National baseline processing has been regenerated under this policy. Explicit full-national geometric recomputation has not been run as part of this update.
 
 The maintained here.now map source is under `website/`. Its census export has 287,178 merged common areas, all 13 indicators, 17 vector archives, and unmatched coverage summaries. Numeric exports match the research tables after existing map presentation exclusions. Existing infrastructure/community assets are preserved from the previous map publication. Build and browser verification are recorded in [the map update](../verification/web-map-update.md).
+
+Obrasgov polygons are excluded from map rendering and picking at researcher request; source records and investment summaries remain preserved. Points and lines remain visible. [Initial location screening](../verification/obrasgov-spatial-review.md) found 46 illustrative offshore point components from 38 projects; this is not a national coastline classification. No point locations have been corrected or removed.

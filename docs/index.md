@@ -2,14 +2,14 @@
 
 Status: current
 Last updated: 2026-10-05
-Version: 0.4
+Version: 0.5
 Scope: Research Project Documentation
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-05 | 0.4 | Codex | Recorded harmonisation corrections and the maintained here.now map workflow. |
+| 2026-10-05 | 0.5 | Codex | Indexed the Obrasgov spatial review. |
 
 This index is the starting point for maintaining the project and understanding the processing flow.
 
@@ -26,6 +26,7 @@ This index is the starting point for maintaining the project and understanding t
 - [Harmonisation audit](verification/harmonisation-audit.md)
 - [Harmonisation update verification](verification/harmonisation-update.md)
 - [Here.now map update verification](verification/web-map-update.md)
+- [Obrasgov spatial review](verification/obrasgov-spatial-review.md)
 - [Source file migration manifest](reference/migration_manifest.csv)
 - [Original workflow chunk mapping](reference/workflow_mapping.csv)
 

@@ -1,0 +1,170 @@
+{
+  "local_browser_checks": {
+    "obrasPolicy": {
+      "fill": false,
+      "point": true,
+      "line": true,
+      "types": [
+        "Point",
+        "MultiPoint",
+        "LineString"
+      ]
+    },
+    "polygonToggleAndBasemapChecks": true,
+    "ibamaPolygonsRetained": true,
+    "errors": [],
+    "bad": [],
+    "feature": {
+      "common_id": "150269",
+      "n_2010": 1,
+      "n_2022": 6
+    },
+    "popup": "Black Population ProportionCommon-area estimate6.7%Common area 150269Common ID1502692010 tracts in group12022 tracts in group620104.0%20226.7%Change+2.7 ppBlack population \u00b7 201033Total population \u00b7 2010815Black population \u00b7 202273Total population \u00b7 20221,088Counts cover the complete merged common area. Original tract boundaries are reference data.",
+    "mergedAreas": 287178,
+    "overviewFeatures": 43,
+    "summaryCoverageShown": true,
+    "densityChangeLayer": true,
+    "incomeLayer": true,
+    "commonIdSearch": true,
+    "mobileViewport": true,
+    "midTierRendered": true,
+    "tile_request_count": 297,
+    "tile_responses": [
+      {
+        "archive": "favelas.pmtiles",
+        "status": 206,
+        "requests": 57
+      },
+      {
+        "archive": "ibama.pmtiles",
+        "status": 206,
+        "requests": 26
+      },
+      {
+        "archive": "obras.pmtiles",
+        "status": 206,
+        "requests": 98
+      },
+      {
+        "archive": "social-detail-minas-espirito-santo-commona048705307bf.pmtiles",
+        "status": 206,
+        "requests": 2
+      },
+      {
+        "archive": "social-detail-rio-de-janeiro-commona048705307bf.pmtiles",
+        "status": 206,
+        "requests": 79
+      },
+      {
+        "archive": "social-mid-minas-espirito-santo-commona048705307bf.pmtiles",
+        "status": 206,
+        "requests": 8
+      },
+      {
+        "archive": "social-mid-rio-de-janeiro-commona048705307bf.pmtiles",
+        "status": 206,
+        "requests": 7
+      },
+      {
+        "archive": "social-mid-sao-paulo-commona048705307bf.pmtiles",
+        "status": 206,
+        "requests": 5
+      },
+      {
+        "archive": "social-overview-commona048705307bf.pmtiles",
+        "status": 206,
+        "requests": 15
+      }
+    ]
+  },
+  "scope": "Obrasgov display-only polygon exclusion; frozen infrastructure data unchanged; points not corrected",
+  "published_browser_checks": {
+    "obrasPolicy": {
+      "fill": false,
+      "point": true,
+      "line": true,
+      "types": [
+        "Point",
+        "MultiPoint",
+        "LineString"
+      ]
+    },
+    "polygonToggleAndBasemapChecks": true,
+    "ibamaPolygonsRetained": true,
+    "errors": [],
+    "bad": [],
+    "feature": {
+      "common_id": "140413",
+      "n_2010": 1,
+      "n_2022": 4
+    },
+    "popup": "Black Population ProportionCommon-area estimate6.6%Common area 140413Common ID1404132010 tracts in group12022 tracts in group420101.6%20226.6%Change+5.0 ppBlack population \u00b7 20107Total population \u00b7 2010435Black population \u00b7 202250Total population \u00b7 2022762Counts cover the complete merged common area. Original tract boundaries are reference data.",
+    "mergedAreas": 287178,
+    "overviewFeatures": 41,
+    "summaryCoverageShown": true,
+    "densityChangeLayer": true,
+    "incomeLayer": true,
+    "commonIdSearch": true,
+    "mobileViewport": true,
+    "midTierRendered": true,
+    "tile_request_count": 245,
+    "tile_responses": [
+      {
+        "archive": "favelas.pmtiles",
+        "status": 206,
+        "requests": 57
+      },
+      {
+        "archive": "ibama.pmtiles",
+        "status": 206,
+        "requests": 1
+      },
+      {
+        "archive": "obras.pmtiles",
+        "status": 206,
+        "requests": 98
+      },
+      {
+        "archive": "social-detail-minas-espirito-santo-commona048705307bf.pmtiles",
+        "status": 206,
+        "requests": 2
+      },
+      {
+        "archive": "social-detail-rio-de-janeiro-commona048705307bf.pmtiles",
+        "status": 206,
+        "requests": 53
+      },
+      {
+        "archive": "social-mid-minas-espirito-santo-commona048705307bf.pmtiles",
+        "status": 206,
+        "requests": 8
+      },
+      {
+        "archive": "social-mid-rio-de-janeiro-commona048705307bf.pmtiles",
+        "status": 206,
+        "requests": 7
+      },
+      {
+        "archive": "social-mid-sao-paulo-commona048705307bf.pmtiles",
+        "status": 206,
+        "requests": 5
+      },
+      {
+        "archive": "social-overview-commona048705307bf.pmtiles",
+        "status": 206,
+        "requests": 14
+      }
+    ]
+  },
+  "publication": {
+    "site_url": "https://sandy-ivory-k65c.here.now/",
+    "version_id": "01M466S499KKFR6X9WY7QDQEMM",
+    "verified_at": "2026-10-05T14:18:47.818457+00:00",
+    "authentication": "authenticated",
+    "persistence": "permanent",
+    "file_count": 121,
+    "all_published_file_hashes_match_local": true,
+    "existing_site_updated": true
+  },
+  "unchanged_frozen_archives": true
+}

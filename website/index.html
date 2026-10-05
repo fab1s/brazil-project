@@ -8,8 +8,8 @@
     <link rel="preconnect" href="https://esm.sh">
     <link rel="preconnect" href="https://tiles.openfreemap.org">
     <link rel="stylesheet" href="vendor/maplibre-gl.css">
-    <link rel="stylesheet" href="styles.css?v=20261005-common-1">
-  <link rel="stylesheet" href="mobile.css?v=20261005-common-1">
+    <link rel="stylesheet" href="styles.css?v=20261005-obras-2">
+  <link rel="stylesheet" href="mobile.css?v=20261005-obras-2">
   </head>
   <body>
     <main>
@@ -25,7 +25,7 @@
           <div id="panelContent" class="panel-content">
             <div class="panel-heading"><span>Explore</span><p>Choose what appears on the map.</p></div>
             <div class="layer-list">
-              <section class="layer-control" data-layer-card="obras"><label class="layer-toggle"><input id="obrasToggle" type="checkbox"><i class="layer-icon layer-icon-obras" data-lucide="landmark" aria-hidden="true"></i><span><strong>Obras.gov projects</strong><small class="layer-meta"><span class="geometry-kinds" aria-label="Points, lines, and areas"><span class="geometry-kind" data-tooltip="Point" aria-label="Point"><i data-lucide="map-pin" aria-hidden="true"></i></span><span class="geometry-kind" data-tooltip="Line" aria-label="Line"><i data-lucide="route" aria-hidden="true"></i></span><span class="geometry-kind" data-tooltip="Area" aria-label="Area"><i data-lucide="hexagon" aria-hidden="true"></i></span></span><span id="obrasCount">134,929 records</span></small></span></label><div id="obrasLegend" class="type-key"></div></section>
+              <section class="layer-control" data-layer-card="obras"><label class="layer-toggle"><input id="obrasToggle" type="checkbox"><i class="layer-icon layer-icon-obras" data-lucide="landmark" aria-hidden="true"></i><span><strong>Obras.gov projects</strong><small class="layer-meta"><span class="geometry-kinds" aria-label="Points and lines"><span class="geometry-kind" data-tooltip="Point" aria-label="Point"><i data-lucide="map-pin" aria-hidden="true"></i></span><span class="geometry-kind" data-tooltip="Line" aria-label="Line"><i data-lucide="route" aria-hidden="true"></i></span></span><span id="obrasCount">134,929 source records</span></small></span></label><div id="obrasLegend" class="type-key"></div></section>
               <section class="layer-control" data-layer-card="ibama"><label class="layer-toggle"><input id="ibamaToggle" type="checkbox"><i class="layer-icon layer-icon-ibama" data-lucide="leaf" aria-hidden="true"></i><span><strong>IBAMA licensed projects</strong><small class="layer-meta"><span class="geometry-kinds" aria-label="Points, lines, and areas"><span class="geometry-kind" data-tooltip="Point" aria-label="Point"><i data-lucide="map-pin" aria-hidden="true"></i></span><span class="geometry-kind" data-tooltip="Line" aria-label="Line"><i data-lucide="route" aria-hidden="true"></i></span><span class="geometry-kind" data-tooltip="Area" aria-label="Area"><i data-lucide="hexagon" aria-hidden="true"></i></span></span><span id="ibamaCount">8,494 records</span></small></span></label><div id="ibamaLegend" class="type-key"></div></section>
               <section class="layer-control" data-layer-card="favelas"><label class="layer-toggle"><input id="favelasToggle" type="checkbox"><i class="layer-icon layer-icon-favelas" data-lucide="house" aria-hidden="true"></i><span><strong>IBGE favelas and communities</strong><small class="layer-meta"><span class="geometry-kinds" aria-label="Areas"><span class="geometry-kind" data-tooltip="Area" aria-label="Area"><i data-lucide="hexagon" aria-hidden="true"></i></span></span><span id="favelasCount">12,348 communities</span></small></span></label></section>
               <div id="indicatorSections"></div>
@@ -62,14 +62,14 @@
         <button id="openInsights" class="insight-cta" type="button" aria-controls="dataDrawer" aria-expanded="false">View data summaries</button>
         <aside id="dataDrawer" class="data-drawer" aria-label="Data summaries" hidden>
           <div class="data-drawer-header"><strong>Data summaries</strong><button id="closeInsights" type="button" aria-label="Close data summaries">×</button></div>
-          <section id="insights" class="insights" aria-labelledby="insightsTitle"><div class="section-intro"><span>Data profile</span><h2 id="insightsTitle">Counts and type frequencies</h2><p>Each dataset remains independently summarised, regardless of which map layers are selected.</p></div><div id="summaryCards" class="summary-grid"></div></section>
+          <section id="insights" class="insights" aria-labelledby="insightsTitle"><div class="section-intro"><span>Data profile</span><h2 id="insightsTitle">Counts and type frequencies</h2><p>Each dataset remains independently summarised, regardless of which map layers are selected. Obrasgov summaries include source records whose polygons are excluded from the map.</p></div><div id="summaryCards" class="summary-grid"></div></section>
           <section id="timeline" class="timeline-section" aria-labelledby="timelineTitle"><div class="section-intro"><span>Temporal profile</span><h2 id="timelineTitle">Obras.gov project dates</h2><p>Explore records by their reported registration, planned, and actual dates.</p></div><div class="timeline-card"><div class="timeline-controls"><label>Date basis<select id="timelineField" disabled></select></label><label>From<input id="timelineStart" type="date" disabled></label><label>To<input id="timelineEnd" type="date" disabled></label><button id="timelineReset" type="button" disabled>Full period</button></div><div class="timeline-summary"><strong id="timelineTitleLine">Loading date profile…</strong><span id="timelineCoverage"></span></div><div class="timeline-chart-shell"><svg id="timelineChart" role="img" aria-label="Obras.gov date distribution"></svg></div><p id="timelineNote">The date profile loads only when this section is near view.</p></div></section>
           <section class="insights" aria-labelledby="censusSummaryTitle"><div class="section-intro"><span>Census data</span><h2 id="censusSummaryTitle">Population, housing and services</h2><p>All mapped areas in Brazil, regardless of zoom or selected layers. Each comparison area is counted once. Shares use total counts, not an average of area percentages. Population density divides total population by total included area in km². Yearly coverage can differ; change uses only areas with data in both years. Missing values are excluded. Matched census geography contains 287,178 merged common areas. The 16 unmatched 2010 tracts and 24 unmatched 2022 tracts are excluded from comparisons; their available population and missing-value coverage are reported below.</p></div><div id="censusSummaryCards" class="summary-grid">Loading census summaries…</div></section>
         </aside>
       </section>
     </main>
     <footer hidden>IBGE census data · Location search © <a href="https://open-meteo.com/en/docs/geocoding-api">Open-Meteo</a> · Basemap data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, <a href="https://openfreemap.org/">OpenFreeMap</a>, and <a href="https://openmaptiles.org/">OpenMapTiles</a>.</footer>
-    <script type="module" src="startup.js?v=20261005-common-1"></script>
-  <script type="module" src="mobile.js?v=20261005-common-1"></script>
+    <script type="module" src="startup.js?v=20261005-obras-2"></script>
+  <script type="module" src="mobile.js?v=20261005-obras-2"></script>
   </body>
 </html>

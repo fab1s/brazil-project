@@ -2,14 +2,14 @@
 
 Status: maintained
 Last updated: 2026-10-05
-Version: 0.1
+Version: 0.2
 Scope: Build and update the existing research map from local validated common areas
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-05 | 0.1 | Codex | Added reproducible merged-area map exports and existing-site publication. |
+| 2026-10-05 | 0.2 | Codex | Documented Obrasgov polygon exclusion and spatial screening. |
 
 Browser source is under `website/`. The public site remains `https://sandy-ivory-k65c.here.now/`. Public data derivatives are generated in `outputs/maps/website/`; never publish the project root, raw datasets, work GeoPackage, credentials, or local here.now state.
 
@@ -52,3 +52,9 @@ bash /Users/fa4850sc/.agents/skills/here-now/scripts/publish.sh outputs/maps/web
 ```
 
 The helper stages files, skips unchanged hashes, uploads changed assets, and finalizes the existing slug. Save the publication version and verification evidence in `docs/verification/`. A failed build must not be published. No scientific publication review is implied by software/render checks.
+
+## Obrasgov display policy
+
+At researcher request, Obrasgov polygon components have no fill layer and are excluded from map interaction. Only point and line layers are registered, including after background changes. Mixed collections can still display their point/line components. Raw records and frozen PMTiles remain unchanged; IBAMA polygons, favelas and census areas are unaffected. Source-record totals and investment summaries still include polygon records, with explicit wording in the interface.
+
+The read-only location screen and proposed preprocessing policy are recorded in [the spatial review](../verification/obrasgov-spatial-review.md). No offshore-point deletion, correction, or blanket reprojection has been implemented.

@@ -1,4 +1,4 @@
-import { indicatorScale, NO_DATA_COLOUR } from "./indicator-scales.js?v=20261005-common-1";
+import { indicatorScale, NO_DATA_COLOUR } from "./indicator-scales.js?v=20261005-obras-2";
 // SOURCE: Exact expressions in IBGE Census - Temporal Comparison.qmd.
 const calculationDetails = {
   "black": {

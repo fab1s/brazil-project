@@ -2,14 +2,14 @@
 
 Status: current
 Last updated: 2026-10-05
-Version: 0.2
+Version: 0.3
 Scope: Project Utilities
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-05 | 0.2 | Codex | Documented migration, verification, and here.now map utilities. |
+| 2026-10-05 | 0.3 | Codex | Documented map utilities and read-only Obrasgov coordinate screening. |
 
 migrate_files.py copies and verifies original files. verify_r_reference.py compares fresh independent exports. create_project_docs.py builds initial documentation; maintaining current documentation afterward requires deliberate edits. The r folder retains isolated R adapters and reference checks.
 
@@ -22,3 +22,5 @@ Use the project CLI and documented setup from the root README. Read relevant met
 ## Update Rules
 
 Update this README when local responsibilities or artifact contracts change. Preserve source provenance and report verification scope.
+
+`audit_obras_locations.py` reads the frozen Obrasgov GeoPackage and saves diagnostic counts, a checksum and illustrative offshore examples. It requires the project GeoPandas/Shapely environment and never modifies inputs. Run `--output .cache/obras-spatial-audit/recheck.json`; the [spatial review](../docs/verification/obrasgov-spatial-review.md) states its geographic and collection-extraction limits.
