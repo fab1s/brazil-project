@@ -1,14 +1,15 @@
 # Remaining Research Tasks
 
 Status: current
-Last updated: 2026-10-05
-Version: 0.4
+Last updated: 2026-10-06
+Version: 0.5
 Scope: Remaining Research Tasks
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
+| 2026-10-06 | 0.5 | Codex | Separated completed location diagnostics from outstanding review. |
 | 2026-10-05 | 0.4 | Codex | Added Obrasgov coordinate-quality review. |
 
 - Review the [harmonisation update](../verification/harmonisation-update.md) and its footprint/coverage diagnostics under the approved boundary-change assumption. The requested implementation corrections are complete.
@@ -21,4 +22,6 @@ Scope: Remaining Research Tasks
 - Supply the original Linha Verde shapefile to restore the optional overlay; no substitute was inferred.
 - Do not mark scientific or publication review complete merely because software tests pass.
 
-- Complete national Obrasgov location QA against authoritative state/municipality/coastal boundaries, including islands and marine-project exceptions; review flagged records before altering display or analytical inclusion. [Initial screening](../verification/obrasgov-spatial-review.md) is exploratory.
+- Review the completed [national Obrasgov location QA](../verification/obrasgov-location-qa.md): offshore, coastal, foreign-border, administrative and possible marine flags require provider evidence before correction.
+
+The national diagnostic and clean/quarantine exports are complete; see [verification](../verification/obrasgov-location-qa.md). Remaining location work is review of flagged source IDs, provider-supported corrections and marine exceptions, coastal/island edge cases, and deliberate map publication if this derivative is adopted. Never infer corrected coordinates or present eligible locations as validated geocoding.

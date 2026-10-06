@@ -1,14 +1,15 @@
 # Research Processing Methods
 
 Status: current
-Last updated: 2026-10-05
-Version: 0.2
+Last updated: 2026-10-06
+Version: 0.3
 Scope: Research Processing Methods
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
+| 2026-10-06 | 0.3 | Codex | Separated geographic quality filtering from translation. |
 | 2026-10-05 | 0.2 | Codex | Recorded the harmonisation corrections and approved research assumptions. |
 
 ## Census correspondence
@@ -62,3 +63,7 @@ The original exploratory 2000-to-2010/2022 comparison is limited to Belo Horizon
 ## Original tract exploration
 
 The original exploratory Black population maps cover Belo Horizonte, Vespasiano, São José da Lapa, Confins, Lagoa Santa, and Santa Luzia in Minas Gerais. These use raw annual tract ratios and the original share bands, separate from harmonised temporal estimates. The optional Linha Verde shapefile is absent from the source; the overlay is not reconstructed or substituted.
+
+## Obrasgov location-quality derivative
+
+The requested [location policy](obrasgov-location-policy.md) defines an independent diagnostic/map preprocessing stage. It retains all source project rows and investments, preserves coordinates and the prior translated snapshot, and writes component eligibility and review flags. Offshore status is screened with IBGE municipalities and generalized Natural Earth references. Eligibility is not verified coordinate accuracy; no automatic coordinate correction is performed.

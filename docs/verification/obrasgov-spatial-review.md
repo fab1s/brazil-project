@@ -1,14 +1,15 @@
 # Obrasgov Spatial Review
 
 Status: initial screening; display change published and verified
-Last updated: 2026-10-05
-Version: 0.1
+Last updated: 2026-10-06
+Version: 0.2
 Scope: Obrasgov geometry display and exploratory coordinate-quality screening
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
+| 2026-10-06 | 0.2 | Codex | Linked completed national preprocessing, preserving the initial screening record. |
 | 2026-10-05 | 0.1 | Codex | Removed Obrasgov polygons from display and screened suspicious locations. |
 
 ## Implemented display decision
@@ -61,3 +62,7 @@ Reproduce this initial screen without changing inputs:
 6. Correct only from verified provider coordinates or evidence establishing the actual original CRS. Never infer a CRS from magnitude alone, silently swap axes, snap points to the shore, or present municipal centroids as exact project locations.
 
 A national coastline/state/municipality audit, reviewed exclusion policy and verified corrections remain outstanding. This screening supports review; it does not validate all retained locations.
+
+## Follow-up
+
+The initial box-based screening above is superseded for diagnostic coverage by [national location preprocessing](obrasgov-location-qa.md). Its thresholds, references, recursive geometry handling and separate clean/quarantine outputs are documented. Provider-backed corrections and marine validity remain unverified. The October 5 polygon-display publication remains the current public map.

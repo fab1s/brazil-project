@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from brazil_project.io import Context, WorkflowError
 
-STAGES = ('overview','census-exploration','harmonisation','indicators','ibama','obrasgov','land-value','charts')
+STAGES = ('overview','census-exploration','harmonisation','indicators','ibama','obrasgov','obrasgov-location-qa','land-value','charts')
 DEPENDENCIES = {'indicators':['harmonisation'], 'charts':['harmonisation','indicators']}
 
 def dispatch(ctx, stage):
@@ -26,6 +26,8 @@ def dispatch(ctx, stage):
     elif stage in ('ibama','obrasgov'):
         from brazil_project.infrastructure.projects import run
         return run(ctx,stage)
+    elif stage=='obrasgov-location-qa':
+        from brazil_project.infrastructure.location_qa import run
     elif stage=='acquire-census':
         from brazil_project.acquisition.census import run
     elif stage in ('acquire-ibama','acquire-obrasgov'):

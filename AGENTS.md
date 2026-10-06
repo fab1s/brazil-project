@@ -1,14 +1,15 @@
 # Agent Working Instructions
 
 Status: current
-Last updated: 2026-10-05
-Version: 0.3
+Last updated: 2026-10-06
+Version: 0.4
 Scope: Agent Working Instructions
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
+| 2026-10-06 | 0.4 | Codex | Required concise process records, embedded code outputs and a final script audit. |
 | 2026-10-05 | 0.3 | Codex | Recorded the harmonisation corrections and approved research assumptions. |
 
 These rules apply to this independent research project. RISSI provided documentation patterns; its application architecture and deployment rules do not apply here.
@@ -47,6 +48,14 @@ After code, configuration, data flow, or structure changes, assess and update af
 Major Markdown documents use Status, Last updated, Version, and Scope, with a concise edit-history table near the top. The root README is a brief project description and is exempt from metadata and edit history; setup instructions belong in `docs/technical/workflow.md`. Use one history row per date and sequential versions; update the same-day row rather than adding repeated entries. Original copied reference files are preserved verbatim.
 
 Each major folder has a concise README with purpose, project connections, file responsibilities, workflows, inputs/outputs, dependencies, and update rules. `docs/` uses `index.md` as its entry point.
+
+## Process Records And Script Audits
+
+For substantial processing work, maintain a concise Markdown process record as work proceeds. Record inputs and provenance, analytical decisions, commands, generated outputs, verification results and remaining uncertainty. Link it from current progress; do not leave the process only in chat or tool output.
+
+Embed reviewed code-generated figures in the relevant Markdown as rendered images, with the generation command and a short caption stating what the output demonstrates and omits. Keep working artifacts under `outputs/`; copy only small reviewed documentation figures to `docs/assets/` so the Markdown renders in GitHub. Preserve the exact image bytes and record their checksum/provenance. Keep full datasets and bulk outputs outside Git.
+
+After completing or materially changing a processing script, audit correctness, provenance, invariants, failure/recovery behavior, output contracts and reproducibility. Record findings, fixes and unresolved limitations in Markdown. Fix material implementation issues within scope and rerun relevant checks before declaring the work complete. Distinguish software verification from scientific validation.
 
 ## Data And Attribution
 

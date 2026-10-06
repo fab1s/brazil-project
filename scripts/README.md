@@ -1,14 +1,15 @@
 # Project Utilities
 
 Status: current
-Last updated: 2026-10-05
-Version: 0.3
+Last updated: 2026-10-06
+Version: 0.4
 Scope: Project Utilities
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
+| 2026-10-06 | 0.4 | Codex | Added explicit geographic reference acquisition. |
 | 2026-10-05 | 0.3 | Codex | Documented map utilities and read-only Obrasgov coordinate screening. |
 
 migrate_files.py copies and verifies original files. verify_r_reference.py compares fresh independent exports. create_project_docs.py builds initial documentation; maintaining current documentation afterward requires deliberate edits. The r folder retains isolated R adapters and reference checks.
@@ -24,3 +25,9 @@ Use the project CLI and documented setup from the root README. Read relevant met
 Update this README when local responsibilities or artifact contracts change. Preserve source provenance and report verification scope.
 
 `audit_obras_locations.py` reads the frozen Obrasgov GeoPackage and saves diagnostic counts, a checksum and illustrative offshore examples. It requires the project GeoPandas/Shapely environment and never modifies inputs. Run `--output .cache/obras-spatial-audit/recheck.json`; the [spatial review](../docs/verification/obrasgov-spatial-review.md) states its geographic and collection-extraction limits.
+
+`acquire_location_references.py` explicitly downloads pinned IBGE 2022 municipalities and Natural Earth land/coastline releases into `data/reference/location-qa`, preserving complete zip archives and per-file URL/checksum/date provenance. Verified completed downloads are reused after interruption; incomplete downloads restart safely. Routine location QA requires those local files and rejects checksum changes. It is independent of live Obrasgov acquisition.
+
+`verify_location_qa.py --output .cache/obras-spatial-audit/verification.json` checks saved artifact hashes, exact original attributes and WKB, map/quarantine partition completeness, duplicated-location attribute provenance and source-row investment coverage. It requires a completed local QA run.
+
+`plot_location_qa.py` renders unchanged, finite point components and review/eligibility flags into `outputs/figures/obrasgov-location-qa/location-screening.png`. Administrative boundaries are simplified only in this illustration; polygons, lines, missing and invalid points are omitted from the overview.

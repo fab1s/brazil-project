@@ -1,14 +1,15 @@
 # Verification Results
 
 Status: verified with explicit limitations
-Last updated: 2026-10-05
-Version: 0.4
+Last updated: 2026-10-06
+Version: 0.5
 Scope: Verification Results
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
+| 2026-10-06 | 0.5 | Codex | Recorded national location screening and repeat verification. |
 | 2026-10-05 | 0.4 | Codex | Recorded migration, harmonisation, and merged-area public map checks. |
 
 ## File integrity
@@ -24,7 +25,7 @@ Independent evidence includes original stored-output comparisons and fresh R ref
 | Check | Result |
 | --- | --- |
 | Original file integrity | 344 source and copied file checksums match |
-| Python method, adapter, and map tests | 36 pass |
+| Python method, adapter, map, location and utility tests | 51 pass |
 | Indexed spherical intersection test | Matches original sf/S2 all-pairs results |
 | Package dependencies and build | pip check passes; wheel and source distribution build |
 | Fresh R indicator reference | All 13 calculations match on complete common areas intersecting Belo Horizonte |
@@ -57,3 +58,7 @@ The researcher-approved [harmonisation update](harmonisation-update.md) supersed
 ## Public map verification
 
 The [here.now map update](web-map-update.md) exports one row per common ID, all 13 indicators, and complete-group summaries. All exported values match the corresponding research tables after existing map presentation exclusions. Browser checks cover overview/mid/detail loading, common-ID popups and search, density change, income, unmatched coverage, and desktop/mobile rendering.
+
+## Obrasgov location-quality preprocessing
+
+[National location QA](obrasgov-location-qa.md) is a new separate method, not translation parity. Two fresh CLI executions produce byte-identical GeoParquet artifacts, preserve 134,929 original rows and exact geometry/attributes, and conserve original source-row investment coverage. All 51 tests pass. The separate map derivative contains 226,309 eligible point/line components and 2,037 quarantined components; 2,010 polygons remain excluded by display policy. Location eligibility does not establish coordinate accuracy. Public website data have not adopted this derivative.

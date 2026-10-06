@@ -599,7 +599,11 @@
     }
   ],
   "python_tests": {
-    "passed": 36
+    "passed": 51,
+    "checked_at": "2026-10-06",
+    "command": ".venv/bin/python -m pytest -q",
+    "location_policy_tests": 11,
+    "script_audit_utility_tests": 4
   },
   "spherical_index_test": {
     "passed": true
@@ -681,5 +685,25 @@
       "all_published_file_hashes_match_local": true,
       "existing_site_updated": true
     }
+  },
+  "obrasgov_location_qa": {
+    "source_records": 134929,
+    "components": 230356,
+    "map_components": 226309,
+    "quarantined_components": 2037,
+    "far_offshore_project_ids": 236,
+    "tests_passed": 51,
+    "repeat_execution": {
+      "passed": true,
+      "same_contract": true,
+      "all_five_geoparquet_hashes_identical": true,
+      "same_results_except_timestamp": true,
+      "first_run_at": "2026-10-06T12:13:58.303328+00:00",
+      "second_run_at": "2026-10-06T12:17:27.252975+00:00"
+    },
+    "evidence": "docs/verification/obrasgov-location-qa-evidence.json",
+    "public_map_updated": false,
+    "process_record": "docs/current/obrasgov-location-qa-process.md",
+    "script_audit": "docs/verification/obrasgov-location-qa-script-audit.md"
   }
 }

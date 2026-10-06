@@ -1,14 +1,15 @@
 # Workflow Commands And Artifacts
 
 Status: current
-Last updated: 2026-10-05
-Version: 0.4
+Last updated: 2026-10-06
+Version: 0.5
 Scope: Workflow Commands And Artifacts
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
+| 2026-10-06 | 0.5 | Codex | Documented explicit location references and routine QA. |
 | 2026-10-05 | 0.4 | Codex | Recorded the harmonisation corrections and approved research assumptions. |
 
 ## Setup
@@ -109,3 +110,19 @@ The Python report dependencies are included in `requirements.lock`. HTML outputs
 - `footprint_diagnostics` and `report.json`: geometric disagreement, coverage, missingness, and policy/source versions.
 
 The boundary-change assumption is recorded in [harmonisation policy](../methods/harmonisation-policy.md). Versioned source archives remain references for historical parity; positive-area rejection can intentionally change their memberships.
+
+## Obrasgov location QA
+
+Acquire the pinned geographic references explicitly once:
+
+```bash
+.venv/bin/python scripts/acquire_location_references.py
+```
+
+Then run offline from the project environment:
+
+```bash
+.venv/bin/brazil-project run obrasgov-location-qa --config config/project.toml
+```
+
+Outputs under `data/intermediate/obrasgov-location-qa/` include source and component GeoParquet audits, eligible map components, quarantined components, a review table and a fingerprinted report. `outputs/maps/obrasgov-location-qa/locations.gpkg` has `map_components` and `quarantined_components` layers; `review.csv` exposes per-component decisions. Use project/source-row IDs when summarizing project investments, never repeated component values. The public map is not silently replaced by this new derivative. See [the policy](../methods/obrasgov-location-policy.md).
