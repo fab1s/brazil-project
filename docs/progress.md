@@ -2,14 +2,14 @@
 
 Status: implemented and validated with recorded limitations
 Last updated: 2026-10-06
-Version: 0.12
+Version: 0.13
 Scope: Current Project Progress
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.12 | Codex | Simplified navigation and consolidated QMD/Markdown pairs without content loss. |
+| 2026-10-06 | 0.13 | Codex | Consolidated Markdown reports and added a reader-focused folder guide to the root README. |
 | 2026-10-05 | 0.6 | Codex | Recorded Obrasgov map display changes and location review. |
 
 The complete original file collection is copied, organized, and checksum verified. The Python package and CLI are installed locally. Python dependencies and retained R dependencies are locked.
@@ -36,6 +36,6 @@ The researcher requested a further **check without filtering** against `uf_princ
 
 The researcher subsequently approved excluding all 2,346 entirely outside primary-state components. The separate [state exclusion derivative](obrasgov-primary-state-filter.md) removes 1,814 additional map-eligible components (532 were already absent), leaving 224,495 final eligible map components. Original records, partial intersections and other locations from affected projects remain intact; the live map still uses the previous publication.
 
-The [simplified layout](project-layout.md) has six visible working folders. Executable code/configuration/tests are under `code/`, active reports under `research/reports/`, original material under `data/archive/`, and project configuration is `project.toml`. Documentation is flat with `docs/evidence/` and `docs/assets/`; 33 former folder READMEs are preserved verbatim. Empty placeholders are removed and input path lookups no longer create directories. All 59 tests, nine notebook executions and the R adapter check pass after relocation; layout preservation is recorded in the linked manifest.
+The [simplified layout](project-layout.md) has six visible working folders; the root [README](../README.md#where-to-find-things) now guides readers through reports, documentation and supporting materials. Executable code/configuration/tests are under `code/`, active reports under `research/reports/`, original material under `data/archive/`, and project configuration is `project.toml`. Documentation is flat with `docs/evidence/` and `docs/assets/`; 33 former folder READMEs are preserved verbatim. Empty placeholders are removed and input path lookups no longer create directories. All 59 tests, nine notebook executions and the R adapter check pass after relocation; layout preservation is recorded in the linked manifest.
 
 [Markdown consolidation](report-previews.md) records the nine single readable reports, preserved ordered Python cells, exact source archive and fresh-process verification. The [research index](../research/README.md#read-the-reports) links each report. Refreshing produces review copies without overwriting narrative; no analytical stages or research inputs changed.
