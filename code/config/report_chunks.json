@@ -9,9 +9,10 @@
       "stage": "charts",
       "implementation": "code/brazil_project/visualisation/charts.py",
       "artifact": "year_summary",
-      "notebook": "research/notebooks/brazil_poroject_charts.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented; fresh R population and cutoff parity passes"
+      "status": "implemented; fresh R population and cutoff parity passes",
+      "report": "research/reports/brazil_poroject_charts.md",
+      "report_script": "code/reports/brazil_poroject_charts.py"
     }
   ],
   "Scripts_Data/IBAMA/IBAMA - Data Extraction.qmd": [
@@ -24,9 +25,10 @@
       "stage": "ibama",
       "implementation": "code/brazil_project/infrastructure/projects.py",
       "artifact": "report",
-      "notebook": "research/notebooks/ibama_data_extraction.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "snapshot processing verified; live acquisition unverified"
+      "status": "snapshot processing verified; live acquisition unverified",
+      "report": "research/reports/ibama_data_extraction.md",
+      "report_script": "code/reports/ibama_data_extraction.py"
     },
     {
       "source_file": "Scripts_Data/IBAMA/IBAMA - Data Extraction.qmd",
@@ -37,9 +39,10 @@
       "stage": "ibama",
       "implementation": "code/brazil_project/infrastructure/projects.py",
       "artifact": "report",
-      "notebook": "research/notebooks/ibama_data_extraction.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "snapshot processing verified; live acquisition unverified"
+      "status": "snapshot processing verified; live acquisition unverified",
+      "report": "research/reports/ibama_data_extraction.md",
+      "report_script": "code/reports/ibama_data_extraction.py"
     },
     {
       "source_file": "Scripts_Data/IBAMA/IBAMA - Data Extraction.qmd",
@@ -50,9 +53,10 @@
       "stage": "ibama",
       "implementation": "code/brazil_project/infrastructure/projects.py",
       "artifact": "sector_counts",
-      "notebook": "research/notebooks/ibama_data_extraction.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "snapshot processing verified; live acquisition unverified"
+      "status": "snapshot processing verified; live acquisition unverified",
+      "report": "research/reports/ibama_data_extraction.md",
+      "report_script": "code/reports/ibama_data_extraction.py"
     },
     {
       "source_file": "Scripts_Data/IBAMA/IBAMA - Data Extraction.qmd",
@@ -63,9 +67,10 @@
       "stage": "ibama",
       "implementation": "code/brazil_project/infrastructure/projects.py",
       "artifact": "report",
-      "notebook": "research/notebooks/ibama_data_extraction.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "snapshot processing verified; live acquisition unverified"
+      "status": "snapshot processing verified; live acquisition unverified",
+      "report": "research/reports/ibama_data_extraction.md",
+      "report_script": "code/reports/ibama_data_extraction.py"
     },
     {
       "source_file": "Scripts_Data/IBAMA/IBAMA - Data Extraction.qmd",
@@ -76,9 +81,10 @@
       "stage": "ibama",
       "implementation": "code/brazil_project/infrastructure/projects.py",
       "artifact": "report",
-      "notebook": "research/notebooks/ibama_data_extraction.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "snapshot processing verified; live acquisition unverified"
+      "status": "snapshot processing verified; live acquisition unverified",
+      "report": "research/reports/ibama_data_extraction.md",
+      "report_script": "code/reports/ibama_data_extraction.py"
     }
   ],
   "Scripts_Data/IBGE/IBGE - Census tract harmonisation.qmd": [
@@ -91,9 +97,10 @@
       "stage": "harmonisation",
       "implementation": "code/brazil_project/harmonisation/census.py",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_census_tract_harmonisation.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "updated positive-area policy; complete-group scope and merged outputs; see harmonisation-update verification"
+      "status": "updated positive-area policy; complete-group scope and merged outputs; see harmonisation-update verification",
+      "report": "research/reports/ibge_census_tract_harmonisation.md",
+      "report_script": "code/reports/ibge_census_tract_harmonisation.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE - Census tract harmonisation.qmd",
@@ -104,9 +111,10 @@
       "stage": "harmonisation",
       "implementation": "code/brazil_project/harmonisation/census.py",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_census_tract_harmonisation.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "updated positive-area policy; complete-group scope and merged outputs; see harmonisation-update verification"
+      "status": "updated positive-area policy; complete-group scope and merged outputs; see harmonisation-update verification",
+      "report": "research/reports/ibge_census_tract_harmonisation.md",
+      "report_script": "code/reports/ibge_census_tract_harmonisation.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE - Census tract harmonisation.qmd",
@@ -117,9 +125,10 @@
       "stage": "harmonisation",
       "implementation": "code/brazil_project/harmonisation/census.py",
       "artifact": "common_geometry_2022",
-      "notebook": "research/notebooks/ibge_census_tract_harmonisation.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "updated positive-area policy; complete-group scope and merged outputs; see harmonisation-update verification"
+      "status": "updated positive-area policy; complete-group scope and merged outputs; see harmonisation-update verification",
+      "report": "research/reports/ibge_census_tract_harmonisation.md",
+      "report_script": "code/reports/ibge_census_tract_harmonisation.py"
     }
   ],
   "Scripts_Data/IBGE/IBGE - Dataset Overview.qmd": [
@@ -132,9 +141,10 @@
       "stage": "overview",
       "implementation": "code/scripts/r/overview.R",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_dataset_overview.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested"
+      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested",
+      "report": "research/reports/ibge_dataset_overview.md",
+      "report_script": "code/reports/ibge_dataset_overview.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE - Dataset Overview.qmd",
@@ -145,9 +155,10 @@
       "stage": "overview",
       "implementation": "code/scripts/r/overview.R",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_dataset_overview.qmd",
       "acquisition_disabled_in_original": true,
-      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested"
+      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested",
+      "report": "research/reports/ibge_dataset_overview.md",
+      "report_script": "code/reports/ibge_dataset_overview.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE - Dataset Overview.qmd",
@@ -158,9 +169,10 @@
       "stage": "overview",
       "implementation": "code/scripts/r/overview.R",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_dataset_overview.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested"
+      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested",
+      "report": "research/reports/ibge_dataset_overview.md",
+      "report_script": "code/reports/ibge_dataset_overview.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE - Dataset Overview.qmd",
@@ -171,9 +183,10 @@
       "stage": "overview",
       "implementation": "code/scripts/r/overview.R",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_dataset_overview.qmd",
       "acquisition_disabled_in_original": true,
-      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested"
+      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested",
+      "report": "research/reports/ibge_dataset_overview.md",
+      "report_script": "code/reports/ibge_dataset_overview.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE - Dataset Overview.qmd",
@@ -184,9 +197,10 @@
       "stage": "overview",
       "implementation": "code/scripts/r/overview.R",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_dataset_overview.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested"
+      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested",
+      "report": "research/reports/ibge_dataset_overview.md",
+      "report_script": "code/reports/ibge_dataset_overview.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE - Dataset Overview.qmd",
@@ -197,9 +211,10 @@
       "stage": "overview",
       "implementation": "code/scripts/r/overview.R",
       "artifact": "change_summary_2000_2010",
-      "notebook": "research/notebooks/ibge_dataset_overview.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested"
+      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested",
+      "report": "research/reports/ibge_dataset_overview.md",
+      "report_script": "code/reports/ibge_dataset_overview.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE - Dataset Overview.qmd",
@@ -210,9 +225,10 @@
       "stage": "overview",
       "implementation": "code/scripts/r/overview.R",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_dataset_overview.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested"
+      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested",
+      "report": "research/reports/ibge_dataset_overview.md",
+      "report_script": "code/reports/ibge_dataset_overview.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE - Dataset Overview.qmd",
@@ -223,9 +239,10 @@
       "stage": "overview",
       "implementation": "code/scripts/r/overview.R",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_dataset_overview.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested"
+      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested",
+      "report": "research/reports/ibge_dataset_overview.md",
+      "report_script": "code/reports/ibge_dataset_overview.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE - Dataset Overview.qmd",
@@ -236,9 +253,10 @@
       "stage": "overview",
       "implementation": "code/scripts/r/overview.R",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_dataset_overview.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested"
+      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested",
+      "report": "research/reports/ibge_dataset_overview.md",
+      "report_script": "code/reports/ibge_dataset_overview.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE - Dataset Overview.qmd",
@@ -249,9 +267,10 @@
       "stage": "overview",
       "implementation": "code/scripts/r/overview.R",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_dataset_overview.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested"
+      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested",
+      "report": "research/reports/ibge_dataset_overview.md",
+      "report_script": "code/reports/ibge_dataset_overview.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE - Dataset Overview.qmd",
@@ -262,9 +281,10 @@
       "stage": "overview",
       "implementation": "code/scripts/r/overview.R",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_dataset_overview.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested"
+      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested",
+      "report": "research/reports/ibge_dataset_overview.md",
+      "report_script": "code/reports/ibge_dataset_overview.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE - Dataset Overview.qmd",
@@ -275,9 +295,10 @@
       "stage": "overview",
       "implementation": "code/scripts/r/overview.R",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_dataset_overview.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested"
+      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested",
+      "report": "research/reports/ibge_dataset_overview.md",
+      "report_script": "code/reports/ibge_dataset_overview.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE - Dataset Overview.qmd",
@@ -288,9 +309,10 @@
       "stage": "overview",
       "implementation": "code/scripts/r/overview.R",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_dataset_overview.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested"
+      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested",
+      "report": "research/reports/ibge_dataset_overview.md",
+      "report_script": "code/reports/ibge_dataset_overview.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE - Dataset Overview.qmd",
@@ -301,9 +323,10 @@
       "stage": "overview",
       "implementation": "code/scripts/r/overview.R",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_dataset_overview.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested"
+      "status": "retained R sf/S2 computation; Python report views; indexed semantics tested",
+      "report": "research/reports/ibge_dataset_overview.md",
+      "report_script": "code/reports/ibge_dataset_overview.py"
     }
   ],
   "Scripts_Data/IBGE/IBGE Census - Data Extraction.qmd": [
@@ -316,9 +339,10 @@
       "stage": "census-exploration",
       "implementation": "code/brazil_project/visualisation/census.py",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_census_data_extraction.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented on copied snapshots; acquisition remains explicit"
+      "status": "implemented on copied snapshots; acquisition remains explicit",
+      "report": "research/reports/ibge_census_data_extraction.md",
+      "report_script": "code/reports/ibge_census_data_extraction.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE Census - Data Extraction.qmd",
@@ -329,9 +353,10 @@
       "stage": "census-exploration",
       "implementation": "code/brazil_project/visualisation/census.py",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_census_data_extraction.qmd",
       "acquisition_disabled_in_original": true,
-      "status": "implemented on copied snapshots; acquisition remains explicit"
+      "status": "implemented on copied snapshots; acquisition remains explicit",
+      "report": "research/reports/ibge_census_data_extraction.md",
+      "report_script": "code/reports/ibge_census_data_extraction.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE Census - Data Extraction.qmd",
@@ -342,9 +367,10 @@
       "stage": "census-exploration",
       "implementation": "code/brazil_project/visualisation/census.py",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_census_data_extraction.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented on copied snapshots; acquisition remains explicit"
+      "status": "implemented on copied snapshots; acquisition remains explicit",
+      "report": "research/reports/ibge_census_data_extraction.md",
+      "report_script": "code/reports/ibge_census_data_extraction.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE Census - Data Extraction.qmd",
@@ -355,9 +381,10 @@
       "stage": "census-exploration",
       "implementation": "code/brazil_project/visualisation/census.py",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_census_data_extraction.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented on copied snapshots; acquisition remains explicit"
+      "status": "implemented on copied snapshots; acquisition remains explicit",
+      "report": "research/reports/ibge_census_data_extraction.md",
+      "report_script": "code/reports/ibge_census_data_extraction.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE Census - Data Extraction.qmd",
@@ -368,9 +395,10 @@
       "stage": "census-exploration",
       "implementation": "code/brazil_project/visualisation/census.py",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_census_data_extraction.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "blocked: original Linha Verde shapefile absent"
+      "status": "blocked: original Linha Verde shapefile absent",
+      "report": "research/reports/ibge_census_data_extraction.md",
+      "report_script": "code/reports/ibge_census_data_extraction.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE Census - Data Extraction.qmd",
@@ -381,9 +409,10 @@
       "stage": "census-exploration",
       "implementation": "code/brazil_project/visualisation/census.py",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_census_data_extraction.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented on copied snapshots; acquisition remains explicit"
+      "status": "implemented on copied snapshots; acquisition remains explicit",
+      "report": "research/reports/ibge_census_data_extraction.md",
+      "report_script": "code/reports/ibge_census_data_extraction.py"
     }
   ],
   "Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd": [
@@ -396,9 +425,10 @@
       "stage": "indicators",
       "implementation": "code/brazil_project/indicators/temporal.py",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_census_temporal_comparison.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented; fresh R numerical parity passes for validation scope"
+      "status": "implemented; fresh R numerical parity passes for validation scope",
+      "report": "research/reports/ibge_census_temporal_comparison.md",
+      "report_script": "code/reports/ibge_census_temporal_comparison.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd",
@@ -409,9 +439,10 @@
       "stage": "indicators",
       "implementation": "code/brazil_project/indicators/temporal.py",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_census_temporal_comparison.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented; fresh R numerical parity passes for validation scope"
+      "status": "implemented; fresh R numerical parity passes for validation scope",
+      "report": "research/reports/ibge_census_temporal_comparison.md",
+      "report_script": "code/reports/ibge_census_temporal_comparison.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd",
@@ -422,9 +453,10 @@
       "stage": "indicators",
       "implementation": "code/brazil_project/indicators/temporal.py",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_census_temporal_comparison.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented; fresh R numerical parity passes for validation scope"
+      "status": "implemented; fresh R numerical parity passes for validation scope",
+      "report": "research/reports/ibge_census_temporal_comparison.md",
+      "report_script": "code/reports/ibge_census_temporal_comparison.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd",
@@ -435,9 +467,10 @@
       "stage": "indicators",
       "implementation": "code/brazil_project/indicators/temporal.py",
       "artifact": "black",
-      "notebook": "research/notebooks/ibge_census_temporal_comparison.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented; fresh R numerical parity passes for validation scope"
+      "status": "implemented; fresh R numerical parity passes for validation scope",
+      "report": "research/reports/ibge_census_temporal_comparison.md",
+      "report_script": "code/reports/ibge_census_temporal_comparison.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd",
@@ -448,9 +481,10 @@
       "stage": "indicators",
       "implementation": "code/brazil_project/indicators/temporal.py",
       "artifact": "literacy",
-      "notebook": "research/notebooks/ibge_census_temporal_comparison.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented; fresh R numerical parity passes for validation scope"
+      "status": "implemented; fresh R numerical parity passes for validation scope",
+      "report": "research/reports/ibge_census_temporal_comparison.md",
+      "report_script": "code/reports/ibge_census_temporal_comparison.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd",
@@ -461,9 +495,10 @@
       "stage": "indicators",
       "implementation": "code/brazil_project/indicators/temporal.py",
       "artifact": "rudimentary_sanitation",
-      "notebook": "research/notebooks/ibge_census_temporal_comparison.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented; fresh R numerical parity passes for validation scope"
+      "status": "implemented; fresh R numerical parity passes for validation scope",
+      "report": "research/reports/ibge_census_temporal_comparison.md",
+      "report_script": "code/reports/ibge_census_temporal_comparison.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd",
@@ -474,9 +509,10 @@
       "stage": "indicators",
       "implementation": "code/brazil_project/indicators/temporal.py",
       "artifact": "water_network",
-      "notebook": "research/notebooks/ibge_census_temporal_comparison.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented; fresh R numerical parity passes for validation scope"
+      "status": "implemented; fresh R numerical parity passes for validation scope",
+      "report": "research/reports/ibge_census_temporal_comparison.md",
+      "report_script": "code/reports/ibge_census_temporal_comparison.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd",
@@ -487,9 +523,10 @@
       "stage": "indicators",
       "implementation": "code/brazil_project/indicators/temporal.py",
       "artifact": "waste_collection",
-      "notebook": "research/notebooks/ibge_census_temporal_comparison.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented; fresh R numerical parity passes for validation scope"
+      "status": "implemented; fresh R numerical parity passes for validation scope",
+      "report": "research/reports/ibge_census_temporal_comparison.md",
+      "report_script": "code/reports/ibge_census_temporal_comparison.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd",
@@ -500,9 +537,10 @@
       "stage": "indicators",
       "implementation": "code/brazil_project/indicators/temporal.py",
       "artifact": "sewer_septic",
-      "notebook": "research/notebooks/ibge_census_temporal_comparison.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented; fresh R numerical parity passes for validation scope"
+      "status": "implemented; fresh R numerical parity passes for validation scope",
+      "report": "research/reports/ibge_census_temporal_comparison.md",
+      "report_script": "code/reports/ibge_census_temporal_comparison.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd",
@@ -513,9 +551,10 @@
       "stage": "indicators",
       "implementation": "code/brazil_project/indicators/temporal.py",
       "artifact": "brown",
-      "notebook": "research/notebooks/ibge_census_temporal_comparison.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented; fresh R numerical parity passes for validation scope"
+      "status": "implemented; fresh R numerical parity passes for validation scope",
+      "report": "research/reports/ibge_census_temporal_comparison.md",
+      "report_script": "code/reports/ibge_census_temporal_comparison.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd",
@@ -526,9 +565,10 @@
       "stage": "indicators",
       "implementation": "code/brazil_project/indicators/temporal.py",
       "artifact": "black_brown",
-      "notebook": "research/notebooks/ibge_census_temporal_comparison.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented; fresh R numerical parity passes for validation scope"
+      "status": "implemented; fresh R numerical parity passes for validation scope",
+      "report": "research/reports/ibge_census_temporal_comparison.md",
+      "report_script": "code/reports/ibge_census_temporal_comparison.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd",
@@ -539,9 +579,10 @@
       "stage": "indicators",
       "implementation": "code/brazil_project/indicators/temporal.py",
       "artifact": "income",
-      "notebook": "research/notebooks/ibge_census_temporal_comparison.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented; fresh R numerical parity passes for validation scope"
+      "status": "implemented; fresh R numerical parity passes for validation scope",
+      "report": "research/reports/ibge_census_temporal_comparison.md",
+      "report_script": "code/reports/ibge_census_temporal_comparison.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd",
@@ -552,9 +593,10 @@
       "stage": "indicators",
       "implementation": "code/brazil_project/indicators/temporal.py",
       "artifact": "houses",
-      "notebook": "research/notebooks/ibge_census_temporal_comparison.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented; fresh R numerical parity passes for validation scope"
+      "status": "implemented; fresh R numerical parity passes for validation scope",
+      "report": "research/reports/ibge_census_temporal_comparison.md",
+      "report_script": "code/reports/ibge_census_temporal_comparison.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd",
@@ -565,9 +607,10 @@
       "stage": "indicators",
       "implementation": "code/brazil_project/indicators/temporal.py",
       "artifact": "village_condo",
-      "notebook": "research/notebooks/ibge_census_temporal_comparison.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented; fresh R numerical parity passes for validation scope"
+      "status": "implemented; fresh R numerical parity passes for validation scope",
+      "report": "research/reports/ibge_census_temporal_comparison.md",
+      "report_script": "code/reports/ibge_census_temporal_comparison.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd",
@@ -578,9 +621,10 @@
       "stage": "indicators",
       "implementation": "code/brazil_project/indicators/temporal.py",
       "artifact": "apartments",
-      "notebook": "research/notebooks/ibge_census_temporal_comparison.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented; fresh R numerical parity passes for validation scope"
+      "status": "implemented; fresh R numerical parity passes for validation scope",
+      "report": "research/reports/ibge_census_temporal_comparison.md",
+      "report_script": "code/reports/ibge_census_temporal_comparison.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd",
@@ -591,9 +635,10 @@
       "stage": "indicators",
       "implementation": "code/brazil_project/indicators/temporal.py",
       "artifact": "population_density",
-      "notebook": "research/notebooks/ibge_census_temporal_comparison.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented; fresh R numerical parity passes for validation scope"
+      "status": "implemented; fresh R numerical parity passes for validation scope",
+      "report": "research/reports/ibge_census_temporal_comparison.md",
+      "report_script": "code/reports/ibge_census_temporal_comparison.py"
     },
     {
       "source_file": "Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd",
@@ -604,9 +649,10 @@
       "stage": "indicators",
       "implementation": "code/brazil_project/indicators/temporal.py",
       "artifact": "report",
-      "notebook": "research/notebooks/ibge_census_temporal_comparison.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "implemented; fresh R numerical parity passes for validation scope"
+      "status": "implemented; fresh R numerical parity passes for validation scope",
+      "report": "research/reports/ibge_census_temporal_comparison.md",
+      "report_script": "code/reports/ibge_census_temporal_comparison.py"
     }
   ],
   "Scripts_Data/Land value/Belo Horizonte/Property value.qmd": [
@@ -619,9 +665,10 @@
       "stage": "land-value",
       "implementation": "code/brazil_project/land_value/property.py",
       "artifact": "report",
-      "notebook": "research/notebooks/property_value.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "workbook and zone import implemented; exact cadastral input missing"
+      "status": "workbook and zone import implemented; exact cadastral input missing",
+      "report": "research/reports/property_value.md",
+      "report_script": "code/reports/property_value.py"
     },
     {
       "source_file": "Scripts_Data/Land value/Belo Horizonte/Property value.qmd",
@@ -632,9 +679,10 @@
       "stage": "land-value",
       "implementation": "code/brazil_project/land_value/property.py",
       "artifact": "report",
-      "notebook": "research/notebooks/property_value.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "workbook and zone import implemented; exact cadastral input missing"
+      "status": "workbook and zone import implemented; exact cadastral input missing",
+      "report": "research/reports/property_value.md",
+      "report_script": "code/reports/property_value.py"
     },
     {
       "source_file": "Scripts_Data/Land value/Belo Horizonte/Property value.qmd",
@@ -645,9 +693,10 @@
       "stage": "land-value",
       "implementation": "code/brazil_project/land_value/property.py",
       "artifact": "annex_i",
-      "notebook": "research/notebooks/property_value.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "workbook and zone import implemented; exact cadastral input missing"
+      "status": "workbook and zone import implemented; exact cadastral input missing",
+      "report": "research/reports/property_value.md",
+      "report_script": "code/reports/property_value.py"
     }
   ],
   "Scripts_Data/Obrasgov/Obrasgov - Data Extraction.qmd": [
@@ -660,9 +709,10 @@
       "stage": "obrasgov",
       "implementation": "code/brazil_project/infrastructure/projects.py",
       "artifact": "report",
-      "notebook": "research/notebooks/obrasgov_data_extraction.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "snapshot processing verified; live acquisition unverified"
+      "status": "snapshot processing verified; live acquisition unverified",
+      "report": "research/reports/obrasgov_data_extraction.md",
+      "report_script": "code/reports/obrasgov_data_extraction.py"
     },
     {
       "source_file": "Scripts_Data/Obrasgov/Obrasgov - Data Extraction.qmd",
@@ -673,9 +723,10 @@
       "stage": "obrasgov",
       "implementation": "code/brazil_project/infrastructure/projects.py",
       "artifact": "report",
-      "notebook": "research/notebooks/obrasgov_data_extraction.qmd",
       "acquisition_disabled_in_original": true,
-      "status": "snapshot processing verified; live acquisition unverified"
+      "status": "snapshot processing verified; live acquisition unverified",
+      "report": "research/reports/obrasgov_data_extraction.md",
+      "report_script": "code/reports/obrasgov_data_extraction.py"
     },
     {
       "source_file": "Scripts_Data/Obrasgov/Obrasgov - Data Extraction.qmd",
@@ -686,9 +737,10 @@
       "stage": "obrasgov",
       "implementation": "code/brazil_project/infrastructure/projects.py",
       "artifact": "report",
-      "notebook": "research/notebooks/obrasgov_data_extraction.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "snapshot processing verified; live acquisition unverified"
+      "status": "snapshot processing verified; live acquisition unverified",
+      "report": "research/reports/obrasgov_data_extraction.md",
+      "report_script": "code/reports/obrasgov_data_extraction.py"
     },
     {
       "source_file": "Scripts_Data/Obrasgov/Obrasgov - Data Extraction.qmd",
@@ -699,9 +751,10 @@
       "stage": "obrasgov",
       "implementation": "code/brazil_project/infrastructure/projects.py",
       "artifact": "report",
-      "notebook": "research/notebooks/obrasgov_data_extraction.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "snapshot processing verified; live acquisition unverified"
+      "status": "snapshot processing verified; live acquisition unverified",
+      "report": "research/reports/obrasgov_data_extraction.md",
+      "report_script": "code/reports/obrasgov_data_extraction.py"
     },
     {
       "source_file": "Scripts_Data/Obrasgov/Obrasgov - Data Extraction.qmd",
@@ -712,9 +765,10 @@
       "stage": "obrasgov",
       "implementation": "code/brazil_project/infrastructure/projects.py",
       "artifact": "report",
-      "notebook": "research/notebooks/obrasgov_data_extraction.qmd",
       "acquisition_disabled_in_original": true,
-      "status": "snapshot processing verified; live acquisition unverified"
+      "status": "snapshot processing verified; live acquisition unverified",
+      "report": "research/reports/obrasgov_data_extraction.md",
+      "report_script": "code/reports/obrasgov_data_extraction.py"
     },
     {
       "source_file": "Scripts_Data/Obrasgov/Obrasgov - Data Extraction.qmd",
@@ -725,9 +779,10 @@
       "stage": "obrasgov",
       "implementation": "code/brazil_project/infrastructure/projects.py",
       "artifact": "report",
-      "notebook": "research/notebooks/obrasgov_data_extraction.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "snapshot processing verified; live acquisition unverified"
+      "status": "snapshot processing verified; live acquisition unverified",
+      "report": "research/reports/obrasgov_data_extraction.md",
+      "report_script": "code/reports/obrasgov_data_extraction.py"
     },
     {
       "source_file": "Scripts_Data/Obrasgov/Obrasgov - Data Extraction.qmd",
@@ -738,9 +793,10 @@
       "stage": "obrasgov",
       "implementation": "code/brazil_project/infrastructure/projects.py",
       "artifact": "report",
-      "notebook": "research/notebooks/obrasgov_data_extraction.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "snapshot processing verified; live acquisition unverified"
+      "status": "snapshot processing verified; live acquisition unverified",
+      "report": "research/reports/obrasgov_data_extraction.md",
+      "report_script": "code/reports/obrasgov_data_extraction.py"
     }
   ],
   "Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd": [
@@ -753,9 +809,10 @@
       "stage": "obrasgov",
       "implementation": "code/brazil_project/infrastructure/projects.py",
       "artifact": "report",
-      "notebook": "research/notebooks/obrasgov_preprocessing.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "snapshot processing verified; live acquisition unverified"
+      "status": "snapshot processing verified; live acquisition unverified",
+      "report": "research/reports/obrasgov_preprocessing.md",
+      "report_script": "code/reports/obrasgov_preprocessing.py"
     },
     {
       "source_file": "Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd",
@@ -766,9 +823,10 @@
       "stage": "obrasgov",
       "implementation": "code/brazil_project/infrastructure/projects.py",
       "artifact": "report",
-      "notebook": "research/notebooks/obrasgov_preprocessing.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "snapshot processing verified; live acquisition unverified"
+      "status": "snapshot processing verified; live acquisition unverified",
+      "report": "research/reports/obrasgov_preprocessing.md",
+      "report_script": "code/reports/obrasgov_preprocessing.py"
     },
     {
       "source_file": "Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd",
@@ -779,9 +837,10 @@
       "stage": "obrasgov",
       "implementation": "code/brazil_project/infrastructure/projects.py",
       "artifact": "report",
-      "notebook": "research/notebooks/obrasgov_preprocessing.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "snapshot processing verified; live acquisition unverified"
+      "status": "snapshot processing verified; live acquisition unverified",
+      "report": "research/reports/obrasgov_preprocessing.md",
+      "report_script": "code/reports/obrasgov_preprocessing.py"
     },
     {
       "source_file": "Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd",
@@ -792,9 +851,10 @@
       "stage": "obrasgov",
       "implementation": "code/brazil_project/infrastructure/projects.py",
       "artifact": "type_subtype_counts",
-      "notebook": "research/notebooks/obrasgov_preprocessing.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "snapshot processing verified; live acquisition unverified"
+      "status": "snapshot processing verified; live acquisition unverified",
+      "report": "research/reports/obrasgov_preprocessing.md",
+      "report_script": "code/reports/obrasgov_preprocessing.py"
     },
     {
       "source_file": "Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd",
@@ -805,9 +865,10 @@
       "stage": "obrasgov",
       "implementation": "code/brazil_project/infrastructure/projects.py",
       "artifact": "type_subtype_counts",
-      "notebook": "research/notebooks/obrasgov_preprocessing.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "snapshot processing verified; live acquisition unverified"
+      "status": "snapshot processing verified; live acquisition unverified",
+      "report": "research/reports/obrasgov_preprocessing.md",
+      "report_script": "code/reports/obrasgov_preprocessing.py"
     },
     {
       "source_file": "Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd",
@@ -818,9 +879,10 @@
       "stage": "obrasgov",
       "implementation": "code/brazil_project/infrastructure/projects.py",
       "artifact": "report",
-      "notebook": "research/notebooks/obrasgov_preprocessing.qmd",
       "acquisition_disabled_in_original": false,
-      "status": "snapshot processing verified; live acquisition unverified"
+      "status": "snapshot processing verified; live acquisition unverified",
+      "report": "research/reports/obrasgov_preprocessing.md",
+      "report_script": "code/reports/obrasgov_preprocessing.py"
     }
   ]
 }

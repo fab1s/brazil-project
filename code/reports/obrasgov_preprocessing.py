@@ -1,0 +1,88 @@
+# %% [markdown]
+# ---
+# title: "Obrasgov Preprocessing"
+# format:
+#   html: default
+#   gfm: default
+# editor: visual
+# jupyter: python3
+# ---
+#
+# This report follows the original import, translation and cleaning flow using saved Python processing artifacts. Rendering does not download or modify source datasets. The later location QA and approved primary-state exclusions are documented separately below.
+#
+# ## Processing flow
+#
+# %%
+#| label: obrasgov_preprocessing_1
+from pathlib import Path
+from brazil_project.io import Context
+from brazil_project.reporting import show_chunk
+project = next(p for p in [Path.cwd(), *Path.cwd().parents] if (p / "project.toml").exists())
+ctx = Context(project / "project.toml")
+show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd', 1)
+
+# %% [markdown]
+#
+# %%
+#| label: obrasgov_preprocessing_2
+show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd', 2)
+
+# %% [markdown]
+#
+# %%
+#| label: obrasgov_preprocessing_3
+show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd', 3)
+
+# %% [markdown]
+#
+# %%
+#| label: obrasgov_preprocessing_4
+show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd', 4)
+
+# %% [markdown]
+#
+# %%
+#| label: obrasgov_preprocessing_5
+show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd', 5)
+
+# %% [markdown]
+#
+# %%
+#| label: obrasgov_preprocessing_6
+show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd', 6)
+
+# %% [markdown]
+#
+# ## Location preprocessing and primary-state exclusions
+#
+# The faithful snapshot translation above is separate from the later spatial quality checks. Original records remain preserved. The approved state filter excludes components entirely outside their reported primary state, keeps partial/boundary intersections under the baseline policy, and saves a complete exclusion audit. See the [processing and verification record](../../docs/obrasgov-primary-state-filter.md).
+#
+# %%
+#| label: obrasgov_state_filter_summary
+import json
+import pandas as pd
+from IPython.display import display
+state_report = ctx.intermediate / "obrasgov-primary-state-filter/report.json"
+if state_report.exists():
+    state_result = json.loads(state_report.read_text())
+    display(pd.DataFrame([
+        {"Result": "Components excluded by primary state", "Count": state_result["excluded_components"]},
+        {"Result": "Map components before state exclusions", "Count": state_result["map_components_before"]},
+        {"Result": "Map components after state exclusions", "Count": state_result["map_components_after"]},
+    ]))
+else:
+    display({"status": "State filter not yet generated", "command": ".venv/bin/python code/scripts/filter_obras_primary_state.py"})
+
+# %% [markdown]
+#
+# ![Original eligible Obrasgov points before and after approved primary-state exclusions](../../docs/assets/obrasgov-primary-state-filter.png)
+#
+# Point-only illustration; lines, polygons and already quarantined locations are omitted. Source coordinates are unchanged.
+
+# COMPATIBILITY: Preserve the static narrative figure as an explicit Python output.
+from IPython.display import Image, display
+figure = project / 'docs/assets/obrasgov-primary-state-filter.png'
+if figure.exists():
+    display(Image(filename=str(figure)))
+else:
+    display({"status": "Missing reference figure", "path": 'docs/assets/obrasgov-primary-state-filter.png'})

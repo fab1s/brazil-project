@@ -7,7 +7,7 @@ from brazil_project.io import WorkflowError
 
 
 def show_chunk(ctx,source,index):
-    manifest=json.loads((ctx.root/'code/config/notebook_chunks.json').read_text())
+    manifest=json.loads((ctx.root/'code/config/report_chunks.json').read_text())
     entry=manifest[source][index-1]
     stage,artifact=entry['stage'],entry['artifact']
     from IPython.display import display,Image,HTML
@@ -18,7 +18,7 @@ def show_chunk(ctx,source,index):
             # COMPATIBILITY: GitHub strips JavaScript; keep interactive maps in
             # HTML reports rather than embedding unusable widgets in Markdown.
             from IPython.display import Markdown
-            display(Markdown('Interactive map: render this Quarto source to **HTML** to explore it.'))
+            display(Markdown('Local interactive map (outside Git): `' + str(path.relative_to(ctx.root)) + '`'))
         else:
             display(HTML(path.read_text()))
     folder=ctx.intermediate/stage

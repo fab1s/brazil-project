@@ -2,14 +2,14 @@
 
 Status: current
 Last updated: 2026-10-06
-Version: 0.4
+Version: 0.5
 Scope: Research Processing Methods
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.4 | Codex | Updated paths and navigation for the simplified project layout. |
+| 2026-10-06 | 0.5 | Codex | Recorded Markdown reporting without changing analytical methods. |
 | 2026-10-05 | 0.2 | Codex | Recorded the harmonisation corrections and approved research assumptions. |
 
 ## Census correspondence
@@ -67,3 +67,7 @@ The original exploratory Black population maps cover Belo Horizonte, Vespasiano,
 ## Obrasgov location-quality derivative
 
 The requested [location policy](obrasgov-location-policy.md) defines an independent diagnostic/map preprocessing stage. It retains all source project rows and investments, preserves coordinates and the prior translated snapshot, and writes component eligibility and review flags. Offshore status is screened with IBGE municipalities and generalized Natural Earth references. Eligibility is not verified coordinate accuracy; no automatic coordinate correction is performed.
+
+## Reporting
+
+Research reports are Markdown snapshots of saved results. Separate Python scripts preserve the former notebook code and execution order. This presentation change does not change acquisition, geometries, identifiers, exclusions, missingness or numerical methods.

@@ -1,6 +1,6 @@
 # IBAMA - Data Extraction
 
-Rendered preview · [Editable Quarto source](ibama_data_extraction.qmd) · Generated from saved local artifacts; full datasets stay outside Git.
+Research report · [Python report script](../../code/reports/ibama_data_extraction.py) · Saved local results; full datasets stay outside Git.
 
 
     {'records': 8494,
@@ -43,7 +43,7 @@ endpoint:
      'source': 'copied_snapshot',
      'generated_at': '2026-10-05T10:22:58.743667+00:00'}
 
-Interactive map: render this Quarto source to **HTML** to explore it.
+Interactive maps are local HTML artifacts under `outputs/maps/`; see [workflow commands](../../docs/workflow.md).
 
     {'records': 8494,
      'unknown_sectors': 0,

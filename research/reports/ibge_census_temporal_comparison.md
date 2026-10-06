@@ -1,6 +1,6 @@
 # IBGE Census - Temporal Comparison
 
-Rendered preview · [Editable Quarto source](ibge_census_temporal_comparison.qmd) · Generated from saved local artifacts; full datasets stay outside Git.
+Research report · [Python report script](../../code/reports/ibge_census_temporal_comparison.py) · Saved local results; full datasets stay outside Git.
 
 
 Spatial indicator outputs now contain one merged 2022 feature per

@@ -1,15 +1,16 @@
----
-title: "IBGE Census - Temporal Comparison"
-format:
-  html: default
-  gfm: default
-editor: visual
-jupyter: python3
----
-
-Spatial indicator outputs now contain one merged 2022 feature per `common_id`. Original tract pieces remain reference data. The [approved harmonisation policy](../../docs/harmonisation-policy.md) records the boundary-change assumption, complete-group scope, and explicit unmatched coverage.
-
-```{python}
+# %% [markdown]
+# ---
+# title: "IBGE Census - Temporal Comparison"
+# format:
+#   html: default
+#   gfm: default
+# editor: visual
+# jupyter: python3
+# ---
+#
+# Spatial indicator outputs now contain one merged 2022 feature per `common_id`. Original tract pieces remain reference data. The [approved harmonisation policy](../../docs/harmonisation-policy.md) records the boundary-change assumption, complete-group scope, and explicit unmatched coverage.
+#
+# %%
 #| label: ibge_census_temporal_comparison_1
 from pathlib import Path
 from brazil_project.io import Context
@@ -17,92 +18,109 @@ from brazil_project.reporting import show_chunk
 project = next(p for p in [Path.cwd(), *Path.cwd().parents] if (p / "project.toml").exists())
 ctx = Context(project / "project.toml")
 show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 1)
-```
 
-## Black population
-
-```{python}
+# %% [markdown]
+#
+# ## Black population
+#
+# %%
 #| label: ibge_census_temporal_comparison_2
 show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 2)
-```
 
-## Calculation conventions
-
-All eight indicators retain available annual common-area estimates with `full_join()`. Counts are summed with `na.rm = TRUE`; missing components of combined counts are also treated as zero before addition. This preserves the requested Black-only aggregation approach, but incomplete counts can bias proportions. Ratios with zero total population/households remain unavailable. An absent year is never filled with zero, so percentage-point change requires both annual ratios. These are common-area estimates displayed on 2022 geometry.
-
-```{python}
+# %% [markdown]
+#
+# ## Calculation conventions
+#
+# All eight indicators retain available annual common-area estimates with `full_join()`. Counts are summed with `na.rm = TRUE`; missing components of combined counts are also treated as zero before addition. This preserves the requested Black-only aggregation approach, but incomplete counts can bias proportions. Ratios with zero total population/households remain unavailable. An absent year is never filled with zero, so percentage-point change requires both annual ratios. These are common-area estimates displayed on 2022 geometry.
+#
+# %%
 #| label: ibge_census_temporal_comparison_3
 show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 3)
-```
 
-```{python}
+# %% [markdown]
+#
+# %%
 #| label: ibge_census_temporal_comparison_4
 show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 4)
-```
 
-```{python}
+# %% [markdown]
+#
+# %%
 #| label: ibge_census_temporal_comparison_5
 show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 5)
-```
 
-```{python}
+# %% [markdown]
+#
+# %%
 #| label: ibge_census_temporal_comparison_6
 show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 6)
-```
 
-```{python}
+# %% [markdown]
+#
+# %%
 #| label: ibge_census_temporal_comparison_7
 show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 7)
-```
 
-```{python}
+# %% [markdown]
+#
+# %%
 #| label: ibge_census_temporal_comparison_8
 show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 8)
-```
 
-```{python}
+# %% [markdown]
+#
+# %%
 #| label: ibge_census_temporal_comparison_9
 show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 9)
-```
 
-```{python}
+# %% [markdown]
+#
+# %%
 #| label: ibge_census_temporal_comparison_10
 show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 10)
-```
 
-```{python}
+# %% [markdown]
+#
+# %%
 #| label: ibge_census_temporal_comparison_11
 show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 11)
-```
 
-Income is harmonised by common_id. Multi-tract groups require validated counts of income-receiving household heads for the matching household universe; without those counts their means remain unavailable. Single-tract means are retained independently in each year.
-
-```{python}
+# %% [markdown]
+#
+# Income is harmonised by common_id. Multi-tract groups require validated counts of income-receiving household heads for the matching household universe; without those counts their means remain unavailable. Single-tract means are retained independently in each year.
+#
+# %%
 #| label: ibge_census_temporal_comparison_12
 show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 12)
-```
 
-```{python}
+# %% [markdown]
+#
+# %%
 #| label: ibge_census_temporal_comparison_13
 show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 13)
-```
 
-```{python}
+# %% [markdown]
+#
+# %%
 #| label: ibge_census_temporal_comparison_14
 show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 14)
-```
 
-```{python}
+# %% [markdown]
+#
+# %%
 #| label: ibge_census_temporal_comparison_15
 show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 15)
-```
 
-```{python}
+# %% [markdown]
+#
+# %%
 #| label: ibge_census_temporal_comparison_16
 show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 16)
-```
 
-```{python}
+# %% [markdown]
+#
+# %%
 #| label: ibge_census_temporal_comparison_17
 show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 17)
-```
+
+# %% [markdown]

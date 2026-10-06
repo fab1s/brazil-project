@@ -744,6 +744,16 @@
     "reviewed_pngs": 4,
     "browser_broken_images": 0,
     "evidence": "report-previews.json",
-    "scientific_parity_revalidated": false
+    "scientific_parity_revalidated": false,
+    "status": "historical Quarto render; superseded"
+  },
+  "markdown_reports": {
+    "reports": 9,
+    "python_scripts": 9,
+    "tests_passed": 64,
+    "fresh_executions_passed": 9,
+    "full_content_preserved": true,
+    "evidence": "markdown-consolidation.json",
+    "quarto_required": false
   }
 }

@@ -2,14 +2,14 @@
 
 Status: current
 Last updated: 2026-10-06
-Version: 0.8
+Version: 0.9
 Scope: Workflow Commands And Artifacts
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.8 | Codex | Simplified paths and documented visual editing and HTML/GitHub report regeneration. |
+| 2026-10-06 | 0.9 | Codex | Documented Markdown reports, independent Python execution and safe review copies. |
 | 2026-10-05 | 0.4 | Codex | Recorded the harmonisation corrections and approved research assumptions. |
 
 ## Setup
@@ -87,23 +87,19 @@ The first parity command compares stored original outputs and may intentionally 
 
 Infrastructure snapshot directories are configurable through ibama_snapshot and obrasgov_snapshot. Successful request caches are immutable; start a new configured snapshot for a new harvest. A failed acquisition does not make partial new results available to analysis.
 
-## Render research reports
+## Read and refresh research reports
 
-After generating the stage artifacts, render both local HTML and GitHub-readable previews with:
+Read or edit the single `.md` report for each topic under `research/reports/`. Processing remains in the Python package; saved-output display code is under `code/reports/`.
 
-```sh
+```bash
 .venv/bin/python code/scripts/render_reports.py
+.venv/bin/python code/scripts/render_reports.py --only obrasgov_preprocessing
+.venv/bin/python code/scripts/verify_reports.py
 ```
 
-This updates reviewed `.md` companions beside the `.qmd` sources and deduplicated PNG assets. Read-only HTML rendering remains available through an installed Quarto runtime or the tested local portable runtime:
+Refreshing runs each Python report in a separate process and writes Markdown review copies and figures under `outputs/reports/`. It never overwrites maintained reports. Review new values/figures, then copy approved results into the corresponding research Markdown; preserve narrative and use the small reviewed image workflow. Missing inputs remain explicit notices. Acquisition and analytical recomputation are separate stage commands.
 
-```sh
-QUARTO_PYTHON="$PWD/.venv/bin/python" .cache/quarto/bin/quarto render --to html
-# On another machine with Quarto installed:
-QUARTO_PYTHON="$PWD/.venv/bin/python" quarto render --to html
-```
-
-The Python report dependencies are included in `requirements.lock`. HTML outputs are under `outputs/reports/research/notebooks/`. Rendering reads saved artifacts, preserves explicit missing-input notices, and does not acquire data. The portable runtime is machine-local and excluded from Git.
+Quarto is no longer needed. Existing HTML outputs and original QMD contents are preserved as historical artifacts. Interactive maps remain local HTML under `outputs/maps/` or on the project website. See [process and audit](report-previews.md).
 
 ## Harmonisation products
 
@@ -141,5 +137,3 @@ Outputs under `data/intermediate/obrasgov-location-qa/` include source and compo
 ```
 
 The second command excludes exactly `entirely_outside` original components and combines this with existing location-QA eligibility. It requires matching completed diagnostic/QA manifests and verified inputs; rerun the state check after updating its inputs or implementation. Outputs are separate under `data/intermediate/obrasgov-primary-state-filter` and `outputs/maps/obrasgov-primary-state-filter`; `locations.gpkg` contains `map_components` and `excluded_primary_state`. Read the completed report and verify artifact hashes before consumption. Original research totals and the prior QA bundle remain preserved. See [process, figure and script audit](obrasgov-primary-state-filter.md).
-
-For visual editing, reopen the current `research/notebooks/*.qmd` file with the **Quarto Visual Editor**. The Quarto VS Code extension is recommended in `.vscode/extensions.json`; machine-local editor/runtime settings remain untracked. GitHub displays the rendered `.md` companions; it does not execute Quarto. See [setup and checks](report-previews.md).

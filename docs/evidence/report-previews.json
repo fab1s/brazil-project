@@ -1,5 +1,5 @@
 {
-  "status": "completed",
+  "status": "historical; superseded by Markdown consolidation",
   "quarto_version": "1.9.38",
   "script_sha256": "888aeed1222d3de3293f264488c8940a7e0ec72438496b40ead82273e45faa99",
   "reports": [
@@ -207,5 +207,6 @@
       "html_source": "outputs/reports/research/notebooks/obrasgov_preprocessing.html",
       "capture": "Playwright Chromium, 1280x1000, offline"
     }
-  }
+  },
+  "current_evidence": "docs/evidence/markdown-consolidation.json"
 }

@@ -2,14 +2,14 @@
 
 Status: current
 Last updated: 2026-10-06
-Version: 0.5
+Version: 0.6
 Scope: Agent Working Instructions
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.5 | Codex | Required concise records/audits and a simple content-driven project layout. |
+| 2026-10-06 | 0.6 | Codex | Required concise records, simple layout and Markdown reports with separate Python scripts. |
 | 2026-10-05 | 0.3 | Codex | Recorded the harmonisation corrections and approved research assumptions. |
 
 These rules apply to this independent research project. RISSI provided documentation patterns; its application architecture and deployment rules do not apply here.
@@ -48,6 +48,8 @@ After code, configuration, data flow, or structure changes, assess and update af
 Major Markdown documents use Status, Last updated, Version, and Scope, with a concise edit-history table near the top. The root README is a brief project description and is exempt from metadata and edit history; setup instructions belong in `docs/workflow.md`. Use one history row per date and sequential versions; update the same-day row rather than adding repeated entries. Original copied reference files are preserved verbatim.
 
 Keep six visible working folders: `code/`, `data/`, `docs/`, `outputs/`, `research/`, and `website/`. Use the root `project.toml`. Create files and directories only when needed for real contents; no empty placeholders. Major working folders have one useful README; do not add repetitive READMEs to every subfolder. Keep documentation mostly flat and navigate through `docs/index.md`. Preserve original data/documents; when consolidating files, retain their complete contents and record the new location. Former folder READMEs are preserved in `docs/folder-notes.md`.
+
+Research reports are maintained Markdown under `research/reports/`; executable report code lives under `code/reports/`. Keep one readable report per topic. Refresh scripts write review copies under `outputs/reports/` and never overwrite maintained narratives. Preserve prior QMD contents in the archive and Git history. Saved report snapshots are exempt from authored-document metadata.
 
 ## Process Records And Script Audits
 

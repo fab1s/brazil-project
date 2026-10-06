@@ -1,6 +1,6 @@
 # Property value
 
-Rendered preview · [Editable Quarto source](property_value.qmd) · Generated from saved local artifacts; full datasets stay outside Git.
+Research report · [Python report script](../../code/reports/property_value.py) · Saved local results; full datasets stay outside Git.
 
 
     {'workbook_sheets': ['Annex I',

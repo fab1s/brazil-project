@@ -2,14 +2,14 @@
 
 Status: current
 Last updated: 2026-10-06
-Version: 0.3
+Version: 0.4
 Scope: Brazil Project Migration Plan
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.3 | Codex | Updated paths and navigation for the simplified project layout. |
+| 2026-10-06 | 0.4 | Codex | Consolidated readable reports into Markdown with separate Python scripts. |
 | 2026-10-05 | 0.2 | Codex | Separated the original migration from the later approved harmonisation policy. |
 
 ## Implemented project organization
@@ -24,7 +24,7 @@ The Python runner exposes explicit acquisition, overview, harmonisation, indicat
 
 Census and boundary acquisition remain isolated R adapters. The exploratory geographic overview retains sf/S2 to preserve spherical intersection behavior. Python performs projected correspondence, annual indicators, income, population density, infrastructure processing, and conference chart calculations.
 
-The original workflow ordering and narrative are retained through Python-backed Quarto views. Each original executable chunk is mapped to its implementation and artifact contract. Original R code remains available for independent reference validation.
+The original workflow ordering and narrative are retained through Markdown reports and separate Python report scripts. Each original executable chunk is mapped to its implementation and artifact contract. Original R code remains available for independent reference validation.
 
 ## Validation strategy
 

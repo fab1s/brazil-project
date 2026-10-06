@@ -1,6 +1,6 @@
 # Obrasgov Preprocessing
 
-Rendered preview · [Editable Quarto source](obrasgov_preprocessing.qmd) · Generated from saved local artifacts; full datasets stay outside Git.
+Research report · [Python report script](../../code/reports/obrasgov_preprocessing.py) · Saved local results; full datasets stay outside Git.
 
 
 This report follows the original import, translation and cleaning flow

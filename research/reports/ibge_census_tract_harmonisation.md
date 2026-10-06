@@ -1,6 +1,6 @@
 # IBGE Census - Census tract harmonisation
 
-Rendered preview · [Editable Quarto source](ibge_census_tract_harmonisation.qmd) · Generated from saved local artifacts; full datasets stay outside Git.
+Research report · [Python report script](../../code/reports/ibge_census_tract_harmonisation.py) · Saved local results; full datasets stay outside Git.
 
 
 This code links 2010 and 2022 census tracts based on their largest
@@ -144,6 +144,8 @@ selection, unmatched coverage, and the boundary-change assumption.
 
     {'artifact_rows': 287178,
      'path': 'data/intermediate/harmonisation/bundles/4d8e6abf520341809668db82f8c56e71/common_geometry_2022.parquet'}
+
+**Historical note about the reference tract base:** active analytical geometry is now merged by `common_id`; the following original note describes the preserved tract pieces.
 
 Be aware that the base geometry layer has not been unioned by common ID.
 2010 tracts that were split share a common ID but still follow the 2022

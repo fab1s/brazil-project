@@ -1,0 +1,46 @@
+# %% [markdown]
+# ---
+# title: "IBGE Census - Census tract harmonisation"
+# format:
+#   html: default
+#   gfm: default
+# editor: visual
+# jupyter: python3
+# ---
+#
+# This code links 2010 and 2022 census tracts based on their largest spatial overlap in both directions, creating a correspondence table (crosswalk). It identifies whether areas stayed the same, were split, merged, or changed in a more complex way. The original tract pieces remain unchanged as reference geometry. The active analytical layer merges complete 2022 groups by `common_id`, and matching now excludes line/point-only contacts. See the [approved policy](../../docs/harmonisation-policy.md) for complete-group selection, unmatched coverage, and the boundary-change assumption.
+#
+# %%
+#| label: ibge_census_tract_harmonisation_1
+from pathlib import Path
+from brazil_project.io import Context
+from brazil_project.reporting import show_chunk
+project = next(p for p in [Path.cwd(), *Path.cwd().parents] if (p / "project.toml").exists())
+ctx = Context(project / "project.toml")
+show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Census tract harmonisation.qmd', 1)
+
+# %% [markdown]
+#
+# %%
+#| label: ibge_census_tract_harmonisation_2
+show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Census tract harmonisation.qmd', 2)
+
+# %% [markdown]
+#
+# ![Original census tract harmonization flow chart](../../data/archive/original_outputs/Scripts_Data/IBGE/images/Harmonizing%202010%20and%202022%20Census%20Tracts.png){fig-align="center" width="461"}
+#
+# %%
+#| label: ibge_census_tract_harmonisation_3
+show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Census tract harmonisation.qmd', 3)
+
+# %% [markdown]
+#
+# Be aware that the base geometry layer has not been unioned by common ID. 2010 tracts that were split share a common ID but still follow the 2022 tract boundaries.
+
+# COMPATIBILITY: Preserve the static narrative figure as an explicit Python output.
+from IPython.display import Image, display
+figure = project / 'data/archive/original_outputs/Scripts_Data/IBGE/images/Harmonizing 2010 and 2022 Census Tracts.png'
+if figure.exists():
+    display(Image(filename=str(figure)))
+else:
+    display({"status": "Missing reference figure", "path": 'data/archive/original_outputs/Scripts_Data/IBGE/images/Harmonizing 2010 and 2022 Census Tracts.png'})

@@ -2,35 +2,31 @@
 
 Status: current
 Last updated: 2026-10-06
-Version: 0.3
+Version: 0.4
 Scope: Research Materials
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | --- | --- | --- | --- |
-| 2026-10-06 | 0.3 | Codex | Simplified navigation and added rendered research-report previews. |
+| 2026-10-06 | 0.4 | Codex | Kept one Markdown report per topic with separate executable Python scripts. |
 | 2026-10-05 | 0.1 | Codex | Established the independent research project. |
 
-- `notebooks/`: the nine active Quarto research reports; narratives display explicit saved processing artifacts.
+- `reports/`: nine readable Markdown reports, with saved tables, figures and narratives.
 - `cs2nordic/`: preserved conference abstract, poster and presentation.
 
-Create manuscript or other conference folders when there are actual documents to put in them. Original notebooks remain under `data/archive/original_code/`. Rendering writes to `outputs/reports/`; it does not acquire new datasets. See [report commands](../docs/workflow.md). Preserve document contents and distinguish exploratory results from validated findings.
+Executable report code lives under `code/reports/`; analytical processing lives in the Python package. Original research code and the former QMD files are preserved under `data/archive/` and in Git history. Create other research folders only when real documents need them.
 
 ## Read the reports
 
-Open the **preview** on GitHub; open the **Quarto source** for visual editing/execution. Local HTML reports are generated under `outputs/reports/research/notebooks/`.
+- [Obrasgov preprocessing and spatial exclusions](reports/obrasgov_preprocessing.md)
+- [Census harmonisation](reports/ibge_census_tract_harmonisation.md)
+- [Temporal indicators](reports/ibge_census_temporal_comparison.md)
+- [Dataset overview](reports/ibge_dataset_overview.md)
+- [Conference charts](reports/brazil_poroject_charts.md)
+- [IBAMA](reports/ibama_data_extraction.md)
+- [Obrasgov data extraction](reports/obrasgov_data_extraction.md)
+- [Census data extraction](reports/ibge_census_data_extraction.md)
+- [Land value](reports/property_value.md)
 
-| Report | Preview | Quarto source |
-| --- | --- | --- |
-| Obrasgov preprocessing and spatial exclusions | [Read](notebooks/obrasgov_preprocessing.md) | [Edit](notebooks/obrasgov_preprocessing.qmd) |
-| Census harmonisation | [Read](notebooks/ibge_census_tract_harmonisation.md) | [Edit](notebooks/ibge_census_tract_harmonisation.qmd) |
-| Temporal indicators | [Read](notebooks/ibge_census_temporal_comparison.md) | [Edit](notebooks/ibge_census_temporal_comparison.qmd) |
-| Dataset overview | [Read](notebooks/ibge_dataset_overview.md) | [Edit](notebooks/ibge_dataset_overview.qmd) |
-| Conference charts | [Read](notebooks/brazil_poroject_charts.md) | [Edit](notebooks/brazil_poroject_charts.qmd) |
-| IBAMA | [Read](notebooks/ibama_data_extraction.md) | [Edit](notebooks/ibama_data_extraction.qmd) |
-| Obrasgov data extraction | [Read](notebooks/obrasgov_data_extraction.md) | [Edit](notebooks/obrasgov_data_extraction.qmd) |
-| Census data extraction | [Read](notebooks/ibge_census_data_extraction.md) | [Edit](notebooks/ibge_census_data_extraction.qmd) |
-| Land value | [Read](notebooks/property_value.md) | [Edit](notebooks/property_value.qmd) |
-
-Regenerate both views with `.venv/bin/python code/scripts/render_reports.py`. See [preview setup and verification](../docs/report-previews.md).
+Edit the Markdown report directly. Generate new output review copies with `.venv/bin/python code/scripts/render_reports.py`; review and copy results into reports when needed. Refreshing never overwrites your edits. See [commands and checks](../docs/report-previews.md).

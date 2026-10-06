@@ -1,15 +1,16 @@
----
-title: "Obrasgov.br Data"
-format:
-  html: default
-  gfm: default
-editor: visual
-jupyter: python3
----
-
-## Data Extraction
-
-```{python}
+# %% [markdown]
+# ---
+# title: "Obrasgov.br Data"
+# format:
+#   html: default
+#   gfm: default
+# editor: visual
+# jupyter: python3
+# ---
+#
+# ## Data Extraction
+#
+# %%
 #| label: obrasgov_data_extraction_1
 from pathlib import Path
 from brazil_project.io import Context
@@ -17,48 +18,55 @@ from brazil_project.reporting import show_chunk
 project = next(p for p in [Path.cwd(), *Path.cwd().parents] if (p / "project.toml").exists())
 ctx = Context(project / "project.toml")
 show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Data Extraction.qmd', 1)
-```
 
-First we retrieve all projects.
-
-```{python}
+# %% [markdown]
+#
+# First we retrieve all projects.
+#
+# %%
 #| label: obrasgov_data_extraction_2
 show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Data Extraction.qmd', 2)
-```
 
-Then we transform the nested tables into columns.
-
-```{python}
+# %% [markdown]
+#
+# Then we transform the nested tables into columns.
+#
+# %%
 #| label: obrasgov_data_extraction_3
 show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Data Extraction.qmd', 3)
-```
 
-The Obrasgov API only allows for the extraction of point geometries. In order to enrich the dataset with multidimensional geometries we have to resort to another endpoint. Using Obrasgovr we first extract the geo-data metadata to identify which geometries are potentially multidimensional.
-
-```{python}
+# %% [markdown]
+#
+# The Obrasgov API only allows for the extraction of point geometries. In order to enrich the dataset with multidimensional geometries we have to resort to another endpoint. Using Obrasgovr we first extract the geo-data metadata to identify which geometries are potentially multidimensional.
+#
+# %%
 #| label: obrasgov_data_extraction_4
 show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Data Extraction.qmd', 4)
-```
 
-With the filtered IDs, we extract the full geometries.
-
-```{python}
+# %% [markdown]
+#
+# With the filtered IDs, we extract the full geometries.
+#
+# %%
 #| label: obrasgov_data_extraction_5
 show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Data Extraction.qmd', 5)
-```
 
-```{python}
+# %% [markdown]
+#
+# %%
 #| label: obrasgov_data_extraction_6
 show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Data Extraction.qmd', 6)
-```
 
-::: callout-note
-- Metadata can be extracted for the individual geometries. For now, geometries were merged by project ID.
-:::
-
-We then join both tables and end up with the final data set for further manipulation.
-
-```{python}
+# %% [markdown]
+#
+# ::: callout-note
+# - Metadata can be extracted for the individual geometries. For now, geometries were merged by project ID.
+# :::
+#
+# We then join both tables and end up with the final data set for further manipulation.
+#
+# %%
 #| label: obrasgov_data_extraction_7
 show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Data Extraction.qmd', 7)
-```
+
+# %% [markdown]

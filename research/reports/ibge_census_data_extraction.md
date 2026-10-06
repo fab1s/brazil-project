@@ -1,6 +1,6 @@
 # IBGE Census - Data Extraction
 
-Rendered preview · [Editable Quarto source](ibge_census_data_extraction.qmd) · Generated from saved local artifacts; full datasets stay outside Git.
+Research report · [Python report script](../../code/reports/ibge_census_data_extraction.py) · Saved local results; full datasets stay outside Git.
 
 
     {'scope': ['Belo Horizonte',
@@ -167,4 +167,4 @@ Rendered preview · [Editable Quarto source](ibge_census_data_extraction.qmd) ·
      'metro_overlay': 'missing original Linha Verde shapefile; not substituted',
      'generated_at': '2026-10-05T10:21:42.763834+00:00'}
 
-Interactive map: render this Quarto source to **HTML** to explore it.
+Interactive maps are local HTML artifacts under `outputs/maps/`; see [workflow commands](../../docs/workflow.md).

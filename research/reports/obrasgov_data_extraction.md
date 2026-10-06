@@ -1,6 +1,6 @@
 # Obrasgov.br Data
 
-Rendered preview · [Editable Quarto source](obrasgov_data_extraction.qmd) · Generated from saved local artifacts; full datasets stay outside Git.
+Research report · [Python report script](../../code/reports/obrasgov_data_extraction.py) · Saved local results; full datasets stay outside Git.
 
 
 ## Data Extraction

@@ -1,6 +1,6 @@
 # IBGE Dataset Overview
 
-Rendered preview · [Editable Quarto source](ibge_dataset_overview.qmd) · Generated from saved local artifacts; full datasets stay outside Git.
+Research report · [Python report script](../../code/reports/ibge_dataset_overview.py) · Saved local results; full datasets stay outside Git.
 
 
 This code compares census tract boundaries from 2000, 2010, and 2022 in

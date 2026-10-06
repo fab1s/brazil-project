@@ -35,5 +35,5 @@ research/**/*.pdf
 
 .herenow/
 
-# Machine-local Quarto executable/interpreter settings.
+# Machine-local editor/interpreter settings.
 /.vscode/settings.json

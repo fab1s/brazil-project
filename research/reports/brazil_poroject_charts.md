@@ -1,6 +1,6 @@
 # Brazil Poroject - Charts
 
-Rendered preview · [Editable Quarto source](brazil_poroject_charts.qmd) · Generated from saved local artifacts; full datasets stay outside Git.
+Research report · [Python report script](../../code/reports/brazil_poroject_charts.py) · Saved local results; full datasets stay outside Git.
 
 
 

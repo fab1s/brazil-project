@@ -2,14 +2,14 @@
 
 Status: implemented and preservation verified
 Last updated: 2026-10-06
-Version: 0.1
+Version: 0.2
 Scope: Human navigation, content preservation and executable path updates
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | --- | --- | --- | --- |
-| 2026-10-06 | 0.1 | Codex | Consolidated working folders and preserved original document contents. |
+| 2026-10-06 | 0.2 | Codex | Consolidated research reports into Markdown and preserved former QMD content. |
 
 ## Where things are
 
@@ -22,7 +22,7 @@ brazil-project/
     assets/             reviewed figures
     evidence/           checks and migration manifests
   outputs/              generated figures, maps, tables, reports and software builds
-  research/             active notebooks and CS2Nordic conference documents
+  research/             Markdown reports and CS2Nordic conference documents
   website/              interactive map source
 ```
 
@@ -31,7 +31,7 @@ The visible working folders fall from **13 to six**. The root README gives a bri
 ## Process and preservation
 
 - Inventoried 1,147 files before changing paths; recorded sizes and SHA-256 checksums.
-- Moved code/configuration/tests under `code/`; moved active reports to `research/notebooks/` and conference material to `research/cs2nordic/`. Original code, results, sessions and notes now live under `data/archive/`.
+- Moved code/configuration/tests under `code/`; moved active reports to `research/reports/` and conference material to `research/cs2nordic/`. Original code, results, sessions and notes now live under `data/archive/`.
 - Flattened authored documentation; machine-readable evidence is grouped under `docs/evidence/`. Consolidated **33 former folder READMEs verbatim** in [preserved folder notes](folder-notes.md).
 - Removed **four zero-byte session files** and unused directories. No nonempty source dataset, research document or source note was deleted. Pre-edit authored files and changed generated contracts/container bytes are preserved in `data/archive/layout-before-2026-10-06.zip` for recovery. Generated Python bytecode and package metadata are rebuildable runtime artifacts.
 - Updated Markdown/Quarto links, script discovery, package installation, R library paths, migration destinations and configuration defaults. Root `project.toml` replaces `config/project.toml`; CLI and package names are unchanged.
@@ -43,7 +43,7 @@ The [move ledger](evidence/layout-moves.csv) records every inventoried file, its
 
 ```bash
 .venv/bin/python -m pytest -q
-.venv/bin/python code/scripts/verify_notebooks.py
+.venv/bin/python code/scripts/verify_reports.py
 Rscript code/scripts/r/test_overview.R
 .venv/bin/python code/scripts/migrate_files.py --verify-only
 .venv/bin/python code/scripts/check_docs.py
@@ -57,3 +57,5 @@ Rscript code/scripts/r/test_overview.R
 - **Recovery and limits:** the move ledger verifies this dated layout snapshot; subsequent legitimate code/document edits can change its current hashes. Pre-edit recovery copies are local, outside Git. Dependency caches/bytecode are generated runtime artifacts, not immutable research inputs. The original archived source hierarchy is retained for provenance.
 
 Existing analytical methods and numerical data are unchanged; restructuring does not publish a new website. Runtime caches stay hidden under `.cache/` and `.venv/`. New files/folders are created only when they have real contents.
+
+Reports now live under `research/reports/` as Markdown only; their former executable cells live under `code/reports/`. [Preservation and workflow](report-previews.md) records the original QMD archive and code mapping.
