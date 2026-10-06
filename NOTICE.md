@@ -5,13 +5,6 @@ Last updated: 2026-10-06
 Version: 0.4
 Scope: Sources And Attribution
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.4 | Codex | Updated paths and navigation for the simplified project layout. |
-| 2026-10-05 | 0.2 | Codex | Recorded original research sources and the existing map browser dependencies. |
-
 The original research material was copied from the user's Brazil Project folder in OneDrive. It includes IBGE census data and boundaries, IBAMA environmental licensing geometries, Obrasgov infrastructure records, Belo Horizonte property references, and CS2Nordic research material. Original license and attribution documents are retained where present. This notice does not grant redistribution rights.
 
 Documentation and agent-rule patterns were adapted from the user's RISSI repository, specifically its root AGENTS.md. Brazil remains an independent research project; no RISSI application code, operational defaults, or deployment infrastructure was copied.

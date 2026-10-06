@@ -5,12 +5,6 @@ Last updated: 2026-10-06
 Version: 0.3
 Scope: Concise record of inputs, implementation, generated outputs and verification
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.3 | Codex | Updated paths and navigation for the simplified project layout. |
-
 | Step | Action and recorded result |
 | --- | --- |
 | Inputs | Preserved 134,929 frozen Obrasgov source rows. Explicitly downloaded checksum-recorded IBGE 2022 municipalities and pinned Natural Earth references. |

@@ -5,13 +5,6 @@ Last updated: 2026-10-06
 Version: 0.8
 Scope: Remaining Research Tasks
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.8 | Codex | Updated report-review tasks for the Markdown workflow. |
-| 2026-10-05 | 0.4 | Codex | Added Obrasgov coordinate-quality review. |
-
 - Review the [harmonisation update](harmonisation-update.md) and its footprint/coverage diagnostics under the approved boundary-change assumption. The requested implementation corrections are complete.
 - Supply the exact `20220601_regional_barreiro_cadastro_imobiliario.csv` referenced by the property report, or approve a separate dated-input methodological change.
 - Inspect the seven small overlapping-piece cases identified by the audit. Original pieces are preserved and unique part IDs are implemented.

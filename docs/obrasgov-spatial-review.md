@@ -5,13 +5,6 @@ Last updated: 2026-10-06
 Version: 0.3
 Scope: Obrasgov geometry display and exploratory coordinate-quality screening
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.3 | Codex | Updated paths and navigation for the simplified project layout. |
-| 2026-10-05 | 0.1 | Codex | Removed Obrasgov polygons from display and screened suspicious locations. |
-
 ## Implemented display decision
 
 All Obrasgov polygon components are excluded from rendering and feature picking. Point and line components remain, including those in mixed records. This policy is applied when layers are created and survives visibility toggles and background replacement. IBAMA polygons, census areas and community polygons are unaffected. The frozen archives and research source remain intact. Interface counts and investment summaries explicitly describe source records, including projects whose polygon locations are not displayed. This is a display decision, not a methodological exclusion from research totals.

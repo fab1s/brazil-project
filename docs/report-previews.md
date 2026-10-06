@@ -5,12 +5,6 @@ Last updated: 2026-10-06
 Version: 0.2
 Scope: Single readable reports, separate executable code and safe result refreshes
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| --- | --- | --- | --- |
-| 2026-10-06 | 0.2 | Codex | Restored previews, then consolidated the requested Markdown-only report workflow. |
-
 [Read the nine reports](../research/README.md#read-the-reports) under `research/reports/`. Each topic has one maintained Markdown document containing its narrative, saved tables and reviewed figures. Open it directly on GitHub or use your editor's Markdown preview. There is no active QMD counterpart and no Quarto requirement.
 
 The 63 executable cells from the nine former QMD sources are preserved verbatim and in order under `code/reports/`. Original prose and YAML are also retained as script comments and in the exact source archive. Static narrative figures are explicit Python display outputs. Processing, acquisition and research methods are unchanged; the chunk mapping identifies both each Markdown report and its Python script.

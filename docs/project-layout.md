@@ -5,12 +5,6 @@ Last updated: 2026-10-06
 Version: 0.2
 Scope: Human navigation, content preservation and executable path updates
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| --- | --- | --- | --- |
-| 2026-10-06 | 0.2 | Codex | Consolidated research reports into Markdown and preserved former QMD content. |
-
 ## Where things are
 
 ```text
@@ -32,7 +26,7 @@ The visible working folders fall from **13 to six**. The root README gives a bri
 
 - Inventoried 1,147 files before changing paths; recorded sizes and SHA-256 checksums.
 - Moved code/configuration/tests under `code/`; moved active reports to `research/reports/` and conference material to `research/cs2nordic/`. Original code, results, sessions and notes now live under `data/archive/`.
-- Flattened authored documentation; machine-readable evidence is grouped under `docs/evidence/`. Consolidated **33 former folder READMEs verbatim** in [preserved folder notes](folder-notes.md).
+- Flattened authored documentation; machine-readable evidence is grouped under `docs/evidence/`. Consolidated **33 former folder READMEs** in [preserved folder notes](folder-notes.md); the current reading copies omit edit-history tables, while exact originals remain in the recovery archive and Git history.
 - Removed **four zero-byte session files** and unused directories. No nonempty source dataset, research document or source note was deleted. Pre-edit authored files and changed generated contracts/container bytes are preserved in `data/archive/layout-before-2026-10-06.zip` for recovery. Generated Python bytecode and package metadata are rebuildable runtime artifacts.
 - Updated Markdown/Quarto links, script discovery, package installation, R library paths, migration destinations and configuration defaults. Root `project.toml` replaces `config/project.toml`; CLI and package names are unchanged.
 - Retired the original placeholder-document generator to `data/archive/project-tools/`; active code no longer creates directories merely while looking up inputs. Writers create only the directories their real outputs need.

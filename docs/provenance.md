@@ -5,13 +5,6 @@ Last updated: 2026-10-06
 Version: 0.3
 Scope: Data Provenance And Migration
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.3 | Codex | Updated paths and navigation for the simplified project layout. |
-| 2026-10-05 | 0.1 | Codex | Established the independent research project. |
-
 ## Original project
 
 Source folder: `/Users/fa4850sc/Library/CloudStorage/OneDrive-LundUniversity/Brazil Project`.

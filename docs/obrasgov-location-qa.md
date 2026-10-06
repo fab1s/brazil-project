@@ -5,12 +5,6 @@ Last updated: 2026-10-06
 Version: 0.2
 Scope: National location diagnostics and separate map eligibility derivative
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.2 | Codex | Updated paths and navigation for the simplified project layout. |
-
 The stage follows [the location policy](obrasgov-location-policy.md). It reads the original frozen map GeoPackage, not the translated cleaned snapshot, and preserves all source rows and investment values. It recursively decomposes collections, checks finite/range/validity constraints, intersects IBGE municipalities and states, screens land/coastal position, checks every line vertex plus interpolated samples, flags marine descriptions, and exports separate eligible and quarantined locations.
 
 References were explicitly acquired from [IBGE municipal mesh 2022](https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais/municipio_2022/Brasil/BR/) and pinned Natural Earth release 5.1.1 archives for [land](https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-land/) and [coastline](https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-coastline/). [Reference provenance](evidence/location-qa-references.json) records exact URLs, checksums and archive metadata. The coastline archive within release 5.1.1 contains an internal version label `5.0.0-pre9`; the archive checksum is the identity used for processing. Zip archives preserve accompanying metadata. Checksums are verified before routine offline runs. Natural Earth coastlines are generalized and omit some small islands; IBGE-covered islands take precedence.

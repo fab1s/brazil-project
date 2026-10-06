@@ -5,12 +5,6 @@ Last updated: 2026-10-05
 Version: 0.2
 Scope: Browser source for the existing here.now research map
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
-| 2026-10-05 | 0.2 | Codex | Recorded the Obrasgov points-and-lines display policy. |
-
 This folder contains the browser source for [the project map](https://sandy-ivory-k65c.here.now/). It was imported from the user's existing site, version `01M31KE04H54YANWH772AWSSJW`; the earlier local source lived under the September 14 Codex task's `work/brazil-map/site`. This is independent of RISSI.
 
 `app.js` manages the map, project layers, search, camera, and loading. `social-indicators.js` manages the 13 census indicators, formulas, selectors, and common-area popups. `data-summaries.js` renders nationwide estimates and unmatched coverage. `id-search.js` reads generated tract/common-area bounds. `startup.js` reports module failures. CSS and `mobile.js` preserve the existing desktop/mobile controls. `vendor/` retains the existing MapLibre 5.16.0, PMTiles 4.3.0, and Lucide 0.468.0 browser dependencies, with their upstream license texts alongside the files.

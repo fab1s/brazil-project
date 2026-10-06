@@ -14,9 +14,9 @@ for path in set(paths):
     if path != ROOT/'README.md' and path.suffix=='.md' and not generated_preview:
         for key in ['Status:','Last updated:','Version:','Scope:']:
             if key not in text:errors.append(f'{path}: {key} missing')
-    if path!=ROOT/'README.md' and path.suffix=='.md' and not generated_preview and '## Edit History' not in text:errors.append(f'{path}: edit history missing')
+    if re.search(r'^#{1,6}\s+Edit History\s*$', text, re.M | re.I):errors.append(f'{path}: remove edit-history section; use Git history')
     if len(re.findall(r'^```',text,re.M))%2:errors.append(f'{path}: unmatched code fence')
-    # WHY: Verbatim legacy folder notes quote previous paths, not current links.
+    # WHY: Legacy folder notes quote previous paths, not current links.
     if path.name=='folder-notes.md':
         text=text.split('<details>',1)[0]
     for target in re.findall(r'\]\(([^)]+)\)',text):

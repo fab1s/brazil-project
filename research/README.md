@@ -5,13 +5,6 @@ Last updated: 2026-10-06
 Version: 0.4
 Scope: Research Materials
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| --- | --- | --- | --- |
-| 2026-10-06 | 0.4 | Codex | Kept one Markdown report per topic with separate executable Python scripts. |
-| 2026-10-05 | 0.1 | Codex | Established the independent research project. |
-
 - `reports/`: nine readable Markdown reports, with saved tables, figures and narratives.
 - `cs2nordic/`: preserved conference abstract, poster and presentation.
 

@@ -5,13 +5,6 @@ Last updated: 2026-10-06
 Version: 0.11
 Scope: Project Documentation
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| --- | --- | --- | --- |
-| 2026-10-06 | 0.11 | Codex | Indexed single Markdown reports and the Python refresh workflow. |
-| 2026-10-05 | 0.5 | Codex | Indexed the Obrasgov spatial review. |
-
 Start with [progress](progress.md), [tasks](tasks.md), [methods](methods.md) and [commands](workflow.md).
 
 [Read the research reports](../research/README.md#read-the-reports) · [Markdown reports and execution](report-previews.md)
@@ -27,4 +20,4 @@ Start with [progress](progress.md), [tasks](tasks.md), [methods](methods.md) and
 - **Website:** [map checks](web-map-update.md).
 - **Project:** [verification results](checks.md), [layout changes and preservation](project-layout.md).
 
-`evidence/` holds machine-readable checks, migration manifests and chunk mappings. `assets/` holds reviewed figures embedded in these documents. [Former folder notes](folder-notes.md) preserve consolidated documentation verbatim; original source notes are under `data/archive/original_notes/`. Current documents remain directly in this folder, organized through this index rather than extra directory layers.
+`evidence/` holds machine-readable checks, migration manifests and chunk mappings. `assets/` holds reviewed figures embedded in these documents. [Former folder notes](folder-notes.md) collect former documentation without edit-history tables; original source notes are under `data/archive/original_notes/`. Current documents remain directly in this folder, organized through this index rather than extra directory layers.

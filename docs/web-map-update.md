@@ -5,13 +5,6 @@ Last updated: 2026-10-06
 Version: 0.2
 Scope: Existing here.now map updated from the approved national harmonisation bundle
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.2 | Codex | Updated paths and navigation for the simplified project layout. |
-| 2026-10-05 | 0.1 | Codex | Recorded merged-area exports, numeric parity, browser checks, and publication evidence. |
-
 The updated map uses 287,178 complete merged common areas rather than repeated values on individual tract pieces. Original reference geometry remains available in the research bundle; the active census tiles, popup identifiers, and summaries use common IDs. The existing Rio opening view, basemaps, desktop/mobile controls, project and community layers, timeline, and all 13 indicators are retained.
 
 ## Checks

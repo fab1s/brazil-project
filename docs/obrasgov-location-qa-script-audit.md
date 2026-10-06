@@ -5,12 +5,6 @@ Last updated: 2026-10-06
 Version: 0.2
 Scope: Producer, reference acquisition, verification and figure generation
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.2 | Codex | Updated paths and navigation for the simplified project layout. |
-
 Reviewed `code/brazil_project/infrastructure/location_qa.py`, `code/scripts/acquire_location_references.py`, `code/scripts/verify_location_qa.py`, `code/scripts/plot_location_qa.py` and CLI/configuration wiring after successful national preprocessing. Checks covered provenance, source preservation, geometry decomposition, eligibility boundaries, repeated IDs, investments, failure handling, exchange formats and repeat execution.
 
 | Finding | Resolution / evidence |

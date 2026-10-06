@@ -5,12 +5,6 @@ Last updated: 2026-10-06
 Version: 0.2
 Scope: Researcher-approved exclusion of entirely outside primary-state geometry components
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.2 | Codex | Updated paths and navigation for the simplified project layout. |
-
 ## Process and code output
 
 The researcher approved removing the **2,346 components entirely outside their reported primary state**, including 1,678 intersecting another state and 668 intersecting no mapped state territory. This display decision is recorded separately in the [location policy](obrasgov-location-policy.md); it does not establish that all excluded source coordinates are wrong.

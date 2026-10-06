@@ -5,13 +5,6 @@ Last updated: 2026-10-06
 Version: 0.4
 Scope: Brazil Project Migration Plan
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.4 | Codex | Consolidated readable reports into Markdown with separate Python scripts. |
-| 2026-10-05 | 0.2 | Codex | Separated the original migration from the later approved harmonisation policy. |
-
 ## Implemented project organization
 
 The complete original folder is copied locally, classified, and checksum verified. Research documents are separated from executable code; original scripts, Quarto notebooks, backups, outputs, and session files remain recoverable. Duplicate contents are recorded and conflicting files are never overwritten silently.

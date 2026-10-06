@@ -5,13 +5,6 @@ Last updated: 2026-10-06
 Version: 0.2
 Scope: Changes from the faithful original translation to the active harmonisation policy
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.2 | Codex | Updated paths and navigation for the simplified project layout. |
-| 2026-10-05 | 0.1 | Codex | Recorded the researcher-approved harmonisation changes separately from translation. |
-
 On 2026-10-05 the researcher approved the changes discussed in the [audit](harmonisation-audit.md). The original code, lookups, geometry, and results remain unchanged in their preserved locations. The active policy is `positive-area-common-geometry-v1`.
 
 ## Matching and subsets

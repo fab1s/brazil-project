@@ -5,13 +5,6 @@ Last updated: 2026-10-06
 Version: 0.13
 Scope: Current Project Progress
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.13 | Codex | Consolidated Markdown reports and added a reader-focused folder guide to the root README. |
-| 2026-10-05 | 0.6 | Codex | Recorded Obrasgov map display changes and location review. |
-
 The complete original file collection is copied, organized, and checksum verified. The Python package and CLI are installed locally. Python dependencies and retained R dependencies are locked.
 
 Python annual indicators and conference chart populations are implemented, and national outputs have been generated. Infrastructure snapshot processing is implemented; Obrasgov retains 133,417 records after cleaning, matching the original snapshot. IBAMA includes 8,494 records with translated sectors. Land-value annex imports and the available zone geometry are implemented; the exact cadastral input remains missing.

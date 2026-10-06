@@ -5,13 +5,6 @@ Last updated: 2026-10-06
 Version: 0.2
 Scope: Researcher-approved harmonisation corrections following the audit
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.2 | Codex | Updated paths and navigation for the simplified project layout. |
-| 2026-10-05 | 0.1 | Codex | Recorded implementation, regression checks, and regenerated research outputs. |
-
 ## Changes delivered
 
 - Atomic complete bundles replace loose geometry/lookup selection. Consumers verify source fingerprints, correspondence mode, scope, artifact checksums, and group counts. Density cannot choose an earlier comparison geometry by file existence.

@@ -5,13 +5,6 @@ Last updated: 2026-10-06
 Version: 0.3
 Scope: Census correspondence, common-area geometry, aggregation, and reuse of stage artifacts
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.3 | Codex | Updated paths and navigation for the simplified project layout. |
-| 2026-10-05 | 0.2 | Codex | Preserved the audit findings and linked their implemented remediation. |
-
 The [implemented remediation](harmonisation-update.md) addresses the requested code and output changes. The findings below describe the pre-update implementation; footprint disagreement remains a diagnostic under the researcher-approved assumption.
 
 ## Assessment

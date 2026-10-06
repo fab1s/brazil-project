@@ -5,13 +5,6 @@ Last updated: 2026-10-06
 Version: 0.5
 Scope: Research Processing Methods
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.5 | Codex | Recorded Markdown reporting without changing analytical methods. |
-| 2026-10-05 | 0.2 | Codex | Recorded the harmonisation corrections and approved research assumptions. |
-
 ## Census correspondence
 
 The original method transforms 2010 and 2022 tracts to EPSG:5880, sets precision at 1e6, and makes geometry valid. Each year selects its largest strictly positive polygon-area overlap in the other year. Edge-only and point-only contacts are excluded under the approved updated policy. The union of both directional match sets forms an undirected graph; connected components define common comparison areas. Relations are classified as one to one, split, merge, or many to many.

@@ -5,13 +5,6 @@ Last updated: 2026-10-06
 Version: 0.9
 Scope: Workflow Commands And Artifacts
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.9 | Codex | Documented Markdown reports, independent Python execution and safe review copies. |
-| 2026-10-05 | 0.4 | Codex | Recorded the harmonisation corrections and approved research assumptions. |
-
 ## Setup
 
 The tested Python runtime is 3.9.6. Use a project environment and the exact dependency lock.

@@ -5,12 +5,6 @@ Last updated: 2026-10-06
 Version: 0.3
 Scope: Separate location-quality preprocessing; no changes to faithful snapshot translation
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.3 | Codex | Updated paths and navigation for the simplified project layout. |
-
 The researcher requested the full preprocessing proposed after offshore records were identified. This is a new diagnostic and display derivative, not a replacement for original infrastructure processing or research totals. Original coordinates, geometries, IDs, declared CRS and acquisition provenance remain immutable. No coordinate corrections, axis swaps, shore snapping or inferred reprojection are authorized by this policy.
 
 Routine `obrasgov-location-qa` uses explicit local references. Acquisition is a separate script. IBGE municipality mesh 2022 supplies country, municipality and state coverage including its mapped islands. Natural Earth land and ocean coastline at 1:10 million provide approximate offshore screening and coastal distances. They are generalized screening references; small islands and fine coastal detail may be absent. An IBGE-covered point takes precedence over Natural Earth land coverage.

@@ -2,15 +2,8 @@
 
 Status: current
 Last updated: 2026-10-06
-Version: 0.6
+Version: 0.7
 Scope: Agent Working Instructions
-
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.6 | Codex | Required concise records, simple layout and Markdown reports with separate Python scripts. |
-| 2026-10-05 | 0.3 | Codex | Recorded the harmonisation corrections and approved research assumptions. |
 
 These rules apply to this independent research project. RISSI provided documentation patterns; its application architecture and deployment rules do not apply here.
 
@@ -45,7 +38,7 @@ Run meaningful focused tests for changed behavior. For analytical changes, compa
 
 After code, configuration, data flow, or structure changes, assess and update affected folder READMEs, methods, technical contracts, progress, tasks, and verification evidence. Document current state rather than conversational history.
 
-Major Markdown documents use Status, Last updated, Version, and Scope, with a concise edit-history table near the top. The root README is a brief project description and is exempt from metadata and edit history; setup instructions belong in `docs/workflow.md`. Use one history row per date and sequential versions; update the same-day row rather than adding repeated entries. Original copied reference files are preserved verbatim.
+Major Markdown documents use Status, Last updated, Version, and Scope. Do not add edit-history sections or tables; Git records changes. The root README is a brief project description and is exempt from metadata; setup instructions belong in `docs/workflow.md`. Original archived reference files are preserved verbatim.
 
 Keep six visible working folders: `code/`, `data/`, `docs/`, `outputs/`, `research/`, and `website/`. Use the root `project.toml`. Create files and directories only when needed for real contents; no empty placeholders. Major working folders have one useful README; do not add repetitive READMEs to every subfolder. Keep documentation mostly flat and navigate through `docs/index.md`. Preserve original data/documents; when consolidating files, retain their complete contents and record the new location. Former folder READMEs are preserved in `docs/folder-notes.md`.
 

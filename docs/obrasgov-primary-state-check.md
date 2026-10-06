@@ -5,12 +5,6 @@ Last updated: 2026-10-06
 Version: 0.3
 Scope: Complete original geometry containment against reported uf_principal
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.3 | Codex | Updated paths and navigation for the simplified project layout. |
-
 ## Process and code output
 
 Read all 230,356 original components from the checksum-verified location audit, including polygons and previously quarantined components. Dissolved the original-resolution IBGE 2022 municipalities by `SIGLA_UF`, preserving mapped islands. Tested each complete geometry against its reported `uf_principal`, rather than its centroid or sampled line path. No acquisition, coordinate changes, eligibility updates, filtering or public-map changes.

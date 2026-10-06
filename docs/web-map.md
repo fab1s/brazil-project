@@ -5,13 +5,6 @@ Last updated: 2026-10-06
 Version: 0.3
 Scope: Build and update the existing research map from local validated common areas
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.3 | Codex | Updated paths and navigation for the simplified project layout. |
-| 2026-10-05 | 0.2 | Codex | Documented Obrasgov polygon exclusion and spatial screening. |
-
 Browser source is under `website/`. The public site remains `https://sandy-ivory-k65c.here.now/`. Public data derivatives are generated in `outputs/maps/website/`; never publish the project root, raw datasets, work GeoPackage, credentials, or local here.now state.
 
 ## Inputs and preparation

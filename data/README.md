@@ -5,13 +5,6 @@ Last updated: 2026-10-06
 Version: 0.2
 Scope: Research Data
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| --- | --- | --- | --- |
-| 2026-10-06 | 0.2 | Codex | Simplified navigation and documented the consolidated layout. |
-| 2026-10-05 | 0.1 | Codex | Established the independent research project. |
-
 - `raw/`: immutable source datasets, grouped by provider.
 - `processed/`: preserved source result baselines.
 - `reference/`: codebooks, workbooks and geographic references.

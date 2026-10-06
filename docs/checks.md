@@ -5,13 +5,6 @@ Last updated: 2026-10-06
 Version: 0.6
 Scope: Verification Results
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.6 | Codex | Updated paths and navigation for the simplified project layout. |
-| 2026-10-05 | 0.4 | Codex | Recorded migration, harmonisation, and merged-area public map checks. |
-
 ## File integrity
 
 All 344 original files were copied and SHA256 verified. The verification utility also rereads the OneDrive originals and confirms their recorded content hashes.

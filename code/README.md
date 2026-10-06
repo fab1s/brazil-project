@@ -5,12 +5,6 @@ Last updated: 2026-10-06
 Version: 0.2
 Scope: Project Code
 
-## Edit History
-
-| Date | Version | Edited by | Reason |
-| --- | --- | --- | --- |
-| 2026-10-06 | 0.2 | Codex | Documented separate report scripts and saved-output capture. |
-
 Everything executable lives here:
 
 - `brazil_project/`: installable Python package; processing, analysis and CLI.
