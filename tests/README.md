@@ -2,14 +2,14 @@
 
 Status: current
 Last updated: 2026-10-06
-Version: 0.4
+Version: 0.5
 Scope: Scientific And Workflow Tests
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.4 | Codex | Added location QA contracts. |
+| 2026-10-06 | 0.5 | Codex | Added location QA and complete primary-state containment contracts. |
 | 2026-10-05 | 0.3 | Codex | Recorded harmonisation contracts and weighted web-map export checks. |
 
 test_methods.py exercises meaningful analytical and acquisition edge cases. Run python -m pytest. Independent R and stored-result comparisons supplement synthetic tests.
@@ -29,3 +29,5 @@ Update this README when local responsibilities or artifact contracts change. Pre
 `test_location_qa.py` checks recursive decomposition, duplicate IDs, source preservation, marine signals, coastal tolerances, foreign land, small islands covered only by IBGE, shared municipal/state boundaries, missing and invalid locations, CRS rejection and offshore excursions in lines. These synthetic tests verify policy behavior; national results and limitations are recorded separately.
 
 `test_location_utilities.py` covers the final audit fixes: interrupted manifest publication, completed-producer/plot-input guards and rejection of optimized-Python verification.
+
+`test_primary_state_check.py` verifies exact boundary-inclusive containment for points, crossing lines and polygons; boundary candidate states; missing/invalid/out-of-range geometries; missing primary state; preservation of rows/source geometry; and CRS/reference rejection.

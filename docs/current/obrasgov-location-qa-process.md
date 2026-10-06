@@ -2,14 +2,14 @@
 
 Status: preprocessing, documentation and post-run audit complete
 Last updated: 2026-10-06
-Version: 0.1
+Version: 0.2
 Scope: Concise record of inputs, implementation, generated outputs and verification
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.1 | Codex | Recorded the process, embedded the generated figure and documented the final script audit. |
+| 2026-10-06 | 0.2 | Codex | Recorded processing, figures, final audit and the follow-up check without filtering. |
 
 | Step | Action and recorded result |
 | --- | --- |
@@ -47,3 +47,5 @@ Coordinates corrected:         0
 [Clean/quarantine GeoPackage](../../outputs/maps/obrasgov-location-qa/locations.gpkg) · [Review CSV](../../outputs/maps/obrasgov-location-qa/review.csv) · [Detailed verification](../verification/obrasgov-location-qa.md)
 
 Remaining work: provider-backed location review/corrections, marine exceptions and coastal/island edge cases. There are 4,968 repeated-ID source rows; the audit preserves them and separates source-row investment sums from unique-ID diagnostics. Scientific validity and live-map publication are separate from these software checks.
+
+Follow-up **check only**: [primary-state containment](../verification/obrasgov-primary-state-check.md) compares complete original point/line/polygon geometry with `uf_principal`. Its separate table and embedded figure document mismatches; existing QA eligibility, coordinates and map are unchanged.

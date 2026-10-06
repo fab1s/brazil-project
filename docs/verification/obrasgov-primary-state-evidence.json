@@ -1,0 +1,298 @@
+{
+  "national_check": {
+    "status": "completed",
+    "mode": "diagnostic_only_no_filtering",
+    "reference": "IBGE municipalities 2022 dissolved by SIGLA_UF; original resolution",
+    "predicate": "covers for fully_inside; intersects for partly_inside_or_boundary_contact; no buffer or coordinate correction",
+    "inputs": {
+      "data/intermediate/obrasgov-location-qa/component_audit.parquet": "a37ced6f2fa55ceb6758914181c34359abae256288d12d897b50c3b7fadb8b05",
+      "data/reference/location-qa/BR_Municipios_2022.zip": "9c904fa1feb978a89042bfecd7758e571266f285d6122a4ff02ffe37bffb76a2",
+      "data/processed/obrasgov/projects_st.gpkg": "091c27860f78eee1e6abe989dbbef65a8b7412f87d82616d74c30ca6774f17cc"
+    },
+    "script_sha256": "677256107d991aa0b7fd5452b2d65cec67454a369e340877cda1a01659fbd8c8",
+    "source_rows": 134929,
+    "components": 230356,
+    "component_counts": {
+      "fully_inside": 226006,
+      "entirely_outside": 2346,
+      "not_assessable_geometry": 1561,
+      "partly_inside_or_boundary_contact": 440,
+      "unknown_or_missing_primary_state": 3
+    },
+    "affected_source_rows": {
+      "entirely_outside": 784,
+      "fully_inside": 132924,
+      "not_assessable_geometry": 1558,
+      "partly_inside_or_boundary_contact": 112,
+      "unknown_or_missing_primary_state": 3
+    },
+    "affected_distinct_project_ids": {
+      "entirely_outside": 697,
+      "fully_inside": 128048,
+      "not_assessable_geometry": 1508,
+      "partly_inside_or_boundary_contact": 79,
+      "unknown_or_missing_primary_state": 3
+    },
+    "counts_by_state": {
+      "": {
+        "entirely_outside": 0,
+        "fully_inside": 0,
+        "not_assessable_geometry": 6,
+        "partly_inside_or_boundary_contact": 0,
+        "unknown_or_missing_primary_state": 3
+      },
+      "AC": {
+        "entirely_outside": 6,
+        "fully_inside": 1831,
+        "not_assessable_geometry": 8,
+        "partly_inside_or_boundary_contact": 1,
+        "unknown_or_missing_primary_state": 0
+      },
+      "AL": {
+        "entirely_outside": 99,
+        "fully_inside": 3230,
+        "not_assessable_geometry": 25,
+        "partly_inside_or_boundary_contact": 8,
+        "unknown_or_missing_primary_state": 0
+      },
+      "AM": {
+        "entirely_outside": 24,
+        "fully_inside": 4952,
+        "not_assessable_geometry": 22,
+        "partly_inside_or_boundary_contact": 32,
+        "unknown_or_missing_primary_state": 0
+      },
+      "AP": {
+        "entirely_outside": 16,
+        "fully_inside": 2189,
+        "not_assessable_geometry": 7,
+        "partly_inside_or_boundary_contact": 0,
+        "unknown_or_missing_primary_state": 0
+      },
+      "BA": {
+        "entirely_outside": 280,
+        "fully_inside": 18053,
+        "not_assessable_geometry": 132,
+        "partly_inside_or_boundary_contact": 4,
+        "unknown_or_missing_primary_state": 0
+      },
+      "CE": {
+        "entirely_outside": 28,
+        "fully_inside": 9938,
+        "not_assessable_geometry": 80,
+        "partly_inside_or_boundary_contact": 34,
+        "unknown_or_missing_primary_state": 0
+      },
+      "DF": {
+        "entirely_outside": 330,
+        "fully_inside": 1324,
+        "not_assessable_geometry": 13,
+        "partly_inside_or_boundary_contact": 21,
+        "unknown_or_missing_primary_state": 0
+      },
+      "ES": {
+        "entirely_outside": 12,
+        "fully_inside": 2812,
+        "not_assessable_geometry": 43,
+        "partly_inside_or_boundary_contact": 2,
+        "unknown_or_missing_primary_state": 0
+      },
+      "GO": {
+        "entirely_outside": 28,
+        "fully_inside": 4965,
+        "not_assessable_geometry": 39,
+        "partly_inside_or_boundary_contact": 2,
+        "unknown_or_missing_primary_state": 0
+      },
+      "MA": {
+        "entirely_outside": 293,
+        "fully_inside": 18699,
+        "not_assessable_geometry": 80,
+        "partly_inside_or_boundary_contact": 6,
+        "unknown_or_missing_primary_state": 0
+      },
+      "MG": {
+        "entirely_outside": 84,
+        "fully_inside": 22551,
+        "not_assessable_geometry": 114,
+        "partly_inside_or_boundary_contact": 3,
+        "unknown_or_missing_primary_state": 0
+      },
+      "MS": {
+        "entirely_outside": 12,
+        "fully_inside": 3168,
+        "not_assessable_geometry": 33,
+        "partly_inside_or_boundary_contact": 1,
+        "unknown_or_missing_primary_state": 0
+      },
+      "MT": {
+        "entirely_outside": 43,
+        "fully_inside": 4996,
+        "not_assessable_geometry": 23,
+        "partly_inside_or_boundary_contact": 6,
+        "unknown_or_missing_primary_state": 0
+      },
+      "PA": {
+        "entirely_outside": 50,
+        "fully_inside": 21038,
+        "not_assessable_geometry": 56,
+        "partly_inside_or_boundary_contact": 15,
+        "unknown_or_missing_primary_state": 0
+      },
+      "PB": {
+        "entirely_outside": 24,
+        "fully_inside": 6390,
+        "not_assessable_geometry": 40,
+        "partly_inside_or_boundary_contact": 6,
+        "unknown_or_missing_primary_state": 0
+      },
+      "PE": {
+        "entirely_outside": 363,
+        "fully_inside": 13917,
+        "not_assessable_geometry": 57,
+        "partly_inside_or_boundary_contact": 204,
+        "unknown_or_missing_primary_state": 0
+      },
+      "PI": {
+        "entirely_outside": 237,
+        "fully_inside": 13083,
+        "not_assessable_geometry": 140,
+        "partly_inside_or_boundary_contact": 35,
+        "unknown_or_missing_primary_state": 0
+      },
+      "PR": {
+        "entirely_outside": 21,
+        "fully_inside": 7270,
+        "not_assessable_geometry": 76,
+        "partly_inside_or_boundary_contact": 11,
+        "unknown_or_missing_primary_state": 0
+      },
+      "RJ": {
+        "entirely_outside": 59,
+        "fully_inside": 5771,
+        "not_assessable_geometry": 39,
+        "partly_inside_or_boundary_contact": 20,
+        "unknown_or_missing_primary_state": 0
+      },
+      "RN": {
+        "entirely_outside": 31,
+        "fully_inside": 5001,
+        "not_assessable_geometry": 24,
+        "partly_inside_or_boundary_contact": 7,
+        "unknown_or_missing_primary_state": 0
+      },
+      "RO": {
+        "entirely_outside": 38,
+        "fully_inside": 2535,
+        "not_assessable_geometry": 23,
+        "partly_inside_or_boundary_contact": 1,
+        "unknown_or_missing_primary_state": 0
+      },
+      "RR": {
+        "entirely_outside": 9,
+        "fully_inside": 1625,
+        "not_assessable_geometry": 42,
+        "partly_inside_or_boundary_contact": 0,
+        "unknown_or_missing_primary_state": 0
+      },
+      "RS": {
+        "entirely_outside": 74,
+        "fully_inside": 13079,
+        "not_assessable_geometry": 154,
+        "partly_inside_or_boundary_contact": 5,
+        "unknown_or_missing_primary_state": 0
+      },
+      "SC": {
+        "entirely_outside": 43,
+        "fully_inside": 6678,
+        "not_assessable_geometry": 30,
+        "partly_inside_or_boundary_contact": 1,
+        "unknown_or_missing_primary_state": 0
+      },
+      "SE": {
+        "entirely_outside": 13,
+        "fully_inside": 2554,
+        "not_assessable_geometry": 25,
+        "partly_inside_or_boundary_contact": 10,
+        "unknown_or_missing_primary_state": 0
+      },
+      "SP": {
+        "entirely_outside": 52,
+        "fully_inside": 23803,
+        "not_assessable_geometry": 212,
+        "partly_inside_or_boundary_contact": 1,
+        "unknown_or_missing_primary_state": 0
+      },
+      "TO": {
+        "entirely_outside": 77,
+        "fully_inside": 4554,
+        "not_assessable_geometry": 18,
+        "partly_inside_or_boundary_contact": 4,
+        "unknown_or_missing_primary_state": 0
+      }
+    },
+    "counts_by_geometry": {
+      "LineString": {
+        "entirely_outside": 329,
+        "fully_inside": 23477,
+        "not_assessable_geometry": 0,
+        "partly_inside_or_boundary_contact": 375,
+        "unknown_or_missing_primary_state": 0
+      },
+      "MultiPoint": {
+        "entirely_outside": 0,
+        "fully_inside": 0,
+        "not_assessable_geometry": 1509,
+        "partly_inside_or_boundary_contact": 0,
+        "unknown_or_missing_primary_state": 0
+      },
+      "Point": {
+        "entirely_outside": 2010,
+        "fully_inside": 200640,
+        "not_assessable_geometry": 3,
+        "partly_inside_or_boundary_contact": 0,
+        "unknown_or_missing_primary_state": 3
+      },
+      "Polygon": {
+        "entirely_outside": 7,
+        "fully_inside": 1889,
+        "not_assessable_geometry": 49,
+        "partly_inside_or_boundary_contact": 65,
+        "unknown_or_missing_primary_state": 0
+      }
+    },
+    "entirely_outside_intersecting_other_states": 1678,
+    "entirely_outside_intersecting_no_state": 668,
+    "figure": {
+      "path": "outputs/figures/obrasgov-location-qa/primary-state-check.png",
+      "sha256": "a0c9d2335732140b56d10cc4959f0f803ffa807fe77a61869b3037356eab4f66"
+    },
+    "output_sha256": {
+      "components.csv": "1d26c299819b06d142c6f36544c3b56c558e075379b801aadee5c89313d45571",
+      "by-state.csv": "0014477a1d7f9b1d9c3973fb633837ee7fa7cdff25940734fffdf191e4a83d6e",
+      "by-geometry.csv": "076c078cc01d1367042619f2e0a689ae9b4d7e6628be120394be4de6e5e5a487"
+    },
+    "limitations": [
+      "Primary state may describe a lead state in a multi-state project.",
+      "IBGE 2022 administrative territory is not an offshore licensing boundary.",
+      "Exact boundary differences can produce partial or outside results.",
+      "Source rows/project IDs may have multiple components and occur in multiple categories."
+    ]
+  },
+  "verification": {
+    "focused_tests_passed": 2,
+    "repeat_csv_hashes_identical": true,
+    "prior_csv_hashes": {
+      "components.csv": "1d26c299819b06d142c6f36544c3b56c558e075379b801aadee5c89313d45571",
+      "by-state.csv": "0014477a1d7f9b1d9c3973fb633837ee7fa7cdff25940734fffdf191e4a83d6e",
+      "by-geometry.csv": "076c078cc01d1367042619f2e0a689ae9b4d7e6628be120394be4de6e5e5a487"
+    },
+    "source_hashes_unchanged": true,
+    "no_filtering_or_eligibility_changes": true,
+    "figure_dimensions": [
+      1500,
+      1350
+    ],
+    "exact_documentation_copy": true
+  }
+}
