@@ -599,7 +599,7 @@
     }
   ],
   "python_tests": {
-    "passed": 51,
+    "passed": 58,
     "checked_at": "2026-10-06",
     "command": ".venv/bin/python -m pytest -q",
     "location_policy_tests": 11,
@@ -705,5 +705,16 @@
     "public_map_updated": false,
     "process_record": "docs/current/obrasgov-location-qa-process.md",
     "script_audit": "docs/verification/obrasgov-location-qa-script-audit.md"
+  },
+  "obrasgov_primary_state_filter": {
+    "status": "verified",
+    "excluded_components": 2346,
+    "map_components_before": 226309,
+    "map_components_after": 224495,
+    "newly_excluded_map_components": 1814,
+    "repeat_geoparquet_hashes_identical": true,
+    "source_geometry_and_attributes_preserved": true,
+    "public_map_updated": false,
+    "evidence": "docs/verification/obrasgov-primary-state-filter-evidence.json"
   }
 }

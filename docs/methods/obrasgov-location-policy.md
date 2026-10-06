@@ -2,14 +2,14 @@
 
 Status: implemented; national execution and repeat checks verified
 Last updated: 2026-10-06
-Version: 0.1
+Version: 0.2
 Scope: Separate location-quality preprocessing; no changes to faithful snapshot translation
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.1 | Codex | Recorded the requested location checks and conservative spatial-output policy before implementation. |
+| 2026-10-06 | 0.2 | Codex | Recorded location QA and the approved exclusion of entirely outside primary-state components. |
 
 The researcher requested the full preprocessing proposed after offshore records were identified. This is a new diagnostic and display derivative, not a replacement for original infrastructure processing or research totals. Original coordinates, geometries, IDs, declared CRS and acquisition provenance remain immutable. No coordinate corrections, axis swaps, shore snapping or inferred reprojection are authorized by this policy.
 
@@ -17,7 +17,7 @@ Routine `obrasgov-location-qa` uses explicit local references. Acquisition is a 
 
 Recursive geometry decomposition gives each source row and component a stable ordinal, preserving repeated coordinates and duplicate project IDs. Missing, empty, invalid, nonfinite and out-of-range geometry are diagnosed separately. Polygons stay excluded from the map by the prior display instruction; they remain in the audit and original geometries. Point and line components receive location checks. Lines are assessed across vertices and a sampled path; long lines spanning countries or water are reviewed rather than assumed wholly onshore from their centroid.
 
-Geographic flags use `intersects`, retaining all candidate municipalities at shared boundaries. Explicit municipality codes are checked when a documented code field is available. Municipality names inferred from descriptions are not treated as reliable IDs. The existing snapshot has no structured municipality code; this limitation is reported. `uf_principal` is supporting context; a mismatch alone does not exclude a location because projects may cross states.
+Geographic flags use `intersects`, retaining all candidate municipalities at shared boundaries. Explicit municipality codes are checked when a documented code field is available. Municipality names inferred from descriptions are not treated as reliable IDs. The existing snapshot has no structured municipality code; this limitation is reported. The baseline location QA treats `uf_principal` as supporting context because projects may cross states. A separate researcher-approved primary-state display filter now excludes components classified as `entirely_outside` by the complete-geometry containment check. This includes locations in another state and locations outside every mapped state; no marine exception overrides this filter. Components partly inside/touching their primary state remain subject to baseline eligibility. Missing primary states and unassessable geometry are not newly excluded by this state rule. This is a requested display restriction, not evidence that every excluded location is erroneous.
 
 The default cleaned map derivative quarantines nonfinite/out-of-range/invalid point and line components; locations outside Brazil on foreign land more than 1 km from its administrative coverage; and components wholly offshore beyond 5 km from both mapped IBGE coverage and the generalized coastline without a marine-description signal. Close coastal and foreign-border locations remain with uncertainty flags. Thresholds are explicit, configurable screening tolerances, not proof of source accuracy. Components spanning good and suspect positions are quarantined for review; endpoints alone never establish eligibility.
 
@@ -30,3 +30,7 @@ Outputs include the complete row audit with original geometry; recursive compone
 The source contains repeated project IDs. Source-row investment totals preserve the original snapshot and may count the same project amount more than once. A separate diagnostic reports each distinct ID once only when its reported amounts agree, and explicitly counts conflicting or entirely missing amounts. This diagnostic does not silently consolidate source rows or certify the budgets.
 
 The metric screening domain is 80°W–25°W and 40°S–10°N, enclosing Brazil and its mapped offshore islands. Locations outside this domain are provisionally quarantined with `outside_screening_extent`, not reprojected or declared invalid geographic coordinates. The coastline is clipped with a surrounding margin for distance calculations. These checks concern longitude/latitude; no altitude validity claim is made.
+
+## Primary-state exclusion derivative
+
+`scripts/filter_obras_primary_state.py` applies the saved, checksum-verified complete-geometry diagnostic to every original component. It records all exclusions separately and exports map components satisfying both the original location-QA eligibility and the new state rule. No entire project is dropped merely because one component is excluded, and no original geometry is clipped or corrected. Original records, duplicate IDs and research investment totals remain preserved; component investment values are not summed. The prior diagnostic and baseline QA bundle remain available. The public website changes only through a subsequent explicit map build/publication.

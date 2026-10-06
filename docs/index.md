@@ -2,14 +2,14 @@
 
 Status: current
 Last updated: 2026-10-06
-Version: 0.7
+Version: 0.8
 Scope: Research Project Documentation
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.7 | Codex | Indexed primary-state containment diagnostics. |
+| 2026-10-06 | 0.8 | Codex | Indexed primary-state diagnostics and approved exclusions. |
 | 2026-10-05 | 0.5 | Codex | Indexed the Obrasgov spatial review. |
 
 This index is the starting point for maintaining the project and understanding the processing flow.
@@ -31,6 +31,7 @@ This index is the starting point for maintaining the project and understanding t
 - [Obrasgov spatial review](verification/obrasgov-spatial-review.md)
 - [Obrasgov location policy](methods/obrasgov-location-policy.md)
 - [Obrasgov location preprocessing verification](verification/obrasgov-location-qa.md)
+- [Obrasgov primary-state exclusion process and audit](verification/obrasgov-primary-state-filter.md)
 - [Obrasgov primary-state check](verification/obrasgov-primary-state-check.md)
 - [Obrasgov final script audit](verification/obrasgov-location-qa-script-audit.md)
 - [Source file migration manifest](reference/migration_manifest.csv)

@@ -2,14 +2,14 @@
 
 Status: diagnostic complete; no filtering applied
 Last updated: 2026-10-06
-Version: 0.1
+Version: 0.2
 Scope: Complete original geometry containment against reported uf_principal
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.1 | Codex | Checked reported primary-state coverage without altering locations or eligibility. |
+| 2026-10-06 | 0.2 | Codex | Recorded state diagnostics and linked the separately approved exclusion derivative. |
 
 ## Process and code output
 
@@ -44,4 +44,4 @@ Of the 2,346 entirely outside components, **1,678 intersect another Brazilian st
 - Exact `covers`/`intersects` predicates assess whole lines and polygons without sampling, simplification or centroid substitution. Boundary hits retain every candidate state; duplicate source project IDs remain separate.
 - Two focused tests pass, covering points, crossing lines/polygons, shared boundaries, missing state, invalid/missing/out-of-range geometries, source preservation, CRS mismatch and duplicate reference keys. Two national executions produced identical diagnostic CSV hashes.
 - Removed any prior completion summary before publishing outputs; the completed summary is atomically replaced last and records CSV/figure hashes. Concurrent runs are unsupported; after interruption rerun and require the completed summary plus matching output hashes.
-- Remaining limits: exact source/reference boundary differences; historical projects checked against 2022 boundaries; primary state semantics for multi-state projects; and offshore jurisdiction. No methodological decision to exclude state mismatches has been made.
+- Remaining limits: exact source/reference boundary differences; historical projects checked against 2022 boundaries; primary state semantics for multi-state projects; and offshore jurisdiction. The researcher subsequently approved a separate [entirely-outside exclusion derivative](obrasgov-primary-state-filter.md); this diagnostic and its results remain unchanged.

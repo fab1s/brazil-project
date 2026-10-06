@@ -2,14 +2,14 @@
 
 Status: current
 Last updated: 2026-10-06
-Version: 0.5
+Version: 0.6
 Scope: Workflow Commands And Artifacts
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.5 | Codex | Documented explicit location references and routine QA. |
+| 2026-10-06 | 0.6 | Codex | Documented location QA and approved primary-state exclusion commands. |
 | 2026-10-05 | 0.4 | Codex | Recorded the harmonisation corrections and approved research assumptions. |
 
 ## Setup
@@ -126,3 +126,12 @@ Then run offline from the project environment:
 ```
 
 Outputs under `data/intermediate/obrasgov-location-qa/` include source and component GeoParquet audits, eligible map components, quarantined components, a review table and a fingerprinted report. `outputs/maps/obrasgov-location-qa/locations.gpkg` has `map_components` and `quarantined_components` layers; `review.csv` exposes per-component decisions. Use project/source-row IDs when summarizing project investments, never repeated component values. The public map is not silently replaced by this new derivative. See [the policy](../methods/obrasgov-location-policy.md).
+
+## Approved primary-state map exclusion
+
+```bash
+.venv/bin/python scripts/check_obras_primary_state.py --config config/project.toml
+.venv/bin/python scripts/filter_obras_primary_state.py --config config/project.toml
+```
+
+The second command excludes exactly `entirely_outside` original components and combines this with existing location-QA eligibility. It requires matching completed diagnostic/QA manifests and verified inputs; rerun the state check after updating its inputs or implementation. Outputs are separate under `data/intermediate/obrasgov-primary-state-filter` and `outputs/maps/obrasgov-primary-state-filter`; `locations.gpkg` contains `map_components` and `excluded_primary_state`. Read the completed report and verify artifact hashes before consumption. Original research totals and the prior QA bundle remain preserved. See [process, figure and script audit](../verification/obrasgov-primary-state-filter.md).

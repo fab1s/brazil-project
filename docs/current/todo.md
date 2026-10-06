@@ -2,14 +2,14 @@
 
 Status: current
 Last updated: 2026-10-06
-Version: 0.5
+Version: 0.6
 Scope: Remaining Research Tasks
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.5 | Codex | Separated completed location diagnostics from outstanding review. |
+| 2026-10-06 | 0.6 | Codex | Recorded completed primary-state exclusions and remaining map publication/review. |
 | 2026-10-05 | 0.4 | Codex | Added Obrasgov coordinate-quality review. |
 
 - Review the [harmonisation update](../verification/harmonisation-update.md) and its footprint/coverage diagnostics under the approved boundary-change assumption. The requested implementation corrections are complete.
@@ -25,3 +25,5 @@ Scope: Remaining Research Tasks
 - Review the completed [national Obrasgov location QA](../verification/obrasgov-location-qa.md): offshore, coastal, foreign-border, administrative and possible marine flags require provider evidence before correction.
 
 The national diagnostic and clean/quarantine exports are complete; see [verification](../verification/obrasgov-location-qa.md). Remaining location work is review of flagged source IDs, provider-supported corrections and marine exceptions, coastal/island edge cases, and deliberate map publication if this derivative is adopted. Never infer corrected coordinates or present eligible locations as validated geocoding.
+
+The [approved primary-state exclusion](../verification/obrasgov-primary-state-filter.md) is implemented: all 2,346 entirely-outside components are excluded from the separate derivative; 224,495 map components remain after baseline QA. Review partially intersecting projects separately and adopt/publish the final map derivative when requested. No source correction or whole-project deletion was inferred.
