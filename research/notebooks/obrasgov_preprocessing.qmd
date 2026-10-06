@@ -1,0 +1,40 @@
+---
+title: "Obrasgov Preprocessing"
+format: html
+jupyter: python3
+---
+
+```{python}
+#| label: obrasgov_preprocessing_1
+from pathlib import Path
+from brazil_project.io import Context
+from brazil_project.reporting import show_chunk
+project = next(p for p in [Path.cwd(), *Path.cwd().parents] if (p / "project.toml").exists())
+ctx = Context(project / "project.toml")
+show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd', 1)
+```
+
+```{python}
+#| label: obrasgov_preprocessing_2
+show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd', 2)
+```
+
+```{python}
+#| label: obrasgov_preprocessing_3
+show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd', 3)
+```
+
+```{python}
+#| label: obrasgov_preprocessing_4
+show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd', 4)
+```
+
+```{python}
+#| label: obrasgov_preprocessing_5
+show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd', 5)
+```
+
+```{python}
+#| label: obrasgov_preprocessing_6
+show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd', 6)
+```

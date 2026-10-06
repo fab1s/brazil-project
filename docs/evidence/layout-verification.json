@@ -1,0 +1,40 @@
+{
+  "status": "verified",
+  "date": "2026-10-06",
+  "inventory_files": 1147,
+  "preservation_counts": {
+    "recovery-archive": 77,
+    "unchanged-file": 1027,
+    "verbatim-folder-notes": 33,
+    "empty-content": 4,
+    "generated-runtime": 6
+  },
+  "working_folders_before": 13,
+  "working_folders_after": 6,
+  "working_folders": [
+    "code",
+    "data",
+    "docs",
+    "outputs",
+    "research",
+    "website"
+  ],
+  "empty_directories_removed": 133,
+  "zero_byte_files_removed": 4,
+  "consolidated_folder_readmes": 33,
+  "python_tests_passed": 59,
+  "fresh_notebook_reports_passed": 9,
+  "r_reference_check_passed": true,
+  "offline_editable_install_passed": true,
+  "original_migration_files_verified": 344,
+  "location_qa_verifier_passed": true,
+  "state_filter_regenerated_geoparquet_hashes_unchanged": true,
+  "state_filter_components": 224495,
+  "layout_ledger_sha256": "0c4bfdb4c98a43a2b801d6b7955b9263b07872900287a4d2e72da98afa4f431b",
+  "recovery_archive_sha256": "7905a175032b14c239937ad8c09582505b36e8935c2ac83da0c76f755a78f92c",
+  "public_map_changed": false,
+  "final_preservation_verifier_passed": true,
+  "empty_working_directories": 0,
+  "zero_byte_working_files": 0,
+  "documentation_and_notebook_links_passed": true
+}

@@ -9,9 +9,13 @@ dist/
 .Rhistory
 .RData*
 .Rproj.user/
-renv/library/
-renv/staging/
-archive/
+.cache/renv-project/library/
+.cache/renv-project/staging/
+data/archive/*
+!data/archive/original_notes/
+!data/archive/original_notes/**
+!data/archive/project-tools/
+!data/archive/project-tools/**
 data/raw/
 data/intermediate/
 data/processed/
@@ -23,7 +27,7 @@ research/**/*.pdf
 !**/README.md
 
 .cache/
-renv/bootstrap/
+.cache/renv-project/bootstrap/
 .quarto/
 
 /.quarto/

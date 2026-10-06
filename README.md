@@ -4,7 +4,9 @@ A research project exploring changes in population, housing, income, and access 
 
 The project harmonises census tracts across 2010 and 2022 so that demographic and socioeconomic indicators can be compared over time. It also brings together IBAMA licensing records, Obrasgov infrastructure projects, and exploratory property-value data, producing maps, charts, and research reports.
 
-[Research methods and documentation](docs/index.md) · [Setup and workflow instructions](docs/technical/workflow.md)
+**Find your work:** `research/` reports and presentations · `outputs/` maps, figures and tables · `data/` datasets and originals · `code/` processing and tests · `docs/` methods and progress · `website/` map source.
+
+[Research methods and documentation](docs/index.md) · [Setup and workflow instructions](docs/workflow.md)
 
 ![Brazil project website showing the interactive map and data layers](docs/assets/website-screenshot.png)
 

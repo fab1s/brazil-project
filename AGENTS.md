@@ -2,21 +2,21 @@
 
 Status: current
 Last updated: 2026-10-06
-Version: 0.4
+Version: 0.5
 Scope: Agent Working Instructions
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.4 | Codex | Required concise process records, embedded code outputs and a final script audit. |
+| 2026-10-06 | 0.5 | Codex | Required concise records/audits and a simple content-driven project layout. |
 | 2026-10-05 | 0.3 | Codex | Recorded the harmonisation corrections and approved research assumptions. |
 
 These rules apply to this independent research project. RISSI provided documentation patterns; its application architecture and deployment rules do not apply here.
 
 ## Read First
 
-Before nontrivial work, read `README.md`, `docs/index.md`, `docs/current/current-progress-report.md`, `docs/current/todo.md`, and `NOTICE.md`. Read the nearest folder README, `docs/methods/research-methods.md`, and the relevant technical page before changing an analytical stage.
+Before nontrivial work, read `README.md`, `docs/index.md`, `docs/progress.md`, `docs/tasks.md`, and `NOTICE.md`. Read the nearest folder README, `docs/methods.md`, and the relevant technical page before changing an analytical stage.
 
 ## Research Working Rules
 
@@ -45,9 +45,9 @@ Run meaningful focused tests for changed behavior. For analytical changes, compa
 
 After code, configuration, data flow, or structure changes, assess and update affected folder READMEs, methods, technical contracts, progress, tasks, and verification evidence. Document current state rather than conversational history.
 
-Major Markdown documents use Status, Last updated, Version, and Scope, with a concise edit-history table near the top. The root README is a brief project description and is exempt from metadata and edit history; setup instructions belong in `docs/technical/workflow.md`. Use one history row per date and sequential versions; update the same-day row rather than adding repeated entries. Original copied reference files are preserved verbatim.
+Major Markdown documents use Status, Last updated, Version, and Scope, with a concise edit-history table near the top. The root README is a brief project description and is exempt from metadata and edit history; setup instructions belong in `docs/workflow.md`. Use one history row per date and sequential versions; update the same-day row rather than adding repeated entries. Original copied reference files are preserved verbatim.
 
-Each major folder has a concise README with purpose, project connections, file responsibilities, workflows, inputs/outputs, dependencies, and update rules. `docs/` uses `index.md` as its entry point.
+Keep six visible working folders: `code/`, `data/`, `docs/`, `outputs/`, `research/`, and `website/`. Use the root `project.toml`. Create files and directories only when needed for real contents; no empty placeholders. Major working folders have one useful README; do not add repetitive READMEs to every subfolder. Keep documentation mostly flat and navigate through `docs/index.md`. Preserve original data/documents; when consolidating files, retain their complete contents and record the new location. Former folder READMEs are preserved in `docs/folder-notes.md`.
 
 ## Process Records And Script Audits
 

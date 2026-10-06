@@ -1,22 +1,21 @@
 # Research Data
 
 Status: current
-Last updated: 2026-10-05
-Version: 0.1
+Last updated: 2026-10-06
+Version: 0.2
 Scope: Research Data
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
-| ---- | ------- | --------- | ------ |
+| --- | --- | --- | --- |
+| 2026-10-06 | 0.2 | Codex | Simplified navigation and documented the consolidated layout. |
 | 2026-10-05 | 0.1 | Codex | Established the independent research project. |
 
-raw contains immutable original inputs; processed contains original result baselines; reference contains supplied codebooks and workbooks; intermediate contains generated stage results. Full datasets remain outside Git. Provenance is documented under docs/reference.
+- `raw/`: immutable source datasets, grouped by provider.
+- `processed/`: preserved source result baselines.
+- `reference/`: codebooks, workbooks and geographic references.
+- `intermediate/`: generated stage bundles used by processing.
+- `archive/`: original code, source notes, outputs and session material; recovery copies of the previous layout.
 
-## Main Workflows
-
-Use the project CLI and documented setup from the root README. Read relevant methods before editing analytical code.
-
-## Update Rules
-
-Update this README when local responsibilities or artifact contracts change. Preserve source provenance and report verification scope.
+Full datasets stay outside Git. The exact input paths are in [project.toml](../project.toml); stages create outputs only when executed. See [provenance](../docs/provenance.md) and [workflow](../docs/workflow.md). Do not overwrite original inputs or replace missing inputs with guesses.
