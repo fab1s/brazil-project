@@ -1,8 +1,15 @@
 ---
 title: "Obrasgov Preprocessing"
-format: html
+format:
+  html: default
+  gfm: default
+editor: visual
 jupyter: python3
 ---
+
+This report follows the original import, translation and cleaning flow using saved Python processing artifacts. Rendering does not download or modify source datasets. The later location QA and approved primary-state exclusions are documented separately below.
+
+## Processing flow
 
 ```{python}
 #| label: obrasgov_preprocessing_1
@@ -38,3 +45,29 @@ show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd', 5)
 #| label: obrasgov_preprocessing_6
 show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd', 6)
 ```
+
+
+## Location preprocessing and primary-state exclusions
+
+The faithful snapshot translation above is separate from the later spatial quality checks. Original records remain preserved. The approved state filter excludes components entirely outside their reported primary state, keeps partial/boundary intersections under the baseline policy, and saves a complete exclusion audit. See the [processing and verification record](../../docs/obrasgov-primary-state-filter.md).
+
+```{python}
+#| label: obrasgov_state_filter_summary
+import json
+import pandas as pd
+from IPython.display import display
+state_report = ctx.intermediate / "obrasgov-primary-state-filter/report.json"
+if state_report.exists():
+    state_result = json.loads(state_report.read_text())
+    display(pd.DataFrame([
+        {"Result": "Components excluded by primary state", "Count": state_result["excluded_components"]},
+        {"Result": "Map components before state exclusions", "Count": state_result["map_components_before"]},
+        {"Result": "Map components after state exclusions", "Count": state_result["map_components_after"]},
+    ]))
+else:
+    display({"status": "State filter not yet generated", "command": ".venv/bin/python code/scripts/filter_obras_primary_state.py"})
+```
+
+![Original eligible Obrasgov points before and after approved primary-state exclusions](../../docs/assets/obrasgov-primary-state-filter.png)
+
+Point-only illustration; lines, polygons and already quarantined locations are omitted. Source coordinates are unchanged.

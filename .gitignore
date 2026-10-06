@@ -34,3 +34,6 @@ research/**/*.pdf
 **/*.quarto_ipynb
 
 .herenow/
+
+# Machine-local Quarto executable/interpreter settings.
+/.vscode/settings.json

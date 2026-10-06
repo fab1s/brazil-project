@@ -1,6 +1,9 @@
 ---
 title: "IBGE Census - Temporal Comparison"
-format: html
+format:
+  html: default
+  gfm: default
+editor: visual
 jupyter: python3
 ---
 

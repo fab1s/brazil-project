@@ -2,17 +2,19 @@
 
 Status: current
 Last updated: 2026-10-06
-Version: 0.9
+Version: 0.10
 Scope: Project Documentation
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | --- | --- | --- | --- |
-| 2026-10-06 | 0.9 | Codex | Simplified navigation and documented the consolidated layout. |
+| 2026-10-06 | 0.10 | Codex | Simplified navigation and indexed rendered notebook previews. |
 | 2026-10-05 | 0.5 | Codex | Indexed the Obrasgov spatial review. |
 
 Start with [progress](progress.md), [tasks](tasks.md), [methods](methods.md) and [commands](workflow.md).
+
+[Read the research reports](../research/README.md#read-the-reports) · [Quarto previews and editor setup](report-previews.md)
 
 ## Research and workflow
 

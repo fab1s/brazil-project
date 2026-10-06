@@ -2,14 +2,14 @@
 
 Status: current
 Last updated: 2026-10-06
-Version: 0.7
+Version: 0.8
 Scope: Workflow Commands And Artifacts
 
 ## Edit History
 
 | Date | Version | Edited by | Reason |
 | ---- | ------- | --------- | ------ |
-| 2026-10-06 | 0.7 | Codex | Updated paths and navigation for the simplified project layout. |
+| 2026-10-06 | 0.8 | Codex | Simplified paths and documented visual editing and HTML/GitHub report regeneration. |
 | 2026-10-05 | 0.4 | Codex | Recorded the harmonisation corrections and approved research assumptions. |
 
 ## Setup
@@ -89,15 +89,21 @@ Infrastructure snapshot directories are configurable through ibama_snapshot and 
 
 ## Render research reports
 
-After generating the stage artifacts, use an installed Quarto runtime or the tested local portable runtime:
+After generating the stage artifacts, render both local HTML and GitHub-readable previews with:
 
 ```sh
-QUARTO_PYTHON="$PWD/.venv/bin/python" .cache/quarto/bin/quarto render
-# On another machine with Quarto installed:
-QUARTO_PYTHON="$PWD/.venv/bin/python" quarto render
+.venv/bin/python code/scripts/render_reports.py
 ```
 
-The Python report dependencies are included in `requirements.lock`. HTML outputs are under `outputs/reports/notebooks/`. Rendering reads saved artifacts, preserves explicit missing-input notices, and does not acquire data. The portable runtime is machine-local and excluded from Git.
+This updates reviewed `.md` companions beside the `.qmd` sources and deduplicated PNG assets. Read-only HTML rendering remains available through an installed Quarto runtime or the tested local portable runtime:
+
+```sh
+QUARTO_PYTHON="$PWD/.venv/bin/python" .cache/quarto/bin/quarto render --to html
+# On another machine with Quarto installed:
+QUARTO_PYTHON="$PWD/.venv/bin/python" quarto render --to html
+```
+
+The Python report dependencies are included in `requirements.lock`. HTML outputs are under `outputs/reports/research/notebooks/`. Rendering reads saved artifacts, preserves explicit missing-input notices, and does not acquire data. The portable runtime is machine-local and excluded from Git.
 
 ## Harmonisation products
 
@@ -135,3 +141,5 @@ Outputs under `data/intermediate/obrasgov-location-qa/` include source and compo
 ```
 
 The second command excludes exactly `entirely_outside` original components and combines this with existing location-QA eligibility. It requires matching completed diagnostic/QA manifests and verified inputs; rerun the state check after updating its inputs or implementation. Outputs are separate under `data/intermediate/obrasgov-primary-state-filter` and `outputs/maps/obrasgov-primary-state-filter`; `locations.gpkg` contains `map_components` and `excluded_primary_state`. Read the completed report and verify artifact hashes before consumption. Original research totals and the prior QA bundle remain preserved. See [process, figure and script audit](obrasgov-primary-state-filter.md).
+
+For visual editing, reopen the current `research/notebooks/*.qmd` file with the **Quarto Visual Editor**. The Quarto VS Code extension is recommended in `.vscode/extensions.json`; machine-local editor/runtime settings remain untracked. GitHub displays the rendered `.md` companions; it does not execute Quarto. See [setup and checks](report-previews.md).

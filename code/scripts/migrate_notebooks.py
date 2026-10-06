@@ -51,7 +51,9 @@ def main():
         text=original.read_text()
         header,sep,rest=text[4:].partition('\n---') if text.startswith('---\n') else ('','','')
         if sep:
-            header=re.sub(r'^editor:.*\n?','',header,flags=re.M)
+            # COMPATIBILITY: Retain visual editing when translating executable chunks.
+            if not re.search(r'^editor:', header, re.M):
+                header += '\neditor: visual'
             text='---\n'+header.strip()+'\njupyter: python3\n---'+rest
         entries=[];count=0
         def replace(match):

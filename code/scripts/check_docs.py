@@ -6,14 +6,16 @@ ROOT=Path(__file__).resolve().parents[2]
 paths=[ROOT/n for n in ['README.md','AGENTS.md','NOTICE.md','code/README.md','data/README.md','outputs/README.md','research/README.md','website/README.md']]
 paths+=list((ROOT/'docs').rglob('*.md'))
 paths+=list((ROOT/'research/notebooks').glob('*.qmd'))
+paths+=list((ROOT/'research/notebooks').glob('*.md'))
 errors=[]
 for path in set(paths):
     if 'original_notes' in path.parts:continue
     text=path.read_text()
-    if path != ROOT/'README.md' and path.suffix=='.md':
+    generated_preview = path.parent == ROOT/'research/notebooks' and path.suffix=='.md'
+    if path != ROOT/'README.md' and path.suffix=='.md' and not generated_preview:
         for key in ['Status:','Last updated:','Version:','Scope:']:
             if key not in text:errors.append(f'{path}: {key} missing')
-    if path!=ROOT/'README.md' and path.suffix=='.md' and '## Edit History' not in text:errors.append(f'{path}: edit history missing')
+    if path!=ROOT/'README.md' and path.suffix=='.md' and not generated_preview and '## Edit History' not in text:errors.append(f'{path}: edit history missing')
     if len(re.findall(r'^```',text,re.M))%2:errors.append(f'{path}: unmatched code fence')
     # WHY: Verbatim legacy folder notes quote previous paths, not current links.
     if path.name=='folder-notes.md':

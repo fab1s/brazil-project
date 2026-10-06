@@ -733,5 +733,17 @@
     "fresh_notebook_executions_passed": 9,
     "r_adapter_check_passed": true,
     "original_migration_files_verified": 344
+  },
+  "report_previews": {
+    "reports": 9,
+    "formats": [
+      "html",
+      "gfm"
+    ],
+    "tests_passed": 64,
+    "reviewed_pngs": 4,
+    "browser_broken_images": 0,
+    "evidence": "report-previews.json",
+    "scientific_parity_revalidated": false
   }
 }

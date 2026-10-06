@@ -1,5 +1,6 @@
 """Display saved scientific artifacts without executing acquisition while rendering."""
 import json
+import os
 from pathlib import Path
 import pandas as pd
 from brazil_project.io import WorkflowError
@@ -10,6 +11,16 @@ def show_chunk(ctx,source,index):
     entry=manifest[source][index-1]
     stage,artifact=entry['stage'],entry['artifact']
     from IPython.display import display,Image,HTML
+    github_preview = os.environ.get('BRAZIL_REPORT_FORMAT') == 'gfm'
+
+    def show_map(path):
+        if github_preview:
+            # COMPATIBILITY: GitHub strips JavaScript; keep interactive maps in
+            # HTML reports rather than embedding unusable widgets in Markdown.
+            from IPython.display import Markdown
+            display(Markdown('Interactive map: render this Quarto source to **HTML** to explore it.'))
+        else:
+            display(HTML(path.read_text()))
     folder=ctx.intermediate/stage
     if artifact=='report':
         path=folder/'report.json'
@@ -28,11 +39,11 @@ def show_chunk(ctx,source,index):
             if path.exists(): display(Image(filename=str(path)))
     if stage=='ibama' and entry['chunk_label']=='vizualisation':
         path=ctx.root/'outputs/maps/ibama.html'
-        if path.exists(): display(HTML(path.read_text()))
+        if path.exists(): show_map(path)
     if stage=='overview' and entry['chunk_label'].startswith('example_'):
         examples={'example_1_split':'310620025610001','example_2_split':'310620005650306','example_3_reshape':'310620005620021','example_3_stable':'310620005620008'}
         path=ctx.root/'outputs/maps/overview'/(examples[entry['chunk_label']]+'.html')
-        if path.exists(): display(HTML(path.read_text()))
+        if path.exists(): show_map(path)
     if stage=='census-exploration' and entry['chunk_label']=='visualization_black_ratio':
         path=ctx.root/'outputs/maps/black_ratio_2010_2022.html'
-        if path.exists(): display(HTML(path.read_text()))
+        if path.exists(): show_map(path)

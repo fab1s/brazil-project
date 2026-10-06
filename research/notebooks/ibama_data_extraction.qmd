@@ -1,6 +1,9 @@
 ---
 title: "IBAMA - Data Extraction"
-format: html
+format:
+  html: default
+  gfm: default
+editor: visual
 jupyter: python3
 ---
 
