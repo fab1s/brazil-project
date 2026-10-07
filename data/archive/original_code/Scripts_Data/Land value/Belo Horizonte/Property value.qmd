@@ -1,0 +1,43 @@
+---
+title: "Property value"
+format: html
+editor: visual
+---
+
+```{r libraries}
+
+library(tidyverse)
+library(readxl)
+library(sf)
+library(mapview)
+```
+
+```{r}
+test_ZH <- read_csv("20220601_zona_homogenea_iptu.csv") %>%
+  st_as_sf(wkt = "GEOMETRIA", crs = 31983)
+
+test_CIR <- read_csv("20220601_regional_barreiro_cadastro_imobiliario.csv") %>%
+  st_as_sf(wkt = "GEOMETRIA", crs = 31983)
+
+```
+
+```{r import_price_table}
+# See sheet names
+excel_sheets("lei9795-anexoI, II, III, IV e V - parsed.xlsx") # Document was parsed using AI
+
+# Annex I: Land value map (MVG)
+annex1 <- read_excel("Land value/lei9795-anexoI, II, III, IV e V - parsed.xlsx", 
+                     sheet = "Annex I")
+
+# Annex II: Building value table for non-condominium properties
+annex2 <- read_excel("Land value/lei9795-anexoI, II, III, IV e V - parsed.xlsx", 
+                     sheet = "Annex II")
+
+# Annex III: Building value table for condominium properties
+annex3 <- read_excel("Land value/lei9795-anexoI, II, III, IV e V - parsed.xlsx", 
+                     sheet = "Annex III")
+
+# Annex IV: Correction factors
+annex4 <- read_excel("Land value/lei9795-anexoI, II, III, IV e V - parsed.xlsx", 
+                     sheet = "Annex IV")
+```

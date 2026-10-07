@@ -2,8 +2,10 @@
 
 Status: implemented and validated with recorded limitations
 Last updated: 2026-10-07
-Version: 0.18
+Version: 0.19
 Scope: Current Project Progress
+
+Original R/QMD sources, historical figures, 17 reference PDFs/workbooks, the location-reference manifest and two Belo Horizonte report snapshots with six figures are included for GitHub. All 43 original files match migration checksums; scoped figure links resolve. The [data guide](../data/README.md#research-material-included-in-github) explains these additions; the [baseline inventory](evidence/baseline-files.csv) records preserved GeoPackages kept local by researcher choice, with recovery instructions in the data guide. No analytical code, input bytes or processing results changed.
 
 The three original CS2Nordic conference documents are now explicitly tracked for GitHub, with download links in the [research index](../research/README.md#cs2nordic-conference-materials). Their SHA-256 checksums match the migration manifest; only narrow ignore exceptions were added. Other research binaries and full datasets remain excluded.
 

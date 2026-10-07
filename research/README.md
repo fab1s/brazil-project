@@ -2,7 +2,7 @@
 
 Status: current
 Last updated: 2026-10-07
-Version: 0.8
+Version: 0.9
 Scope: Research Materials
 
 - `reports/`: nine readable Markdown reports, with saved tables, figures and narratives.
@@ -37,3 +37,12 @@ These original conference documents are preserved unchanged and tracked in GitHu
 - [Flash presentation](cs2nordic/CS2%20Flash%20Presentation.pptx) (PowerPoint)
 
 Download these files to open them in Word or PowerPoint. The executable [conference charts report](reports/brazil_poroject_charts.md) is separate from these presentation documents.
+
+## Saved Belo Horizonte reports
+
+These municipality-scoped snapshots include their generated figures. They are separate from the maintained national reports and update only when a scoped workflow is run:
+
+- [Belo Horizonte census harmonisation](../outputs/reports/municipality_3106200/ibge_census_tract_harmonisation.md)
+- [Belo Horizonte temporal indicators](../outputs/reports/municipality_3106200/ibge_census_temporal_comparison.md)
+
+[Original sources, figures and provider references](../data/README.md#research-material-included-in-github) preserve the material used to interpret and verify the pipeline.

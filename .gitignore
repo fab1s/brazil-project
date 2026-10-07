@@ -41,3 +41,22 @@ research/**/*.pdf
 
 # Machine-local editor/interpreter settings.
 /.vscode/settings.json
+
+# Research provenance and reviewed reference documents.
+!data/archive/original_code/
+!data/archive/original_code/**
+!data/archive/original_outputs/
+!data/archive/original_outputs/**
+!data/reference/
+data/reference/**
+!data/reference/**/
+!data/reference/**/*.pdf
+!data/reference/**/*.xlsx
+!data/reference/location-qa/manifest.json
+# Retain the reviewed Belo Horizonte report snapshot and its figures.
+!outputs/
+outputs/*
+!outputs/reports/
+outputs/reports/*
+!outputs/reports/municipality_3106200/
+!outputs/reports/municipality_3106200/**

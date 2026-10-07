@@ -1,0 +1,26 @@
+{
+  "municipalities": {
+    "path": "BR_Municipios_2022.zip",
+    "url": "https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais/municipio_2022/Brasil/BR/BR_Municipios_2022.zip",
+    "description": "IBGE municipal mesh 2022",
+    "sha256": "9c904fa1feb978a89042bfecd7758e571266f285d6122a4ff02ffe37bffb76a2",
+    "bytes": 203627589,
+    "acquired_at": "2026-10-06T11:52:29.156527+00:00"
+  },
+  "land": {
+    "path": "ne_10m_land.zip",
+    "url": "https://naturalearth.s3.amazonaws.com/5.1.1/10m_physical/ne_10m_land.zip",
+    "description": "Natural Earth land 1:10m, 5.1.1",
+    "sha256": "e547d749445eaa0964aba76738090ec88f5e63c4585122170f98c67a7ea922dc",
+    "bytes": 3269070,
+    "acquired_at": "2026-10-06T11:52:31.427667+00:00"
+  },
+  "coastline": {
+    "path": "ne_10m_coastline.zip",
+    "url": "https://naturalearth.s3.amazonaws.com/5.1.1/10m_physical/ne_10m_coastline.zip",
+    "description": "Natural Earth ocean coastline 1:10m, release 5.1.1",
+    "sha256": "bfa04cdbcbef07ef90dfca1dabb48062eca29900a113df0f389303e255484017",
+    "bytes": 3069451,
+    "acquired_at": "2026-10-06T11:54:44.640947+00:00"
+  }
+}
