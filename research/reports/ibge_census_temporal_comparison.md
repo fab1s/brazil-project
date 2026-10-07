@@ -1,50 +1,199 @@
-# IBGE Census - Temporal Comparison
+# Census indicators: 2010–2022 comparison
 
-Executable research report. Refresh with `brazil-project report ibge_census_temporal_comparison`. Code is collapsed below each explanation.
+Compare demographic, household-service, housing, income and density indicators on connected common areas. Each spatial output contains one merged 2022 feature per common_id.
 
-Spatial indicator outputs now contain one merged 2022 feature per `common_id`. Original tract pieces remain reference data. The [approved harmonisation policy](../../docs/harmonisation-policy.md) records the boundary-change assumption, complete-group scope, and explicit unmatched coverage.
+[Variable and dataset codebook](../../docs/codebook.md) · [Methods](../../docs/methods.md) · [All reports](../README.md#read-the-reports)
 
+Refresh processing and this report with `brazil-project report ibge_census_temporal_comparison --config project.toml`. Add `--from-saved` to refresh existing verified artifacts only. Code is collapsed; tables and figures below are saved execution results.
+
+## How to read this analysis
+
+Counts are aggregated before ratios are calculated. Annual tables are outer joined: an absent year stays unavailable, never zero. Most count sums skip missing entries; specified combined components are coalesced to zero. Housing denominators and population-density totals stay missing if every contributing value is missing. Proportion calculations require positive denominators. Incomplete counts can bias ratios even when an estimate is available.
+
+Annual ratio columns are fractions (0.10 = 10%). Percentage-point change is 100 × (2022 ratio − 2010 ratio); a change from 10% to 15% is +5 pp. It is not a 5% relative increase. Income and density use their own units and change rules. See the [variable codebook](../../docs/codebook.md) for every numerator, denominator, source code and exception.
+
+## Inputs, coverage and processing status
+
+Coverage is counted from final saved change columns. The original income missingness counter was recorded before those columns existed and is retained only in collapsed legacy metadata; it does not describe final income coverage. Technical fingerprints remain in run evidence.
 
 <details>
-<summary>Python code</summary>
+<summary>Read saved processing summary</summary>
 
 <!-- brazil:cell ibge_census_temporal_comparison_1 -->
 ```python
-#| label: ibge_census_temporal_comparison_1
-from pathlib import Path
-from brazil_project.io import Context
-from brazil_project.reporting import show_chunk
-show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 1)
+import matplotlib
+matplotlib.use("Agg")  # Headless figures in the fresh report process.
+import json
+import pandas as pd
+from brazil_project.reporting import show_chunk, table, markdown
+processing_record = report_json("indicators")
+coverage_rows = []
+for name, metadata in processing_record.items():
+    if not isinstance(metadata, dict) or "common_areas" not in metadata:
+        continue
+    change_column = ("income_change_brl" if name == "income" else
+                     "population_density_change" if name == "population_density" else
+                     name + "_ratio_change_pp")
+    changes = pd.read_parquet(ctx.require(ctx.artifact("indicators", name + ".parquet")), columns=[change_column])
+    if len(changes) != metadata["common_areas"]:
+        raise RuntimeError("Coverage differs from processing record: " + name)
+    coverage_rows.append({"Indicator": name.replace("_", " ").title(),
+                          "Common areas": len(changes),
+                          "Unavailable change": int(changes[change_column].isna().sum())})
+table(pd.DataFrame(coverage_rows), "Availability is calculated from the final saved change columns, including income and density.")
+markdown("<details>\n<summary>Original processing metadata (legacy income missingness counter is not final coverage)</summary>\n\n```json\n" + json.dumps(processing_record, indent=2) + "\n```\n\n</details>")
+ctx._report_presented = {("indicators", "report")}
 ```
 
 </details>
 
 <!-- brazil:output ibge_census_temporal_comparison_1 begin -->
-```text
-{'harmonisation_version': '8f67986ba3b1f50731be40dc11a183fdda6b8caecd893ed0d9ea5f83ddec1650',
- 'spatial_unit': 'common_id',
- 'black': {'common_areas': 287178, 'missing_change': 3505},
- 'brown': {'common_areas': 287178, 'missing_change': 3505},
- 'black_brown': {'common_areas': 287178, 'missing_change': 3505},
- 'literacy': {'common_areas': 285714, 'missing_change': 5738},
- 'rudimentary_sanitation': {'common_areas': 285714, 'missing_change': 3821},
- 'water_network': {'common_areas': 285714, 'missing_change': 3821},
- 'waste_collection': {'common_areas': 285714, 'missing_change': 3821},
- 'sewer_septic': {'common_areas': 285714, 'missing_change': 3821},
- 'houses': {'common_areas': 287178, 'missing_change': 5285},
- 'village_condo': {'common_areas': 287178, 'missing_change': 5285},
- 'apartments': {'common_areas': 287178, 'missing_change': 5285},
- 'income': {'common_areas': 287178, 'missing_change': 0},
- 'population_density': {'common_areas': 287178},
- 'generated_at': '2026-10-07T07:05:26.333989+00:00'}
-```
-<!-- brazil:output ibge_census_temporal_comparison_1 end -->
+Availability is calculated from the final saved change columns, including income and density.
 
-## Black population
-
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Indicator</th>
+      <th>Common areas</th>
+      <th>Unavailable change</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Black</td>
+      <td>287178</td>
+      <td>3505</td>
+    </tr>
+    <tr>
+      <td>Brown</td>
+      <td>287178</td>
+      <td>3505</td>
+    </tr>
+    <tr>
+      <td>Black Brown</td>
+      <td>287178</td>
+      <td>3505</td>
+    </tr>
+    <tr>
+      <td>Literacy</td>
+      <td>285714</td>
+      <td>5738</td>
+    </tr>
+    <tr>
+      <td>Rudimentary Sanitation</td>
+      <td>285714</td>
+      <td>3821</td>
+    </tr>
+    <tr>
+      <td>Water Network</td>
+      <td>285714</td>
+      <td>3821</td>
+    </tr>
+    <tr>
+      <td>Waste Collection</td>
+      <td>285714</td>
+      <td>3821</td>
+    </tr>
+    <tr>
+      <td>Sewer Septic</td>
+      <td>285714</td>
+      <td>3821</td>
+    </tr>
+    <tr>
+      <td>Houses</td>
+      <td>287178</td>
+      <td>5285</td>
+    </tr>
+    <tr>
+      <td>Village Condo</td>
+      <td>287178</td>
+      <td>5285</td>
+    </tr>
+    <tr>
+      <td>Apartments</td>
+      <td>287178</td>
+      <td>5285</td>
+    </tr>
+    <tr>
+      <td>Income</td>
+      <td>287178</td>
+      <td>7216</td>
+    </tr>
+    <tr>
+      <td>Population Density</td>
+      <td>287178</td>
+      <td>2785</td>
+    </tr>
+  </tbody>
+</table>
 
 <details>
-<summary>Python code</summary>
+<summary>Original processing metadata (legacy income missingness counter is not final coverage)</summary>
+
+```json
+{
+  "harmonisation_version": "8f67986ba3b1f50731be40dc11a183fdda6b8caecd893ed0d9ea5f83ddec1650",
+  "spatial_unit": "common_id",
+  "black": {
+    "common_areas": 287178,
+    "missing_change": 3505
+  },
+  "brown": {
+    "common_areas": 287178,
+    "missing_change": 3505
+  },
+  "black_brown": {
+    "common_areas": 287178,
+    "missing_change": 3505
+  },
+  "literacy": {
+    "common_areas": 285714,
+    "missing_change": 5738
+  },
+  "rudimentary_sanitation": {
+    "common_areas": 285714,
+    "missing_change": 3821
+  },
+  "water_network": {
+    "common_areas": 285714,
+    "missing_change": 3821
+  },
+  "waste_collection": {
+    "common_areas": 285714,
+    "missing_change": 3821
+  },
+  "sewer_septic": {
+    "common_areas": 285714,
+    "missing_change": 3821
+  },
+  "houses": {
+    "common_areas": 287178,
+    "missing_change": 5285
+  },
+  "village_condo": {
+    "common_areas": 287178,
+    "missing_change": 5285
+  },
+  "apartments": {
+    "common_areas": 287178,
+    "missing_change": 5285
+  },
+  "income": {
+    "common_areas": 287178,
+    "missing_change": 0
+  },
+  "population_density": {
+    "common_areas": 287178
+  },
+  "generated_at": "2026-10-07T08:17:10.795067+00:00"
+}
+```
+
+</details>
+<!-- brazil:output ibge_census_temporal_comparison_1 end -->
+
+<details>
+<summary>Trace original step: Data Import</summary>
 
 <!-- brazil:cell ibge_census_temporal_comparison_2 -->
 ```python
@@ -55,33 +204,11 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 2)
 </details>
 
 <!-- brazil:output ibge_census_temporal_comparison_2 begin -->
-```text
-{'harmonisation_version': '8f67986ba3b1f50731be40dc11a183fdda6b8caecd893ed0d9ea5f83ddec1650',
- 'spatial_unit': 'common_id',
- 'black': {'common_areas': 287178, 'missing_change': 3505},
- 'brown': {'common_areas': 287178, 'missing_change': 3505},
- 'black_brown': {'common_areas': 287178, 'missing_change': 3505},
- 'literacy': {'common_areas': 285714, 'missing_change': 5738},
- 'rudimentary_sanitation': {'common_areas': 285714, 'missing_change': 3821},
- 'water_network': {'common_areas': 285714, 'missing_change': 3821},
- 'waste_collection': {'common_areas': 285714, 'missing_change': 3821},
- 'sewer_septic': {'common_areas': 285714, 'missing_change': 3821},
- 'houses': {'common_areas': 287178, 'missing_change': 5285},
- 'village_condo': {'common_areas': 287178, 'missing_change': 5285},
- 'apartments': {'common_areas': 287178, 'missing_change': 5285},
- 'income': {'common_areas': 287178, 'missing_change': 0},
- 'population_density': {'common_areas': 287178},
- 'generated_at': '2026-10-07T07:05:26.333989+00:00'}
-```
+<!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output ibge_census_temporal_comparison_2 end -->
 
-## Calculation conventions
-
-All eight indicators retain available annual common-area estimates with `full_join()`. Counts are summed with `na.rm = TRUE`; missing components of combined counts are also treated as zero before addition. This preserves the requested Black-only aggregation approach, but incomplete counts can bias proportions. Ratios with zero total population/households remain unavailable. An absent year is never filled with zero, so percentage-point change requires both annual ratios. These are common-area estimates displayed on 2022 geometry.
-
-
 <details>
-<summary>Python code</summary>
+<summary>Trace original step: Check Join Keys</summary>
 
 <!-- brazil:cell ibge_census_temporal_comparison_3 -->
 ```python
@@ -92,29 +219,15 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 3)
 </details>
 
 <!-- brazil:output ibge_census_temporal_comparison_3 begin -->
-```text
-{'harmonisation_version': '8f67986ba3b1f50731be40dc11a183fdda6b8caecd893ed0d9ea5f83ddec1650',
- 'spatial_unit': 'common_id',
- 'black': {'common_areas': 287178, 'missing_change': 3505},
- 'brown': {'common_areas': 287178, 'missing_change': 3505},
- 'black_brown': {'common_areas': 287178, 'missing_change': 3505},
- 'literacy': {'common_areas': 285714, 'missing_change': 5738},
- 'rudimentary_sanitation': {'common_areas': 285714, 'missing_change': 3821},
- 'water_network': {'common_areas': 285714, 'missing_change': 3821},
- 'waste_collection': {'common_areas': 285714, 'missing_change': 3821},
- 'sewer_septic': {'common_areas': 285714, 'missing_change': 3821},
- 'houses': {'common_areas': 287178, 'missing_change': 5285},
- 'village_condo': {'common_areas': 287178, 'missing_change': 5285},
- 'apartments': {'common_areas': 287178, 'missing_change': 5285},
- 'income': {'common_areas': 287178, 'missing_change': 0},
- 'population_density': {'common_areas': 287178},
- 'generated_at': '2026-10-07T07:05:26.333989+00:00'}
-```
+<!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output ibge_census_temporal_comparison_3 end -->
 
+## Black population share
+
+Black count / total population, aggregated within each common area.
 
 <details>
-<summary>Python code</summary>
+<summary>Read black population share</summary>
 
 <!-- brazil:cell ibge_census_temporal_comparison_4 -->
 ```python
@@ -125,338 +238,98 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 4)
 </details>
 
 <!-- brazil:output ibge_census_temporal_comparison_4 begin -->
+Unweighted distribution across common areas. These are not national population-weighted estimates.
 
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th></th>
-      <th>common_id</th>
-      <th>pop_2010</th>
-      <th>black_pop_2010</th>
-      <th>black_ratio_2010</th>
-      <th>pop_2022</th>
-      <th>black_pop_2022</th>
-      <th>black_ratio_2022</th>
-      <th>black_ratio_change</th>
-      <th>black_ratio_change_pp</th>
-      <th>n_2010</th>
-      <th>n_2022</th>
-      <th>relationship</th>
+      <th>Year</th>
+      <th>Unit</th>
+      <th>Available areas</th>
+      <th>Unavailable areas</th>
+      <th>Median across areas</th>
+      <th>25th percentile</th>
+      <th>75th percentile</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>859.0</td>
-      <td>57.0</td>
-      <td>0.066356</td>
-      <td>928.0</td>
-      <td>87.0</td>
-      <td>0.093750</td>
-      <td>0.027394</td>
-      <td>2.739377</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
+      <td>2010</td>
+      <td>%</td>
+      <td>284393</td>
+      <td>2785</td>
+      <td>5.1447</td>
+      <td>2.3006</td>
+      <td>9.6000</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>10</td>
-      <td>491.0</td>
-      <td>22.0</td>
-      <td>0.044807</td>
-      <td>311.0</td>
-      <td>21.0</td>
-      <td>0.067524</td>
-      <td>0.022718</td>
-      <td>2.271760</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>100</td>
-      <td>1314.0</td>
-      <td>92.0</td>
-      <td>0.070015</td>
-      <td>1060.0</td>
-      <td>97.0</td>
-      <td>0.091509</td>
-      <td>0.021494</td>
-      <td>2.149421</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1000</td>
-      <td>811.0</td>
-      <td>109.0</td>
-      <td>0.134402</td>
-      <td>683.0</td>
-      <td>63.0</td>
-      <td>0.092240</td>
-      <td>-0.042162</td>
-      <td>-4.216186</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>10000</td>
-      <td>915.0</td>
-      <td>52.0</td>
-      <td>0.056831</td>
-      <td>842.0</td>
-      <td>96.0</td>
-      <td>0.114014</td>
-      <td>0.057184</td>
-      <td>5.718365</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>100000</td>
-      <td>519.0</td>
-      <td>15.0</td>
-      <td>0.028902</td>
-      <td>491.0</td>
-      <td>24.0</td>
-      <td>0.048880</td>
-      <td>0.019978</td>
-      <td>1.997810</td>
-      <td>2</td>
-      <td>3</td>
-      <td>many_to_many</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>100001</td>
-      <td>329.0</td>
-      <td>8.0</td>
-      <td>0.024316</td>
-      <td>381.0</td>
-      <td>11.0</td>
-      <td>0.028871</td>
-      <td>0.004555</td>
-      <td>0.455528</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>100002</td>
-      <td>470.0</td>
-      <td>26.0</td>
-      <td>0.055319</td>
-      <td>421.0</td>
-      <td>7.0</td>
-      <td>0.016627</td>
-      <td>-0.038692</td>
-      <td>-3.869207</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>100003</td>
-      <td>635.0</td>
-      <td>22.0</td>
-      <td>0.034646</td>
-      <td>466.0</td>
-      <td>25.0</td>
-      <td>0.053648</td>
-      <td>0.019002</td>
-      <td>1.900240</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>100004</td>
-      <td>469.0</td>
-      <td>5.0</td>
-      <td>0.010661</td>
-      <td>316.0</td>
-      <td>7.0</td>
-      <td>0.022152</td>
-      <td>0.011491</td>
-      <td>1.149092</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>100005</td>
-      <td>519.0</td>
-      <td>21.0</td>
-      <td>0.040462</td>
-      <td>411.0</td>
-      <td>14.0</td>
-      <td>0.034063</td>
-      <td>-0.006399</td>
-      <td>-0.639917</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>100006</td>
-      <td>524.0</td>
-      <td>20.0</td>
-      <td>0.038168</td>
-      <td>411.0</td>
-      <td>18.0</td>
-      <td>0.043796</td>
-      <td>0.005628</td>
-      <td>0.562768</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>100007</td>
-      <td>424.0</td>
-      <td>53.0</td>
-      <td>0.125000</td>
-      <td>311.0</td>
-      <td>37.0</td>
-      <td>0.118971</td>
-      <td>-0.006029</td>
-      <td>-0.602894</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>100008</td>
-      <td>559.0</td>
-      <td>4.0</td>
-      <td>0.007156</td>
-      <td>646.0</td>
-      <td>20.0</td>
-      <td>0.030960</td>
-      <td>0.023804</td>
-      <td>2.380412</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>100009</td>
-      <td>614.0</td>
-      <td>5.0</td>
-      <td>0.008143</td>
-      <td>554.0</td>
-      <td>16.0</td>
-      <td>0.028881</td>
-      <td>0.020738</td>
-      <td>2.073754</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>10001</td>
-      <td>696.0</td>
-      <td>46.0</td>
-      <td>0.066092</td>
-      <td>810.0</td>
-      <td>99.0</td>
-      <td>0.122222</td>
-      <td>0.056130</td>
-      <td>5.613027</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>100010</td>
-      <td>620.0</td>
-      <td>10.0</td>
-      <td>0.016129</td>
-      <td>625.0</td>
-      <td>18.0</td>
-      <td>0.028800</td>
-      <td>0.012671</td>
-      <td>1.267097</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>100011</td>
-      <td>421.0</td>
-      <td>42.0</td>
-      <td>0.099762</td>
-      <td>348.0</td>
-      <td>42.0</td>
-      <td>0.120690</td>
-      <td>0.020927</td>
-      <td>2.092718</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>100012</td>
-      <td>848.0</td>
-      <td>38.0</td>
-      <td>0.044811</td>
-      <td>1296.0</td>
-      <td>144.0</td>
-      <td>0.111111</td>
-      <td>0.066300</td>
-      <td>6.629979</td>
-      <td>1</td>
-      <td>3</td>
-      <td>2010_to_2022_split</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>100013</td>
-      <td>412.0</td>
-      <td>26.0</td>
-      <td>0.063107</td>
-      <td>701.0</td>
-      <td>70.0</td>
-      <td>0.099857</td>
-      <td>0.036751</td>
-      <td>3.675055</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
+      <td>2022</td>
+      <td>%</td>
+      <td>284994</td>
+      <td>2184</td>
+      <td>7.8616</td>
+      <td>4.1499</td>
+      <td>12.9543</td>
     </tr>
   </tbody>
 </table>
 
+First five saved common areas (a data preview, not a representative sample). Annual ratios in this preview are fractions; change is percentage points for proportion indicators.
 
-```text
-{'artifact_rows': 287178, 'path': 'data/intermediate/indicators/black.parquet'}
-```
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>common_id</th>
+      <th>black_ratio_2010</th>
+      <th>black_ratio_2022</th>
+      <th>black_ratio_change_pp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>0.0664</td>
+      <td>0.0938</td>
+      <td>2.7394</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>0.0448</td>
+      <td>0.0675</td>
+      <td>2.2718</td>
+    </tr>
+    <tr>
+      <td>100</td>
+      <td>0.0700</td>
+      <td>0.0915</td>
+      <td>2.1494</td>
+    </tr>
+    <tr>
+      <td>1000</td>
+      <td>0.1344</td>
+      <td>0.0922</td>
+      <td>-4.2162</td>
+    </tr>
+    <tr>
+      <td>10000</td>
+      <td>0.0568</td>
+      <td>0.1140</td>
+      <td>5.7184</td>
+    </tr>
+  </tbody>
+</table>
+
+![Generated figure](assets/87fd225de925ddcca7439994bb37001ba17f46f2c1715def7842af5000559eb3.png)
+
+Median and middle 50% of available common-area estimates; whiskers follow 1.5×IQR. Outliers are hidden in the figure and retained in the data. Annual availability can differ; this is descriptive, not a paired causal comparison.
 <!-- brazil:output ibge_census_temporal_comparison_4 end -->
 
+## Literacy among people aged 15+
+
+Literate population aged 15+ / population aged 15+. The 2022 Pessoas table supplies its own denominator independently of the Basico join.
 
 <details>
-<summary>Python code</summary>
+<summary>Read literacy among people aged 15+</summary>
 
 <!-- brazil:cell ibge_census_temporal_comparison_5 -->
 ```python
@@ -467,339 +340,94 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 5)
 </details>
 
 <!-- brazil:output ibge_census_temporal_comparison_5 begin -->
+Unweighted distribution across common areas. These are not national population-weighted estimates.
 
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th></th>
-      <th>common_id</th>
-      <th>pop_15plus_2010</th>
-      <th>literate_15plus_2010</th>
-      <th>literacy_ratio_2010</th>
-      <th>pop_15plus_2022</th>
-      <th>literate_15plus_2022</th>
-      <th>literacy_ratio_2022</th>
-      <th>literacy_ratio_change</th>
-      <th>literacy_ratio_change_pp</th>
-      <th>n_2010</th>
-      <th>n_2022</th>
-      <th>relationship</th>
+      <th>Year</th>
+      <th>Unit</th>
+      <th>Available areas</th>
+      <th>Unavailable areas</th>
+      <th>Median across areas</th>
+      <th>25th percentile</th>
+      <th>75th percentile</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>647.0</td>
-      <td>588.0</td>
-      <td>0.908810</td>
-      <td>730.0</td>
-      <td>666.0</td>
-      <td>0.912329</td>
-      <td>0.003519</td>
-      <td>0.351888</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
+      <td>2010</td>
+      <td>%</td>
+      <td>281219</td>
+      <td>4495</td>
+      <td>93.8272</td>
+      <td>85.7143</td>
+      <td>97.3790</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>10</td>
-      <td>400.0</td>
-      <td>384.0</td>
-      <td>0.960000</td>
-      <td>258.0</td>
-      <td>251.0</td>
-      <td>0.972868</td>
-      <td>0.012868</td>
-      <td>1.286822</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>100</td>
-      <td>991.0</td>
-      <td>906.0</td>
-      <td>0.914228</td>
-      <td>860.0</td>
-      <td>822.0</td>
-      <td>0.955814</td>
-      <td>0.041586</td>
-      <td>4.158590</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1000</td>
-      <td>582.0</td>
-      <td>553.0</td>
-      <td>0.950172</td>
-      <td>522.0</td>
-      <td>504.0</td>
-      <td>0.965517</td>
-      <td>0.015345</td>
-      <td>1.534542</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>10000</td>
-      <td>653.0</td>
-      <td>641.0</td>
-      <td>0.981623</td>
-      <td>656.0</td>
-      <td>644.0</td>
-      <td>0.981707</td>
-      <td>0.000084</td>
-      <td>0.008404</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>100000</td>
-      <td>402.0</td>
-      <td>325.0</td>
-      <td>0.808458</td>
-      <td>412.0</td>
-      <td>372.0</td>
-      <td>0.902913</td>
-      <td>0.094455</td>
-      <td>9.445491</td>
-      <td>2</td>
-      <td>3</td>
-      <td>many_to_many</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>100001</td>
-      <td>276.0</td>
-      <td>269.0</td>
-      <td>0.974638</td>
-      <td>327.0</td>
-      <td>325.0</td>
-      <td>0.993884</td>
-      <td>0.019246</td>
-      <td>1.924611</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>100002</td>
-      <td>360.0</td>
-      <td>360.0</td>
-      <td>1.000000</td>
-      <td>359.0</td>
-      <td>355.0</td>
-      <td>0.988858</td>
-      <td>-0.011142</td>
-      <td>-1.114206</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>100003</td>
-      <td>527.0</td>
-      <td>504.0</td>
-      <td>0.956357</td>
-      <td>409.0</td>
-      <td>389.0</td>
-      <td>0.951100</td>
-      <td>-0.005256</td>
-      <td>-0.525649</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>100004</td>
-      <td>415.0</td>
-      <td>405.0</td>
-      <td>0.975904</td>
-      <td>290.0</td>
-      <td>287.0</td>
-      <td>0.989655</td>
-      <td>0.013752</td>
-      <td>1.375156</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>100005</td>
-      <td>439.0</td>
-      <td>426.0</td>
-      <td>0.970387</td>
-      <td>359.0</td>
-      <td>341.0</td>
-      <td>0.949861</td>
-      <td>-0.020527</td>
-      <td>-2.052652</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>100006</td>
-      <td>437.0</td>
-      <td>434.0</td>
-      <td>0.993135</td>
-      <td>367.0</td>
-      <td>361.0</td>
-      <td>0.983651</td>
-      <td>-0.009484</td>
-      <td>-0.948379</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>100007</td>
-      <td>333.0</td>
-      <td>297.0</td>
-      <td>0.891892</td>
-      <td>261.0</td>
-      <td>238.0</td>
-      <td>0.911877</td>
-      <td>0.019986</td>
-      <td>1.998550</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>100008</td>
-      <td>411.0</td>
-      <td>410.0</td>
-      <td>0.997567</td>
-      <td>509.0</td>
-      <td>501.0</td>
-      <td>0.984283</td>
-      <td>-0.013284</td>
-      <td>-1.328400</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>100009</td>
-      <td>497.0</td>
-      <td>486.0</td>
-      <td>0.977867</td>
-      <td>482.0</td>
-      <td>469.0</td>
-      <td>0.973029</td>
-      <td>-0.004838</td>
-      <td>-0.483816</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>10001</td>
-      <td>482.0</td>
-      <td>467.0</td>
-      <td>0.968880</td>
-      <td>635.0</td>
-      <td>625.0</td>
-      <td>0.984252</td>
-      <td>0.015372</td>
-      <td>1.537230</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>100010</td>
-      <td>479.0</td>
-      <td>474.0</td>
-      <td>0.989562</td>
-      <td>511.0</td>
-      <td>508.0</td>
-      <td>0.994129</td>
-      <td>0.004568</td>
-      <td>0.456757</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>100011</td>
-      <td>350.0</td>
-      <td>332.0</td>
-      <td>0.948571</td>
-      <td>301.0</td>
-      <td>289.0</td>
-      <td>0.960133</td>
-      <td>0.011561</td>
-      <td>1.156146</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>100012</td>
-      <td>609.0</td>
-      <td>574.0</td>
-      <td>0.942529</td>
-      <td>993.0</td>
-      <td>937.0</td>
-      <td>0.943605</td>
-      <td>0.001077</td>
-      <td>0.107650</td>
-      <td>1</td>
-      <td>3</td>
-      <td>2010_to_2022_split</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>100013</td>
-      <td>305.0</td>
-      <td>276.0</td>
-      <td>0.904918</td>
-      <td>551.0</td>
-      <td>522.0</td>
-      <td>0.947368</td>
-      <td>0.042450</td>
-      <td>4.245039</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
+      <td>2022</td>
+      <td>%</td>
+      <td>283112</td>
+      <td>2602</td>
+      <td>95.4496</td>
+      <td>89.4751</td>
+      <td>98.0603</td>
     </tr>
   </tbody>
 </table>
 
+First five saved common areas (a data preview, not a representative sample). Annual ratios in this preview are fractions; change is percentage points for proportion indicators.
 
-```text
-{'artifact_rows': 285714,
- 'path': 'data/intermediate/indicators/literacy.parquet'}
-```
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>common_id</th>
+      <th>literacy_ratio_2010</th>
+      <th>literacy_ratio_2022</th>
+      <th>literacy_ratio_change_pp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>0.9088</td>
+      <td>0.9123</td>
+      <td>0.3519</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>0.9600</td>
+      <td>0.9729</td>
+      <td>1.2868</td>
+    </tr>
+    <tr>
+      <td>100</td>
+      <td>0.9142</td>
+      <td>0.9558</td>
+      <td>4.1586</td>
+    </tr>
+    <tr>
+      <td>1000</td>
+      <td>0.9502</td>
+      <td>0.9655</td>
+      <td>1.5345</td>
+    </tr>
+    <tr>
+      <td>10000</td>
+      <td>0.9816</td>
+      <td>0.9817</td>
+      <td>0.0084</td>
+    </tr>
+  </tbody>
+</table>
 <!-- brazil:output ibge_census_temporal_comparison_5 end -->
 
+## Rudimentary sanitation
+
+Selected rudimentary pit, ditch and water-body disposal counts / the original household denominator. This excludes the additional no-bathroom categories used in conference charts.
 
 <details>
-<summary>Python code</summary>
+<summary>Read rudimentary sanitation</summary>
 
 <!-- brazil:cell ibge_census_temporal_comparison_6 -->
 ```python
@@ -810,339 +438,94 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 6)
 </details>
 
 <!-- brazil:output ibge_census_temporal_comparison_6 begin -->
+Unweighted distribution across common areas. These are not national population-weighted estimates.
 
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th></th>
-      <th>common_id</th>
-      <th>households_2010</th>
-      <th>rudimentary_sanitation_households_2010</th>
-      <th>rudimentary_sanitation_ratio_2010</th>
-      <th>households_2022</th>
-      <th>rudimentary_sanitation_households_2022</th>
-      <th>rudimentary_sanitation_ratio_2022</th>
-      <th>rudimentary_sanitation_ratio_change</th>
-      <th>rudimentary_sanitation_ratio_change_pp</th>
-      <th>n_2010</th>
-      <th>n_2022</th>
-      <th>relationship</th>
+      <th>Year</th>
+      <th>Unit</th>
+      <th>Available areas</th>
+      <th>Unavailable areas</th>
+      <th>Median across areas</th>
+      <th>25th percentile</th>
+      <th>75th percentile</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>264.0</td>
-      <td>261.0</td>
-      <td>0.988636</td>
-      <td>336.0</td>
-      <td>329.0</td>
-      <td>0.979167</td>
-      <td>-0.009470</td>
-      <td>-0.946970</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
+      <td>2010</td>
+      <td>%</td>
+      <td>283550</td>
+      <td>2164</td>
+      <td>5.0633</td>
+      <td>0.0000</td>
+      <td>65.8254</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>10</td>
-      <td>168.0</td>
-      <td>166.0</td>
-      <td>0.988095</td>
-      <td>123.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>-0.988095</td>
-      <td>-98.809524</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>100</td>
-      <td>384.0</td>
-      <td>23.0</td>
-      <td>0.059896</td>
-      <td>391.0</td>
-      <td>5.0</td>
-      <td>0.012788</td>
-      <td>-0.047108</td>
-      <td>-4.710811</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1000</td>
-      <td>213.0</td>
-      <td>194.0</td>
-      <td>0.910798</td>
-      <td>216.0</td>
-      <td>187.0</td>
-      <td>0.865741</td>
-      <td>-0.045057</td>
-      <td>-4.505738</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>10000</td>
-      <td>261.0</td>
-      <td>149.0</td>
-      <td>0.570881</td>
-      <td>263.0</td>
-      <td>20.0</td>
-      <td>0.076046</td>
-      <td>-0.494836</td>
-      <td>-49.483560</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>100000</td>
-      <td>181.0</td>
-      <td>102.0</td>
-      <td>0.563536</td>
-      <td>213.0</td>
-      <td>90.0</td>
-      <td>0.422535</td>
-      <td>-0.141001</td>
-      <td>-14.100070</td>
-      <td>2</td>
-      <td>3</td>
-      <td>many_to_many</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>100001</td>
-      <td>117.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>151.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>100002</td>
-      <td>146.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>147.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>100003</td>
-      <td>207.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>175.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>100004</td>
-      <td>169.0</td>
-      <td>4.0</td>
-      <td>0.023669</td>
-      <td>142.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>-0.023669</td>
-      <td>-2.366864</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>100005</td>
-      <td>172.0</td>
-      <td>1.0</td>
-      <td>0.005814</td>
-      <td>162.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>-0.005814</td>
-      <td>-0.581395</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>100006</td>
-      <td>174.0</td>
-      <td>1.0</td>
-      <td>0.005747</td>
-      <td>166.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>-0.005747</td>
-      <td>-0.574713</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>100007</td>
-      <td>138.0</td>
-      <td>1.0</td>
-      <td>0.007246</td>
-      <td>124.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>-0.007246</td>
-      <td>-0.724638</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>100008</td>
-      <td>175.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>223.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>100009</td>
-      <td>183.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>194.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>10001</td>
-      <td>197.0</td>
-      <td>173.0</td>
-      <td>0.878173</td>
-      <td>255.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>-0.878173</td>
-      <td>-87.817259</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>100010</td>
-      <td>183.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>220.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>100011</td>
-      <td>134.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>130.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>100012</td>
-      <td>252.0</td>
-      <td>7.0</td>
-      <td>0.027778</td>
-      <td>439.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>-0.027778</td>
-      <td>-2.777778</td>
-      <td>1</td>
-      <td>3</td>
-      <td>2010_to_2022_split</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>100013</td>
-      <td>127.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>243.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
+      <td>2022</td>
+      <td>%</td>
+      <td>283274</td>
+      <td>2440</td>
+      <td>1.8315</td>
+      <td>0.0000</td>
+      <td>50.0000</td>
     </tr>
   </tbody>
 </table>
 
+First five saved common areas (a data preview, not a representative sample). Annual ratios in this preview are fractions; change is percentage points for proportion indicators.
 
-```text
-{'artifact_rows': 285714,
- 'path': 'data/intermediate/indicators/rudimentary_sanitation.parquet'}
-```
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>common_id</th>
+      <th>rudimentary_sanitation_ratio_2010</th>
+      <th>rudimentary_sanitation_ratio_2022</th>
+      <th>rudimentary_sanitation_ratio_change_pp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>0.9886</td>
+      <td>0.9792</td>
+      <td>-0.9470</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>0.9881</td>
+      <td>0.0000</td>
+      <td>-98.8095</td>
+    </tr>
+    <tr>
+      <td>100</td>
+      <td>0.0599</td>
+      <td>0.0128</td>
+      <td>-4.7108</td>
+    </tr>
+    <tr>
+      <td>1000</td>
+      <td>0.9108</td>
+      <td>0.8657</td>
+      <td>-4.5057</td>
+    </tr>
+    <tr>
+      <td>10000</td>
+      <td>0.5709</td>
+      <td>0.0760</td>
+      <td>-49.4836</td>
+    </tr>
+  </tbody>
+</table>
 <!-- brazil:output ibge_census_temporal_comparison_6 end -->
 
+## Water-network access
+
+Water-network household counts / the original household denominator.
 
 <details>
-<summary>Python code</summary>
+<summary>Read water-network access</summary>
 
 <!-- brazil:cell ibge_census_temporal_comparison_7 -->
 ```python
@@ -1153,339 +536,94 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 7)
 </details>
 
 <!-- brazil:output ibge_census_temporal_comparison_7 begin -->
+Unweighted distribution across common areas. These are not national population-weighted estimates.
 
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th></th>
-      <th>common_id</th>
-      <th>households_2010</th>
-      <th>water_network_households_2010</th>
-      <th>water_network_ratio_2010</th>
-      <th>households_2022</th>
-      <th>water_network_households_2022</th>
-      <th>water_network_ratio_2022</th>
-      <th>water_network_ratio_change</th>
-      <th>water_network_ratio_change_pp</th>
-      <th>n_2010</th>
-      <th>n_2022</th>
-      <th>relationship</th>
+      <th>Year</th>
+      <th>Unit</th>
+      <th>Available areas</th>
+      <th>Unavailable areas</th>
+      <th>Median across areas</th>
+      <th>25th percentile</th>
+      <th>75th percentile</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>264.0</td>
-      <td>68.0</td>
-      <td>0.257576</td>
-      <td>336.0</td>
-      <td>69.0</td>
-      <td>0.205357</td>
-      <td>-0.052219</td>
-      <td>-5.221861</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
+      <td>2010</td>
+      <td>%</td>
+      <td>283550</td>
+      <td>2164</td>
+      <td>97.1429</td>
+      <td>27.4194</td>
+      <td>100.0000</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>10</td>
-      <td>168.0</td>
-      <td>103.0</td>
-      <td>0.613095</td>
-      <td>123.0</td>
-      <td>111.0</td>
-      <td>0.902439</td>
-      <td>0.289344</td>
-      <td>28.934379</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>100</td>
-      <td>384.0</td>
-      <td>155.0</td>
-      <td>0.403646</td>
-      <td>391.0</td>
-      <td>198.0</td>
-      <td>0.506394</td>
-      <td>0.102748</td>
-      <td>10.274803</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1000</td>
-      <td>213.0</td>
-      <td>161.0</td>
-      <td>0.755869</td>
-      <td>216.0</td>
-      <td>185.0</td>
-      <td>0.856481</td>
-      <td>0.100613</td>
-      <td>10.061294</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>10000</td>
-      <td>261.0</td>
-      <td>235.0</td>
-      <td>0.900383</td>
-      <td>263.0</td>
-      <td>202.0</td>
-      <td>0.768061</td>
-      <td>-0.132322</td>
-      <td>-13.232231</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>100000</td>
-      <td>181.0</td>
-      <td>97.0</td>
-      <td>0.535912</td>
-      <td>213.0</td>
-      <td>105.0</td>
-      <td>0.492958</td>
-      <td>-0.042954</td>
-      <td>-4.295386</td>
-      <td>2</td>
-      <td>3</td>
-      <td>many_to_many</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>100001</td>
-      <td>117.0</td>
-      <td>117.0</td>
-      <td>1.000000</td>
-      <td>151.0</td>
-      <td>136.0</td>
-      <td>0.900662</td>
-      <td>-0.099338</td>
-      <td>-9.933775</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>100002</td>
-      <td>146.0</td>
-      <td>146.0</td>
-      <td>1.000000</td>
-      <td>147.0</td>
-      <td>147.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>100003</td>
-      <td>207.0</td>
-      <td>207.0</td>
-      <td>1.000000</td>
-      <td>175.0</td>
-      <td>175.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>100004</td>
-      <td>169.0</td>
-      <td>169.0</td>
-      <td>1.000000</td>
-      <td>142.0</td>
-      <td>142.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>100005</td>
-      <td>172.0</td>
-      <td>172.0</td>
-      <td>1.000000</td>
-      <td>162.0</td>
-      <td>162.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>100006</td>
-      <td>174.0</td>
-      <td>174.0</td>
-      <td>1.000000</td>
-      <td>166.0</td>
-      <td>166.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>100007</td>
-      <td>138.0</td>
-      <td>138.0</td>
-      <td>1.000000</td>
-      <td>124.0</td>
-      <td>124.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>100008</td>
-      <td>175.0</td>
-      <td>175.0</td>
-      <td>1.000000</td>
-      <td>223.0</td>
-      <td>222.0</td>
-      <td>0.995516</td>
-      <td>-0.004484</td>
-      <td>-0.448430</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>100009</td>
-      <td>183.0</td>
-      <td>183.0</td>
-      <td>1.000000</td>
-      <td>194.0</td>
-      <td>194.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>10001</td>
-      <td>197.0</td>
-      <td>185.0</td>
-      <td>0.939086</td>
-      <td>255.0</td>
-      <td>229.0</td>
-      <td>0.898039</td>
-      <td>-0.041047</td>
-      <td>-4.104708</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>100010</td>
-      <td>183.0</td>
-      <td>183.0</td>
-      <td>1.000000</td>
-      <td>220.0</td>
-      <td>220.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>100011</td>
-      <td>134.0</td>
-      <td>133.0</td>
-      <td>0.992537</td>
-      <td>130.0</td>
-      <td>130.0</td>
-      <td>1.000000</td>
-      <td>0.007463</td>
-      <td>0.746269</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>100012</td>
-      <td>252.0</td>
-      <td>245.0</td>
-      <td>0.972222</td>
-      <td>439.0</td>
-      <td>436.0</td>
-      <td>0.993166</td>
-      <td>0.020944</td>
-      <td>2.094406</td>
-      <td>1</td>
-      <td>3</td>
-      <td>2010_to_2022_split</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>100013</td>
-      <td>127.0</td>
-      <td>127.0</td>
-      <td>1.000000</td>
-      <td>243.0</td>
-      <td>243.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
+      <td>2022</td>
+      <td>%</td>
+      <td>283274</td>
+      <td>2440</td>
+      <td>98.3051</td>
+      <td>70.4142</td>
+      <td>100.0000</td>
     </tr>
   </tbody>
 </table>
 
+First five saved common areas (a data preview, not a representative sample). Annual ratios in this preview are fractions; change is percentage points for proportion indicators.
 
-```text
-{'artifact_rows': 285714,
- 'path': 'data/intermediate/indicators/water_network.parquet'}
-```
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>common_id</th>
+      <th>water_network_ratio_2010</th>
+      <th>water_network_ratio_2022</th>
+      <th>water_network_ratio_change_pp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>0.2576</td>
+      <td>0.2054</td>
+      <td>-5.2219</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>0.6131</td>
+      <td>0.9024</td>
+      <td>28.9344</td>
+    </tr>
+    <tr>
+      <td>100</td>
+      <td>0.4036</td>
+      <td>0.5064</td>
+      <td>10.2748</td>
+    </tr>
+    <tr>
+      <td>1000</td>
+      <td>0.7559</td>
+      <td>0.8565</td>
+      <td>10.0613</td>
+    </tr>
+    <tr>
+      <td>10000</td>
+      <td>0.9004</td>
+      <td>0.7681</td>
+      <td>-13.2322</td>
+    </tr>
+  </tbody>
+</table>
 <!-- brazil:output ibge_census_temporal_comparison_7 end -->
 
+## Waste collection
+
+Selected collection categories / the original household denominator. The combined 2022 components retain the original missing-component rule.
 
 <details>
-<summary>Python code</summary>
+<summary>Read waste collection</summary>
 
 <!-- brazil:cell ibge_census_temporal_comparison_8 -->
 ```python
@@ -1496,339 +634,94 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 8)
 </details>
 
 <!-- brazil:output ibge_census_temporal_comparison_8 begin -->
+Unweighted distribution across common areas. These are not national population-weighted estimates.
 
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th></th>
-      <th>common_id</th>
-      <th>households_2010</th>
-      <th>waste_collection_households_2010</th>
-      <th>waste_collection_ratio_2010</th>
-      <th>households_2022</th>
-      <th>waste_collection_households_2022</th>
-      <th>waste_collection_ratio_2022</th>
-      <th>waste_collection_ratio_change</th>
-      <th>waste_collection_ratio_change_pp</th>
-      <th>n_2010</th>
-      <th>n_2022</th>
-      <th>relationship</th>
+      <th>Year</th>
+      <th>Unit</th>
+      <th>Available areas</th>
+      <th>Unavailable areas</th>
+      <th>Median across areas</th>
+      <th>25th percentile</th>
+      <th>75th percentile</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>264.0</td>
-      <td>256.0</td>
-      <td>0.969697</td>
-      <td>336.0</td>
-      <td>333.0</td>
-      <td>0.991071</td>
-      <td>0.021374</td>
-      <td>2.137446</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
+      <td>2010</td>
+      <td>%</td>
+      <td>283550</td>
+      <td>2164</td>
+      <td>99.5614</td>
+      <td>48.7179</td>
+      <td>100.0000</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>10</td>
-      <td>168.0</td>
-      <td>168.0</td>
-      <td>1.000000</td>
-      <td>123.0</td>
-      <td>123.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>100</td>
-      <td>384.0</td>
-      <td>382.0</td>
-      <td>0.994792</td>
-      <td>391.0</td>
-      <td>391.0</td>
-      <td>1.000000</td>
-      <td>0.005208</td>
-      <td>0.520833</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1000</td>
-      <td>213.0</td>
-      <td>213.0</td>
-      <td>1.000000</td>
-      <td>216.0</td>
-      <td>216.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>10000</td>
-      <td>261.0</td>
-      <td>261.0</td>
-      <td>1.000000</td>
-      <td>263.0</td>
-      <td>262.0</td>
-      <td>0.996198</td>
-      <td>-0.003802</td>
-      <td>-0.380228</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>100000</td>
-      <td>181.0</td>
-      <td>99.0</td>
-      <td>0.546961</td>
-      <td>213.0</td>
-      <td>169.0</td>
-      <td>0.793427</td>
-      <td>0.246466</td>
-      <td>24.646590</td>
-      <td>2</td>
-      <td>3</td>
-      <td>many_to_many</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>100001</td>
-      <td>117.0</td>
-      <td>117.0</td>
-      <td>1.000000</td>
-      <td>151.0</td>
-      <td>150.0</td>
-      <td>0.993377</td>
-      <td>-0.006623</td>
-      <td>-0.662252</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>100002</td>
-      <td>146.0</td>
-      <td>146.0</td>
-      <td>1.000000</td>
-      <td>147.0</td>
-      <td>146.0</td>
-      <td>0.993197</td>
-      <td>-0.006803</td>
-      <td>-0.680272</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>100003</td>
-      <td>207.0</td>
-      <td>207.0</td>
-      <td>1.000000</td>
-      <td>175.0</td>
-      <td>174.0</td>
-      <td>0.994286</td>
-      <td>-0.005714</td>
-      <td>-0.571429</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>100004</td>
-      <td>169.0</td>
-      <td>169.0</td>
-      <td>1.000000</td>
-      <td>142.0</td>
-      <td>141.0</td>
-      <td>0.992958</td>
-      <td>-0.007042</td>
-      <td>-0.704225</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>100005</td>
-      <td>172.0</td>
-      <td>172.0</td>
-      <td>1.000000</td>
-      <td>162.0</td>
-      <td>153.0</td>
-      <td>0.944444</td>
-      <td>-0.055556</td>
-      <td>-5.555556</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>100006</td>
-      <td>174.0</td>
-      <td>174.0</td>
-      <td>1.000000</td>
-      <td>166.0</td>
-      <td>166.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>100007</td>
-      <td>138.0</td>
-      <td>138.0</td>
-      <td>1.000000</td>
-      <td>124.0</td>
-      <td>124.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>100008</td>
-      <td>175.0</td>
-      <td>175.0</td>
-      <td>1.000000</td>
-      <td>223.0</td>
-      <td>223.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>100009</td>
-      <td>183.0</td>
-      <td>183.0</td>
-      <td>1.000000</td>
-      <td>194.0</td>
-      <td>194.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>10001</td>
-      <td>197.0</td>
-      <td>197.0</td>
-      <td>1.000000</td>
-      <td>255.0</td>
-      <td>255.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>100010</td>
-      <td>183.0</td>
-      <td>183.0</td>
-      <td>1.000000</td>
-      <td>220.0</td>
-      <td>220.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>100011</td>
-      <td>134.0</td>
-      <td>134.0</td>
-      <td>1.000000</td>
-      <td>130.0</td>
-      <td>130.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>100012</td>
-      <td>252.0</td>
-      <td>242.0</td>
-      <td>0.960317</td>
-      <td>439.0</td>
-      <td>428.0</td>
-      <td>0.974943</td>
-      <td>0.014626</td>
-      <td>1.462559</td>
-      <td>1</td>
-      <td>3</td>
-      <td>2010_to_2022_split</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>100013</td>
-      <td>127.0</td>
-      <td>126.0</td>
-      <td>0.992126</td>
-      <td>243.0</td>
-      <td>243.0</td>
-      <td>1.000000</td>
-      <td>0.007874</td>
-      <td>0.787402</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
+      <td>2022</td>
+      <td>%</td>
+      <td>283274</td>
+      <td>2440</td>
+      <td>99.6575</td>
+      <td>95.3642</td>
+      <td>100.0000</td>
     </tr>
   </tbody>
 </table>
 
+First five saved common areas (a data preview, not a representative sample). Annual ratios in this preview are fractions; change is percentage points for proportion indicators.
 
-```text
-{'artifact_rows': 285714,
- 'path': 'data/intermediate/indicators/waste_collection.parquet'}
-```
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>common_id</th>
+      <th>waste_collection_ratio_2010</th>
+      <th>waste_collection_ratio_2022</th>
+      <th>waste_collection_ratio_change_pp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>0.9697</td>
+      <td>0.9911</td>
+      <td>2.1374</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>100</td>
+      <td>0.9948</td>
+      <td>1.0000</td>
+      <td>0.5208</td>
+    </tr>
+    <tr>
+      <td>1000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>10000</td>
+      <td>1.0000</td>
+      <td>0.9962</td>
+      <td>-0.3802</td>
+    </tr>
+  </tbody>
+</table>
 <!-- brazil:output ibge_census_temporal_comparison_8 end -->
 
+## Sewer or septic disposal
+
+Selected sewer/septic disposal categories / the original household denominator. Categories follow the year-specific codes in the codebook.
 
 <details>
-<summary>Python code</summary>
+<summary>Read sewer or septic disposal</summary>
 
 <!-- brazil:cell ibge_census_temporal_comparison_9 -->
 ```python
@@ -1839,339 +732,94 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 9)
 </details>
 
 <!-- brazil:output ibge_census_temporal_comparison_9 begin -->
+Unweighted distribution across common areas. These are not national population-weighted estimates.
 
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th></th>
-      <th>common_id</th>
-      <th>households_2010</th>
-      <th>sewer_septic_households_2010</th>
-      <th>sewer_septic_ratio_2010</th>
-      <th>households_2022</th>
-      <th>sewer_septic_households_2022</th>
-      <th>sewer_septic_ratio_2022</th>
-      <th>sewer_septic_ratio_change</th>
-      <th>sewer_septic_ratio_change_pp</th>
-      <th>n_2010</th>
-      <th>n_2022</th>
-      <th>relationship</th>
+      <th>Year</th>
+      <th>Unit</th>
+      <th>Available areas</th>
+      <th>Unavailable areas</th>
+      <th>Median across areas</th>
+      <th>25th percentile</th>
+      <th>75th percentile</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>264.0</td>
-      <td>1.0</td>
-      <td>0.003788</td>
-      <td>336.0</td>
-      <td>6.0</td>
-      <td>0.017857</td>
-      <td>0.014069</td>
-      <td>1.406926</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
+      <td>2010</td>
+      <td>%</td>
+      <td>283550</td>
+      <td>2164</td>
+      <td>78.4431</td>
+      <td>2.8571</td>
+      <td>99.5455</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>10</td>
-      <td>168.0</td>
-      <td>2.0</td>
-      <td>0.011905</td>
-      <td>123.0</td>
-      <td>122.0</td>
-      <td>0.991870</td>
-      <td>0.979965</td>
-      <td>97.996516</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>100</td>
-      <td>384.0</td>
-      <td>359.0</td>
-      <td>0.934896</td>
-      <td>391.0</td>
-      <td>386.0</td>
-      <td>0.987212</td>
-      <td>0.052316</td>
-      <td>5.231644</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1000</td>
-      <td>213.0</td>
-      <td>19.0</td>
-      <td>0.089202</td>
-      <td>216.0</td>
-      <td>29.0</td>
-      <td>0.134259</td>
-      <td>0.045057</td>
-      <td>4.505738</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>10000</td>
-      <td>261.0</td>
-      <td>112.0</td>
-      <td>0.429119</td>
-      <td>263.0</td>
-      <td>243.0</td>
-      <td>0.923954</td>
-      <td>0.494836</td>
-      <td>49.483560</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>100000</td>
-      <td>181.0</td>
-      <td>78.0</td>
-      <td>0.430939</td>
-      <td>213.0</td>
-      <td>122.0</td>
-      <td>0.572770</td>
-      <td>0.141831</td>
-      <td>14.183073</td>
-      <td>2</td>
-      <td>3</td>
-      <td>many_to_many</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>100001</td>
-      <td>117.0</td>
-      <td>117.0</td>
-      <td>1.000000</td>
-      <td>151.0</td>
-      <td>151.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>100002</td>
-      <td>146.0</td>
-      <td>146.0</td>
-      <td>1.000000</td>
-      <td>147.0</td>
-      <td>147.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>100003</td>
-      <td>207.0</td>
-      <td>207.0</td>
-      <td>1.000000</td>
-      <td>175.0</td>
-      <td>173.0</td>
-      <td>0.988571</td>
-      <td>-0.011429</td>
-      <td>-1.142857</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>100004</td>
-      <td>169.0</td>
-      <td>165.0</td>
-      <td>0.976331</td>
-      <td>142.0</td>
-      <td>142.0</td>
-      <td>1.000000</td>
-      <td>0.023669</td>
-      <td>2.366864</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>100005</td>
-      <td>172.0</td>
-      <td>171.0</td>
-      <td>0.994186</td>
-      <td>162.0</td>
-      <td>162.0</td>
-      <td>1.000000</td>
-      <td>0.005814</td>
-      <td>0.581395</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>100006</td>
-      <td>174.0</td>
-      <td>172.0</td>
-      <td>0.988506</td>
-      <td>166.0</td>
-      <td>165.0</td>
-      <td>0.993976</td>
-      <td>0.005470</td>
-      <td>0.547016</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>100007</td>
-      <td>138.0</td>
-      <td>137.0</td>
-      <td>0.992754</td>
-      <td>124.0</td>
-      <td>123.0</td>
-      <td>0.991935</td>
-      <td>-0.000818</td>
-      <td>-0.081814</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>100008</td>
-      <td>175.0</td>
-      <td>175.0</td>
-      <td>1.000000</td>
-      <td>223.0</td>
-      <td>222.0</td>
-      <td>0.995516</td>
-      <td>-0.004484</td>
-      <td>-0.448430</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>100009</td>
-      <td>183.0</td>
-      <td>183.0</td>
-      <td>1.000000</td>
-      <td>194.0</td>
-      <td>194.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>10001</td>
-      <td>197.0</td>
-      <td>24.0</td>
-      <td>0.121827</td>
-      <td>255.0</td>
-      <td>252.0</td>
-      <td>0.988235</td>
-      <td>0.866408</td>
-      <td>86.640788</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>100010</td>
-      <td>183.0</td>
-      <td>183.0</td>
-      <td>1.000000</td>
-      <td>220.0</td>
-      <td>220.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>100011</td>
-      <td>134.0</td>
-      <td>134.0</td>
-      <td>1.000000</td>
-      <td>130.0</td>
-      <td>130.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>100012</td>
-      <td>252.0</td>
-      <td>242.0</td>
-      <td>0.960317</td>
-      <td>439.0</td>
-      <td>435.0</td>
-      <td>0.990888</td>
-      <td>0.030571</td>
-      <td>3.057092</td>
-      <td>1</td>
-      <td>3</td>
-      <td>2010_to_2022_split</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>100013</td>
-      <td>127.0</td>
-      <td>127.0</td>
-      <td>1.000000</td>
-      <td>243.0</td>
-      <td>243.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
+      <td>2022</td>
+      <td>%</td>
+      <td>283274</td>
+      <td>2440</td>
+      <td>96.5636</td>
+      <td>43.8849</td>
+      <td>99.7135</td>
     </tr>
   </tbody>
 </table>
 
+First five saved common areas (a data preview, not a representative sample). Annual ratios in this preview are fractions; change is percentage points for proportion indicators.
 
-```text
-{'artifact_rows': 285714,
- 'path': 'data/intermediate/indicators/sewer_septic.parquet'}
-```
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>common_id</th>
+      <th>sewer_septic_ratio_2010</th>
+      <th>sewer_septic_ratio_2022</th>
+      <th>sewer_septic_ratio_change_pp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>0.0038</td>
+      <td>0.0179</td>
+      <td>1.4069</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>0.0119</td>
+      <td>0.9919</td>
+      <td>97.9965</td>
+    </tr>
+    <tr>
+      <td>100</td>
+      <td>0.9349</td>
+      <td>0.9872</td>
+      <td>5.2316</td>
+    </tr>
+    <tr>
+      <td>1000</td>
+      <td>0.0892</td>
+      <td>0.1343</td>
+      <td>4.5057</td>
+    </tr>
+    <tr>
+      <td>10000</td>
+      <td>0.4291</td>
+      <td>0.9240</td>
+      <td>49.4836</td>
+    </tr>
+  </tbody>
+</table>
 <!-- brazil:output ibge_census_temporal_comparison_9 end -->
 
+## Brown population share
+
+Brown count / total population. This retains the census category as supplied.
 
 <details>
-<summary>Python code</summary>
+<summary>Read brown population share</summary>
 
 <!-- brazil:cell ibge_census_temporal_comparison_10 -->
 ```python
@@ -2182,338 +830,94 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 10)
 </details>
 
 <!-- brazil:output ibge_census_temporal_comparison_10 begin -->
+Unweighted distribution across common areas. These are not national population-weighted estimates.
 
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th></th>
-      <th>common_id</th>
-      <th>pop_2010</th>
-      <th>brown_pop_2010</th>
-      <th>brown_ratio_2010</th>
-      <th>pop_2022</th>
-      <th>brown_pop_2022</th>
-      <th>brown_ratio_2022</th>
-      <th>brown_ratio_change</th>
-      <th>brown_ratio_change_pp</th>
-      <th>n_2010</th>
-      <th>n_2022</th>
-      <th>relationship</th>
+      <th>Year</th>
+      <th>Unit</th>
+      <th>Available areas</th>
+      <th>Unavailable areas</th>
+      <th>Median across areas</th>
+      <th>25th percentile</th>
+      <th>75th percentile</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>859.0</td>
-      <td>404.0</td>
-      <td>0.470314</td>
-      <td>928.0</td>
-      <td>514.0</td>
-      <td>0.553879</td>
-      <td>0.083565</td>
-      <td>8.356499</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
+      <td>2010</td>
+      <td>%</td>
+      <td>284393</td>
+      <td>2785</td>
+      <td>42.8835</td>
+      <td>20.9369</td>
+      <td>58.4507</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>10</td>
-      <td>491.0</td>
-      <td>236.0</td>
-      <td>0.480652</td>
-      <td>311.0</td>
-      <td>166.0</td>
-      <td>0.533762</td>
-      <td>0.053110</td>
-      <td>5.311033</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>100</td>
-      <td>1314.0</td>
-      <td>692.0</td>
-      <td>0.526636</td>
-      <td>1060.0</td>
-      <td>582.0</td>
-      <td>0.549057</td>
-      <td>0.022420</td>
-      <td>2.242038</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1000</td>
-      <td>811.0</td>
-      <td>469.0</td>
-      <td>0.578298</td>
-      <td>683.0</td>
-      <td>448.0</td>
-      <td>0.655930</td>
-      <td>0.077631</td>
-      <td>7.763132</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>10000</td>
-      <td>915.0</td>
-      <td>641.0</td>
-      <td>0.700546</td>
-      <td>842.0</td>
-      <td>541.0</td>
-      <td>0.642518</td>
-      <td>-0.058029</td>
-      <td>-5.802863</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>100000</td>
-      <td>519.0</td>
-      <td>229.0</td>
-      <td>0.441233</td>
-      <td>491.0</td>
-      <td>204.0</td>
-      <td>0.415479</td>
-      <td>-0.025755</td>
-      <td>-2.575453</td>
-      <td>2</td>
-      <td>3</td>
-      <td>many_to_many</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>100001</td>
-      <td>329.0</td>
-      <td>86.0</td>
-      <td>0.261398</td>
-      <td>381.0</td>
-      <td>115.0</td>
-      <td>0.301837</td>
-      <td>0.040439</td>
-      <td>4.043909</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>100002</td>
-      <td>470.0</td>
-      <td>140.0</td>
-      <td>0.297872</td>
-      <td>421.0</td>
-      <td>166.0</td>
-      <td>0.394299</td>
-      <td>0.096427</td>
-      <td>9.642695</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>100003</td>
-      <td>635.0</td>
-      <td>254.0</td>
-      <td>0.400000</td>
-      <td>466.0</td>
-      <td>144.0</td>
-      <td>0.309013</td>
-      <td>-0.090987</td>
-      <td>-9.098712</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>100004</td>
-      <td>469.0</td>
-      <td>113.0</td>
-      <td>0.240938</td>
-      <td>316.0</td>
-      <td>98.0</td>
-      <td>0.310127</td>
-      <td>0.069188</td>
-      <td>6.918842</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>100005</td>
-      <td>519.0</td>
-      <td>148.0</td>
-      <td>0.285164</td>
-      <td>411.0</td>
-      <td>148.0</td>
-      <td>0.360097</td>
-      <td>0.074934</td>
-      <td>7.493355</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>100006</td>
-      <td>524.0</td>
-      <td>124.0</td>
-      <td>0.236641</td>
-      <td>411.0</td>
-      <td>123.0</td>
-      <td>0.299270</td>
-      <td>0.062629</td>
-      <td>6.262885</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>100007</td>
-      <td>424.0</td>
-      <td>224.0</td>
-      <td>0.528302</td>
-      <td>311.0</td>
-      <td>153.0</td>
-      <td>0.491961</td>
-      <td>-0.036340</td>
-      <td>-3.634047</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>100008</td>
-      <td>559.0</td>
-      <td>136.0</td>
-      <td>0.243292</td>
-      <td>646.0</td>
-      <td>229.0</td>
-      <td>0.354489</td>
-      <td>0.111198</td>
-      <td>11.119757</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>100009</td>
-      <td>614.0</td>
-      <td>145.0</td>
-      <td>0.236156</td>
-      <td>554.0</td>
-      <td>184.0</td>
-      <td>0.332130</td>
-      <td>0.095974</td>
-      <td>9.597361</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>10001</td>
-      <td>696.0</td>
-      <td>448.0</td>
-      <td>0.643678</td>
-      <td>810.0</td>
-      <td>534.0</td>
-      <td>0.659259</td>
-      <td>0.015581</td>
-      <td>1.558110</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>100010</td>
-      <td>620.0</td>
-      <td>135.0</td>
-      <td>0.217742</td>
-      <td>625.0</td>
-      <td>173.0</td>
-      <td>0.276800</td>
-      <td>0.059058</td>
-      <td>5.905806</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>100011</td>
-      <td>421.0</td>
-      <td>120.0</td>
-      <td>0.285036</td>
-      <td>348.0</td>
-      <td>148.0</td>
-      <td>0.425287</td>
-      <td>0.140252</td>
-      <td>14.025173</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>100012</td>
-      <td>848.0</td>
-      <td>425.0</td>
-      <td>0.501179</td>
-      <td>1296.0</td>
-      <td>584.0</td>
-      <td>0.450617</td>
-      <td>-0.050562</td>
-      <td>-5.056196</td>
-      <td>1</td>
-      <td>3</td>
-      <td>2010_to_2022_split</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>100013</td>
-      <td>412.0</td>
-      <td>193.0</td>
-      <td>0.468447</td>
-      <td>701.0</td>
-      <td>385.0</td>
-      <td>0.549215</td>
-      <td>0.080769</td>
-      <td>8.076880</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
+      <td>2022</td>
+      <td>%</td>
+      <td>284994</td>
+      <td>2184</td>
+      <td>45.6022</td>
+      <td>26.8477</td>
+      <td>58.9233</td>
     </tr>
   </tbody>
 </table>
 
+First five saved common areas (a data preview, not a representative sample). Annual ratios in this preview are fractions; change is percentage points for proportion indicators.
 
-```text
-{'artifact_rows': 287178, 'path': 'data/intermediate/indicators/brown.parquet'}
-```
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>common_id</th>
+      <th>brown_ratio_2010</th>
+      <th>brown_ratio_2022</th>
+      <th>brown_ratio_change_pp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>0.4703</td>
+      <td>0.5539</td>
+      <td>8.3565</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>0.4807</td>
+      <td>0.5338</td>
+      <td>5.3110</td>
+    </tr>
+    <tr>
+      <td>100</td>
+      <td>0.5266</td>
+      <td>0.5491</td>
+      <td>2.2420</td>
+    </tr>
+    <tr>
+      <td>1000</td>
+      <td>0.5783</td>
+      <td>0.6559</td>
+      <td>7.7631</td>
+    </tr>
+    <tr>
+      <td>10000</td>
+      <td>0.7005</td>
+      <td>0.6425</td>
+      <td>-5.8029</td>
+    </tr>
+  </tbody>
+</table>
 <!-- brazil:output ibge_census_temporal_comparison_10 end -->
 
+## Combined Black/Brown population share
+
+Sum of Black and Brown counts / total population; missing component counts are coalesced to zero.
 
 <details>
-<summary>Python code</summary>
+<summary>Read combined black/brown population share</summary>
 
 <!-- brazil:cell ibge_census_temporal_comparison_11 -->
 ```python
@@ -2524,341 +928,94 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 11)
 </details>
 
 <!-- brazil:output ibge_census_temporal_comparison_11 begin -->
+Unweighted distribution across common areas. These are not national population-weighted estimates.
 
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th></th>
-      <th>common_id</th>
-      <th>pop_2010</th>
-      <th>black_brown_pop_2010</th>
-      <th>black_brown_ratio_2010</th>
-      <th>pop_2022</th>
-      <th>black_brown_pop_2022</th>
-      <th>black_brown_ratio_2022</th>
-      <th>black_brown_ratio_change</th>
-      <th>black_brown_ratio_change_pp</th>
-      <th>n_2010</th>
-      <th>n_2022</th>
-      <th>relationship</th>
+      <th>Year</th>
+      <th>Unit</th>
+      <th>Available areas</th>
+      <th>Unavailable areas</th>
+      <th>Median across areas</th>
+      <th>25th percentile</th>
+      <th>75th percentile</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>859.0</td>
-      <td>461.0</td>
-      <td>0.536671</td>
-      <td>928.0</td>
-      <td>601.0</td>
-      <td>0.647629</td>
-      <td>0.110959</td>
-      <td>11.095876</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
+      <td>2010</td>
+      <td>%</td>
+      <td>284393</td>
+      <td>2785</td>
+      <td>51.4423</td>
+      <td>25.7895</td>
+      <td>68.6838</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>10</td>
-      <td>491.0</td>
-      <td>258.0</td>
-      <td>0.525458</td>
-      <td>311.0</td>
-      <td>187.0</td>
-      <td>0.601286</td>
-      <td>0.075828</td>
-      <td>7.582793</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>100</td>
-      <td>1314.0</td>
-      <td>784.0</td>
-      <td>0.596651</td>
-      <td>1060.0</td>
-      <td>679.0</td>
-      <td>0.640566</td>
-      <td>0.043915</td>
-      <td>4.391459</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1000</td>
-      <td>811.0</td>
-      <td>578.0</td>
-      <td>0.712700</td>
-      <td>683.0</td>
-      <td>511.0</td>
-      <td>0.748170</td>
-      <td>0.035469</td>
-      <td>3.546947</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>10000</td>
-      <td>915.0</td>
-      <td>693.0</td>
-      <td>0.757377</td>
-      <td>842.0</td>
-      <td>637.0</td>
-      <td>0.756532</td>
-      <td>-0.000845</td>
-      <td>-0.084498</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>100000</td>
-      <td>519.0</td>
-      <td>244.0</td>
-      <td>0.470135</td>
-      <td>491.0</td>
-      <td>228.0</td>
-      <td>0.464358</td>
-      <td>-0.005776</td>
-      <td>-0.577642</td>
-      <td>2</td>
-      <td>3</td>
-      <td>many_to_many</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>100001</td>
-      <td>329.0</td>
-      <td>94.0</td>
-      <td>0.285714</td>
-      <td>381.0</td>
-      <td>126.0</td>
-      <td>0.330709</td>
-      <td>0.044994</td>
-      <td>4.499438</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>100002</td>
-      <td>470.0</td>
-      <td>166.0</td>
-      <td>0.353191</td>
-      <td>421.0</td>
-      <td>173.0</td>
-      <td>0.410926</td>
-      <td>0.057735</td>
-      <td>5.773488</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>100003</td>
-      <td>635.0</td>
-      <td>276.0</td>
-      <td>0.434646</td>
-      <td>466.0</td>
-      <td>169.0</td>
-      <td>0.362661</td>
-      <td>-0.071985</td>
-      <td>-7.198473</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>100004</td>
-      <td>469.0</td>
-      <td>118.0</td>
-      <td>0.251599</td>
-      <td>316.0</td>
-      <td>105.0</td>
-      <td>0.332278</td>
-      <td>0.080679</td>
-      <td>8.067933</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>100005</td>
-      <td>519.0</td>
-      <td>169.0</td>
-      <td>0.325626</td>
-      <td>411.0</td>
-      <td>162.0</td>
-      <td>0.394161</td>
-      <td>0.068534</td>
-      <td>6.853438</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>100006</td>
-      <td>524.0</td>
-      <td>144.0</td>
-      <td>0.274809</td>
-      <td>411.0</td>
-      <td>141.0</td>
-      <td>0.343066</td>
-      <td>0.068257</td>
-      <td>6.825653</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>100007</td>
-      <td>424.0</td>
-      <td>277.0</td>
-      <td>0.653302</td>
-      <td>311.0</td>
-      <td>190.0</td>
-      <td>0.610932</td>
-      <td>-0.042369</td>
-      <td>-4.236941</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>100008</td>
-      <td>559.0</td>
-      <td>140.0</td>
-      <td>0.250447</td>
-      <td>646.0</td>
-      <td>249.0</td>
-      <td>0.385449</td>
-      <td>0.135002</td>
-      <td>13.500169</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>100009</td>
-      <td>614.0</td>
-      <td>150.0</td>
-      <td>0.244300</td>
-      <td>554.0</td>
-      <td>200.0</td>
-      <td>0.361011</td>
-      <td>0.116711</td>
-      <td>11.671116</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>10001</td>
-      <td>696.0</td>
-      <td>494.0</td>
-      <td>0.709770</td>
-      <td>810.0</td>
-      <td>633.0</td>
-      <td>0.781481</td>
-      <td>0.071711</td>
-      <td>7.171137</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>100010</td>
-      <td>620.0</td>
-      <td>145.0</td>
-      <td>0.233871</td>
-      <td>625.0</td>
-      <td>191.0</td>
-      <td>0.305600</td>
-      <td>0.071729</td>
-      <td>7.172903</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>100011</td>
-      <td>421.0</td>
-      <td>162.0</td>
-      <td>0.384798</td>
-      <td>348.0</td>
-      <td>190.0</td>
-      <td>0.545977</td>
-      <td>0.161179</td>
-      <td>16.117891</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>100012</td>
-      <td>848.0</td>
-      <td>463.0</td>
-      <td>0.545991</td>
-      <td>1296.0</td>
-      <td>728.0</td>
-      <td>0.561728</td>
-      <td>0.015738</td>
-      <td>1.573783</td>
-      <td>1</td>
-      <td>3</td>
-      <td>2010_to_2022_split</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>100013</td>
-      <td>412.0</td>
-      <td>219.0</td>
-      <td>0.531553</td>
-      <td>701.0</td>
-      <td>455.0</td>
-      <td>0.649073</td>
-      <td>0.117519</td>
-      <td>11.751936</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
+      <td>2022</td>
+      <td>%</td>
+      <td>284994</td>
+      <td>2184</td>
+      <td>57.0926</td>
+      <td>33.1933</td>
+      <td>72.7407</td>
     </tr>
   </tbody>
 </table>
 
+First five saved common areas (a data preview, not a representative sample). Annual ratios in this preview are fractions; change is percentage points for proportion indicators.
 
-```text
-{'artifact_rows': 287178,
- 'path': 'data/intermediate/indicators/black_brown.parquet'}
-```
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>common_id</th>
+      <th>black_brown_ratio_2010</th>
+      <th>black_brown_ratio_2022</th>
+      <th>black_brown_ratio_change_pp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>0.5367</td>
+      <td>0.6476</td>
+      <td>11.0959</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>0.5255</td>
+      <td>0.6013</td>
+      <td>7.5828</td>
+    </tr>
+    <tr>
+      <td>100</td>
+      <td>0.5967</td>
+      <td>0.6406</td>
+      <td>4.3915</td>
+    </tr>
+    <tr>
+      <td>1000</td>
+      <td>0.7127</td>
+      <td>0.7482</td>
+      <td>3.5469</td>
+    </tr>
+    <tr>
+      <td>10000</td>
+      <td>0.7574</td>
+      <td>0.7565</td>
+      <td>-0.0845</td>
+    </tr>
+  </tbody>
+</table>
 <!-- brazil:output ibge_census_temporal_comparison_11 end -->
 
-Income is harmonised by common_id. Multi-tract groups require validated counts of income-receiving household heads for the matching household universe; without those counts their means remain unavailable. Single-tract means are retained independently in each year.
+## Income in July 2022 reais
 
+2010 tract mean = total income / positive recipients. Group means are weighted by household heads using only valid mean/weight pairs; incomplete coverage is reported but does not automatically block a mean. This corrects the former report’s stronger prose restriction to describe the existing implementation. The pipeline’s configured inflation factor converts 2010 nominal income to July 2022 reais. Absolute change is BRL; relative change requires positive 2010 income.
 
 <details>
-<summary>Python code</summary>
+<summary>Read income in july 2022 reais</summary>
 
 <!-- brazil:cell ibge_census_temporal_comparison_12 -->
 ```python
@@ -2869,654 +1026,98 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 12)
 </details>
 
 <!-- brazil:output ibge_census_temporal_comparison_12 begin -->
+Unweighted distribution across common areas. These are not national population-weighted estimates.
 
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th></th>
-      <th>common_id</th>
-      <th>n_2010_x</th>
-      <th>n_used_2010</th>
-      <th>missing_weights_2010</th>
-      <th>missing_means_2010</th>
-      <th>heads_used_2010</th>
-      <th>weighted_sum_2010</th>
-      <th>complete_2010</th>
-      <th>tract_coverage_pct_2010</th>
-      <th>income_2010</th>
-      <th>income_2010_nominal</th>
-      <th>n_2022_x</th>
-      <th>n_used_2022</th>
-      <th>missing_weights_2022</th>
-      <th>missing_means_2022</th>
-      <th>heads_used_2022</th>
-      <th>weighted_sum_2022</th>
-      <th>complete_2022</th>
-      <th>tract_coverage_pct_2022</th>
-      <th>income_2022</th>
-      <th>n_2010_y</th>
-      <th>n_2022_y</th>
-      <th>relationship</th>
-      <th>valid_income_change</th>
-      <th>valid_income_change_pct</th>
-      <th>income_change_brl</th>
-      <th>income_change_pct</th>
+      <th>Year</th>
+      <th>Unit</th>
+      <th>Available areas</th>
+      <th>Unavailable areas</th>
+      <th>Median across areas</th>
+      <th>25th percentile</th>
+      <th>75th percentile</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>264.0</td>
-      <td>275732.205128</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>2169.046150</td>
-      <td>1044.440171</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>336.0</td>
-      <td>824218.08</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>2453.030000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>True</td>
-      <td>True</td>
-      <td>283.983850</td>
-      <td>13.092568</td>
+      <td>2010</td>
+      <td>July 2022 BRL</td>
+      <td>280906</td>
+      <td>6272</td>
+      <td>2,081.9171</td>
+      <td>1,452.9446</td>
+      <td>3,085.3132</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>10</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>168.0</td>
-      <td>231121.271523</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>2857.036979</td>
-      <td>1375.721854</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>123.0</td>
-      <td>627308.61</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>5100.070000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>True</td>
-      <td>True</td>
-      <td>2243.033021</td>
-      <td>78.509065</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>100</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>384.0</td>
-      <td>423391.906706</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>2289.794737</td>
-      <td>1102.583090</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>391.0</td>
-      <td>963787.63</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>2464.930000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>True</td>
-      <td>True</td>
-      <td>175.135263</td>
-      <td>7.648514</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>213.0</td>
-      <td>174906.910448</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>1705.346327</td>
-      <td>821.159204</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>216.0</td>
-      <td>446327.28</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>2066.330000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>True</td>
-      <td>True</td>
-      <td>360.983673</td>
-      <td>21.167763</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>10000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>261.0</td>
-      <td>302518.207792</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>2407.111661</td>
-      <td>1159.073593</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>263.0</td>
-      <td>614652.04</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>2337.080000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>True</td>
-      <td>True</td>
-      <td>-70.031661</td>
-      <td>-2.909365</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>100000</td>
-      <td>2</td>
-      <td>2</td>
-      <td>0</td>
-      <td>0</td>
-      <td>182.0</td>
-      <td>166167.137500</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>1896.090122</td>
-      <td>913.006250</td>
-      <td>3</td>
-      <td>3</td>
-      <td>0</td>
-      <td>0</td>
-      <td>213.0</td>
-      <td>502801.26</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>2360.569296</td>
-      <td>2</td>
-      <td>3</td>
-      <td>many_to_many</td>
-      <td>True</td>
-      <td>True</td>
-      <td>464.479174</td>
-      <td>24.496682</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>100001</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>117.0</td>
-      <td>221499.313043</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>3931.621914</td>
-      <td>1893.156522</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>151.0</td>
-      <td>796888.91</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>5277.410000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>True</td>
-      <td>True</td>
-      <td>1345.788086</td>
-      <td>34.229845</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>100002</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>147.0</td>
-      <td>447022.829787</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>6315.352465</td>
-      <td>3040.971631</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>147.0</td>
-      <td>719382.72</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>4893.760000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>True</td>
-      <td>True</td>
-      <td>-1421.592465</td>
-      <td>-22.510105</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>100003</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>207.0</td>
-      <td>353641.296482</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>3547.952965</td>
-      <td>1708.412060</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>175.0</td>
-      <td>570498.25</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>3259.990000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>True</td>
-      <td>True</td>
-      <td>-287.962965</td>
-      <td>-8.116313</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>100004</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>169.0</td>
-      <td>230319.512048</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>2830.279022</td>
-      <td>1362.837349</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>142.0</td>
-      <td>367931.94</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>2591.070000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>True</td>
-      <td>True</td>
-      <td>-239.209022</td>
-      <td>-8.451782</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>100005</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>172.0</td>
-      <td>215373.546012</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>2600.453766</td>
-      <td>1252.171779</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>162.0</td>
-      <td>378187.38</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>2334.490000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>True</td>
-      <td>True</td>
-      <td>-265.963766</td>
-      <td>-10.227591</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>100006</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>174.0</td>
-      <td>363099.105882</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>4333.723074</td>
-      <td>2086.776471</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>166.0</td>
-      <td>694587.16</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>4184.260000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>True</td>
-      <td>True</td>
-      <td>-149.463074</td>
-      <td>-3.448838</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>100007</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>138.0</td>
-      <td>127461.720930</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>1918.164798</td>
-      <td>923.635659</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>124.0</td>
-      <td>241026.24</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>1943.760000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>True</td>
-      <td>True</td>
-      <td>25.595202</td>
-      <td>1.334359</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>100008</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>175.0</td>
-      <td>371165.209790</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>4404.680772</td>
-      <td>2120.944056</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>223.0</td>
-      <td>953708.56</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>4276.720000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>True</td>
-      <td>True</td>
-      <td>-127.960772</td>
-      <td>-2.905109</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>100009</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>184.0</td>
-      <td>323943.821229</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>3656.260267</td>
-      <td>1760.564246</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>194.0</td>
-      <td>738835.42</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>3808.430000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>True</td>
-      <td>True</td>
-      <td>152.169733</td>
-      <td>4.161896</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>10001</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>197.0</td>
-      <td>195056.121547</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>2056.262634</td>
-      <td>990.132597</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>255.0</td>
-      <td>573923.40</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>2250.680000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>True</td>
-      <td>True</td>
-      <td>194.417366</td>
-      <td>9.454890</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>100010</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>183.0</td>
-      <td>645415.297753</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>7324.422539</td>
-      <td>3526.859551</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>220.0</td>
-      <td>1300824.80</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>5912.840000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>True</td>
-      <td>True</td>
-      <td>-1411.582539</td>
-      <td>-19.272271</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>100011</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>134.0</td>
-      <td>125666.875000</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>1947.606621</td>
-      <td>937.812500</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>130.0</td>
-      <td>236355.60</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>1818.120000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>True</td>
-      <td>True</td>
-      <td>-129.486621</td>
-      <td>-6.648500</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>100012</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>252.0</td>
-      <td>253448.470588</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>2088.691788</td>
-      <td>1005.747899</td>
-      <td>3</td>
-      <td>3</td>
-      <td>0</td>
-      <td>0</td>
-      <td>439.0</td>
-      <td>796111.87</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>1813.466674</td>
-      <td>1</td>
-      <td>3</td>
-      <td>2010_to_2022_split</td>
-      <td>True</td>
-      <td>True</td>
-      <td>-275.225114</td>
-      <td>-13.176914</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>100013</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>127.0</td>
-      <td>99254.163462</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>1623.043791</td>
-      <td>781.528846</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>243.0</td>
-      <td>447363.00</td>
-      <td>True</td>
-      <td>100.0</td>
-      <td>1841.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>True</td>
-      <td>True</td>
-      <td>217.956209</td>
-      <td>13.428856</td>
+      <td>2022</td>
+      <td>July 2022 BRL</td>
+      <td>283192</td>
+      <td>3986</td>
+      <td>2,181.2355</td>
+      <td>1,545.6730</td>
+      <td>3,138.0611</td>
     </tr>
   </tbody>
 </table>
 
+First five saved common areas (a data preview, not a representative sample). Annual ratios in this preview are fractions; change is percentage points for proportion indicators.
 
-```text
-{'artifact_rows': 287178,
- 'path': 'data/intermediate/indicators/income.parquet'}
-```
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>common_id</th>
+      <th>income_2010</th>
+      <th>income_2022</th>
+      <th>income_change_brl</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>2,169.0461</td>
+      <td>2,453.0300</td>
+      <td>283.9839</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>2,857.0370</td>
+      <td>5,100.0700</td>
+      <td>2,243.0330</td>
+    </tr>
+    <tr>
+      <td>100</td>
+      <td>2,289.7947</td>
+      <td>2,464.9300</td>
+      <td>175.1353</td>
+    </tr>
+    <tr>
+      <td>1000</td>
+      <td>1,705.3463</td>
+      <td>2,066.3300</td>
+      <td>360.9837</td>
+    </tr>
+    <tr>
+      <td>10000</td>
+      <td>2,407.1117</td>
+      <td>2,337.0800</td>
+      <td>-70.0317</td>
+    </tr>
+  </tbody>
+</table>
+
+![Generated figure](assets/8b9bd8d62bbdbdce20ec7bbbafb58f2cd9e39fdf3817476004bc9e3fac2f5c2f.png)
+
+Median and middle 50% of available common-area estimates; whiskers follow 1.5×IQR. Outliers are hidden in the figure and retained in the data. Annual availability can differ; this is descriptive, not a paired causal comparison.
 <!-- brazil:output ibge_census_temporal_comparison_12 end -->
 
+## House dwelling share
+
+House counts / the original household denominator. All-missing group denominators remain unavailable.
 
 <details>
-<summary>Python code</summary>
+<summary>Read house dwelling share</summary>
 
 <!-- brazil:cell ibge_census_temporal_comparison_13 -->
 ```python
@@ -3527,339 +1128,94 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 13)
 </details>
 
 <!-- brazil:output ibge_census_temporal_comparison_13 begin -->
+Unweighted distribution across common areas. These are not national population-weighted estimates.
 
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th></th>
-      <th>common_id</th>
-      <th>households_2010</th>
-      <th>houses_2010</th>
-      <th>houses_ratio_2010</th>
-      <th>households_2022</th>
-      <th>houses_2022</th>
-      <th>houses_ratio_2022</th>
-      <th>houses_ratio_change</th>
-      <th>houses_ratio_change_pp</th>
-      <th>n_2010</th>
-      <th>n_2022</th>
-      <th>relationship</th>
+      <th>Year</th>
+      <th>Unit</th>
+      <th>Available areas</th>
+      <th>Unavailable areas</th>
+      <th>Median across areas</th>
+      <th>25th percentile</th>
+      <th>75th percentile</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>264.0</td>
-      <td>264.0</td>
-      <td>1.000000</td>
-      <td>336.0</td>
-      <td>335.0</td>
-      <td>0.997024</td>
-      <td>-0.002976</td>
-      <td>-0.297619</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
+      <td>2010</td>
+      <td>%</td>
+      <td>283550</td>
+      <td>3628</td>
+      <td>99.2063</td>
+      <td>85.0467</td>
+      <td>100.0000</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>10</td>
-      <td>168.0</td>
-      <td>168.0</td>
-      <td>1.000000</td>
-      <td>123.0</td>
-      <td>121.0</td>
-      <td>0.983740</td>
-      <td>-0.016260</td>
-      <td>-1.626016</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>100</td>
-      <td>384.0</td>
-      <td>358.0</td>
-      <td>0.932292</td>
-      <td>391.0</td>
-      <td>362.0</td>
-      <td>0.925831</td>
-      <td>-0.006460</td>
-      <td>-0.646046</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1000</td>
-      <td>213.0</td>
-      <td>207.0</td>
-      <td>0.971831</td>
-      <td>216.0</td>
-      <td>214.0</td>
-      <td>0.990741</td>
-      <td>0.018910</td>
-      <td>1.890975</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>10000</td>
-      <td>261.0</td>
-      <td>260.0</td>
-      <td>0.996169</td>
-      <td>263.0</td>
-      <td>259.0</td>
-      <td>0.984791</td>
-      <td>-0.011378</td>
-      <td>-1.137771</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>100000</td>
-      <td>181.0</td>
-      <td>179.0</td>
-      <td>0.988950</td>
-      <td>213.0</td>
-      <td>213.0</td>
-      <td>1.000000</td>
-      <td>0.011050</td>
-      <td>1.104972</td>
-      <td>2</td>
-      <td>3</td>
-      <td>many_to_many</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>100001</td>
-      <td>117.0</td>
-      <td>72.0</td>
-      <td>0.615385</td>
-      <td>151.0</td>
-      <td>50.0</td>
-      <td>0.331126</td>
-      <td>-0.284259</td>
-      <td>-28.425879</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>100002</td>
-      <td>146.0</td>
-      <td>118.0</td>
-      <td>0.808219</td>
-      <td>147.0</td>
-      <td>124.0</td>
-      <td>0.843537</td>
-      <td>0.035318</td>
-      <td>3.531824</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>100003</td>
-      <td>207.0</td>
-      <td>188.0</td>
-      <td>0.908213</td>
-      <td>175.0</td>
-      <td>156.0</td>
-      <td>0.891429</td>
-      <td>-0.016784</td>
-      <td>-1.678399</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>100004</td>
-      <td>169.0</td>
-      <td>144.0</td>
-      <td>0.852071</td>
-      <td>142.0</td>
-      <td>112.0</td>
-      <td>0.788732</td>
-      <td>-0.063339</td>
-      <td>-6.333861</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>100005</td>
-      <td>172.0</td>
-      <td>160.0</td>
-      <td>0.930233</td>
-      <td>162.0</td>
-      <td>141.0</td>
-      <td>0.870370</td>
-      <td>-0.059862</td>
-      <td>-5.986219</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>100006</td>
-      <td>174.0</td>
-      <td>174.0</td>
-      <td>1.000000</td>
-      <td>166.0</td>
-      <td>160.0</td>
-      <td>0.963855</td>
-      <td>-0.036145</td>
-      <td>-3.614458</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>100007</td>
-      <td>138.0</td>
-      <td>138.0</td>
-      <td>1.000000</td>
-      <td>124.0</td>
-      <td>124.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>100008</td>
-      <td>175.0</td>
-      <td>162.0</td>
-      <td>0.925714</td>
-      <td>223.0</td>
-      <td>203.0</td>
-      <td>0.910314</td>
-      <td>-0.015400</td>
-      <td>-1.540038</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>100009</td>
-      <td>183.0</td>
-      <td>178.0</td>
-      <td>0.972678</td>
-      <td>194.0</td>
-      <td>186.0</td>
-      <td>0.958763</td>
-      <td>-0.013915</td>
-      <td>-1.391471</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>10001</td>
-      <td>197.0</td>
-      <td>196.0</td>
-      <td>0.994924</td>
-      <td>255.0</td>
-      <td>198.0</td>
-      <td>0.776471</td>
-      <td>-0.218453</td>
-      <td>-21.845327</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>100010</td>
-      <td>183.0</td>
-      <td>180.0</td>
-      <td>0.983607</td>
-      <td>220.0</td>
-      <td>207.0</td>
-      <td>0.940909</td>
-      <td>-0.042697</td>
-      <td>-4.269747</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>100011</td>
-      <td>134.0</td>
-      <td>129.0</td>
-      <td>0.962687</td>
-      <td>130.0</td>
-      <td>127.0</td>
-      <td>0.976923</td>
-      <td>0.014237</td>
-      <td>1.423651</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>100012</td>
-      <td>252.0</td>
-      <td>252.0</td>
-      <td>1.000000</td>
-      <td>439.0</td>
-      <td>439.0</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>3</td>
-      <td>2010_to_2022_split</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>100013</td>
-      <td>127.0</td>
-      <td>127.0</td>
-      <td>1.000000</td>
-      <td>243.0</td>
-      <td>235.0</td>
-      <td>0.967078</td>
-      <td>-0.032922</td>
-      <td>-3.292181</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
+      <td>2022</td>
+      <td>%</td>
+      <td>283274</td>
+      <td>3904</td>
+      <td>98.5714</td>
+      <td>86.9110</td>
+      <td>100.0000</td>
     </tr>
   </tbody>
 </table>
 
+First five saved common areas (a data preview, not a representative sample). Annual ratios in this preview are fractions; change is percentage points for proportion indicators.
 
-```text
-{'artifact_rows': 287178,
- 'path': 'data/intermediate/indicators/houses.parquet'}
-```
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>common_id</th>
+      <th>houses_ratio_2010</th>
+      <th>houses_ratio_2022</th>
+      <th>houses_ratio_change_pp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>1.0000</td>
+      <td>0.9970</td>
+      <td>-0.2976</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>1.0000</td>
+      <td>0.9837</td>
+      <td>-1.6260</td>
+    </tr>
+    <tr>
+      <td>100</td>
+      <td>0.9323</td>
+      <td>0.9258</td>
+      <td>-0.6460</td>
+    </tr>
+    <tr>
+      <td>1000</td>
+      <td>0.9718</td>
+      <td>0.9907</td>
+      <td>1.8910</td>
+    </tr>
+    <tr>
+      <td>10000</td>
+      <td>0.9962</td>
+      <td>0.9848</td>
+      <td>-1.1378</td>
+    </tr>
+  </tbody>
+</table>
 <!-- brazil:output ibge_census_temporal_comparison_13 end -->
 
+## Village/condominium house share
+
+Village or condominium house counts / the original household denominator. This is a dwelling type, not a neighbourhood classification.
 
 <details>
-<summary>Python code</summary>
+<summary>Read village/condominium house share</summary>
 
 <!-- brazil:cell ibge_census_temporal_comparison_14 -->
 ```python
@@ -3870,339 +1226,94 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 14)
 </details>
 
 <!-- brazil:output ibge_census_temporal_comparison_14 begin -->
+Unweighted distribution across common areas. These are not national population-weighted estimates.
 
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th></th>
-      <th>common_id</th>
-      <th>households_2010</th>
-      <th>village_condo_2010</th>
-      <th>village_condo_ratio_2010</th>
-      <th>households_2022</th>
-      <th>village_condo_2022</th>
-      <th>village_condo_ratio_2022</th>
-      <th>village_condo_ratio_change</th>
-      <th>village_condo_ratio_change_pp</th>
-      <th>n_2010</th>
-      <th>n_2022</th>
-      <th>relationship</th>
+      <th>Year</th>
+      <th>Unit</th>
+      <th>Available areas</th>
+      <th>Unavailable areas</th>
+      <th>Median across areas</th>
+      <th>25th percentile</th>
+      <th>75th percentile</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>264.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>336.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
+      <td>2010</td>
+      <td>%</td>
+      <td>283550</td>
+      <td>3628</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.4115</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>10</td>
-      <td>168.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>123.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>100</td>
-      <td>384.0</td>
-      <td>1.0</td>
-      <td>0.002604</td>
-      <td>391.0</td>
-      <td>14.0</td>
-      <td>0.035806</td>
-      <td>0.033201</td>
-      <td>3.320146</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1000</td>
-      <td>213.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>216.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>10000</td>
-      <td>261.0</td>
-      <td>1.0</td>
-      <td>0.003831</td>
-      <td>263.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>-0.003831</td>
-      <td>-0.383142</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>100000</td>
-      <td>181.0</td>
-      <td>2.0</td>
-      <td>0.011050</td>
-      <td>213.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>-0.011050</td>
-      <td>-1.104972</td>
-      <td>2</td>
-      <td>3</td>
-      <td>many_to_many</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>100001</td>
-      <td>117.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>151.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>100002</td>
-      <td>146.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>147.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>100003</td>
-      <td>207.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>175.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>100004</td>
-      <td>169.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>142.0</td>
-      <td>6.0</td>
-      <td>0.042254</td>
-      <td>0.042254</td>
-      <td>4.225352</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>100005</td>
-      <td>172.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>162.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>100006</td>
-      <td>174.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>166.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>100007</td>
-      <td>138.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>124.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>100008</td>
-      <td>175.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>223.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>100009</td>
-      <td>183.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>194.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>10001</td>
-      <td>197.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>255.0</td>
-      <td>3.0</td>
-      <td>0.011765</td>
-      <td>0.011765</td>
-      <td>1.176471</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>100010</td>
-      <td>183.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>220.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>100011</td>
-      <td>134.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>130.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>100012</td>
-      <td>252.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>439.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>3</td>
-      <td>2010_to_2022_split</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>100013</td>
-      <td>127.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>243.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
+      <td>2022</td>
+      <td>%</td>
+      <td>283274</td>
+      <td>3904</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
     </tr>
   </tbody>
 </table>
 
+First five saved common areas (a data preview, not a representative sample). Annual ratios in this preview are fractions; change is percentage points for proportion indicators.
 
-```text
-{'artifact_rows': 287178,
- 'path': 'data/intermediate/indicators/village_condo.parquet'}
-```
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>common_id</th>
+      <th>village_condo_ratio_2010</th>
+      <th>village_condo_ratio_2022</th>
+      <th>village_condo_ratio_change_pp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>100</td>
+      <td>0.0026</td>
+      <td>0.0358</td>
+      <td>3.3201</td>
+    </tr>
+    <tr>
+      <td>1000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>10000</td>
+      <td>0.0038</td>
+      <td>0.0000</td>
+      <td>-0.3831</td>
+    </tr>
+  </tbody>
+</table>
 <!-- brazil:output ibge_census_temporal_comparison_14 end -->
 
+## Apartment share
+
+Apartment counts / the original household denominator. All-missing group denominators remain unavailable.
 
 <details>
-<summary>Python code</summary>
+<summary>Read apartment share</summary>
 
 <!-- brazil:cell ibge_census_temporal_comparison_15 -->
 ```python
@@ -4213,339 +1324,94 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 15)
 </details>
 
 <!-- brazil:output ibge_census_temporal_comparison_15 begin -->
+Unweighted distribution across common areas. These are not national population-weighted estimates.
 
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th></th>
-      <th>common_id</th>
-      <th>households_2010</th>
-      <th>apartments_2010</th>
-      <th>apartments_ratio_2010</th>
-      <th>households_2022</th>
-      <th>apartments_2022</th>
-      <th>apartments_ratio_2022</th>
-      <th>apartments_ratio_change</th>
-      <th>apartments_ratio_change_pp</th>
-      <th>n_2010</th>
-      <th>n_2022</th>
-      <th>relationship</th>
+      <th>Year</th>
+      <th>Unit</th>
+      <th>Available areas</th>
+      <th>Unavailable areas</th>
+      <th>Median across areas</th>
+      <th>25th percentile</th>
+      <th>75th percentile</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>264.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>336.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
+      <td>2010</td>
+      <td>%</td>
+      <td>283550</td>
+      <td>3628</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>6.3559</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>10</td>
-      <td>168.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>123.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>100</td>
-      <td>384.0</td>
-      <td>25.0</td>
-      <td>0.065104</td>
-      <td>391.0</td>
-      <td>15.0</td>
-      <td>0.038363</td>
-      <td>-0.026741</td>
-      <td>-2.674100</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1000</td>
-      <td>213.0</td>
-      <td>6.0</td>
-      <td>0.028169</td>
-      <td>216.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>-0.028169</td>
-      <td>-2.816901</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>10000</td>
-      <td>261.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>263.0</td>
-      <td>3.0</td>
-      <td>0.011407</td>
-      <td>0.011407</td>
-      <td>1.140684</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>100000</td>
-      <td>181.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>213.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>2</td>
-      <td>3</td>
-      <td>many_to_many</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>100001</td>
-      <td>117.0</td>
-      <td>45.0</td>
-      <td>0.384615</td>
-      <td>151.0</td>
-      <td>101.0</td>
-      <td>0.668874</td>
-      <td>0.284259</td>
-      <td>28.425879</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>100002</td>
-      <td>146.0</td>
-      <td>28.0</td>
-      <td>0.191781</td>
-      <td>147.0</td>
-      <td>23.0</td>
-      <td>0.156463</td>
-      <td>-0.035318</td>
-      <td>-3.531824</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>100003</td>
-      <td>207.0</td>
-      <td>19.0</td>
-      <td>0.091787</td>
-      <td>175.0</td>
-      <td>18.0</td>
-      <td>0.102857</td>
-      <td>0.011070</td>
-      <td>1.106970</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>100004</td>
-      <td>169.0</td>
-      <td>24.0</td>
-      <td>0.142012</td>
-      <td>142.0</td>
-      <td>24.0</td>
-      <td>0.169014</td>
-      <td>0.027002</td>
-      <td>2.700225</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>100005</td>
-      <td>172.0</td>
-      <td>12.0</td>
-      <td>0.069767</td>
-      <td>162.0</td>
-      <td>21.0</td>
-      <td>0.129630</td>
-      <td>0.059862</td>
-      <td>5.986219</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>100006</td>
-      <td>174.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>166.0</td>
-      <td>6.0</td>
-      <td>0.036145</td>
-      <td>0.036145</td>
-      <td>3.614458</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>100007</td>
-      <td>138.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>124.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>100008</td>
-      <td>175.0</td>
-      <td>13.0</td>
-      <td>0.074286</td>
-      <td>223.0</td>
-      <td>20.0</td>
-      <td>0.089686</td>
-      <td>0.015400</td>
-      <td>1.540038</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>100009</td>
-      <td>183.0</td>
-      <td>5.0</td>
-      <td>0.027322</td>
-      <td>194.0</td>
-      <td>8.0</td>
-      <td>0.041237</td>
-      <td>0.013915</td>
-      <td>1.391471</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>10001</td>
-      <td>197.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>255.0</td>
-      <td>53.0</td>
-      <td>0.207843</td>
-      <td>0.207843</td>
-      <td>20.784314</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>100010</td>
-      <td>183.0</td>
-      <td>3.0</td>
-      <td>0.016393</td>
-      <td>220.0</td>
-      <td>13.0</td>
-      <td>0.059091</td>
-      <td>0.042697</td>
-      <td>4.269747</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>100011</td>
-      <td>134.0</td>
-      <td>4.0</td>
-      <td>0.029851</td>
-      <td>130.0</td>
-      <td>3.0</td>
-      <td>0.023077</td>
-      <td>-0.006774</td>
-      <td>-0.677382</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>100012</td>
-      <td>252.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>439.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>1</td>
-      <td>3</td>
-      <td>2010_to_2022_split</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>100013</td>
-      <td>127.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>243.0</td>
-      <td>8.0</td>
-      <td>0.032922</td>
-      <td>0.032922</td>
-      <td>3.292181</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
+      <td>2022</td>
+      <td>%</td>
+      <td>283274</td>
+      <td>3904</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>7.2626</td>
     </tr>
   </tbody>
 </table>
 
+First five saved common areas (a data preview, not a representative sample). Annual ratios in this preview are fractions; change is percentage points for proportion indicators.
 
-```text
-{'artifact_rows': 287178,
- 'path': 'data/intermediate/indicators/apartments.parquet'}
-```
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>common_id</th>
+      <th>apartments_ratio_2010</th>
+      <th>apartments_ratio_2022</th>
+      <th>apartments_ratio_change_pp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>100</td>
+      <td>0.0651</td>
+      <td>0.0384</td>
+      <td>-2.6741</td>
+    </tr>
+    <tr>
+      <td>1000</td>
+      <td>0.0282</td>
+      <td>0.0000</td>
+      <td>-2.8169</td>
+    </tr>
+    <tr>
+      <td>10000</td>
+      <td>0.0000</td>
+      <td>0.0114</td>
+      <td>1.1407</td>
+    </tr>
+  </tbody>
+</table>
 <!-- brazil:output ibge_census_temporal_comparison_15 end -->
 
+## Population density
+
+Population / saved common-area km². Area is computed from merged geometry in equal-area EPSG:6933. Absolute change is people/km²; percentage change requires positive 2010 density. The archived stored absolute-change column differs from current source code; see the verification record.
 
 <details>
-<summary>Python code</summary>
+<summary>Read population density</summary>
 
 <!-- brazil:cell ibge_census_temporal_comparison_16 -->
 ```python
@@ -4556,255 +1422,94 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 16)
 </details>
 
 <!-- brazil:output ibge_census_temporal_comparison_16 begin -->
+Unweighted distribution across common areas. These are not national population-weighted estimates.
 
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th></th>
-      <th>common_id</th>
-      <th>pop_2010</th>
-      <th>pop_2022</th>
-      <th>area_km2</th>
-      <th>population_density_2010</th>
-      <th>population_density_2022</th>
-      <th>population_density_change</th>
-      <th>population_density_change_pct</th>
+      <th>Year</th>
+      <th>Unit</th>
+      <th>Available areas</th>
+      <th>Unavailable areas</th>
+      <th>Median across areas</th>
+      <th>25th percentile</th>
+      <th>75th percentile</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>859.0</td>
-      <td>928.0</td>
-      <td>0.539979</td>
-      <td>1590.801283</td>
-      <td>1718.583924</td>
-      <td>127.782641</td>
-      <td>8.032596</td>
+      <td>2010</td>
+      <td>people/km²</td>
+      <td>284393</td>
+      <td>2785</td>
+      <td>3,868.5947</td>
+      <td>378.3721</td>
+      <td>10,116.5252</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>10</td>
-      <td>491.0</td>
-      <td>311.0</td>
-      <td>0.183445</td>
-      <td>2676.546444</td>
-      <td>1695.327788</td>
-      <td>-981.218656</td>
-      <td>-36.659878</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>100</td>
-      <td>1314.0</td>
-      <td>1060.0</td>
-      <td>0.217012</td>
-      <td>6054.966154</td>
-      <td>4884.523686</td>
-      <td>-1170.442468</td>
-      <td>-19.330289</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1000</td>
-      <td>811.0</td>
-      <td>683.0</td>
-      <td>0.067295</td>
-      <td>12051.438254</td>
-      <td>10149.361686</td>
-      <td>-1902.076568</td>
-      <td>-15.782984</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>10000</td>
-      <td>915.0</td>
-      <td>842.0</td>
-      <td>0.119492</td>
-      <td>7657.395010</td>
-      <td>7046.477157</td>
-      <td>-610.917853</td>
-      <td>-7.978142</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>100000</td>
-      <td>519.0</td>
-      <td>491.0</td>
-      <td>91.040011</td>
-      <td>5.700790</td>
-      <td>5.393233</td>
-      <td>-0.307557</td>
-      <td>-5.394990</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>100001</td>
-      <td>329.0</td>
-      <td>381.0</td>
-      <td>0.056755</td>
-      <td>5796.821910</td>
-      <td>6713.036923</td>
-      <td>916.215013</td>
-      <td>15.805471</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>100002</td>
-      <td>470.0</td>
-      <td>421.0</td>
-      <td>0.090660</td>
-      <td>5184.224043</td>
-      <td>4643.741111</td>
-      <td>-540.482932</td>
-      <td>-10.425532</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>100003</td>
-      <td>635.0</td>
-      <td>466.0</td>
-      <td>0.085019</td>
-      <td>7468.919665</td>
-      <td>5481.128447</td>
-      <td>-1987.791218</td>
-      <td>-26.614173</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>100004</td>
-      <td>469.0</td>
-      <td>316.0</td>
-      <td>0.105918</td>
-      <td>4427.941762</td>
-      <td>2983.431976</td>
-      <td>-1444.509786</td>
-      <td>-32.622601</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>100005</td>
-      <td>519.0</td>
-      <td>411.0</td>
-      <td>0.087685</td>
-      <td>5918.888578</td>
-      <td>4687.212342</td>
-      <td>-1231.676236</td>
-      <td>-20.809249</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>100006</td>
-      <td>524.0</td>
-      <td>411.0</td>
-      <td>0.079447</td>
-      <td>6595.628267</td>
-      <td>5173.288584</td>
-      <td>-1422.339684</td>
-      <td>-21.564885</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>100007</td>
-      <td>424.0</td>
-      <td>311.0</td>
-      <td>0.051121</td>
-      <td>8294.084807</td>
-      <td>6083.632960</td>
-      <td>-2210.451847</td>
-      <td>-26.650943</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>100008</td>
-      <td>559.0</td>
-      <td>646.0</td>
-      <td>0.448989</td>
-      <td>1245.018772</td>
-      <td>1438.787346</td>
-      <td>193.768575</td>
-      <td>15.563506</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>100009</td>
-      <td>614.0</td>
-      <td>554.0</td>
-      <td>0.098064</td>
-      <td>6261.201857</td>
-      <td>5649.358027</td>
-      <td>-611.843830</td>
-      <td>-9.771987</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>10001</td>
-      <td>696.0</td>
-      <td>810.0</td>
-      <td>0.071374</td>
-      <td>9751.473591</td>
-      <td>11348.697713</td>
-      <td>1597.224123</td>
-      <td>16.379310</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>100010</td>
-      <td>620.0</td>
-      <td>625.0</td>
-      <td>0.156026</td>
-      <td>3973.692268</td>
-      <td>4005.738173</td>
-      <td>32.045905</td>
-      <td>0.806452</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>100011</td>
-      <td>421.0</td>
-      <td>348.0</td>
-      <td>0.045247</td>
-      <td>9304.446209</td>
-      <td>7691.086178</td>
-      <td>-1613.360032</td>
-      <td>-17.339667</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>100012</td>
-      <td>848.0</td>
-      <td>1296.0</td>
-      <td>2.000736</td>
-      <td>423.844050</td>
-      <td>647.761662</td>
-      <td>223.917611</td>
-      <td>52.830189</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>100013</td>
-      <td>412.0</td>
-      <td>701.0</td>
-      <td>0.165580</td>
-      <td>2488.226443</td>
-      <td>4233.608584</td>
-      <td>1745.382141</td>
-      <td>70.145631</td>
+      <td>2022</td>
+      <td>people/km²</td>
+      <td>287178</td>
+      <td>0</td>
+      <td>3,747.5155</td>
+      <td>408.3483</td>
+      <td>9,242.8121</td>
     </tr>
   </tbody>
 </table>
 
+First five saved common areas (a data preview, not a representative sample). Annual ratios in this preview are fractions; change is percentage points for proportion indicators.
 
-```text
-{'artifact_rows': 287178,
- 'path': 'data/intermediate/indicators/population_density.parquet'}
-```
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>common_id</th>
+      <th>population_density_2010</th>
+      <th>population_density_2022</th>
+      <th>population_density_change</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>1,590.8013</td>
+      <td>1,718.5839</td>
+      <td>127.7826</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>2,676.5464</td>
+      <td>1,695.3278</td>
+      <td>-981.2187</td>
+    </tr>
+    <tr>
+      <td>100</td>
+      <td>6,054.9662</td>
+      <td>4,884.5237</td>
+      <td>-1,170.4425</td>
+    </tr>
+    <tr>
+      <td>1000</td>
+      <td>12,051.4383</td>
+      <td>10,149.3617</td>
+      <td>-1,902.0766</td>
+    </tr>
+    <tr>
+      <td>10000</td>
+      <td>7,657.3950</td>
+      <td>7,046.4772</td>
+      <td>-610.9179</td>
+    </tr>
+  </tbody>
+</table>
+
+![Generated figure](assets/7c9149518b581a1f0abec5fcf81206b221a0e4838cff23d83b6107ed7976883f.png)
+
+Median and middle 50% of available common-area estimates; whiskers follow 1.5×IQR. Outliers are hidden in the figure and retained in the data. Annual availability can differ; this is descriptive, not a paired causal comparison.
 <!-- brazil:output ibge_census_temporal_comparison_16 end -->
 
-
 <details>
-<summary>Python code</summary>
+<summary>Trace original step: Save</summary>
 
 <!-- brazil:cell ibge_census_temporal_comparison_17 -->
 ```python
@@ -4815,22 +1520,9 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 17)
 </details>
 
 <!-- brazil:output ibge_census_temporal_comparison_17 begin -->
-```text
-{'harmonisation_version': '8f67986ba3b1f50731be40dc11a183fdda6b8caecd893ed0d9ea5f83ddec1650',
- 'spatial_unit': 'common_id',
- 'black': {'common_areas': 287178, 'missing_change': 3505},
- 'brown': {'common_areas': 287178, 'missing_change': 3505},
- 'black_brown': {'common_areas': 287178, 'missing_change': 3505},
- 'literacy': {'common_areas': 285714, 'missing_change': 5738},
- 'rudimentary_sanitation': {'common_areas': 285714, 'missing_change': 3821},
- 'water_network': {'common_areas': 285714, 'missing_change': 3821},
- 'waste_collection': {'common_areas': 285714, 'missing_change': 3821},
- 'sewer_septic': {'common_areas': 285714, 'missing_change': 3821},
- 'houses': {'common_areas': 287178, 'missing_change': 5285},
- 'village_condo': {'common_areas': 287178, 'missing_change': 5285},
- 'apartments': {'common_areas': 287178, 'missing_change': 5285},
- 'income': {'common_areas': 287178, 'missing_change': 0},
- 'population_density': {'common_areas': 287178},
- 'generated_at': '2026-10-07T07:05:26.333989+00:00'}
-```
+<!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output ibge_census_temporal_comparison_17 end -->
+
+## Interpretation and limits
+
+Outputs retain the original aggregation, missingness and exclusion rules. Available results do not establish national scientific validation. Read [verification and remaining limitations](../../docs/checks.md) before drawing research conclusions. Original codebooks and earlier report contents remain preserved in the project archive.

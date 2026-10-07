@@ -2,7 +2,7 @@
 
 Status: current
 Last updated: 2026-10-07
-Version: 0.3
+Version: 0.4
 Scope: Project Code
 
 Reusable processing and command-line tools live here; executable report cells live alongside their explanations under `research/reports/`.
@@ -20,5 +20,7 @@ The single project configuration is [project.toml](../project.toml). Dependencie
 ```
 
 Create a directory only when real inputs or outputs need it. Preserve research methods and update [progress](../docs/progress.md) after material changes.
+
+`brazil_project/reporting.py` formats saved results and generates descriptive figures; it does not change analytical calculations. Definitions live in [the variable codebook](../docs/codebook.md), with the [presentation audit](../docs/report-readability.md).
 
 The pipeline executes Markdown report cells after successful processing. `report_engine.py` validates markers, captures results and publishes only generated sections; the CLI passes the current configuration and scope. See [the integration contract](../docs/report-integration.md).

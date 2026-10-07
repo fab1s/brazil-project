@@ -2,7 +2,7 @@
 
 Status: current
 Last updated: 2026-10-07
-Version: 0.8
+Version: 0.9
 Scope: Agent Working Instructions
 
 These rules apply to this independent research project. RISSI provided documentation patterns; its application architecture and deployment rules do not apply here.
@@ -43,6 +43,8 @@ Major Markdown documents use Status, Last updated, Version, and Scope. Do not ad
 Keep six visible working folders: `code/`, `data/`, `docs/`, `outputs/`, `research/`, and `website/`. Use the root `project.toml`. Create files and directories only when needed for real contents; no empty placeholders. Major working folders have one useful README; do not add repetitive READMEs to every subfolder. Keep documentation mostly flat and navigate through `docs/index.md`. Preserve original data/documents; when consolidating files, retain their complete contents and record the new location. Former folder READMEs are preserved in `docs/folder-notes.md`.
 
 Research reports under `research/reports/` contain executable Python cells and paired generated-result sections. Keep one report per topic. Processing commands refresh affected reports automatically; change explanations, code and captions outside generated sections. The renderer replaces only marked outputs after validation, preserves authored content, passes the actual configuration/scope and isolates report processes. National reports remain intact during municipality runs. Separate report scripts are archived; reusable analysis stays in the Python package. Reports are exempt from authored-document metadata. Never bypass producer fingerprints or mix scopes; rerun processing when saved provenance differs. Preserve originals and prior report contents in the archive and Git history.
+
+Report presentation must lead with purpose, scope and interpretation. Label tables with units, denominators and missingness; distinguish source rows, distinct IDs and geometry components. Put full machine provenance in collapsed details, suppress repeated results without removing cell traceability, and caption figures with their population, exclusions and limits. Maintain `docs/codebook.md` alongside changed variables; preserve original provider codebooks. Presentation changes must retain processing rules and pass report-refresh and scope tests.
 
 ## Process Records And Script Audits
 

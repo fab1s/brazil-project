@@ -1,15 +1,30 @@
-# IBGE Census - Census tract harmonisation
+# Census tract harmonisation
 
-Executable research report. Refresh with `brazil-project report ibge_census_tract_harmonisation`. Code is collapsed below each explanation.
+Link 2010 and 2022 tracts into common comparison areas, preserving the research processing flow and original source geometry. The lookup assigns tracts to common_id; the analytical geometry merges complete 2022 pieces within each group.
 
-This code links 2010 and 2022 census tracts based on their largest spatial overlap in both directions, creating a correspondence table (crosswalk). It identifies whether areas stayed the same, were split, merged, or changed in a more complex way. The original tract pieces remain unchanged as reference geometry. The active analytical layer merges complete 2022 groups by `common_id`, and matching now excludes line/point-only contacts. See the [approved policy](../../docs/harmonisation-policy.md) for complete-group selection, unmatched coverage, and the boundary-change assumption.
+[Variable and dataset codebook](../../docs/codebook.md) · [Methods](../../docs/methods.md) · [All reports](../README.md#read-the-reports)
 
+Refresh processing and this report with `brazil-project report ibge_census_tract_harmonisation --config project.toml`. Add `--from-saved` to refresh existing verified artifacts only. Code is collapsed; tables and figures below are saved execution results.
+
+## How to read this analysis
+
+Each tract selects its largest strictly positive polygon-area overlap in the other year. The two directional sets of links form a graph; connected components become comparison groups. Boundary-only contact is not an overlap match. Groups can be one-to-one, split, merge or many-to-many. A municipality selects complete groups, including contributing tracts beyond its boundary.
+
+The routine national mode validates the original correspondence; it is not a fresh national recomputation. A versioned bundle keeps geometry and lookups together. Original tract pieces, including repeated tract IDs, remain reference data; identifiers are deduplicated for count aggregation.
+
+**Research assumption:** footprint differences are assumed not to materially change the inhabited population compared. This has not been independently verified. Merging boundaries does not establish identical footprints in both years; diagnostics remain available without automatically rejecting groups. See the [approved policy](../../docs/harmonisation-policy.md).
+
+## Inputs, coverage and processing status
+
+This summary reads the current saved processing artifacts. Technical fingerprints are available in the collapsed provenance record.
 
 <details>
-<summary>Python code</summary>
+<summary>Read saved processing summary</summary>
 
 <!-- brazil:cell ibge_census_tract_harmonisation_1 -->
 ```python
+import matplotlib
+matplotlib.use("Agg")  # Headless figures in the fresh report process.
 #| label: ibge_census_tract_harmonisation_1
 from pathlib import Path
 from brazil_project.io import Context
@@ -20,64 +35,178 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Census tract harmonisation.qmd', 1)
 </details>
 
 <!-- brazil:output ibge_census_tract_harmonisation_1 begin -->
-```text
-{'version': '8f67986ba3b1f50731be40dc11a183fdda6b8caecd893ed0d9ea5f83ddec1650',
- 'source_version': '84700cdc61d0b76baf8512431fc55a7f3e9a8044b682a6fc51987b53ea1a49bd',
- 'policy': 'positive-area-common-geometry-v1',
- 'mode': 'validated_original_correspondence',
- 'scope': 'Brazil',
- 'source_contract': {'policy': 'positive-area-common-geometry-v1',
-  'mode': 'validated_original_correspondence',
-  'inputs': {'tracts': '15ce7a4882dd3f8798223e3c1697fa3f32164793acac884da026c75b56549a3c',
-   'baseline_lookup': '42d1354a5ed84047f4df28781aecd1970c0dd7e09c630c960c1a1139cb098c9b',
-   'baseline_geometry': 'ae961e48f488a18ae94cb3ece85162bab4f039daa9b87b3c029ac9e579edae57',
-   'baseline_group_sizes': '17175bc7b75c44465cceecd87184fcbc413daedb5aaabb01cbd8efdc4bf721a1'},
-  'crs': 5880,
-  'precision_grid': 1e-06},
- 'population_coverage': {'2010': {'matched_tract_ids': 316558,
-   'unmatched_tract_ids': 16,
-   'measures': {'population': {'status': 'partial',
-     'matched_known_total': 190755712.0,
-     'unmatched_known_total': 87.0,
-     'matched_missing_values': 6448,
-     'unmatched_missing_values': 12,
-     'unmatched_share_of_known_total': 4.560804990258776e-07},
-    'households': {'status': 'partial',
-     'matched_known_total': 58862521.0,
-     'unmatched_known_total': 40.0,
-     'matched_missing_values': 7264,
-     'unmatched_missing_values': 12,
-     'unmatched_share_of_known_total': 6.795490940327928e-07}}},
-  '2022': {'matched_tract_ids': 468073,
-   'unmatched_tract_ids': 24,
-   'measures': {'population': {'status': 'complete',
-     'matched_known_total': 203080475.0,
-     'unmatched_known_total': 281.0,
-     'matched_missing_values': 0,
-     'unmatched_missing_values': 0,
-     'unmatched_share_of_known_total': 1.3836860051870204e-06},
-    'households': {'status': 'partial',
-     'matched_known_total': 72438873.0,
-     'unmatched_known_total': 80.0,
-     'matched_missing_values': 17988,
-     'unmatched_missing_values': 21,
-     'unmatched_share_of_known_total': 1.1043781927659832e-06}}}},
- 'assumption': 'Boundary differences are assumed not to materially change the inhabited population; not independently verified.',
- 'generation': '1483b749a1d549b2921143f05004033e',
- 'tracts_2022': 472778,
- 'groups': 287178,
- 'duplicate_base_ids': 4681,
- 'common_geometry_features': 287178,
- 'rejected_edges': 0,
- 'unmatched': {'2010': 16, '2022': 24},
- 'footprint_difference_above_10pct': 131222,
- 'generated_at': '2026-10-07T07:04:38.358590+00:00'}
-```
-<!-- brazil:output ibge_census_tract_harmonisation_1 end -->
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Measure</th>
+      <th>Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Comparison groups</td>
+      <td>287178</td>
+    </tr>
+    <tr>
+      <td>Merged 2022 features</td>
+      <td>287178</td>
+    </tr>
+    <tr>
+      <td>Reference 2022 pieces</td>
+      <td>472778</td>
+    </tr>
+    <tr>
+      <td>Repeated reference IDs</td>
+      <td>4681</td>
+    </tr>
+  </tbody>
+</table>
 
+Coverage: known totals exclude unavailable values; missing values are not zero.
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Year</th>
+      <th>Measure</th>
+      <th>Matched tract IDs</th>
+      <th>Unmatched tract IDs</th>
+      <th>Known unmatched total</th>
+      <th>Unmatched missing values</th>
+      <th>Matched missing values</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2010</td>
+      <td>population</td>
+      <td>316558</td>
+      <td>16</td>
+      <td>87.0000</td>
+      <td>12</td>
+      <td>6448</td>
+    </tr>
+    <tr>
+      <td>2010</td>
+      <td>households</td>
+      <td>316558</td>
+      <td>16</td>
+      <td>40.0000</td>
+      <td>12</td>
+      <td>7264</td>
+    </tr>
+    <tr>
+      <td>2022</td>
+      <td>population</td>
+      <td>468073</td>
+      <td>24</td>
+      <td>281.0000</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>2022</td>
+      <td>households</td>
+      <td>468073</td>
+      <td>24</td>
+      <td>80.0000</td>
+      <td>21</td>
+      <td>17988</td>
+    </tr>
+  </tbody>
+</table>
+
+Execution mode: `validated_original_correspondence`. Boundary differences are assumed not to materially change the inhabited population; not independently verified.
 
 <details>
-<summary>Python code</summary>
+<summary>Technical provenance and complete processing record</summary>
+
+```json
+{
+  "version": "8f67986ba3b1f50731be40dc11a183fdda6b8caecd893ed0d9ea5f83ddec1650",
+  "source_version": "84700cdc61d0b76baf8512431fc55a7f3e9a8044b682a6fc51987b53ea1a49bd",
+  "policy": "positive-area-common-geometry-v1",
+  "mode": "validated_original_correspondence",
+  "scope": "Brazil",
+  "source_contract": {
+    "policy": "positive-area-common-geometry-v1",
+    "mode": "validated_original_correspondence",
+    "inputs": {
+      "tracts": "15ce7a4882dd3f8798223e3c1697fa3f32164793acac884da026c75b56549a3c",
+      "baseline_lookup": "42d1354a5ed84047f4df28781aecd1970c0dd7e09c630c960c1a1139cb098c9b",
+      "baseline_geometry": "ae961e48f488a18ae94cb3ece85162bab4f039daa9b87b3c029ac9e579edae57",
+      "baseline_group_sizes": "17175bc7b75c44465cceecd87184fcbc413daedb5aaabb01cbd8efdc4bf721a1"
+    },
+    "crs": 5880,
+    "precision_grid": 1e-06
+  },
+  "population_coverage": {
+    "2010": {
+      "matched_tract_ids": 316558,
+      "unmatched_tract_ids": 16,
+      "measures": {
+        "population": {
+          "status": "partial",
+          "matched_known_total": 190755712.0,
+          "unmatched_known_total": 87.0,
+          "matched_missing_values": 6448,
+          "unmatched_missing_values": 12,
+          "unmatched_share_of_known_total": 4.560804990258776e-07
+        },
+        "households": {
+          "status": "partial",
+          "matched_known_total": 58862521.0,
+          "unmatched_known_total": 40.0,
+          "matched_missing_values": 7264,
+          "unmatched_missing_values": 12,
+          "unmatched_share_of_known_total": 6.795490940327928e-07
+        }
+      }
+    },
+    "2022": {
+      "matched_tract_ids": 468073,
+      "unmatched_tract_ids": 24,
+      "measures": {
+        "population": {
+          "status": "complete",
+          "matched_known_total": 203080475.0,
+          "unmatched_known_total": 281.0,
+          "matched_missing_values": 0,
+          "unmatched_missing_values": 0,
+          "unmatched_share_of_known_total": 1.3836860051870204e-06
+        },
+        "households": {
+          "status": "partial",
+          "matched_known_total": 72438873.0,
+          "unmatched_known_total": 80.0,
+          "matched_missing_values": 17988,
+          "unmatched_missing_values": 21,
+          "unmatched_share_of_known_total": 1.1043781927659832e-06
+        }
+      }
+    }
+  },
+  "assumption": "Boundary differences are assumed not to materially change the inhabited population; not independently verified.",
+  "generation": "b8b2c1c8082e4defa8e70bcdca4eb3bc",
+  "tracts_2022": 472778,
+  "groups": 287178,
+  "duplicate_base_ids": 4681,
+  "common_geometry_features": 287178,
+  "rejected_edges": 0,
+  "unmatched": {
+    "2010": 16,
+    "2022": 24
+  },
+  "footprint_difference_above_10pct": 131222,
+  "generated_at": "2026-10-07T08:15:57.844141+00:00"
+}
+```
+
+</details>
+<!-- brazil:output ibge_census_tract_harmonisation_1 end -->
+
+<details>
+<summary>Trace original step: Data Import</summary>
 
 <!-- brazil:cell ibge_census_tract_harmonisation_2 -->
 ```python
@@ -88,82 +217,36 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Census tract harmonisation.qmd', 2)
 </details>
 
 <!-- brazil:output ibge_census_tract_harmonisation_2 begin -->
-```text
-{'version': '8f67986ba3b1f50731be40dc11a183fdda6b8caecd893ed0d9ea5f83ddec1650',
- 'source_version': '84700cdc61d0b76baf8512431fc55a7f3e9a8044b682a6fc51987b53ea1a49bd',
- 'policy': 'positive-area-common-geometry-v1',
- 'mode': 'validated_original_correspondence',
- 'scope': 'Brazil',
- 'source_contract': {'policy': 'positive-area-common-geometry-v1',
-  'mode': 'validated_original_correspondence',
-  'inputs': {'tracts': '15ce7a4882dd3f8798223e3c1697fa3f32164793acac884da026c75b56549a3c',
-   'baseline_lookup': '42d1354a5ed84047f4df28781aecd1970c0dd7e09c630c960c1a1139cb098c9b',
-   'baseline_geometry': 'ae961e48f488a18ae94cb3ece85162bab4f039daa9b87b3c029ac9e579edae57',
-   'baseline_group_sizes': '17175bc7b75c44465cceecd87184fcbc413daedb5aaabb01cbd8efdc4bf721a1'},
-  'crs': 5880,
-  'precision_grid': 1e-06},
- 'population_coverage': {'2010': {'matched_tract_ids': 316558,
-   'unmatched_tract_ids': 16,
-   'measures': {'population': {'status': 'partial',
-     'matched_known_total': 190755712.0,
-     'unmatched_known_total': 87.0,
-     'matched_missing_values': 6448,
-     'unmatched_missing_values': 12,
-     'unmatched_share_of_known_total': 4.560804990258776e-07},
-    'households': {'status': 'partial',
-     'matched_known_total': 58862521.0,
-     'unmatched_known_total': 40.0,
-     'matched_missing_values': 7264,
-     'unmatched_missing_values': 12,
-     'unmatched_share_of_known_total': 6.795490940327928e-07}}},
-  '2022': {'matched_tract_ids': 468073,
-   'unmatched_tract_ids': 24,
-   'measures': {'population': {'status': 'complete',
-     'matched_known_total': 203080475.0,
-     'unmatched_known_total': 281.0,
-     'matched_missing_values': 0,
-     'unmatched_missing_values': 0,
-     'unmatched_share_of_known_total': 1.3836860051870204e-06},
-    'households': {'status': 'partial',
-     'matched_known_total': 72438873.0,
-     'unmatched_known_total': 80.0,
-     'matched_missing_values': 17988,
-     'unmatched_missing_values': 21,
-     'unmatched_share_of_known_total': 1.1043781927659832e-06}}}},
- 'assumption': 'Boundary differences are assumed not to materially change the inhabited population; not independently verified.',
- 'generation': '1483b749a1d549b2921143f05004033e',
- 'tracts_2022': 472778,
- 'groups': 287178,
- 'duplicate_base_ids': 4681,
- 'common_geometry_features': 287178,
- 'rejected_edges': 0,
- 'unmatched': {'2010': 16, '2022': 24},
- 'footprint_difference_above_10pct': 131222,
- 'generated_at': '2026-10-07T07:04:38.358590+00:00'}
-```
+<!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output ibge_census_tract_harmonisation_2 end -->
 
+## How comparison groups work
+
+The illustration explains relationship types. A common_id identifies a connected group; dissolving its 2022 pieces removes internal display boundaries.
+
 <details>
-<summary>Python code</summary>
+<summary>Draw common-area relationship schematic</summary>
 
 <!-- brazil:cell reference_diagram -->
 ```python
-report_image("data/archive/original_outputs/Scripts_Data/IBGE/images/Harmonizing 2010 and 2022 Census Tracts.png")
+from brazil_project.reporting import harmonisation_diagram
+harmonisation_diagram(ctx)
 ```
 
 </details>
 
 <!-- brazil:output reference_diagram begin -->
-![Generated figure](assets/0838f6bd9fdf9632ded8acbdcdd5f2bdc885381de3824e70dd9b1c40254f2e33.png)
+![Generated figure](assets/32179d8b13840544dd42ab5dec308158982a4a4c1e7fc995b2f4b2e9d81de813.png)
+
+Schematic only: no measured tract boundaries. Connected links form one common_id; complete 2022 pieces are merged for analysis. Largest positive overlap is selected in both directions. Yearly footprints may differ under the accepted research assumption.
 <!-- brazil:output reference_diagram end -->
 
-Original census tract harmonization flow chart.
+## Merged analytical geography
 
-
-
+One row per common_id; inner tract boundaries are merged. Original pieces remain reference data. The preview identifies saved areas and their measured km². Dissolving preserves holes and gaps between source pieces; small holes can appear as short interior strokes in the illustration. These are not separately retained tract boundaries.
 
 <details>
-<summary>Python code</summary>
+<summary>Read merged common-area geometry</summary>
 
 <!-- brazil:cell ibge_census_tract_harmonisation_3 -->
 ```python
@@ -174,11 +257,11 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Census tract harmonisation.qmd', 3)
 </details>
 
 <!-- brazil:output ibge_census_tract_harmonisation_3 begin -->
+287,178 saved rows; showing up to ten. See the codebook for column definitions.
 
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th></th>
       <th>common_id</th>
       <th>n_2010</th>
       <th>n_2022</th>
@@ -191,235 +274,115 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Census tract harmonisation.qmd', 3)
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1:1</td>
-      <td>0.539979</td>
-      <td>0.071359</td>
-      <td>0.534356</td>
-      <td>0.545054</td>
+      <td>0.5400</td>
+      <td>0.0714</td>
+      <td>0.5344</td>
+      <td>0.5451</td>
     </tr>
     <tr>
-      <th>1</th>
       <td>10</td>
       <td>1</td>
       <td>1</td>
       <td>1:1</td>
-      <td>0.183445</td>
-      <td>0.157143</td>
-      <td>0.194150</td>
-      <td>0.185165</td>
+      <td>0.1834</td>
+      <td>0.1571</td>
+      <td>0.1942</td>
+      <td>0.1852</td>
     </tr>
     <tr>
-      <th>2</th>
       <td>100</td>
       <td>1</td>
       <td>1</td>
       <td>1:1</td>
-      <td>0.217012</td>
-      <td>0.137256</td>
-      <td>0.210305</td>
-      <td>0.219653</td>
+      <td>0.2170</td>
+      <td>0.1373</td>
+      <td>0.2103</td>
+      <td>0.2197</td>
     </tr>
     <tr>
-      <th>3</th>
       <td>1000</td>
       <td>1</td>
       <td>1</td>
       <td>1:1</td>
-      <td>0.067295</td>
-      <td>0.133822</td>
-      <td>0.066169</td>
-      <td>0.068263</td>
+      <td>0.0673</td>
+      <td>0.1338</td>
+      <td>0.0662</td>
+      <td>0.0683</td>
     </tr>
     <tr>
-      <th>4</th>
       <td>10000</td>
       <td>1</td>
       <td>1</td>
       <td>1:1</td>
-      <td>0.119492</td>
-      <td>0.023133</td>
-      <td>0.118183</td>
-      <td>0.120067</td>
+      <td>0.1195</td>
+      <td>0.0231</td>
+      <td>0.1182</td>
+      <td>0.1201</td>
     </tr>
     <tr>
-      <th>5</th>
       <td>100000</td>
       <td>2</td>
       <td>3</td>
       <td>many_to_many</td>
-      <td>91.040011</td>
-      <td>0.028448</td>
-      <td>93.046892</td>
-      <td>91.987685</td>
+      <td>91.0400</td>
+      <td>0.0284</td>
+      <td>93.0469</td>
+      <td>91.9877</td>
     </tr>
     <tr>
-      <th>6</th>
       <td>100001</td>
       <td>1</td>
       <td>1</td>
       <td>1:1</td>
-      <td>0.056755</td>
-      <td>0.373679</td>
-      <td>0.059133</td>
-      <td>0.057344</td>
+      <td>0.0568</td>
+      <td>0.3737</td>
+      <td>0.0591</td>
+      <td>0.0573</td>
     </tr>
     <tr>
-      <th>7</th>
       <td>100002</td>
       <td>1</td>
       <td>1</td>
       <td>1:1</td>
-      <td>0.090660</td>
-      <td>0.402873</td>
-      <td>0.094015</td>
-      <td>0.091602</td>
+      <td>0.0907</td>
+      <td>0.4029</td>
+      <td>0.0940</td>
+      <td>0.0916</td>
     </tr>
     <tr>
-      <th>8</th>
       <td>100003</td>
       <td>1</td>
       <td>1</td>
       <td>1:1</td>
-      <td>0.085019</td>
-      <td>0.418140</td>
-      <td>0.099104</td>
-      <td>0.085902</td>
+      <td>0.0850</td>
+      <td>0.4181</td>
+      <td>0.0991</td>
+      <td>0.0859</td>
     </tr>
     <tr>
-      <th>9</th>
       <td>100004</td>
       <td>1</td>
       <td>1</td>
       <td>1:1</td>
-      <td>0.105918</td>
-      <td>0.230998</td>
-      <td>0.107598</td>
-      <td>0.107016</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>100005</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>0.087685</td>
-      <td>0.299505</td>
-      <td>0.085229</td>
-      <td>0.088597</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>100006</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>0.079447</td>
-      <td>0.401304</td>
-      <td>0.078223</td>
-      <td>0.080273</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>100007</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>0.051121</td>
-      <td>0.469180</td>
-      <td>0.050756</td>
-      <td>0.051652</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>100008</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>0.448989</td>
-      <td>0.172298</td>
-      <td>0.488978</td>
-      <td>0.453659</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>100009</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>0.098064</td>
-      <td>0.338957</td>
-      <td>0.098907</td>
-      <td>0.099082</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>10001</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>0.071374</td>
-      <td>0.101103</td>
-      <td>0.076234</td>
-      <td>0.071717</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>100010</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>0.156026</td>
-      <td>0.250150</td>
-      <td>0.156728</td>
-      <td>0.157645</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>100011</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>0.045247</td>
-      <td>0.364494</td>
-      <td>0.046667</td>
-      <td>0.045716</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>100012</td>
-      <td>1</td>
-      <td>3</td>
-      <td>2010_to_2022_split</td>
-      <td>2.000736</td>
-      <td>0.178445</td>
-      <td>1.830004</td>
-      <td>2.021359</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>100013</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1:1</td>
-      <td>0.165580</td>
-      <td>0.214994</td>
-      <td>0.167169</td>
-      <td>0.167286</td>
+      <td>0.1059</td>
+      <td>0.2310</td>
+      <td>0.1076</td>
+      <td>0.1070</td>
     </tr>
   </tbody>
 </table>
 
+One row per common_id. area_km2 is the saved equal-area denominator; geometry belongs to the same versioned lookup bundle.
 
-```text
-{'artifact_rows': 287178,
- 'path': 'data/intermediate/harmonisation/bundles/1483b749a1d549b2921143f05004033e/common_geometry_2022.parquet'}
-```
+![Generated figure](assets/488b01caee98ec3f2064278dfcb0af0a63d5a25ccdc4332fc316c3c9dc59edc4.png)
+
+Actual common_id 100000: complete reference pieces at left, one merged analytical feature at right. Original pieces remain saved. This shows removal of internal boundaries, not equality of 2010 and 2022 footprints.
 <!-- brazil:output ibge_census_tract_harmonisation_3 end -->
 
-**Historical note about reference tract pieces; active analytical geometry is merged by `common_id`.**
+## Interpretation and limits
 
-Be aware that the base geometry layer has not been unioned by common ID. 2010 tracts that were split share a common ID but still follow the 2022 tract boundaries.
+Outputs retain the original aggregation, missingness and exclusion rules. Available results do not establish national scientific validation. Read [verification and remaining limitations](../../docs/checks.md) before drawing research conclusions. Original codebooks and earlier report contents remain preserved in the project archive.

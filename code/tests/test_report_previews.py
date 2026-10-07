@@ -42,7 +42,11 @@ def test_all_reports_preserve_archive_and_cell_order():
             for row in ledger['files']:
                 assert hashlib.sha256(z.read(row['path'])).hexdigest()==row['sha256']
             for row in ledger['reports']:
-                script=z.read(row['retired_script']).decode();current=(root/row['report']).read_text()
+                script=z.read(row['retired_script']).decode()
+                preservation=json.loads((root/'docs/evidence/report-readability-preservation.json').read_text())
+                with zipfile.ZipFile(root/preservation['archive']) as prior:
+                    current=prior.read(row['report']).decode()
+                assert hashlib.sha256(current.encode()).hexdigest()==preservation['files'][row['report']]
                 for match in re.finditer(r'^# %% \[markdown\]\n(.*?)(?=^# %%|\Z)',script,re.M|re.S):
                     lines=[]
                     for line in match[1].splitlines():
@@ -160,3 +164,11 @@ def test_changed_saved_output_rejected(project):
     engine.stamp_producer(ctx,'charts',outputs={str(output):engine.fingerprint(output)})
     output.write_text('changed')
     with pytest.raises(WorkflowError,match='input/output changed'):engine.render_report(ctx,NAME)
+
+
+def test_fresh_worker_generates_headless_matplotlib_figure(project):
+    ctx,source=project
+    source.write_text(cell('one','import matplotlib\nmatplotlib.use("Agg")\nimport matplotlib.pyplot as plt\nfrom IPython.display import Image\nfrom io import BytesIO\nfig, ax = plt.subplots()\nax.plot([0, 1], [2, 3])\nraw = BytesIO()\nfig.savefig(raw, format="png")\nplt.close(fig)\ndisplay(Image(data=raw.getvalue(), format="png"))'))
+    row=engine.render_report(ctx,NAME)
+    assert row['status']=='completed'
+    assert '![Generated figure](assets/' in source.read_text()

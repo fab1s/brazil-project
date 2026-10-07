@@ -2,7 +2,7 @@
 
 Status: current
 Last updated: 2026-10-07
-Version: 0.10
+Version: 0.11
 Scope: Workflow Commands And Artifacts
 
 ## Setup
@@ -81,6 +81,8 @@ The first parity command compares stored original outputs and may intentionally 
 Infrastructure snapshot directories are configurable through ibama_snapshot and obrasgov_snapshot. Successful request caches are immutable; start a new configured snapshot for a new harvest. A failed acquisition does not make partial new results available to analysis.
 
 ## Execute Markdown reports
+
+Read [the variable codebook](codebook.md) for table definitions and [the report presentation record](report-readability.md) for current display conventions. Code cells retain stable IDs; repeated saved results are displayed once, and machine provenance is collapsed.
 
 Processing automatically refreshes affected reports, including their tables and figures. Markdown contains executable Python blocks in collapsible sections; edit narrative outside generated-result markers.
 

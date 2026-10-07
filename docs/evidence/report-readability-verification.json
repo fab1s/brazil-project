@@ -1,0 +1,791 @@
+{
+  "reports": [
+    {
+      "report": "brazil_poroject_charts",
+      "cells": 1,
+      "figures": 2,
+      "generation": "ced46047eedd4ff9853550ed7504d081",
+      "sha256": "bcdf3bc9931d4b3e635cd423aaf1eb2fac2d47fc39d74d5f09dcdfb25e4a9baa"
+    },
+    {
+      "report": "ibama_data_extraction",
+      "cells": 5,
+      "figures": 1,
+      "generation": "faf583fc331e4e3ca8012411e4618b5a",
+      "sha256": "70c7f51e1769f2f1ee299fd841c2a21c32378455081dbbcbb145705dc468b1ed"
+    },
+    {
+      "report": "ibge_census_data_extraction",
+      "cells": 6,
+      "figures": 2,
+      "generation": "b8c21897641640659c65ae6f0e0437b4",
+      "sha256": "f885e731d8fe8caf10d3db1c2c04288a263495290af88166af19f5bc610da387"
+    },
+    {
+      "report": "ibge_census_temporal_comparison",
+      "cells": 17,
+      "figures": 3,
+      "generation": "eb146f679e4e43d5950ff45527c4b42d",
+      "sha256": "81e5773287b9de06316ad6ad61b66223977a6c30f64e4a027946cb0318c83207"
+    },
+    {
+      "report": "ibge_census_tract_harmonisation",
+      "cells": 4,
+      "figures": 2,
+      "generation": "a8db5dc837d8474bbfdca89929b8cd9b",
+      "sha256": "a14187500939b3550ba60c34ebacd2f7d5725eeda3ab7baf51bfc7ab81a5be8c"
+    },
+    {
+      "report": "ibge_dataset_overview",
+      "cells": 14,
+      "figures": 4,
+      "generation": "2faeb1d3b7044275968e7d3ed1ea9083",
+      "sha256": "1ab8111519862184e1b8c8faa016af073644cbcb8faedbef4d0a439bf071f506"
+    },
+    {
+      "report": "obrasgov_data_extraction",
+      "cells": 7,
+      "figures": 0,
+      "generation": "290a5aa394bc462cb374b4c5052ab20f",
+      "sha256": "1c06f97c9b9029830aacb010f77dc4808e0b643fabc733d05c356a243f2c686c"
+    },
+    {
+      "report": "obrasgov_preprocessing",
+      "cells": 10,
+      "figures": 4,
+      "generation": "6ddcf0d602c245a4a4eb0590622722ff",
+      "sha256": "75d65e3b1d9f611c981b8e7c3daa3537b863f90f62eea944156538056ef43b3c"
+    },
+    {
+      "report": "property_value",
+      "cells": 3,
+      "figures": 0,
+      "generation": "ef78acfac1ac4e078c05965c3bf7eddf",
+      "sha256": "768bdc81d6204fff18f617b978a384eac513cc4d3eaf95887d0ccc44c4c3722f"
+    }
+  ],
+  "indicator_tables_compared": [
+    "black",
+    "literacy",
+    "rudimentary_sanitation",
+    "water_network",
+    "waste_collection",
+    "sewer_septic",
+    "brown",
+    "black_brown",
+    "income",
+    "houses",
+    "village_condo",
+    "apartments",
+    "population_density"
+  ],
+  "current_obrasgov_figure_bytes_exact": true,
+  "tests": {
+    "passed": 100,
+    "warnings": 25
+  },
+  "processing_producers": [
+    {
+      "stage": "charts",
+      "status": "completed",
+      "producer": "data/intermediate/charts/producer.json",
+      "sha256": "c4a22509e4594fb3deb88a612248fbdbea0a8492bc958cf7d6742df674198ca0"
+    },
+    {
+      "stage": "ibama",
+      "status": "completed",
+      "producer": "data/intermediate/ibama/producer.json",
+      "sha256": "a777ccc25a821b0aeb9c3cf8612e22841522149138835c069efaf7821006fb2f"
+    },
+    {
+      "stage": "census-exploration",
+      "status": "completed",
+      "producer": "data/intermediate/census-exploration/producer.json",
+      "sha256": "7b251f2c02db390f5d3c600360bc5d1b9e19a541a3489c90ac1d10c0db077324"
+    },
+    {
+      "stage": "indicators",
+      "status": "completed",
+      "producer": "data/intermediate/indicators/producer.json",
+      "sha256": "018807ed9ad6ef85e4f5a963b8a14d0b7ea648f9bbe4765905f35b3c7e338a7d"
+    },
+    {
+      "stage": "harmonisation",
+      "status": "completed",
+      "producer": "data/intermediate/harmonisation/producer.json",
+      "sha256": "ab364aac0d095de9c4b44bfe20f273f7a51bf2c293698904a75e95ca408ff924"
+    },
+    {
+      "stage": "overview",
+      "status": "completed",
+      "producer": "data/intermediate/overview/producer.json",
+      "sha256": "de17f1791b46e4dbf3b923b6f13df2486ca07e5afd27d5c62c3956de558eed8e"
+    },
+    {
+      "stage": "obrasgov-snapshot",
+      "status": "completed",
+      "producer": "data/intermediate/obrasgov-snapshot/producer.json",
+      "sha256": "441cda02b67130eab6fb0a6715e24e4cacdb48afffb592b154641b31c19e3cc2"
+    },
+    {
+      "stage": "obrasgov-location-qa",
+      "status": "completed",
+      "producer": "data/intermediate/obrasgov-location-qa/producer.json",
+      "sha256": "20093aa581b0552a988735e001f5f4c4c4457710c732dad6d6dac34747fd9d60"
+    },
+    {
+      "stage": "obrasgov-location-plot",
+      "status": "completed",
+      "producer": "data/intermediate/obrasgov-location-plot/producer.json",
+      "sha256": "061e97188cdd7c250b15178eccbd2a2e6e49d770701fb1ed621f3c1fb275bbcf"
+    },
+    {
+      "stage": "obrasgov-primary-state-check",
+      "status": "completed",
+      "producer": "data/intermediate/obrasgov-primary-state-check/producer.json",
+      "sha256": "54310f3bc03ec39f62b73ee7e0e5cf5aa82f48db51d12893d878e8da824c7e2b"
+    },
+    {
+      "stage": "obrasgov-primary-state-filter",
+      "status": "completed",
+      "producer": "data/intermediate/obrasgov-primary-state-filter/producer.json",
+      "sha256": "607fc4b58bcc4b9b265ae67b5c39280eac2f4e4362817a21582430c426dd1aad"
+    },
+    {
+      "stage": "land-value",
+      "status": "exploratory_partial",
+      "producer": "data/intermediate/land-value/producer.json",
+      "sha256": "c1340c35fa767444fe2d42edaab2295cc65b6d8372626f955bdce8bff67ca6c7"
+    }
+  ],
+  "obrasgov_one_command": {
+    "config": "/Users/fa4850sc/Documents/brazil-project/project.toml",
+    "municipality": "",
+    "recompute_harmonisation": false,
+    "stages": [
+      {
+        "stage": "obrasgov-snapshot",
+        "started_at": "2026-10-07T08:24:25.134244+00:00",
+        "status": "completed",
+        "result": {
+          "records": 134929,
+          "cleaned_records": 133417,
+          "removed": 1512,
+          "baseline_cleaned_records": 133417,
+          "count_matches_baseline": true,
+          "source": "copied_snapshot",
+          "generated_at": "2026-10-07T08:24:30.388195+00:00"
+        }
+      },
+      {
+        "stage": "obrasgov-location-qa",
+        "started_at": "2026-10-07T08:24:30.637115+00:00",
+        "status": "completed",
+        "result": {
+          "status": "completed",
+          "contract": {
+            "policy_version": "1.0",
+            "source_sha256": "091c27860f78eee1e6abe989dbbef65a8b7412f87d82616d74c30ca6774f17cc",
+            "references": {
+              "municipalities": {
+                "path": "BR_Municipios_2022.zip",
+                "url": "https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais/municipio_2022/Brasil/BR/BR_Municipios_2022.zip",
+                "description": "IBGE municipal mesh 2022",
+                "sha256": "9c904fa1feb978a89042bfecd7758e571266f285d6122a4ff02ffe37bffb76a2",
+                "bytes": 203627589,
+                "acquired_at": "2026-10-06T11:52:29.156527+00:00"
+              },
+              "land": {
+                "path": "ne_10m_land.zip",
+                "url": "https://naturalearth.s3.amazonaws.com/5.1.1/10m_physical/ne_10m_land.zip",
+                "description": "Natural Earth land 1:10m, 5.1.1",
+                "sha256": "e547d749445eaa0964aba76738090ec88f5e63c4585122170f98c67a7ea922dc",
+                "bytes": 3269070,
+                "acquired_at": "2026-10-06T11:52:31.427667+00:00"
+              },
+              "coastline": {
+                "path": "ne_10m_coastline.zip",
+                "url": "https://naturalearth.s3.amazonaws.com/5.1.1/10m_physical/ne_10m_coastline.zip",
+                "description": "Natural Earth ocean coastline 1:10m, release 5.1.1",
+                "sha256": "bfa04cdbcbef07ef90dfca1dabb48062eca29900a113df0f389303e255484017",
+                "bytes": 3069451,
+                "acquired_at": "2026-10-06T11:54:44.640947+00:00"
+              }
+            },
+            "parameters": {
+              "coast_tolerance_m": 5000,
+              "border_tolerance_m": 1000,
+              "sample_spacing_m": 1000,
+              "max_line_samples": 250
+            },
+            "code_sha256": "f8c0d12ef77c89f81122516b92c005fcf250c01ab7b5a555e65cf95340093915"
+          },
+          "source_records": 134929,
+          "duplicate_project_id_rows": 4968,
+          "components": 230356,
+          "map_components": 226309,
+          "quarantined_components": 2037,
+          "component_status_counts": {
+            "eligible_unverified": 224103,
+            "administrative_or_coordinate_review": 2063,
+            "polygon_display_excluded": 2010,
+            "quarantined_invalid_location": 1523,
+            "quarantined_offshore": 428,
+            "quarantined_outside_brazil": 86,
+            "coastal_review": 75,
+            "border_review": 62,
+            "possible_marine_review": 6
+          },
+          "quarantined_source_rows": 1826,
+          "quarantined_project_ids": 1801,
+          "offshore_project_ids": 292,
+          "far_offshore_project_ids": 236,
+          "unique_project_budget_diagnostic": {
+            "distinct_project_ids": 129961,
+            "consistent_amount_project_ids": 129961,
+            "conflicting_amount_project_ids": 0,
+            "all_missing_amount_project_ids": 0,
+            "consistent_project_amount_brl": 1017235379491.0999,
+            "source_row_sum_is_not_unique_project_budget": true
+          },
+          "offshore_components": 509,
+          "far_offshore_components": 428,
+          "investment_by_source_row_coverage": {
+            "all_components_eligible": {
+              "source_rows": 131459,
+              "known_investment_brl": 1095191124427.0099,
+              "missing_investment_rows": 0
+            },
+            "mixed_components": {
+              "source_rows": 227,
+              "known_investment_brl": 2187023643.69,
+              "missing_investment_rows": 0
+            },
+            "no_eligible_location": {
+              "source_rows": 3243,
+              "known_investment_brl": 17839949930.53,
+              "missing_investment_rows": 0
+            }
+          },
+          "source_unchanged": true,
+          "coordinates_corrected": 0,
+          "municipality_code_check_available": false,
+          "limitations": [
+            "Generalized coastline and land mask; small unmapped islands can be flagged.",
+            "Marine descriptions indicate review, not verified marine validity.",
+            "Line paths are sampled; all source vertices are checked.",
+            "Retained locations are eligible, not independently validated.",
+            "Source rows include duplicate project IDs; row investment totals are not unique-project budgets."
+          ],
+          "output_fingerprints": {
+            "source_audit": "451555ec861c6065f53640bd70ac44793a731562fc7ff331ff15a0ece2c436aa",
+            "component_audit": "a37ced6f2fa55ceb6758914181c34359abae256288d12d897b50c3b7fadb8b05",
+            "map_components": "894b73d13808206f4571754d41efe57b5820ba838459dbc966454c1fb47d38d6",
+            "quarantined_components": "d34beb533c55ecc97fed473e9e9e4c807431c32d88ea61a2342a8e8d924bbab2",
+            "review_table": "d6646ca021901c08c91523d25142b7a44069512650f66800b648b83719621c8b"
+          },
+          "generated_at": "2026-10-07T08:26:48.236080+00:00"
+        }
+      },
+      {
+        "stage": "obrasgov-location-plot",
+        "started_at": "2026-10-07T08:26:48.663587+00:00",
+        "status": "completed",
+        "result": {
+          "figure": "outputs/figures/obrasgov-location-qa/location-screening.png",
+          "sha256": "f81b4461ea34094d2e3f25742d834bbdb18e8c7e128b3ee6459d43be4466371d"
+        }
+      },
+      {
+        "stage": "obrasgov-primary-state-check",
+        "started_at": "2026-10-07T08:26:56.447793+00:00",
+        "status": "completed",
+        "result": {
+          "status": "completed",
+          "mode": "diagnostic_only_no_filtering",
+          "reference": "IBGE municipalities 2022 dissolved by SIGLA_UF; original resolution",
+          "predicate": "covers for fully_inside; intersects for partly_inside_or_boundary_contact; no buffer or coordinate correction",
+          "inputs": {
+            "data/intermediate/obrasgov-location-qa/component_audit.parquet": "a37ced6f2fa55ceb6758914181c34359abae256288d12d897b50c3b7fadb8b05",
+            "data/reference/location-qa/BR_Municipios_2022.zip": "9c904fa1feb978a89042bfecd7758e571266f285d6122a4ff02ffe37bffb76a2",
+            "data/processed/obrasgov/projects_st.gpkg": "091c27860f78eee1e6abe989dbbef65a8b7412f87d82616d74c30ca6774f17cc"
+          },
+          "script_sha256": "e747480b47dc9661227c55481f845bbc4353f7e63c505f703a3a30a9d3b444c4",
+          "source_rows": 134929,
+          "components": 230356,
+          "component_counts": {
+            "fully_inside": 226006,
+            "entirely_outside": 2346,
+            "not_assessable_geometry": 1561,
+            "partly_inside_or_boundary_contact": 440,
+            "unknown_or_missing_primary_state": 3
+          },
+          "affected_source_rows": {
+            "entirely_outside": 784,
+            "fully_inside": 132924,
+            "not_assessable_geometry": 1558,
+            "partly_inside_or_boundary_contact": 112,
+            "unknown_or_missing_primary_state": 3
+          },
+          "affected_distinct_project_ids": {
+            "entirely_outside": 697,
+            "fully_inside": 128048,
+            "not_assessable_geometry": 1508,
+            "partly_inside_or_boundary_contact": 79,
+            "unknown_or_missing_primary_state": 3
+          },
+          "counts_by_state": {
+            "": {
+              "entirely_outside": 0,
+              "fully_inside": 0,
+              "not_assessable_geometry": 6,
+              "partly_inside_or_boundary_contact": 0,
+              "unknown_or_missing_primary_state": 3
+            },
+            "AC": {
+              "entirely_outside": 6,
+              "fully_inside": 1831,
+              "not_assessable_geometry": 8,
+              "partly_inside_or_boundary_contact": 1,
+              "unknown_or_missing_primary_state": 0
+            },
+            "AL": {
+              "entirely_outside": 99,
+              "fully_inside": 3230,
+              "not_assessable_geometry": 25,
+              "partly_inside_or_boundary_contact": 8,
+              "unknown_or_missing_primary_state": 0
+            },
+            "AM": {
+              "entirely_outside": 24,
+              "fully_inside": 4952,
+              "not_assessable_geometry": 22,
+              "partly_inside_or_boundary_contact": 32,
+              "unknown_or_missing_primary_state": 0
+            },
+            "AP": {
+              "entirely_outside": 16,
+              "fully_inside": 2189,
+              "not_assessable_geometry": 7,
+              "partly_inside_or_boundary_contact": 0,
+              "unknown_or_missing_primary_state": 0
+            },
+            "BA": {
+              "entirely_outside": 280,
+              "fully_inside": 18053,
+              "not_assessable_geometry": 132,
+              "partly_inside_or_boundary_contact": 4,
+              "unknown_or_missing_primary_state": 0
+            },
+            "CE": {
+              "entirely_outside": 28,
+              "fully_inside": 9938,
+              "not_assessable_geometry": 80,
+              "partly_inside_or_boundary_contact": 34,
+              "unknown_or_missing_primary_state": 0
+            },
+            "DF": {
+              "entirely_outside": 330,
+              "fully_inside": 1324,
+              "not_assessable_geometry": 13,
+              "partly_inside_or_boundary_contact": 21,
+              "unknown_or_missing_primary_state": 0
+            },
+            "ES": {
+              "entirely_outside": 12,
+              "fully_inside": 2812,
+              "not_assessable_geometry": 43,
+              "partly_inside_or_boundary_contact": 2,
+              "unknown_or_missing_primary_state": 0
+            },
+            "GO": {
+              "entirely_outside": 28,
+              "fully_inside": 4965,
+              "not_assessable_geometry": 39,
+              "partly_inside_or_boundary_contact": 2,
+              "unknown_or_missing_primary_state": 0
+            },
+            "MA": {
+              "entirely_outside": 293,
+              "fully_inside": 18699,
+              "not_assessable_geometry": 80,
+              "partly_inside_or_boundary_contact": 6,
+              "unknown_or_missing_primary_state": 0
+            },
+            "MG": {
+              "entirely_outside": 84,
+              "fully_inside": 22551,
+              "not_assessable_geometry": 114,
+              "partly_inside_or_boundary_contact": 3,
+              "unknown_or_missing_primary_state": 0
+            },
+            "MS": {
+              "entirely_outside": 12,
+              "fully_inside": 3168,
+              "not_assessable_geometry": 33,
+              "partly_inside_or_boundary_contact": 1,
+              "unknown_or_missing_primary_state": 0
+            },
+            "MT": {
+              "entirely_outside": 43,
+              "fully_inside": 4996,
+              "not_assessable_geometry": 23,
+              "partly_inside_or_boundary_contact": 6,
+              "unknown_or_missing_primary_state": 0
+            },
+            "PA": {
+              "entirely_outside": 50,
+              "fully_inside": 21038,
+              "not_assessable_geometry": 56,
+              "partly_inside_or_boundary_contact": 15,
+              "unknown_or_missing_primary_state": 0
+            },
+            "PB": {
+              "entirely_outside": 24,
+              "fully_inside": 6390,
+              "not_assessable_geometry": 40,
+              "partly_inside_or_boundary_contact": 6,
+              "unknown_or_missing_primary_state": 0
+            },
+            "PE": {
+              "entirely_outside": 363,
+              "fully_inside": 13917,
+              "not_assessable_geometry": 57,
+              "partly_inside_or_boundary_contact": 204,
+              "unknown_or_missing_primary_state": 0
+            },
+            "PI": {
+              "entirely_outside": 237,
+              "fully_inside": 13083,
+              "not_assessable_geometry": 140,
+              "partly_inside_or_boundary_contact": 35,
+              "unknown_or_missing_primary_state": 0
+            },
+            "PR": {
+              "entirely_outside": 21,
+              "fully_inside": 7270,
+              "not_assessable_geometry": 76,
+              "partly_inside_or_boundary_contact": 11,
+              "unknown_or_missing_primary_state": 0
+            },
+            "RJ": {
+              "entirely_outside": 59,
+              "fully_inside": 5771,
+              "not_assessable_geometry": 39,
+              "partly_inside_or_boundary_contact": 20,
+              "unknown_or_missing_primary_state": 0
+            },
+            "RN": {
+              "entirely_outside": 31,
+              "fully_inside": 5001,
+              "not_assessable_geometry": 24,
+              "partly_inside_or_boundary_contact": 7,
+              "unknown_or_missing_primary_state": 0
+            },
+            "RO": {
+              "entirely_outside": 38,
+              "fully_inside": 2535,
+              "not_assessable_geometry": 23,
+              "partly_inside_or_boundary_contact": 1,
+              "unknown_or_missing_primary_state": 0
+            },
+            "RR": {
+              "entirely_outside": 9,
+              "fully_inside": 1625,
+              "not_assessable_geometry": 42,
+              "partly_inside_or_boundary_contact": 0,
+              "unknown_or_missing_primary_state": 0
+            },
+            "RS": {
+              "entirely_outside": 74,
+              "fully_inside": 13079,
+              "not_assessable_geometry": 154,
+              "partly_inside_or_boundary_contact": 5,
+              "unknown_or_missing_primary_state": 0
+            },
+            "SC": {
+              "entirely_outside": 43,
+              "fully_inside": 6678,
+              "not_assessable_geometry": 30,
+              "partly_inside_or_boundary_contact": 1,
+              "unknown_or_missing_primary_state": 0
+            },
+            "SE": {
+              "entirely_outside": 13,
+              "fully_inside": 2554,
+              "not_assessable_geometry": 25,
+              "partly_inside_or_boundary_contact": 10,
+              "unknown_or_missing_primary_state": 0
+            },
+            "SP": {
+              "entirely_outside": 52,
+              "fully_inside": 23803,
+              "not_assessable_geometry": 212,
+              "partly_inside_or_boundary_contact": 1,
+              "unknown_or_missing_primary_state": 0
+            },
+            "TO": {
+              "entirely_outside": 77,
+              "fully_inside": 4554,
+              "not_assessable_geometry": 18,
+              "partly_inside_or_boundary_contact": 4,
+              "unknown_or_missing_primary_state": 0
+            }
+          },
+          "counts_by_geometry": {
+            "LineString": {
+              "entirely_outside": 329,
+              "fully_inside": 23477,
+              "not_assessable_geometry": 0,
+              "partly_inside_or_boundary_contact": 375,
+              "unknown_or_missing_primary_state": 0
+            },
+            "MultiPoint": {
+              "entirely_outside": 0,
+              "fully_inside": 0,
+              "not_assessable_geometry": 1509,
+              "partly_inside_or_boundary_contact": 0,
+              "unknown_or_missing_primary_state": 0
+            },
+            "Point": {
+              "entirely_outside": 2010,
+              "fully_inside": 200640,
+              "not_assessable_geometry": 3,
+              "partly_inside_or_boundary_contact": 0,
+              "unknown_or_missing_primary_state": 3
+            },
+            "Polygon": {
+              "entirely_outside": 7,
+              "fully_inside": 1889,
+              "not_assessable_geometry": 49,
+              "partly_inside_or_boundary_contact": 65,
+              "unknown_or_missing_primary_state": 0
+            }
+          },
+          "entirely_outside_intersecting_other_states": 1678,
+          "entirely_outside_intersecting_no_state": 668,
+          "figure": {
+            "path": "outputs/figures/obrasgov-location-qa/primary-state-check.png",
+            "sha256": "a0c9d2335732140b56d10cc4959f0f803ffa807fe77a61869b3037356eab4f66"
+          },
+          "output_sha256": {
+            "components.csv": "1d26c299819b06d142c6f36544c3b56c558e075379b801aadee5c89313d45571",
+            "by-state.csv": "0014477a1d7f9b1d9c3973fb633837ee7fa7cdff25940734fffdf191e4a83d6e",
+            "by-geometry.csv": "076c078cc01d1367042619f2e0a689ae9b4d7e6628be120394be4de6e5e5a487"
+          },
+          "limitations": [
+            "Primary state may describe a lead state in a multi-state project.",
+            "IBGE 2022 administrative territory is not an offshore licensing boundary.",
+            "Exact boundary differences can produce partial or outside results.",
+            "Source rows/project IDs may have multiple components and occur in multiple categories."
+          ]
+        }
+      },
+      {
+        "stage": "obrasgov-primary-state-filter",
+        "started_at": "2026-10-07T08:27:18.801021+00:00",
+        "status": "completed",
+        "result": null
+      }
+    ],
+    "reports": [
+      {
+        "report": "obrasgov_data_extraction",
+        "status": "completed",
+        "generation": "290a5aa394bc462cb374b4c5052ab20f",
+        "output": "research/reports/obrasgov_data_extraction.md",
+        "output_sha256": "1c06f97c9b9029830aacb010f77dc4808e0b643fabc733d05c356a243f2c686c",
+        "evidence": "outputs/reports/evidence/national/obrasgov_data_extraction/290a5aa394bc462cb374b4c5052ab20f/evidence.json"
+      },
+      {
+        "report": "obrasgov_preprocessing",
+        "status": "completed",
+        "generation": "6ddcf0d602c245a4a4eb0590622722ff",
+        "output": "research/reports/obrasgov_preprocessing.md",
+        "output_sha256": "75d65e3b1d9f611c981b8e7c3daa3537b863f90f62eea944156538056ef43b3c",
+        "evidence": "outputs/reports/evidence/national/obrasgov_preprocessing/6ddcf0d602c245a4a4eb0590622722ff/evidence.json"
+      }
+    ],
+    "generated_at": "2026-10-07T08:27:58.851398+00:00"
+  },
+  "scoped_national_reports_byte_identical": true,
+  "scoped_reports": {
+    "ibge_census_temporal_comparison": {
+      "status": "completed",
+      "generation": "a897076cb2ad4fe7b1e7cedbbc176927",
+      "output_sha256": "f28f05b29ba3b79078092e63299c19b62e8629e360399fd375c736353d089db5"
+    },
+    "ibge_census_tract_harmonisation": {
+      "status": "completed",
+      "generation": "aa6b774d6c7747a79049391331ba7c01",
+      "output_sha256": "3d23734d63e48030a14a1b3c466ef803af9dbccd28fa1f160215cd83c2c114f4"
+    }
+  },
+  "browser": {
+    "reports": [
+      {
+        "file": "brazil_poroject_charts.html",
+        "title": "Conference charts: sanitation, racial composition and income",
+        "tables": 1,
+        "details": 1,
+        "images": [
+          {
+            "src": "assets/86b21d600174eb976d7e638e6318c13bfd97384eca6ac35d64f248e8611456d4.png",
+            "loaded": true
+          },
+          {
+            "src": "assets/ec96fc0e481e0128e031ce099fd4df76c47739f060533f3cb8cb716a6b6f5671.png",
+            "loaded": true
+          }
+        ]
+      },
+      {
+        "file": "codebook.html",
+        "title": "Variable and Dataset Codebook",
+        "tables": 4,
+        "details": 0,
+        "images": [
+          {
+            "src": "../research/reports/assets/32179d8b13840544dd42ab5dec308158982a4a4c1e7fc995b2f4b2e9d81de813.png",
+            "loaded": true
+          }
+        ]
+      },
+      {
+        "file": "ibama_data_extraction.html",
+        "title": "IBAMA environmental licensing records",
+        "tables": 2,
+        "details": 6,
+        "images": [
+          {
+            "src": "assets/9b54007d03937b7fe58866d15ecdca83da631f031fb4078294d9e278ab7df7ed.png",
+            "loaded": true
+          }
+        ]
+      },
+      {
+        "file": "ibge_census_data_extraction.html",
+        "title": "Census exploration: original annual tracts",
+        "tables": 1,
+        "details": 7,
+        "images": [
+          {
+            "src": "assets/658f6d3ab58593790dc60fd73ff24d88556a6e8b73be1f9d396d56aac63d6233.png",
+            "loaded": true
+          },
+          {
+            "src": "assets/c4327174a3a26a1a6b69a56aeddb90b50a36e72627bd75060efba0e8aa186237.png",
+            "loaded": true
+          }
+        ]
+      },
+      {
+        "file": "ibge_census_temporal_comparison.html",
+        "title": "Census indicators: 2010\u20132022 comparison",
+        "tables": 27,
+        "details": 18,
+        "images": [
+          {
+            "src": "assets/87fd225de925ddcca7439994bb37001ba17f46f2c1715def7842af5000559eb3.png",
+            "loaded": true
+          },
+          {
+            "src": "assets/8b9bd8d62bbdbdce20ec7bbbafb58f2cd9e39fdf3817476004bc9e3fac2f5c2f.png",
+            "loaded": true
+          },
+          {
+            "src": "assets/7c9149518b581a1f0abec5fcf81206b221a0e4838cff23d83b6107ed7976883f.png",
+            "loaded": true
+          }
+        ]
+      },
+      {
+        "file": "ibge_census_tract_harmonisation.html",
+        "title": "Census tract harmonisation",
+        "tables": 3,
+        "details": 5,
+        "images": [
+          {
+            "src": "assets/32179d8b13840544dd42ab5dec308158982a4a4c1e7fc995b2f4b2e9d81de813.png",
+            "loaded": true
+          },
+          {
+            "src": "assets/488b01caee98ec3f2064278dfcb0af0a63d5a25ccdc4332fc316c3c9dc59edc4.png",
+            "loaded": true
+          }
+        ]
+      },
+      {
+        "file": "ibge_dataset_overview.html",
+        "title": "Census boundary overview: 2000, 2010 and 2022",
+        "tables": 2,
+        "details": 15,
+        "images": [
+          {
+            "src": "assets/c6ebb10b8b1966edf8a6ebc94a0851db76ff9c1649e9b9a9cfa0e0c0e9ea972e.png",
+            "loaded": true
+          },
+          {
+            "src": "assets/a0abb81a863a1e9a128fefc34ab21066155f21700bde6f17f8991528f0a9eeea.png",
+            "loaded": true
+          },
+          {
+            "src": "assets/09db8e73b70bc95dee8f8d1b4332cb936c4a614f4fe0af53c562e72c2617425a.png",
+            "loaded": true
+          },
+          {
+            "src": "assets/3195b41c4c4ba5bb71289daa252314db93d5232d261d0da41a373208a7feb38b.png",
+            "loaded": true
+          }
+        ]
+      },
+      {
+        "file": "obrasgov_data_extraction.html",
+        "title": "Obrasgov inputs and acquisition",
+        "tables": 1,
+        "details": 8,
+        "images": []
+      },
+      {
+        "file": "obrasgov_preprocessing.html",
+        "title": "Obrasgov preprocessing and location checks",
+        "tables": 6,
+        "details": 13,
+        "images": [
+          {
+            "src": "assets/90fcdf5eb0777311813ae6ef4ea2c7574511dad533eb279769e68d7becf1f775.png",
+            "loaded": true
+          },
+          {
+            "src": "assets/63cfac0a905a8297a0efcd6af57a57a12f561e86a7c5d27c46baf5628d919906.png",
+            "loaded": true
+          },
+          {
+            "src": "assets/f81b4461ea34094d2e3f25742d834bbdb18e8c7e128b3ee6459d43be4466371d.png",
+            "loaded": true
+          },
+          {
+            "src": "assets/0ac43a2ef9a91c20ff6cfa1a4c7d98596a3834341b713641184dfe2f62279224.png",
+            "loaded": true
+          }
+        ]
+      },
+      {
+        "file": "property_value.html",
+        "title": "Exploratory land-value inputs",
+        "tables": 1,
+        "details": 4,
+        "images": []
+      }
+    ],
+    "brokenImages": 0,
+    "externalRequestsBlocked": true
+  },
+  "legacy_income_missingness": {
+    "processing_counter": 0,
+    "final_unavailable_changes": 7216,
+    "presentation_uses_final_columns": true
+  },
+  "local_links_valid": true,
+  "cell_count": 67
+}

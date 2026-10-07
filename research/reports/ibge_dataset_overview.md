@@ -1,15 +1,26 @@
-# IBGE Dataset Overview
+# Census boundary overview: 2000, 2010 and 2022
 
-Executable research report. Refresh with `brazil-project report ibge_dataset_overview`. Code is collapsed below each explanation.
+Explore changes from 2000 urban tracts to newer boundaries in Belo Horizonte. This exploratory method differs from the 2010–2022 common-area harmonisation.
 
-This code compares census tract boundaries from 2000, 2010, and 2022 in Belo Horizonte. It measures how much the areas overlap and classifies older tracts as stable, reshaped, split, or unmatched. It then visualizes examples of these changes and compares the share of the Black population in 2010 and 2022.
+[Variable and dataset codebook](../../docs/codebook.md) · [Methods](../../docs/methods.md) · [All reports](../README.md#read-the-reports)
 
+Refresh processing and this report with `brazil-project report ibge_dataset_overview --config project.toml`. Add `--from-saved` to refresh existing verified artifacts only. Code is collapsed; tables and figures below are saved execution results.
+
+## How to read this analysis
+
+A newer tract contributes when the original spherical overlap fraction exceeds 5%. A single qualifying match above 95% is classified as stable; multiple qualifying matches are split, and a remaining single match is reshaped. No qualifying match is unmatched. R sf/S2 retains the original geographic topology and area semantics. Example figures show actual saved inputs; labels describe the original examples and classifications may differ between comparison years.
+
+## Inputs, coverage and processing status
+
+This summary reads the current saved processing artifacts. Technical fingerprints are available in the collapsed provenance record.
 
 <details>
-<summary>Python code</summary>
+<summary>Read saved processing summary</summary>
 
 <!-- brazil:cell ibge_dataset_overview_1 -->
 ```python
+import matplotlib
+matplotlib.use("Agg")  # Headless figures in the fresh report process.
 #| label: ibge_dataset_overview_1
 from pathlib import Path
 from brazil_project.io import Context
@@ -20,22 +31,91 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 1)
 </details>
 
 <!-- brazil:output ibge_dataset_overview_1 begin -->
-```text
-{'municipality': '3106200',
- 'adapter': 'R sf/S2',
- 'classification_counts': {'2010': {'split': 1323,
-   'stable': 1017,
-   'reshaped': 222,
-   'unmatched': 2},
-  '2022': {'split': 1897, 'stable': 491, 'reshaped': 164, 'unmatched': 11}},
- 'reason': 'preserve original geographic intersection and area semantics',
- 'generated_at': '2026-10-07T07:01:58.874116+00:00'}
-```
-<!-- brazil:output ibge_dataset_overview_1 end -->
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Comparison</th>
+      <th>Classification</th>
+      <th>2000 tracts</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2000 → 2010</td>
+      <td>split</td>
+      <td>1323</td>
+    </tr>
+    <tr>
+      <td>2000 → 2010</td>
+      <td>stable</td>
+      <td>1017</td>
+    </tr>
+    <tr>
+      <td>2000 → 2010</td>
+      <td>reshaped</td>
+      <td>222</td>
+    </tr>
+    <tr>
+      <td>2000 → 2010</td>
+      <td>unmatched</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>2000 → 2022</td>
+      <td>split</td>
+      <td>1897</td>
+    </tr>
+    <tr>
+      <td>2000 → 2022</td>
+      <td>stable</td>
+      <td>491</td>
+    </tr>
+    <tr>
+      <td>2000 → 2022</td>
+      <td>reshaped</td>
+      <td>164</td>
+    </tr>
+    <tr>
+      <td>2000 → 2022</td>
+      <td>unmatched</td>
+      <td>11</td>
+    </tr>
+  </tbody>
+</table>
 
+Municipality: `3106200`; geometry calculations use R sf/S2.
 
 <details>
-<summary>Python code</summary>
+<summary>Technical provenance and complete processing record</summary>
+
+```json
+{
+  "municipality": "3106200",
+  "adapter": "R sf/S2",
+  "classification_counts": {
+    "2010": {
+      "split": 1323,
+      "stable": 1017,
+      "reshaped": 222,
+      "unmatched": 2
+    },
+    "2022": {
+      "split": 1897,
+      "stable": 491,
+      "reshaped": 164,
+      "unmatched": 11
+    }
+  },
+  "reason": "preserve original geographic intersection and area semantics",
+  "generated_at": "2026-10-07T08:13:22.961550+00:00"
+}
+```
+
+</details>
+<!-- brazil:output ibge_dataset_overview_1 end -->
+
+<details>
+<summary>Trace original step: Tracts Import</summary>
 
 <!-- brazil:cell ibge_dataset_overview_2 -->
 ```python
@@ -46,22 +126,11 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 2)
 </details>
 
 <!-- brazil:output ibge_dataset_overview_2 begin -->
-```text
-{'municipality': '3106200',
- 'adapter': 'R sf/S2',
- 'classification_counts': {'2010': {'split': 1323,
-   'stable': 1017,
-   'reshaped': 222,
-   'unmatched': 2},
-  '2022': {'split': 1897, 'stable': 491, 'reshaped': 164, 'unmatched': 11}},
- 'reason': 'preserve original geographic intersection and area semantics',
- 'generated_at': '2026-10-07T07:01:58.874116+00:00'}
-```
+<!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output ibge_dataset_overview_2 end -->
 
-
 <details>
-<summary>Python code</summary>
+<summary>Trace original step: Census Data Import</summary>
 
 <!-- brazil:cell ibge_dataset_overview_3 -->
 ```python
@@ -72,26 +141,11 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 3)
 </details>
 
 <!-- brazil:output ibge_dataset_overview_3 begin -->
-```text
-{'municipality': '3106200',
- 'adapter': 'R sf/S2',
- 'classification_counts': {'2010': {'split': 1323,
-   'stable': 1017,
-   'reshaped': 222,
-   'unmatched': 2},
-  '2022': {'split': 1897, 'stable': 491, 'reshaped': 164, 'unmatched': 11}},
- 'reason': 'preserve original geographic intersection and area semantics',
- 'generated_at': '2026-10-07T07:01:58.874116+00:00'}
-```
+<!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output ibge_dataset_overview_3 end -->
 
-# Census Tract
-
-## Overlap Analysis
-
-
 <details>
-<summary>Python code</summary>
+<summary>Trace original step: Compute Intersections</summary>
 
 <!-- brazil:cell ibge_dataset_overview_4 -->
 ```python
@@ -102,22 +156,11 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 4)
 </details>
 
 <!-- brazil:output ibge_dataset_overview_4 begin -->
-```text
-{'municipality': '3106200',
- 'adapter': 'R sf/S2',
- 'classification_counts': {'2010': {'split': 1323,
-   'stable': 1017,
-   'reshaped': 222,
-   'unmatched': 2},
-  '2022': {'split': 1897, 'stable': 491, 'reshaped': 164, 'unmatched': 11}},
- 'reason': 'preserve original geographic intersection and area semantics',
- 'generated_at': '2026-10-07T07:01:58.874116+00:00'}
-```
+<!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output ibge_dataset_overview_4 end -->
 
-
 <details>
-<summary>Python code</summary>
+<summary>Trace original step: Load Saved Computations</summary>
 
 <!-- brazil:cell ibge_dataset_overview_5 -->
 ```python
@@ -128,24 +171,15 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 5)
 </details>
 
 <!-- brazil:output ibge_dataset_overview_5 begin -->
-```text
-{'municipality': '3106200',
- 'adapter': 'R sf/S2',
- 'classification_counts': {'2010': {'split': 1323,
-   'stable': 1017,
-   'reshaped': 222,
-   'unmatched': 2},
-  '2022': {'split': 1897, 'stable': 491, 'reshaped': 164, 'unmatched': 11}},
- 'reason': 'preserve original geographic intersection and area semantics',
- 'generated_at': '2026-10-07T07:01:58.874116+00:00'}
-```
+<!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output ibge_dataset_overview_5 end -->
 
-### 2000 -\> 2010
+## Tract Change Summary 2000 2010
 
+Saved result from the original comparison flow.
 
 <details>
-<summary>Python code</summary>
+<summary>Tract Change Summary 2000 2010</summary>
 
 <!-- brazil:cell ibge_dataset_overview_6 -->
 ```python
@@ -156,11 +190,11 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 6)
 </details>
 
 <!-- brazil:output ibge_dataset_overview_6 begin -->
+2,564 saved rows; showing up to ten. See the codebook for column definitions.
 
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th></th>
       <th>code_tract_2000</th>
       <th>n</th>
       <th>over5pct</th>
@@ -172,220 +206,101 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 6)
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
       <td>310620005620001</td>
       <td>9</td>
       <td>3</td>
-      <td>0.000772</td>
-      <td>0.982006</td>
-      <td>2.102869</td>
+      <td>0.0008</td>
+      <td>0.9820</td>
+      <td>2.1029</td>
       <td>split</td>
     </tr>
     <tr>
-      <th>1</th>
       <td>310620005620002</td>
       <td>6</td>
       <td>2</td>
-      <td>0.002036</td>
-      <td>0.989558</td>
-      <td>1.986710</td>
+      <td>0.0020</td>
+      <td>0.9896</td>
+      <td>1.9867</td>
       <td>split</td>
     </tr>
     <tr>
-      <th>2</th>
       <td>310620005620003</td>
       <td>7</td>
       <td>1</td>
-      <td>0.000574</td>
-      <td>0.972726</td>
-      <td>0.991485</td>
+      <td>0.0006</td>
+      <td>0.9727</td>
+      <td>0.9915</td>
       <td>stable</td>
     </tr>
     <tr>
-      <th>3</th>
       <td>310620005620004</td>
       <td>5</td>
       <td>1</td>
-      <td>0.001712</td>
-      <td>0.996126</td>
-      <td>1.006446</td>
+      <td>0.0017</td>
+      <td>0.9961</td>
+      <td>1.0064</td>
       <td>stable</td>
     </tr>
     <tr>
-      <th>4</th>
       <td>310620005620005</td>
       <td>8</td>
       <td>1</td>
-      <td>0.000012</td>
-      <td>0.987514</td>
-      <td>1.012916</td>
+      <td>0.0000</td>
+      <td>0.9875</td>
+      <td>1.0129</td>
       <td>stable</td>
     </tr>
     <tr>
-      <th>5</th>
       <td>310620005620006</td>
       <td>6</td>
       <td>1</td>
-      <td>0.000536</td>
-      <td>0.994452</td>
-      <td>1.021422</td>
+      <td>0.0005</td>
+      <td>0.9945</td>
+      <td>1.0214</td>
       <td>stable</td>
     </tr>
     <tr>
-      <th>6</th>
       <td>310620005620007</td>
       <td>3</td>
       <td>1</td>
-      <td>0.004771</td>
-      <td>0.989718</td>
-      <td>1.000275</td>
+      <td>0.0048</td>
+      <td>0.9897</td>
+      <td>1.0003</td>
       <td>stable</td>
     </tr>
     <tr>
-      <th>7</th>
       <td>310620005620008</td>
       <td>3</td>
       <td>1</td>
-      <td>0.000280</td>
-      <td>0.952945</td>
-      <td>0.960805</td>
+      <td>0.0003</td>
+      <td>0.9529</td>
+      <td>0.9608</td>
       <td>stable</td>
     </tr>
     <tr>
-      <th>8</th>
       <td>310620005620009</td>
       <td>4</td>
       <td>2</td>
-      <td>0.007272</td>
-      <td>0.998497</td>
-      <td>1.953615</td>
+      <td>0.0073</td>
+      <td>0.9985</td>
+      <td>1.9536</td>
       <td>split</td>
     </tr>
     <tr>
-      <th>9</th>
       <td>310620005620010</td>
       <td>8</td>
       <td>3</td>
-      <td>0.000295</td>
-      <td>1.000000</td>
-      <td>3.000249</td>
+      <td>0.0003</td>
+      <td>1.0000</td>
+      <td>3.0002</td>
       <td>split</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>310620005620011</td>
-      <td>3</td>
-      <td>1</td>
-      <td>0.001462</td>
-      <td>0.895966</td>
-      <td>0.902668</td>
-      <td>reshaped</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>310620005620012</td>
-      <td>9</td>
-      <td>2</td>
-      <td>0.000420</td>
-      <td>0.998548</td>
-      <td>2.049922</td>
-      <td>split</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>310620005620013</td>
-      <td>7</td>
-      <td>2</td>
-      <td>0.000006</td>
-      <td>0.994177</td>
-      <td>1.991003</td>
-      <td>split</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>310620005620014</td>
-      <td>10</td>
-      <td>2</td>
-      <td>0.000055</td>
-      <td>0.996930</td>
-      <td>2.081956</td>
-      <td>split</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>310620005620015</td>
-      <td>4</td>
-      <td>2</td>
-      <td>0.006853</td>
-      <td>0.966465</td>
-      <td>1.922558</td>
-      <td>split</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>310620005620016</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0.000002</td>
-      <td>0.971315</td>
-      <td>0.975798</td>
-      <td>stable</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>310620005620017</td>
-      <td>5</td>
-      <td>1</td>
-      <td>0.001820</td>
-      <td>0.977440</td>
-      <td>1.023820</td>
-      <td>stable</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>310620005620018</td>
-      <td>7</td>
-      <td>2</td>
-      <td>0.000013</td>
-      <td>0.981346</td>
-      <td>1.966211</td>
-      <td>split</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>310620005620019</td>
-      <td>6</td>
-      <td>2</td>
-      <td>0.000889</td>
-      <td>0.993017</td>
-      <td>1.984615</td>
-      <td>split</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>310620005620020</td>
-      <td>5</td>
-      <td>1</td>
-      <td>0.000009</td>
-      <td>0.945593</td>
-      <td>0.955127</td>
-      <td>reshaped</td>
     </tr>
   </tbody>
 </table>
-
-
-```text
-{'artifact_rows': 2564,
- 'path': 'data/intermediate/overview/change_summary_2000_2010.parquet'}
-```
 <!-- brazil:output ibge_dataset_overview_6 end -->
 
-### 2000 -\> 2022
-
-
 <details>
-<summary>Python code</summary>
+<summary>Trace original step: Unnamed 7</summary>
 
 <!-- brazil:cell ibge_dataset_overview_7 -->
 ```python
@@ -396,26 +311,15 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 7)
 </details>
 
 <!-- brazil:output ibge_dataset_overview_7 begin -->
-```text
-{'municipality': '3106200',
- 'adapter': 'R sf/S2',
- 'classification_counts': {'2010': {'split': 1323,
-   'stable': 1017,
-   'reshaped': 222,
-   'unmatched': 2},
-  '2022': {'split': 1897, 'stable': 491, 'reshaped': 164, 'unmatched': 11}},
- 'reason': 'preserve original geographic intersection and area semantics',
- 'generated_at': '2026-10-07T07:01:58.874116+00:00'}
-```
+<!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output ibge_dataset_overview_7 end -->
 
-### Visualization - Change Types
+## Example 1 Split
 
-**Split**
-
+The two panels compare the same 2000 tract with each newer year. Rose outlines mark the old tract; teal outlines mark eligible newer tracts.
 
 <details>
-<summary>Python code</summary>
+<summary>Draw real tract-boundary example</summary>
 
 <!-- brazil:cell ibge_dataset_overview_8 -->
 ```python
@@ -426,24 +330,17 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 8)
 </details>
 
 <!-- brazil:output ibge_dataset_overview_8 begin -->
-```text
-{'municipality': '3106200',
- 'adapter': 'R sf/S2',
- 'classification_counts': {'2010': {'split': 1323,
-   'stable': 1017,
-   'reshaped': 222,
-   'unmatched': 2},
-  '2022': {'split': 1897, 'stable': 491, 'reshaped': 164, 'unmatched': 11}},
- 'reason': 'preserve original geographic intersection and area semantics',
- 'generated_at': '2026-10-07T07:01:58.874116+00:00'}
-```
+![Generated figure](assets/c6ebb10b8b1966edf8a6ebc94a0851db76ff9c1649e9b9a9cfa0e0c0e9ea972e.png)
 
-Local interactive map (outside Git): `outputs/maps/overview/310620025610001.html`
+Real 2000 tract 310620025610001 (rose outline) and newer tracts (teal), selected by the original >5% overlap rule. No basemap; complete newer outlines may extend outside the old tract. This exploratory classification differs from the 2010–2022 harmonisation method.
 <!-- brazil:output ibge_dataset_overview_8 end -->
 
+## Example 2 Split
+
+The two panels compare the same 2000 tract with each newer year. Rose outlines mark the old tract; teal outlines mark eligible newer tracts.
 
 <details>
-<summary>Python code</summary>
+<summary>Draw real tract-boundary example</summary>
 
 <!-- brazil:cell ibge_dataset_overview_9 -->
 ```python
@@ -454,26 +351,17 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 9)
 </details>
 
 <!-- brazil:output ibge_dataset_overview_9 begin -->
-```text
-{'municipality': '3106200',
- 'adapter': 'R sf/S2',
- 'classification_counts': {'2010': {'split': 1323,
-   'stable': 1017,
-   'reshaped': 222,
-   'unmatched': 2},
-  '2022': {'split': 1897, 'stable': 491, 'reshaped': 164, 'unmatched': 11}},
- 'reason': 'preserve original geographic intersection and area semantics',
- 'generated_at': '2026-10-07T07:01:58.874116+00:00'}
-```
+![Generated figure](assets/a0abb81a863a1e9a128fefc34ab21066155f21700bde6f17f8991528f0a9eeea.png)
 
-Local interactive map (outside Git): `outputs/maps/overview/310620005650306.html`
+Real 2000 tract 310620005650306 (rose outline) and newer tracts (teal), selected by the original >5% overlap rule. No basemap; complete newer outlines may extend outside the old tract. This exploratory classification differs from the 2010–2022 harmonisation method.
 <!-- brazil:output ibge_dataset_overview_9 end -->
 
-**Reshaped**
+## Example 3 Reshape
 
+The two panels compare the same 2000 tract with each newer year. Rose outlines mark the old tract; teal outlines mark eligible newer tracts.
 
 <details>
-<summary>Python code</summary>
+<summary>Draw real tract-boundary example</summary>
 
 <!-- brazil:cell ibge_dataset_overview_10 -->
 ```python
@@ -484,26 +372,17 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 10)
 </details>
 
 <!-- brazil:output ibge_dataset_overview_10 begin -->
-```text
-{'municipality': '3106200',
- 'adapter': 'R sf/S2',
- 'classification_counts': {'2010': {'split': 1323,
-   'stable': 1017,
-   'reshaped': 222,
-   'unmatched': 2},
-  '2022': {'split': 1897, 'stable': 491, 'reshaped': 164, 'unmatched': 11}},
- 'reason': 'preserve original geographic intersection and area semantics',
- 'generated_at': '2026-10-07T07:01:58.874116+00:00'}
-```
+![Generated figure](assets/09db8e73b70bc95dee8f8d1b4332cb936c4a614f4fe0af53c562e72c2617425a.png)
 
-Local interactive map (outside Git): `outputs/maps/overview/310620005620021.html`
+Real 2000 tract 310620005620021 (rose outline) and newer tracts (teal), selected by the original >5% overlap rule. No basemap; complete newer outlines may extend outside the old tract. This exploratory classification differs from the 2010–2022 harmonisation method.
 <!-- brazil:output ibge_dataset_overview_10 end -->
 
-**Stable**
+## Example 3 Stable
 
+The two panels compare the same 2000 tract with each newer year. Rose outlines mark the old tract; teal outlines mark eligible newer tracts.
 
 <details>
-<summary>Python code</summary>
+<summary>Draw real tract-boundary example</summary>
 
 <!-- brazil:cell ibge_dataset_overview_11 -->
 ```python
@@ -514,30 +393,13 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 11)
 </details>
 
 <!-- brazil:output ibge_dataset_overview_11 begin -->
-```text
-{'municipality': '3106200',
- 'adapter': 'R sf/S2',
- 'classification_counts': {'2010': {'split': 1323,
-   'stable': 1017,
-   'reshaped': 222,
-   'unmatched': 2},
-  '2022': {'split': 1897, 'stable': 491, 'reshaped': 164, 'unmatched': 11}},
- 'reason': 'preserve original geographic intersection and area semantics',
- 'generated_at': '2026-10-07T07:01:58.874116+00:00'}
-```
+![Generated figure](assets/3195b41c4c4ba5bb71289daa252314db93d5232d261d0da41a373208a7feb38b.png)
 
-Local interactive map (outside Git): `outputs/maps/overview/310620005620008.html`
+Real 2000 tract 310620005620008 (rose outline) and newer tracts (teal), selected by the original >5% overlap rule. No basemap; complete newer outlines may extend outside the old tract. This exploratory classification differs from the 2010–2022 harmonisation method.
 <!-- brazil:output ibge_dataset_overview_11 end -->
 
-# Census Data
-
-## Visualization - BH
-
-### Black population ratio
-
-
 <details>
-<summary>Python code</summary>
+<summary>Trace original step: Race Ratio Calculation</summary>
 
 <!-- brazil:cell ibge_dataset_overview_12 -->
 ```python
@@ -548,22 +410,11 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 12)
 </details>
 
 <!-- brazil:output ibge_dataset_overview_12 begin -->
-```text
-{'municipality': '3106200',
- 'adapter': 'R sf/S2',
- 'classification_counts': {'2010': {'split': 1323,
-   'stable': 1017,
-   'reshaped': 222,
-   'unmatched': 2},
-  '2022': {'split': 1897, 'stable': 491, 'reshaped': 164, 'unmatched': 11}},
- 'reason': 'preserve original geographic intersection and area semantics',
- 'generated_at': '2026-10-07T07:01:58.874116+00:00'}
-```
+<!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output ibge_dataset_overview_12 end -->
 
-
 <details>
-<summary>Python code</summary>
+<summary>Trace original step: Import Linha Verde</summary>
 
 <!-- brazil:cell ibge_dataset_overview_13 -->
 ```python
@@ -574,22 +425,11 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 13)
 </details>
 
 <!-- brazil:output ibge_dataset_overview_13 begin -->
-```text
-{'municipality': '3106200',
- 'adapter': 'R sf/S2',
- 'classification_counts': {'2010': {'split': 1323,
-   'stable': 1017,
-   'reshaped': 222,
-   'unmatched': 2},
-  '2022': {'split': 1897, 'stable': 491, 'reshaped': 164, 'unmatched': 11}},
- 'reason': 'preserve original geographic intersection and area semantics',
- 'generated_at': '2026-10-07T07:01:58.874116+00:00'}
-```
+<!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output ibge_dataset_overview_13 end -->
 
-
 <details>
-<summary>Python code</summary>
+<summary>Trace original step: Visualization Black Ratio</summary>
 
 <!-- brazil:cell ibge_dataset_overview_14 -->
 ```python
@@ -600,15 +440,9 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 14)
 </details>
 
 <!-- brazil:output ibge_dataset_overview_14 begin -->
-```text
-{'municipality': '3106200',
- 'adapter': 'R sf/S2',
- 'classification_counts': {'2010': {'split': 1323,
-   'stable': 1017,
-   'reshaped': 222,
-   'unmatched': 2},
-  '2022': {'split': 1897, 'stable': 491, 'reshaped': 164, 'unmatched': 11}},
- 'reason': 'preserve original geographic intersection and area semantics',
- 'generated_at': '2026-10-07T07:01:58.874116+00:00'}
-```
+_No displayed output._
 <!-- brazil:output ibge_dataset_overview_14 end -->
+
+## Interpretation and limits
+
+Outputs retain the original aggregation, missingness and exclusion rules. Available results do not establish national scientific validation. Read [verification and remaining limitations](../../docs/checks.md) before drawing research conclusions. Original codebooks and earlier report contents remain preserved in the project archive.

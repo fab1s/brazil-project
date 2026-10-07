@@ -1,8 +1,8 @@
 # Here.now Map Workflow
 
 Status: maintained
-Last updated: 2026-10-06
-Version: 0.3
+Last updated: 2026-10-07
+Version: 0.4
 Scope: Build and update the existing research map from local validated common areas
 
 Browser source is under `website/`. The public site remains `https://sandy-ivory-k65c.here.now/`. Public data derivatives are generated in `outputs/maps/website/`; never publish the project root, raw datasets, work GeoPackage, credentials, or local here.now state.
@@ -11,7 +11,7 @@ Browser source is under `website/`. The public site remains `https://sandy-ivory
 
 The build requires the national versioned harmonisation bundle and the matching indicator report/tables. It rejects stale indicator versions, duplicate common IDs, and indicator IDs outside the bundle. Some indicator tables omit groups entirely; these retain their geometry and unavailable estimates. Out-of-range proportions remain unavailable in map presentation, matching the earlier website rule.
 
-Obrasgov, IBAMA, favelas, timeline, and other existing assets are frozen from the current website. The snapshot utility verifies published hashes and preserves these without rebuilding them from a different research snapshot. Snapshotting is an explicit network step, only needed to initialize or deliberately refresh the existing assets:
+IBAMA, favelas, timeline, and other existing assets are frozen from the current website. Obrasgov is rebuilt from the approved national location derivative, using the same frozen source records. The snapshot utility verifies published hashes and preserves these without rebuilding them from a different research snapshot. Snapshotting is an explicit network step, only needed to initialize or deliberately refresh the existing assets:
 
 ```bash
 .venv/bin/python code/scripts/snapshot_web_map.py --output outputs/maps/website
@@ -37,7 +37,7 @@ The website preserves income's real percentage-change presentation and density's
 
 ## Verify and publish
 
-Run the Python suite, compare all exported attributes with the source tables, and inspect rendered maps and controls. Check range responses and real tile loading at overview, mid, and detail zooms, then common-ID search, popups, summary coverage, density change, income, and mobile layout. Preserve frozen infrastructure/community hashes.
+Run the Python suite, compare all exported attributes with the source tables, and inspect rendered maps and controls. Check range responses and real tile loading at overview, mid, and detail zooms, then common-ID search, popups, summary coverage, density change, income, and mobile layout. Preserve unchanged infrastructure/community hashes; record the deliberate Obrasgov archive replacement separately.
 
 Publish only the completed site directory, using the here.now skill's helper:
 
@@ -49,6 +49,13 @@ The helper stages files, skips unchanged hashes, uploads changed assets, and fin
 
 ## Obrasgov display policy
 
-At researcher request, Obrasgov polygon components have no fill layer and are excluded from map interaction. Only point and line layers are registered, including after background changes. Mixed collections can still display their point/line components. Raw records and frozen PMTiles remain unchanged; IBAMA polygons, favelas and census areas are unaffected. Source-record totals and investment summaries still include polygon records, with explicit wording in the interface.
+At researcher request, Obrasgov polygon components have no fill layer and are excluded from map interaction. Only point and line layers are registered, including after background changes. Mixed collections can still display their point/line components. Raw records and archived previous PMTiles remain unchanged; IBAMA polygons, favelas and census areas are unaffected. Source-record totals and investment summaries still include polygon records, with explicit wording in the interface.
 
-The read-only location screen and proposed preprocessing policy are recorded in [the spatial review](obrasgov-spatial-review.md). No offshore-point deletion, correction, or blanket reprojection has been implemented.
+The approved location QA and primary-state exclusions are published through the derivative described in [the publication record](website-location-update.md). Build it after the existing national Obrasgov command:
+
+```bash
+.venv/bin/brazil-project run obrasgov --config project.toml
+.venv/bin/python code/scripts/build_obras_web_map.py --config project.toml
+```
+
+The exporter verifies producer records and source hashes, preserves source attributes and component geometry in the prepared exchange, and updates map counts separately from source-record summaries. The exporter copies maintained browser source into the publication folder; inspect it and publish with the command above. Preserve the previous archive under `data/archive/` before removing it from the active site directory. No automatic coordinate correction is performed.

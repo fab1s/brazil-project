@@ -1,0 +1,148 @@
+{
+  "date": "2026-10-07",
+  "status": "published_and_browser_verified",
+  "site_url": "https://sandy-ivory-k65c.here.now/",
+  "version": "01M4ANCFJRBKP011HTFEBDX2A7",
+  "permanent": true,
+  "published_files": 122,
+  "all_published_hashes_match_local": true,
+  "export": {
+    "archive": "obras-screened-509af4ee2316.pmtiles",
+    "archiveSha256": "9b9b76f297943a0248ca81a711413c192cea3170cc9e5bf19d851b23a824d2c9",
+    "sourceComponentSha256": "509af4ee231619b9b5098ea8110fc840e47512da4e820323c209b43823b33a6e",
+    "sourceRecords": 134929,
+    "mappedSourceRecords": 131554,
+    "mapComponents": 224495,
+    "geometryCounts": {
+      "Point": 200643,
+      "LineString": 23852
+    },
+    "locationScreenCounts": {
+      "eligible_unverified": 224103,
+      "administrative_or_coordinate_review": 392
+    },
+    "stateExcludedComponents": 2346,
+    "newlyStateExcludedMapComponents": 1814,
+    "policy": "exclude_entirely_outside_primary_state_v1",
+    "coordinatesCorrected": 0,
+    "inputs": {
+      "/Users/fa4850sc/Documents/brazil-project/data/intermediate/obrasgov-primary-state-filter/map_components.parquet": "509af4ee231619b9b5098ea8110fc840e47512da4e820323c209b43823b33a6e",
+      "/Users/fa4850sc/Documents/brazil-project/data/intermediate/obrasgov-primary-state-filter/report.json": "31d184f74b1c2895ede05c4cb44f9ab3cf605c0fa2d77b117bafca18fc00edaa",
+      "/Users/fa4850sc/Documents/brazil-project/data/processed/obrasgov/projects_st.gpkg": "091c27860f78eee1e6abe989dbbef65a8b7412f87d82616d74c30ca6774f17cc"
+    },
+    "scriptSha256": "f38ddd00852ee0c6c2ab466c6166d7360c52d8651b899415b40ad22162a983f3",
+    "publicFields": [
+      "id_projeto_investimento",
+      "desc_nome",
+      "tipo",
+      "subtipo",
+      "situacao",
+      "uf_principal",
+      "organizacao_resp",
+      "vl_investimento_previsto_total",
+      "dt_inicial_prevista",
+      "dt_final_prevista"
+    ],
+    "verification": {
+      "prepared_identifiers_attributes_crs_wkb_exact": true
+    },
+    "limitations": [
+      "Vector tiles project, clip and quantize geometry for display. Eligible locations are not independently verified geocoding.",
+      "Record totals and type/date summaries retain all source rows; do not sum repeated component investment values."
+    ]
+  },
+  "preserved_assets": {
+    "previous_version": "01M466S499KKFR6X9WY7QDQEMM",
+    "changed": [
+      "app.js",
+      "data/stats.json",
+      "index.html",
+      "social-indicators.js",
+      "startup.js"
+    ],
+    "removed_from_site": [
+      "data/obras.pmtiles"
+    ],
+    "previous_obras_archive": "data/archive/website-obras-before-screening-20261007.pmtiles",
+    "previous_obras_sha256": "3746592a1d7df1c0292ed92d587b6f23479946dccc4bce72ac85898755668af4",
+    "unchanged_files": 115
+  },
+  "tile_identity": {
+    "source_components": 224495,
+    "unique_tile_ids": 224457,
+    "unexpected_tile_ids": 0,
+    "missing_by_geometry": {
+      "LineString": 38
+    },
+    "missing_length_m": {
+      "count": 38.0,
+      "mean": 0.3882696871911296,
+      "std": 0.26951406946363654,
+      "min": 0.02521198920335925,
+      "25%": 0.1884022872347794,
+      "50%": 0.30893247982142974,
+      "75%": 0.5764773292777065,
+      "max": 0.9058265368123813
+    },
+    "tile_max_zoom": 13,
+    "tile_resolution_m_at_equator": 1.194328566955879
+  },
+  "tests": {
+    "passed": 92,
+    "warnings": 23,
+    "command": ".venv/bin/python -m pytest code/tests -q"
+  },
+  "local_browser": {
+    "errors": [],
+    "bad": [],
+    "obrasPolicy": {
+      "fill": false,
+      "point": true,
+      "line": true,
+      "types": [
+        "Point",
+        "LineString"
+      ]
+    },
+    "polygonToggleAndBasemapChecks": true,
+    "ibamaPolygonsRetained": true,
+    "mergedAreas": 287178,
+    "summaryCoverageShown": true,
+    "densityChangeLayer": true,
+    "incomeLayer": true,
+    "commonIdSearch": true,
+    "mobileViewport": true,
+    "midTierRendered": true
+  },
+  "live_browser": {
+    "errors": [],
+    "bad": [],
+    "obrasPolicy": {
+      "fill": false,
+      "point": true,
+      "line": true,
+      "types": [
+        "Point",
+        "LineString"
+      ]
+    },
+    "polygonToggleAndBasemapChecks": true,
+    "ibamaPolygonsRetained": true,
+    "mergedAreas": 287178,
+    "summaryCoverageShown": true,
+    "densityChangeLayer": true,
+    "incomeLayer": true,
+    "commonIdSearch": true,
+    "mobileViewport": true,
+    "midTierRendered": true
+  },
+  "live_manifest_exact": true,
+  "browser_range_response_count": 254,
+  "probe_note": "A plain urllib public-asset probe returned 403; the anonymous Chromium page, its manifest and all tile requests passed.",
+  "figure": {
+    "path": "docs/assets/website-obras-screened.png",
+    "working_output": "outputs/figures/website-location-update/national.png",
+    "sha256": "87d2e57e7e78b2d787fafb667cca8d32158940cfe80fadf7e51c0aec1d388742",
+    "source": "Fully loaded local Chromium capture of the reviewed published file contents."
+  }
+}

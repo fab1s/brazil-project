@@ -1,13 +1,26 @@
-# IBAMA - Data Extraction
+# IBAMA environmental licensing records
 
-Executable research report. Refresh with `brazil-project report ibama_data_extraction`. Code is collapsed below each explanation.
+Read the saved licensing snapshot and its sector composition. Ordinary pipeline runs translate and visualise local records; live acquisition is a separate explicit command. Licensing records do not establish project completion or environmental impact.
 
+[Variable and dataset codebook](../../docs/codebook.md) · [Methods](../../docs/methods.md) · [All reports](../README.md#read-the-reports)
+
+Refresh processing and this report with `brazil-project report ibama_data_extraction --config project.toml`. Add `--from-saved` to refresh existing verified artifacts only. Code is collapsed; tables and figures below are saved execution results.
+
+## How to read this analysis
+
+The original provider workflow combines point, line and polygon layers: `tb_empreendimento_repr_p`, `tb_empreendimento_repr_l` and `tb_empreendimento_repr_a`. The acquisition adapter handles pagination separately. Counts below describe source records, not a verified count of unique developments. Untranslated sectors remain visible; no category is inferred.
+
+## Inputs, coverage and processing status
+
+This summary reads the current saved processing artifacts. Technical fingerprints are available in the collapsed provenance record.
 
 <details>
-<summary>Python code</summary>
+<summary>Read saved processing summary</summary>
 
 <!-- brazil:cell ibama_data_extraction_1 -->
 ```python
+import matplotlib
+matplotlib.use("Agg")  # Headless figures in the fresh report process.
 #| label: ibama_data_extraction_1
 from pathlib import Path
 from brazil_project.io import Context
@@ -18,25 +31,44 @@ show_chunk(ctx, 'Scripts_Data/IBAMA/IBAMA - Data Extraction.qmd', 1)
 </details>
 
 <!-- brazil:output ibama_data_extraction_1 begin -->
-```text
-{'records': 8494,
- 'unknown_sectors': 0,
- 'source': 'copied_snapshot',
- 'generated_at': '2026-10-07T07:05:40.860588+00:00'}
-```
-<!-- brazil:output ibama_data_extraction_1 end -->
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Measure</th>
+      <th>Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Licensed source records</td>
+      <td>8494</td>
+    </tr>
+    <tr>
+      <td>Untranslated sectors</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
 
-We will extract three layers separately containing point, line and polygon geometries from the [PAMGIA](https://pamgia.ibama.gov.br/server/rest/services/SIGAGEO) endpoint:
-
-- tb_empreendimento_repr_p
-
-- tb_empreendimento_repr_l
-
-- tb_empreendimento_repr_a
-
+Input source: `copied_snapshot`; this refresh does not harvest live records.
 
 <details>
-<summary>Python code</summary>
+<summary>Technical provenance and complete processing record</summary>
+
+```json
+{
+  "records": 8494,
+  "unknown_sectors": 0,
+  "source": "copied_snapshot",
+  "generated_at": "2026-10-07T08:17:27.893827+00:00"
+}
+```
+
+</details>
+<!-- brazil:output ibama_data_extraction_1 end -->
+
+<details>
+<summary>Trace original step: Unnamed 2</summary>
 
 <!-- brazil:cell ibama_data_extraction_2 -->
 ```python
@@ -47,17 +79,15 @@ show_chunk(ctx, 'Scripts_Data/IBAMA/IBAMA - Data Extraction.qmd', 2)
 </details>
 
 <!-- brazil:output ibama_data_extraction_2 begin -->
-```text
-{'records': 8494,
- 'unknown_sectors': 0,
- 'source': 'copied_snapshot',
- 'generated_at': '2026-10-07T07:05:40.860588+00:00'}
-```
+<!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output ibama_data_extraction_2 end -->
 
+## Joining
+
+Saved result from the original comparison flow.
 
 <details>
-<summary>Python code</summary>
+<summary>Joining</summary>
 
 <!-- brazil:cell ibama_data_extraction_3 -->
 ```python
@@ -68,63 +98,54 @@ show_chunk(ctx, 'Scripts_Data/IBAMA/IBAMA - Data Extraction.qmd', 3)
 </details>
 
 <!-- brazil:output ibama_data_extraction_3 begin -->
+7 saved rows; showing up to ten. See the codebook for column definitions.
 
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th></th>
       <th>tp_sector_en</th>
-      <th>projects</th>
+      <th>Source records</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
       <td>Energy</td>
       <td>2013</td>
     </tr>
     <tr>
-      <th>1</th>
       <td>Mining</td>
       <td>420</td>
     </tr>
     <tr>
-      <th>2</th>
       <td>Nuclear/Radioactive</td>
       <td>25</td>
     </tr>
     <tr>
-      <th>3</th>
       <td>Oil and Gas</td>
       <td>219</td>
     </tr>
     <tr>
-      <th>4</th>
       <td>Other</td>
       <td>512</td>
     </tr>
     <tr>
-      <th>5</th>
       <td>Transportation</td>
       <td>5233</td>
     </tr>
     <tr>
-      <th>6</th>
       <td>Water Resources</td>
       <td>72</td>
     </tr>
   </tbody>
 </table>
-
-
-```text
-{'artifact_rows': 7, 'path': 'data/intermediate/ibama/sector_counts.parquet'}
-```
 <!-- brazil:output ibama_data_extraction_3 end -->
 
+## Sector composition
+
+Source-record counts show the composition of the licensing snapshot. Open the local HTML map to investigate individual locations.
 
 <details>
-<summary>Python code</summary>
+<summary>Draw sector counts and link interactive map</summary>
 
 <!-- brazil:cell ibama_data_extraction_4 -->
 ```python
@@ -135,19 +156,15 @@ show_chunk(ctx, 'Scripts_Data/IBAMA/IBAMA - Data Extraction.qmd', 4)
 </details>
 
 <!-- brazil:output ibama_data_extraction_4 begin -->
-```text
-{'records': 8494,
- 'unknown_sectors': 0,
- 'source': 'copied_snapshot',
- 'generated_at': '2026-10-07T07:05:40.860588+00:00'}
-```
+![Generated figure](assets/9b54007d03937b7fe58866d15ecdca83da631f031fb4078294d9e278ab7df7ed.png)
 
-Local interactive map (outside Git): `outputs/maps/ibama.html`
+Counts of licensed source records by translated sector, including untranslated values. This does not measure environmental impact or distinct developments.
+
+Interactive map: `outputs/maps/ibama.html` (local HTML; GitHub cannot execute it).
 <!-- brazil:output ibama_data_extraction_4 end -->
 
-
 <details>
-<summary>Python code</summary>
+<summary>Trace original step: Save</summary>
 
 <!-- brazil:cell ibama_data_extraction_5 -->
 ```python
@@ -158,10 +175,9 @@ show_chunk(ctx, 'Scripts_Data/IBAMA/IBAMA - Data Extraction.qmd', 5)
 </details>
 
 <!-- brazil:output ibama_data_extraction_5 begin -->
-```text
-{'records': 8494,
- 'unknown_sectors': 0,
- 'source': 'copied_snapshot',
- 'generated_at': '2026-10-07T07:05:40.860588+00:00'}
-```
+<!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output ibama_data_extraction_5 end -->
+
+## Interpretation and limits
+
+Outputs retain the original aggregation, missingness and exclusion rules. Available results do not establish national scientific validation. Read [verification and remaining limitations](../../docs/checks.md) before drawing research conclusions. Original codebooks and earlier report contents remain preserved in the project archive.
