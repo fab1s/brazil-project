@@ -1,0 +1,100 @@
+{
+  "status": "completed",
+  "date": "2026-10-07",
+  "scope": "Expanded national report presentation; no analytical changes",
+  "prior_commit": "e4d700b81d8f41ae3031356896a5649917d1e34b",
+  "prior_report_sha256": "9aeab0d51f08f9633e26a06051c4bfea91a844dbb412900f0dac97e76a34caa3",
+  "reader_words": 2087,
+  "layout": {
+    "executive_summary_first": true,
+    "dataset_column_in_both_tables": true,
+    "main_table_datasets": [
+      "Obrasgov",
+      "Obrasgov",
+      "Obrasgov",
+      "Obrasgov",
+      "Obrasgov",
+      "IBGE"
+    ],
+    "separate_dataset_sections": true,
+    "tables": 2,
+    "figures": 6,
+    "visible_code_controls": 0
+  },
+  "reports": [
+    {
+      "report": "gov_data_quality",
+      "output_sha256": "c5d7f23111e00749e2baa2d388c11c6a14cc0fb3ac46a03099949af05d9163d8",
+      "authored_sha256": "a19874189417cc30bf886416f5db0b5febd91c73092029cacc21887482be5635",
+      "generation": "703793e05872429e960fb6326aa39866",
+      "publication_evidence": "outputs/reports/evidence/national/gov_data_quality/703793e05872429e960fb6326aa39866/evidence.json",
+      "cells": [
+        "gov_data_quality_summary"
+      ],
+      "figures": 6,
+      "repeat_bytes_identical": true
+    },
+    {
+      "report": "gov_data_quality_annex",
+      "output_sha256": "ac21dc21e45b16dc6620d1a538455a415b17af8399ed968f9810faeb52fccf2b",
+      "authored_sha256": "f2c6f2a2ac87b6299a4f8a066d190f8725d973164fb2c34567602a58760c9ccd",
+      "generation": "5821db1d667f4af98e6ffe90b8c8ddbc",
+      "publication_evidence": "outputs/reports/evidence/national/gov_data_quality_annex/5821db1d667f4af98e6ffe90b8c8ddbc/evidence.json",
+      "cells": [
+        "gov_data_quality_lineage",
+        "gov_data_quality_locations",
+        "gov_data_quality_shared_coordinates",
+        "gov_data_quality_categories",
+        "gov_data_quality_dates_budgets",
+        "gov_data_quality_census",
+        "gov_data_quality_readiness"
+      ],
+      "figures": 11,
+      "repeat_bytes_identical": true
+    }
+  ],
+  "preservation": {
+    "annex_bytes_unchanged": true,
+    "annex_sha256": "ac21dc21e45b16dc6620d1a538455a415b17af8399ed968f9810faeb52fccf2b",
+    "all_32_table_hashes_unchanged": true,
+    "all_11_figure_hashes_unchanged": true,
+    "diagnostic_values_unchanged": true
+  },
+  "saved_refresh": {
+    "processing_stages": 0,
+    "report_order": [
+      "gov_data_quality_annex",
+      "gov_data_quality"
+    ]
+  },
+  "tests": {
+    "passed": 186,
+    "warnings": 311,
+    "focused_reporting_tests": 45,
+    "log_sha256": "f300e0cc5cf59c95bd9a1bb8ac714576acdf1350ed48f0be5b464e2093e0de6e",
+    "new_checks": [
+      "dataset attribution and section order",
+      "current annual/paired/population results",
+      "current budget totals and zero counts",
+      "missing/duplicate required summaries reject publication",
+      "six exact current figures",
+      "repeat authored/complete bytes"
+    ]
+  },
+  "browser": {
+    "all_seventeen_image_references_loaded": true,
+    "main_screenshot_reviewed": true,
+    "horizontal_page_overflow": false,
+    "external_requests_blocked": true
+  },
+  "source_values": {
+    "source_rows": 134929,
+    "distinct_projects": 129961,
+    "census_common_areas": 287178
+  },
+  "scientific_status": "Provider and methodological review remain required; no new acquisition, processing, exclusions, corrections, distances or regressions.",
+  "documentation": {
+    "local_links_checked": 171,
+    "missing_links": 0
+  }
+}

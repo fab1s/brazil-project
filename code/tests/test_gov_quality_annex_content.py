@@ -49,20 +49,27 @@ def test_original_eleven_figure_assets_remain_exact_and_annex_is_complete():
         assert hashlib.sha256(asset.read_bytes()).hexdigest() == asset.stem
 
 
-def test_main_is_a_short_executable_summary_with_three_figures_and_annex_link():
+def test_main_is_an_executable_reader_report_with_essential_figures_and_annex_link():
     main = (REPORTS / "gov_data_quality.md").read_text()
     cells, outputs = engine.parse_report(main)
     assert [cell[1] for cell in cells] == ["gov_data_quality_summary"]
     assert len(outputs) == 1
-    assert len(IMAGE.findall(main)) == 3
+    assert len(IMAGE.findall(main)) == 6
     assert "gov_data_quality_annex.md" in main
-    # Reader length excludes the supporting execution code in an HTML comment.
+    # Assess the reader's report, excluding supporting executable source.
     html = mistune.create_markdown(escape=False, plugins=["table"])(main)
     visible = re.sub(r'<!--.*?-->', '', html, flags=re.S)
-    assert len(re.sub(r'<[^>]+>', ' ', visible).split()) < 1100
+    headings = re.findall(r'<h2>(.*?)</h2>', visible)
+    assert headings[0] == "Executive summary"
+    assert "Obrasgov: government project records" in headings
+    assert "IBGE: census information" in headings
+    assert headings.index("Obrasgov: government project records") < headings.index("IBGE: census information")
+    for concept in ("locations", "dates", "budgets", "racial", "income"):
+        assert concept in visible.lower()
     assert "census_annual_coverage" in cells[0][2]
     assert "joint_fully_observed" in cells[0][2]
-    for name in ("location-overview.png", "date-coverage.png", "income-coverage.png"):
+    for name in ("location-overview.png", "shared-coordinates-by-state.png", "date-coverage.png",
+                 "budget-distribution.png", "income-coverage.png", "census-coverage-by-state.png"):
         assert name in cells[0][2]
 
 
@@ -74,4 +81,4 @@ def test_main_retains_quality_flag_timing_completeness_and_aggregate_limits():
     assert "shared_coordinate_threshold" in main
     assert "valid_point_projects" in main
     assert "not" in main and "correct" in main
-    assert "removed" in main
+    assert "no additional exclusions or corrections" in main

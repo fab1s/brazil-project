@@ -1,6 +1,7 @@
 """National QA is read-only, independently runnable and protected by report publication."""
 import base64
 import json
+import re
 from pathlib import Path
 
 import pandas as pd
@@ -181,14 +182,34 @@ def report_project(tmp_path):
         source.write_bytes(original.read_bytes())
     source = tmp_path / "research/reports" / (ANNEX + ".md")
     tables = ["identity_summary", "missingness", "location_summary", "shared_coordinate_thresholds", "coordinate_sites",
-              "dates_summary", "budget_summary", "census_annual_coverage", "linkage_constraints"]
+              "dates_summary", "budget_summary", "census_annual_coverage", "census_paired_coverage",
+              "census_race_population_coverage", "linkage_constraints"]
     for name in tables:
         ctx.write_table(pd.DataFrame({"Measure": ["Current saved value"], "Value": [1250.0]}), STAGE, name)
-    ctx.write_table(pd.DataFrame({'year': [2010, 2022, 2022, 2022],
-                                 'measure': ['race_ratio_available', 'race_ratio_available',
-                                             'race_ratio_fully_observed', 'joint_fully_observed'],
-                                 'n_common_areas': [100, 101, 99, 98],
-                                 'share_pct': [90., 91., 90., 89.]}), STAGE, 'census_annual_coverage')
+    annual = []
+    for year, counts in ((2010, (105, 101, 104, 102, 101)), (2022, (104, 100, 103, 99, 98))):
+        for measure, count in zip(('income_available', 'income_complete_available', 'race_ratio_available',
+                                   'race_ratio_fully_observed', 'joint_fully_observed'), counts):
+            annual.append({'year': year, 'measure': measure, 'n_common_areas': count,
+                           'denominator_common_areas': 110, 'share_pct': 100 * count / 110})
+    ctx.write_table(pd.DataFrame(annual), STAGE, 'census_annual_coverage')
+    ctx.write_table(pd.DataFrame([
+        {'measure': measure, 'availability': 'both_years', 'n_common_areas': count,
+         'denominator_common_areas': 110, 'share_pct': 100 * count / 110}
+        for measure, count in (('race_ratio_fully_observed', 97), ('income_complete_available', 98),
+                               ('joint_fully_observed', 96), ('joint_available', 102))
+    ]), STAGE, 'census_paired_coverage')
+    ctx.write_table(pd.DataFrame([{'year': 2022, 'check': 'missing_race_component',
+                                  'known_population_flagged': 3821787,
+                                  'share_of_known_population_pct': 1.881905}]),
+                    STAGE, 'census_race_population_coverage')
+    ctx.write_table(pd.DataFrame([
+        {'Measure': 'Zero budget', 'Value (BRL)': None, 'Distinct project IDs': 151},
+        {'Measure': 'Sum across source rows: repeats included', 'Value (BRL)': 1115218098001.23,
+         'Distinct project IDs': 129961},
+        {'Measure': 'Sum of one agreed budget per ID: conflicting/invalid IDs omitted',
+         'Value (BRL)': 1017235379491.1, 'Distinct project IDs': 129961},
+    ]), STAGE, 'budget_summary')
     figures = {}
     for name in ("location-overview.png", "point-project-coverage.png", "shared-coordinates-by-state.png",
                  "shared-coordinate-distribution.png", "attribute-missingness.png", "category-consistency.png",
@@ -203,8 +224,14 @@ def report_project(tmp_path):
                        'attributes': {'projects_with_effective_start': 1750, 'projects_with_effective_start_pct': 1.35,
                                       'projects_with_effective_finish': 1241, 'projects_with_effective_finish_pct': .95,
                                       'projects_with_budget_001': 20, 'projects_with_budget_001_pct': 16.,
-                                      'projects_with_category_review': 45},
-                       'locations': {'shared_point_projects': 30, 'valid_point_projects': 100, 'shared_coordinate_threshold': 25},
+                                      'projects_with_category_review': 45,
+                                      'projects_with_category_review_pct': 19.40,
+                                      'projects_with_any_attribute_conflict': 2684,
+                                      'projects_with_completed_status': 42850,
+                                      'projects_completed_without_effective_finish': 41626},
+                       'locations': {'shared_point_projects': 30, 'valid_point_projects': 100,
+                                     'shared_coordinate_threshold': 25, 'eligible_point_projects': 99,
+                                     'max_projects_at_one_coordinate': 2645},
                        'census': {'n_common_areas': 110},
                        "warnings": ["Coordinates are recorded locations, not certified project sites."]})
     engine.stamp_producer(ctx, STAGE)
@@ -229,7 +256,7 @@ def test_report_preserves_narrative_exact_figure_bytes_and_saved_table_values(re
     assert source.read_text() == after
 
 
-def test_concise_summary_refreshes_saved_counts_preserves_narrative_and_limits_figures(report_project):
+def test_reader_summary_refreshes_saved_counts_preserves_narrative_and_essential_figures(report_project):
     ctx, _ = report_project
     source = ctx.root / "research/reports" / (NAME + ".md")
     before = source.read_text()
@@ -238,7 +265,7 @@ def test_concise_summary_refreshes_saved_counts_preserves_narrative_and_limits_f
     after = source.read_text()
     assert engine.authored_text(after) == engine.authored_text(before)
     assert ANNEX + ".md" in after
-    assert after.count("![Generated figure](assets/") == 3
+    assert after.count("![Generated figure](assets/") == 6
     assert "4,968" in after and "129,961" in after
     record = json.loads(ctx.artifact(STAGE, "report.json").read_text())
     record["locations"]["shared_point_projects"] = 40
@@ -247,6 +274,93 @@ def test_concise_summary_refreshes_saved_counts_preserves_narrative_and_limits_f
     refreshed = source.read_text()
     assert "40.00%" in refreshed
     assert engine.authored_text(refreshed) == engine.authored_text(before)
+
+
+def test_reader_report_identifies_each_dataset_and_separates_their_findings(report_project):
+    ctx, _ = report_project
+    source = ctx.root / "research/reports" / (NAME + ".md")
+    engine.render_report(ctx, NAME)
+    rendered = engine.parse_report(source.read_text())[1][0][2]
+    assert "<th>Dataset</th>" in rendered
+    findings = re.search(r'<table\b.*?</table>', rendered, flags=re.S).group(0)
+    rows = re.findall(r'<tr>\s*(.*?)\s*</tr>', findings, flags=re.S)
+    datasets = [re.findall(r'<td>(.*?)</td>', row, flags=re.S)[0] for row in rows]
+    assert datasets.count("Obrasgov") == 5
+    assert datasets.count("IBGE") == 1
+    obras = rendered.index("## Obrasgov: government project records")
+    ibge = rendered.index("## IBGE: census information")
+    assert obras < ibge
+    assert "###" in rendered[obras:ibge] and "###" in rendered[ibge:]
+
+
+def test_reader_report_refreshes_paired_census_and_affected_population_from_current_tables(report_project):
+    ctx, _ = report_project
+    source = ctx.root / "research/reports" / (NAME + ".md")
+    engine.render_report(ctx, NAME)
+    authored = engine.authored_text(source.read_text())
+    annual = ctx.table(STAGE, "census_annual_coverage")
+    joint = annual.year.eq(2022) & annual.measure.eq("joint_fully_observed")
+    annual.loc[joint, "n_common_areas"] = 83
+    annual.loc[joint, "share_pct"] = 100 * 83 / 110
+    ctx.write_table(annual, STAGE, "census_annual_coverage")
+    paired = ctx.table(STAGE, "census_paired_coverage")
+    joint_pair = paired.measure.eq("joint_fully_observed") & paired.availability.eq("both_years")
+    paired.loc[joint_pair, "n_common_areas"] = 81
+    paired.loc[joint_pair, "share_pct"] = 100 * 81 / 110
+    ctx.write_table(paired, STAGE, "census_paired_coverage")
+    population = ctx.table(STAGE, "census_race_population_coverage")
+    population.loc[0, "known_population_flagged"] = 456789
+    population.loc[0, "share_of_known_population_pct"] = 3.14
+    ctx.write_table(population, STAGE, "census_race_population_coverage")
+    engine.render_report(ctx, NAME)
+    refreshed = source.read_text()
+    visible_output = engine.parse_report(refreshed)[1][0][2]
+    for value in (annual.loc[joint, "share_pct"].iloc[0], paired.loc[joint_pair, "share_pct"].iloc[0]):
+        assert f"{value:.2f}%" in visible_output
+    assert f"{int(population.loc[0, 'known_population_flagged']):,}" in visible_output
+    assert f"{population.loc[0, 'share_of_known_population_pct']:.2f}%" in visible_output
+    assert engine.authored_text(refreshed) == authored
+
+
+def test_reader_report_refreshes_budget_counts_and_totals_from_current_tables(report_project):
+    ctx, _ = report_project
+    source = ctx.root / "research/reports" / (NAME + ".md")
+    engine.render_report(ctx, NAME)
+    before = source.read_text()
+    budgets = ctx.table(STAGE, "budget_summary")
+    zero = budgets.Measure.eq("Zero budget")
+    row_sum = budgets.Measure.eq("Sum across source rows: repeats included")
+    id_sum = budgets.Measure.eq("Sum of one agreed budget per ID: conflicting/invalid IDs omitted")
+    budgets.loc[zero, "Distinct project IDs"] = 777
+    budgets.loc[row_sum, "Value (BRL)"] = 2541000000000
+    budgets.loc[id_sum, "Value (BRL)"] = 1769000000000
+    ctx.write_table(budgets, STAGE, "budget_summary")
+    engine.render_report(ctx, NAME)
+    refreshed = source.read_text()
+    visible_output = engine.parse_report(refreshed)[1][0][2]
+    assert f"{int(budgets.loc[zero, 'Distinct project IDs'].iloc[0]):,} report zero" in visible_output
+    for total in budgets.loc[row_sum | id_sum, "Value (BRL)"]:
+        assert f"R${total / 1e12:.3f} trillion" in visible_output
+    assert engine.authored_text(refreshed) == engine.authored_text(before)
+    engine.render_report(ctx, NAME)
+    assert source.read_text() == refreshed
+
+
+@pytest.mark.parametrize("failure", ["missing", "duplicate"])
+def test_reader_report_rejects_missing_or_duplicate_required_summary_rows(report_project, failure):
+    ctx, _ = report_project
+    source = ctx.root / "research/reports" / (NAME + ".md")
+    engine.render_report(ctx, NAME)
+    before = source.read_bytes()
+    annual = ctx.table(STAGE, "census_annual_coverage")
+    required = annual.year.eq(2022) & annual.measure.eq("joint_fully_observed")
+    changed = (annual.loc[~required] if failure == "missing"
+               else pd.concat([annual, annual.loc[required]], ignore_index=True))
+    ctx.write_table(changed, STAGE, "census_annual_coverage")
+    with pytest.raises(WorkflowError, match="Expected one audit summary row") as caught:
+        engine.render_report(ctx, NAME)
+    assert "2022" in str(caught.value) and "joint_fully_observed" in str(caught.value)
+    assert source.read_bytes() == before
 
 
 def test_missing_current_figure_preserves_previous_report(report_project):

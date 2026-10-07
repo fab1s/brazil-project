@@ -25,7 +25,7 @@ Start with the [research reports](research/README.md#read-the-reports) to read t
 | **`code/`** | Reusable Python processing, pipeline tools, supporting R scripts and tests. | [Code guide](code/README.md) |
 | **`website/`** | Source files for the interactive project map. | [Website guide](website/README.md) |
 
-Before analysing infrastructure proximity, read the [concise national government-data quality assessment](research/reports/gov_data_quality.md), with its [detailed annex](research/reports/gov_data_quality_annex.md) for complete diagnostics. Other examples include [Obrasgov preprocessing and location exclusions](research/reports/obrasgov_preprocessing.md) and [census harmonisation](research/reports/ibge_census_tract_harmonisation.md). The `.md` reports display directly on GitHub. Full datasets and generated outputs are kept locally; their folder guides explain where to find them.
+Before analysing infrastructure proximity, read the [national government-data quality assessment](research/reports/gov_data_quality.md), with its [detailed annex](research/reports/gov_data_quality_annex.md) for complete diagnostics. Other examples include [Obrasgov preprocessing and location exclusions](research/reports/obrasgov_preprocessing.md) and [census harmonisation](research/reports/ibge_census_tract_harmonisation.md). The `.md` reports display directly on GitHub. Full datasets and generated outputs are kept locally; their folder guides explain where to find them.
 
 ## How the pipeline and reports fit together
 

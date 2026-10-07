@@ -2,7 +2,7 @@
 
 Status: current
 Last updated: 2026-10-07
-Version: 0.17
+Version: 0.18
 Scope: Project Documentation
 
 Start with [progress](progress.md), [tasks](tasks.md), [methods](methods.md) and [commands](workflow.md).
@@ -17,7 +17,7 @@ Start with [progress](progress.md), [tasks](tasks.md), [methods](methods.md) and
 
 ## Processing and audits
 
-- **Government-data readiness:** [concise national quality report](../research/reports/gov_data_quality.md), [complete diagnostic annex](../research/reports/gov_data_quality_annex.md) and [processing record and script audit](gov-data-quality-process.md), covering locations, repeated coordinates, project attributes and census inputs before proximity modelling. The report and annex refresh together from the same audit command.
+- **Government-data readiness:** [national quality report](../research/reports/gov_data_quality.md), [complete diagnostic annex](../research/reports/gov_data_quality_annex.md) and [processing record and script audit](gov-data-quality-process.md), covering locations, repeated coordinates, project attributes and census inputs before proximity modelling. The report separates Obrasgov and IBGE findings and refreshes with its annex from the same audit command.
 - **Harmonisation:** [audit](harmonisation-audit.md), [repairs and checks](harmonisation-update.md).
 - **Obrasgov:** [processing record and figure](obrasgov-location-qa-process.md), [location QA](obrasgov-location-qa.md), [script audit](obrasgov-location-qa-script-audit.md), [state check](obrasgov-primary-state-check.md), [approved exclusions and before/after figure](obrasgov-primary-state-filter.md), [initial screening](obrasgov-spatial-review.md).
 - **Website:** [map checks](web-map-update.md), [screened Obrasgov publication](website-location-update.md).

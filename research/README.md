@@ -2,7 +2,7 @@
 
 Status: current
 Last updated: 2026-10-07
-Version: 0.12
+Version: 0.13
 Scope: Research Materials
 
 - `reports/`: ten maintained research topics with executable primary Markdown reports, plus a detailed government-data quality annex. These contain saved tables, figures and narratives. The unregistered infrastructure-proximity draft is preserved separately from the runnable report registry.
@@ -14,7 +14,7 @@ Executable Python cells live inside each Markdown report; reusable analytical pr
 
 ## Read the reports
 
-- [National government-data quality: concise assessment](reports/gov_data_quality.md) · [Detailed annex: locations, project attributes and census readiness](reports/gov_data_quality_annex.md)
+- [National government-data quality assessment](reports/gov_data_quality.md) · [Detailed annex: locations, project attributes and census readiness](reports/gov_data_quality_annex.md)
 - [Obrasgov preprocessing and spatial exclusions](reports/obrasgov_preprocessing.md)
 - [Census harmonisation and merged-area illustrations](reports/ibge_census_tract_harmonisation.md)
 - [Temporal indicators, units and coverage](reports/ibge_census_temporal_comparison.md)
@@ -29,7 +29,7 @@ Executable Python cells live inside each Markdown report; reusable analytical pr
 
 Edit explanations and code in the Markdown report directly. Run `brazil-project report <report_name>` to process its inputs and refresh results automatically. Only marked generated sections change. See [commands and checks](../docs/report-integration.md).
 
-The national quality report opens with an executive summary, then presents six findings and three figures in plain language. Its supporting presentation code is hidden from the rendered report; technical instructions, sources and methods remain in the annex, which preserves all seven executable audit sections and eleven diagnostic figures. Both read the same saved results and refresh together with `brazil-project run gov-data-quality --config project.toml` or `brazil-project report gov_data_quality --from-saved --config project.toml`.
+The national quality report opens with an executive summary, then explains the findings in separate Obrasgov and IBGE sections, with six figures and two dataset-labelled tables. It covers project counts and locations, categories, construction dates, planned budgets, census completeness across years and states, and limits of income/race comparisons. Supporting presentation code is hidden from the rendered report; technical instructions, sources and methods remain in the annex, which preserves all seven executable audit sections and eleven diagnostic figures. Both read the same saved results and refresh together with `brazil-project run gov-data-quality --config project.toml` or `brazil-project report gov_data_quality --from-saved --config project.toml`.
 
 The [processing source](../code/brazil_project/infrastructure/gov_quality.py) writes diagnostic tables and figures; the [process and script-audit record](../docs/gov-data-quality-process.md) documents execution and limitations. Report organization changes no numerical methods or study outputs. The audit does not acquire data, change existing exclusions or fit proximity models.
 
