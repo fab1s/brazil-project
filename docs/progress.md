@@ -2,8 +2,10 @@
 
 Status: implemented and validated with recorded limitations
 Last updated: 2026-10-07
-Version: 0.17
+Version: 0.18
 Scope: Current Project Progress
+
+The three original CS2Nordic conference documents are now explicitly tracked for GitHub, with download links in the [research index](../research/README.md#cs2nordic-conference-materials). Their SHA-256 checksums match the migration manifest; only narrow ignore exceptions were added. Other research binaries and full datasets remain excluded.
 
 Reports now include a pipeline/source table and direct active-file/function links beside every executable step, with saved-artifact locations and separate presentation-source links. The root README explains the processing/report split; [the source guide](pipeline-source.md) connects CLI dependencies, retained R, acquisition and protected report publication. Verified all 67 unchanged cell bodies/results and 211 source-function anchors; all nine reports refresh with authored links preserved, and 34 focused reporting/pipeline tests pass. Processing and acquisition were not rerun. [Verification evidence](evidence/pipeline-source-verification.json) records the published generations.
 

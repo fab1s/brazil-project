@@ -2,7 +2,7 @@
 
 Status: current
 Last updated: 2026-10-07
-Version: 0.7
+Version: 0.8
 Scope: Research Materials
 
 - `reports/`: nine readable Markdown reports, with saved tables, figures and narratives.
@@ -27,3 +27,13 @@ Executable Python cells live inside each Markdown report; reusable analytical pr
 [Pipeline/source guide](../docs/pipeline-source.md) maps commands to processing functions, saved datasets and report cells. Each report links active implementations beside its executable sections; archived QMD identifiers preserve provenance.
 
 Edit explanations and code in the Markdown report directly. Run `brazil-project report <report_name>` to process its inputs and refresh results automatically. Only marked generated sections change. See [commands and checks](../docs/report-integration.md).
+
+## CS2Nordic conference materials
+
+These original conference documents are preserved unchanged and tracked in GitHub:
+
+- [Extended abstract](cs2nordic/extended_abstract_CS2Nordic.docx) (Word)
+- [Poster](cs2nordic/poster_CS2.pptx) (PowerPoint)
+- [Flash presentation](cs2nordic/CS2%20Flash%20Presentation.pptx) (PowerPoint)
+
+Download these files to open them in Word or PowerPoint. The executable [conference charts report](reports/brazil_poroject_charts.md) is separate from these presentation documents.

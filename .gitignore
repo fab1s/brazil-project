@@ -24,6 +24,10 @@ outputs/
 research/**/*.pptx
 research/**/*.docx
 research/**/*.pdf
+# Track the preserved CS2Nordic conference documents explicitly.
+!research/cs2nordic/CS2 Flash Presentation.pptx
+!research/cs2nordic/extended_abstract_CS2Nordic.docx
+!research/cs2nordic/poster_CS2.pptx
 !**/README.md
 
 .cache/
