@@ -2,8 +2,10 @@
 
 Status: current; describes implemented methods, not independent scientific validation
 Last updated: 2026-10-07
-Version: 0.1
+Version: 0.2
 Scope: Reader guide to report variables, units, denominators and processing stages
+
+Use the [active processing source and pipeline guide](pipeline-source.md) to locate implementations; each linked report also cites its processing and display functions.
 
 Use this guide alongside the [reports](../research/README.md#read-the-reports) and [methods](methods.md). Original provider definitions remain authoritative: [2000 dictionary](../data/reference/ibge/Questionairs%20and%20Codebooks/2000/2000_dictionary_tracts.pdf), [2010 dictionary](../data/reference/ibge/Questionairs%20and%20Codebooks/2010/2010_dictionary_tracts.pdf), [2022 dictionary](../data/reference/ibge/Questionairs%20and%20Codebooks/2022/2022_dictionary_tracts.xlsx). These reference files are preserved locally and excluded from Git; download/publication rights are not inferred. The mappings below describe what the current code calculates, including differences between workflows.
 

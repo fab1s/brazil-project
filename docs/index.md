@@ -2,12 +2,12 @@
 
 Status: current
 Last updated: 2026-10-07
-Version: 0.14
+Version: 0.15
 Scope: Project Documentation
 
 Start with [progress](progress.md), [tasks](tasks.md), [methods](methods.md) and [commands](workflow.md).
 
-[Variable and dataset codebook](codebook.md) · [Readable-report process and audit](report-readability.md)
+[Pipeline stages and active source code](pipeline-source.md) · [Variable and dataset codebook](codebook.md) · [Readable-report process and audit](report-readability.md)
 
 [Read the research reports](../research/README.md#read-the-reports) · [Executable Markdown and pipeline audit](report-integration.md)
 

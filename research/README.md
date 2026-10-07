@@ -2,7 +2,7 @@
 
 Status: current
 Last updated: 2026-10-07
-Version: 0.6
+Version: 0.7
 Scope: Research Materials
 
 - `reports/`: nine readable Markdown reports, with saved tables, figures and narratives.
@@ -23,5 +23,7 @@ Executable Python cells live inside each Markdown report; reusable analytical pr
 - [Obrasgov data extraction](reports/obrasgov_data_extraction.md)
 - [Census data extraction](reports/ibge_census_data_extraction.md)
 - [Land value](reports/property_value.md)
+
+[Pipeline/source guide](../docs/pipeline-source.md) maps commands to processing functions, saved datasets and report cells. Each report links active implementations beside its executable sections; archived QMD identifiers preserve provenance.
 
 Edit explanations and code in the Markdown report directly. Run `brazil-project report <report_name>` to process its inputs and refresh results automatically. Only marked generated sections change. See [commands and checks](../docs/report-integration.md).

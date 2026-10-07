@@ -6,6 +6,18 @@ Read the saved licensing snapshot and its sector composition. Ordinary pipeline 
 
 Refresh processing and this report with `brazil-project report ibama_data_extraction --config project.toml`. Add `--from-saved` to refresh existing verified artifacts only. Code is collapsed; tables and figures below are saved execution results.
 
+## Processing code and pipeline
+
+Execution order: `ibama`. The [cli.py → dispatch()](../../code/brazil_project/cli.py#L22) dispatcher calls these functions; [cli.py → expand()](../../code/brazil_project/cli.py#L55) resolves dependencies. The cells below read their saved outputs and present the results.
+
+| Pipeline stage | Active processing source | Inputs | Saved outputs used by the process/report |
+| --- | --- | --- | --- |
+| `ibama` | [projects.py → run()](../../code/brazil_project/infrastructure/projects.py#L47) | Configured snapshot or completed local acquisition; source=ibama | `ibama/licensed_projects.parquet; sector_counts.parquet; local HTML map` |
+
+Paths without an `outputs/` prefix in this table are relative to `data/intermediate/`. Municipality runs use `data/intermediate/municipality_<code>/` and publish scoped report copies under `outputs/reports/`; national-only workflows reject municipality scope. See the [complete pipeline source guide](../../docs/pipeline-source.md) for dependencies, acquisition and the report publisher.
+
+Live acquisition is separate: `brazil-project run acquire-ibama --config project.toml` invokes [infrastructure.py → run()](../../code/brazil_project/acquisition/infrastructure.py#L94). The historical extraction steps below describe provenance; ordinary report refresh does not call the API.
+
 ## How to read this analysis
 
 The original provider workflow combines point, line and polygon layers: `tb_empreendimento_repr_p`, `tb_empreendimento_repr_l` and `tb_empreendimento_repr_a`. The acquisition adapter handles pagination separately. Counts below describe source records, not a verified count of unique developments. Untranslated sectors remain visible; no category is inferred.
@@ -13,6 +25,8 @@ The original provider workflow combines point, line and polygon layers: `tb_empr
 ## Inputs, coverage and processing status
 
 This summary reads the current saved processing artifacts. Technical fingerprints are available in the collapsed provenance record.
+
+Processing source: [projects.py → run()](../../code/brazil_project/infrastructure/projects.py#L47). Saved result: `data/intermediate/ibama/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
 
 <details>
 <summary>Read saved processing summary</summary>
@@ -67,6 +81,8 @@ Input source: `copied_snapshot`; this refresh does not harvest live records.
 </details>
 <!-- brazil:output ibama_data_extraction_1 end -->
 
+Processing source: [projects.py → run()](../../code/brazil_project/infrastructure/projects.py#L47). Saved result: `data/intermediate/ibama/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
+
 <details>
 <summary>Trace original step: Unnamed 2</summary>
 
@@ -85,6 +101,8 @@ show_chunk(ctx, 'Scripts_Data/IBAMA/IBAMA - Data Extraction.qmd', 2)
 ## Joining
 
 Saved result from the original comparison flow.
+
+Processing source: [projects.py → counts()](../../code/brazil_project/infrastructure/projects.py#L29). Saved result: `data/intermediate/ibama/sector_counts.parquet`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
 
 <details>
 <summary>Joining</summary>
@@ -144,6 +162,8 @@ show_chunk(ctx, 'Scripts_Data/IBAMA/IBAMA - Data Extraction.qmd', 3)
 
 Source-record counts show the composition of the licensing snapshot. Open the local HTML map to investigate individual locations.
 
+Processing source: [projects.py → run()](../../code/brazil_project/infrastructure/projects.py#L47). Saved result: `data/intermediate/ibama/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
+
 <details>
 <summary>Draw sector counts and link interactive map</summary>
 
@@ -162,6 +182,8 @@ Counts of licensed source records by translated sector, including untranslated v
 
 Interactive map: `outputs/maps/ibama.html` (local HTML; GitHub cannot execute it).
 <!-- brazil:output ibama_data_extraction_4 end -->
+
+Processing source: [projects.py → run()](../../code/brazil_project/infrastructure/projects.py#L47). Saved result: `data/intermediate/ibama/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
 
 <details>
 <summary>Trace original step: Save</summary>

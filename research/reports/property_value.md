@@ -6,6 +6,16 @@ Inspect the available valuation annex workbook and zone input. The cadastral ana
 
 Refresh processing and this report with `brazil-project report property_value --config project.toml`. Add `--from-saved` to refresh existing verified artifacts only. Code is collapsed; tables and figures below are saved execution results.
 
+## Processing code and pipeline
+
+Execution order: `land-value`. The [cli.py → dispatch()](../../code/brazil_project/cli.py#L22) dispatcher calls these functions; [cli.py → expand()](../../code/brazil_project/cli.py#L55) resolves dependencies. The cells below read their saved outputs and present the results.
+
+| Pipeline stage | Active processing source | Inputs | Saved outputs used by the process/report |
+| --- | --- | --- | --- |
+| `land-value` | [property.py → run()](../../code/brazil_project/land_value/property.py#L8) | Configured valuation workbook and exact dated zone/cadastral CSVs | `land-value/annex_*.parquet and zone geometry; processing blocks on absent exact CSV` |
+
+Paths without an `outputs/` prefix in this table are relative to `data/intermediate/`. Municipality runs use `data/intermediate/municipality_<code>/` and publish scoped report copies under `outputs/reports/`; national-only workflows reject municipality scope. See the [complete pipeline source guide](../../docs/pipeline-source.md) for dependencies, acquisition and the report publisher.
+
 ## How to read this analysis
 
 The original valuation workbook was parsed using AI and has not been independently authenticated against the legal reference. Annex tables retain their source headings and values. The required `20220601_regional_barreiro_cadastro_imobiliario.csv` is unavailable; another dated file is not substituted. Saved-output refresh can show the available exploratory imports, while a processing command reports the missing input as a failure.
@@ -13,6 +23,8 @@ The original valuation workbook was parsed using AI and has not been independent
 ## Inputs, coverage and processing status
 
 This summary reads the current saved processing artifacts. Technical fingerprints are available in the collapsed provenance record.
+
+Processing source: [property.py → run()](../../code/brazil_project/land_value/property.py#L8). Saved result: `data/intermediate/land-value/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
 
 <details>
 <summary>Read saved processing summary</summary>
@@ -58,6 +70,8 @@ Required input unavailable: `data/raw/land_value/Belo Horizonte/Data/20220601_re
 </details>
 <!-- brazil:output property_value_1 end -->
 
+Processing source: [property.py → run()](../../code/brazil_project/land_value/property.py#L8). Saved result: `data/intermediate/land-value/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
+
 <details>
 <summary>Trace original step: Unnamed 2</summary>
 
@@ -76,6 +90,8 @@ show_chunk(ctx, 'Scripts_Data/Land value/Belo Horizonte/Property value.qmd', 2)
 ## Imported valuation annex
 
 This preview is a source table, not an estimate of observed market prices. See the original workbook for the full definitions and legal context.
+
+Processing source: [property.py → run()](../../code/brazil_project/land_value/property.py#L8). Saved result: `data/intermediate/land-value/annex_i.parquet`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
 
 <details>
 <summary>Read exploratory Annex I</summary>

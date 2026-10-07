@@ -2,7 +2,7 @@
 
 Status: current
 Last updated: 2026-10-07
-Version: 0.4
+Version: 0.5
 Scope: Project Code
 
 Reusable processing and command-line tools live here; executable report cells live alongside their explanations under `research/reports/`.
@@ -11,6 +11,8 @@ Reusable processing and command-line tools live here; executable report cells li
 - `scripts/`: acquisition, export, auditing and verification commands; `scripts/r/` contains necessary R adapters.
 - `tests/`: automated verification.
 - `config/`: category translations and report chunk mappings.
+
+The [pipeline/source guide](../docs/pipeline-source.md) links each CLI stage to its active function, inputs, saved outputs and reports. Report explanations link directly to these files and functions.
 
 The single project configuration is [project.toml](../project.toml). Dependencies are locked at the project root. Inputs are under `data/`; saved artifacts and outputs follow [workflow commands](../docs/workflow.md). Run commands from the project root:
 

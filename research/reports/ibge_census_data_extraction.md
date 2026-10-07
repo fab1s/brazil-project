@@ -6,6 +6,16 @@ Explore Black population shares on the original 2010 and 2022 tract boundaries i
 
 Refresh processing and this report with `brazil-project report ibge_census_data_extraction --config project.toml`. Add `--from-saved` to refresh existing verified artifacts only. Code is collapsed; tables and figures below are saved execution results.
 
+## Processing code and pipeline
+
+Execution order: `census-exploration`. The [cli.py → dispatch()](../../code/brazil_project/cli.py#L22) dispatcher calls these functions; [cli.py → expand()](../../code/brazil_project/cli.py#L55) resolves dependencies. The cells below read their saved outputs and present the results.
+
+| Pipeline stage | Active processing source | Inputs | Saved outputs used by the process/report |
+| --- | --- | --- | --- |
+| `census-exploration` | [census.py → run()](../../code/brazil_project/visualisation/census.py#L15) | Original annual tracts and census counts for the six-municipality scope | `census-exploration/black_ratio_<year>.parquet; local HTML map and annual boxplots` |
+
+Paths without an `outputs/` prefix in this table are relative to `data/intermediate/`. Municipality runs use `data/intermediate/municipality_<code>/` and publish scoped report copies under `outputs/reports/`; national-only workflows reject municipality scope. See the [complete pipeline source guide](../../docs/pipeline-source.md) for dependencies, acquisition and the report publisher.
+
 ## How to read this analysis
 
 Scope: Belo Horizonte, Vespasiano, São José da Lapa, Confins, Lagoa Santa and Santa Luzia. The ratio is the Black population count divided by each year’s total population. Original exploratory division is preserved; nonfinite values are omitted from visualisation, not silently corrected in saved analytical data. The Belo Horizonte boxplots weight each usable mapped geometry observation equally. Preserved repeated tract identifiers can contribute more than one observation; the original exploratory row weighting is retained. A changing distribution can reflect changing boundaries as well as population composition. The original Linha Verde shapefile is unavailable and is not replaced.
@@ -13,6 +23,8 @@ Scope: Belo Horizonte, Vespasiano, São José da Lapa, Confins, Lagoa Santa and 
 ## Inputs, coverage and processing status
 
 This summary reads the current saved processing artifacts. Technical fingerprints are available in the collapsed provenance record.
+
+Processing source: [census.py → run()](../../code/brazil_project/visualisation/census.py#L15). Saved result: `data/intermediate/census-exploration/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
 
 <details>
 <summary>Read saved processing summary</summary>
@@ -107,6 +119,8 @@ Scope: Belo Horizonte, Vespasiano, São José da Lapa, Confins, Lagoa Santa, San
 </details>
 <!-- brazil:output ibge_census_data_extraction_1 end -->
 
+Processing source: [census.py → run()](../../code/brazil_project/visualisation/census.py#L15). Saved result: `data/intermediate/census-exploration/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
+
 <details>
 <summary>Trace original step: Tracts Import</summary>
 
@@ -121,6 +135,8 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Data Extraction.qmd', 2)
 <!-- brazil:output ibge_census_data_extraction_2 begin -->
 <!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output ibge_census_data_extraction_2 end -->
+
+Processing source: [census.py → run()](../../code/brazil_project/visualisation/census.py#L15). Saved result: `data/intermediate/census-exploration/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
 
 <details>
 <summary>Trace original step: Census Data Import</summary>
@@ -137,6 +153,8 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Data Extraction.qmd', 3)
 <!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output ibge_census_data_extraction_3 end -->
 
+Processing source: [census.py → run()](../../code/brazil_project/visualisation/census.py#L15). Saved result: `data/intermediate/census-exploration/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
+
 <details>
 <summary>Trace original step: Race Ratio Calculation</summary>
 
@@ -151,6 +169,8 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Data Extraction.qmd', 4)
 <!-- brazil:output ibge_census_data_extraction_4 begin -->
 <!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output ibge_census_data_extraction_4 end -->
+
+Processing source: [census.py → run()](../../code/brazil_project/visualisation/census.py#L15). Saved result: `data/intermediate/census-exploration/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
 
 <details>
 <summary>Trace original step: Import Linha Verde</summary>
@@ -170,6 +190,8 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Data Extraction.qmd', 5)
 ## Tract distributions and map
 
 Each boxplot summarises usable Belo Horizonte mapped tract observations on that year’s geography; observations are not deduplicated by tract ID. Do not interpret the median as the share of all city residents.
+
+Processing source: [census.py → run()](../../code/brazil_project/visualisation/census.py#L15). Saved result: `data/intermediate/census-exploration/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
 
 <details>
 <summary>Display current annual boxplots</summary>

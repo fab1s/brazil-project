@@ -6,6 +6,18 @@ Compare inadequate sanitation across urban common areas. The first chart uses ar
 
 Refresh processing and this report with `brazil-project report brazil_poroject_charts --config project.toml`. Add `--from-saved` to refresh existing verified artifacts only. Code is collapsed; tables and figures below are saved execution results.
 
+## Processing code and pipeline
+
+Execution order: `harmonisation → indicators → charts`. The [cli.py → dispatch()](../../code/brazil_project/cli.py#L22) dispatcher calls these functions; [cli.py → expand()](../../code/brazil_project/cli.py#L55) resolves dependencies. The cells below read their saved outputs and present the results.
+
+| Pipeline stage | Active processing source | Inputs | Saved outputs used by the process/report |
+| --- | --- | --- | --- |
+| `charts` | [charts.py → run()](../../code/brazil_project/visualisation/charts.py#L108) | Lookups, household tables, racial shares and income from indicators | `charts/year_summary.parquet and chart populations; outputs/figures/<scope>/ conference charts` |
+
+Paths without an `outputs/` prefix in this table are relative to `data/intermediate/`. Municipality runs use `data/intermediate/municipality_<code>/` and publish scoped report copies under `outputs/reports/`; national-only workflows reject municipality scope. See the [complete pipeline source guide](../../docs/pipeline-source.md) for dependencies, acquisition and the report publisher.
+
+Chart eligibility and populations: [populations()](../../code/brazil_project/visualisation/charts.py#L39); sanitation exclusions: [sanitation()](../../code/brazil_project/visualisation/charts.py#L20); quintile assignment: [ntile()](../../code/brazil_project/visualisation/charts.py#L11).
+
 ## How to read this analysis
 
 The change chart sums eligible household counts within quintiles, giving household-weighted percentages. Q1 has the lowest and Q5 the highest 2022 Black/Brown share. Ties are ordered by common_id. The income figure shows the distribution of area-level sanitation percentages within income bands, rather than household-weighted averages.
@@ -15,6 +27,8 @@ Unlike the temporal rudimentary-sanitation indicator, these charts include house
 ## Sanitation by racial composition and income
 
 The table reports summed eligible household counts and percentages for the paired comparison population. Each generated figure retains its own population and exclusions.
+
+Processing source: [charts.py → run()](../../code/brazil_project/visualisation/charts.py#L108). Saved result: `data/intermediate/charts/year_summary.parquet`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
 
 <details>
 <summary>Display conference tables and figures</summary>

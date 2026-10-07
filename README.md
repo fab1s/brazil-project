@@ -26,3 +26,11 @@ Start with the [research reports](research/README.md#read-the-reports) to read t
 | **`website/`** | Source files for the interactive project map. | [Website guide](website/README.md) |
 
 For example, read [Obrasgov preprocessing and location exclusions](research/reports/obrasgov_preprocessing.md) or [census harmonisation](research/reports/ibge_census_tract_harmonisation.md). The `.md` reports display directly on GitHub. Full datasets and generated outputs are kept locally; their folder guides explain where to find them.
+
+## How the pipeline and reports fit together
+
+The processing code lives in [`code/brazil_project/`](code/brazil_project/), with supporting spatial/R scripts in [`code/scripts/`](code/scripts/). The executable Markdown documents in [`research/reports/`](research/reports/) explain each process, link its active source file and function, and display saved tables and figures. They also contain presentation code and coverage checks; the full processing implementations remain in the package.
+
+**One command → processing functions → saved datasets → report cells → updated Markdown.** The [CLI](code/brazil_project/cli.py) runs dependencies using [project.toml](project.toml), then the [report engine](code/brazil_project/report_engine.py) refreshes only generated results, preserving explanations and source links.
+
+For example, `brazil-project run obrasgov --config project.toml` processes the snapshot, checks locations and primary states, applies approved exclusions, and updates both Obrasgov reports. Acquisition and website publication are separate explicit actions. See the [pipeline stages, source code and data flow](docs/pipeline-source.md).

@@ -6,6 +6,18 @@ Compare demographic, household-service, housing, income and density indicators o
 
 Refresh processing and this report with `brazil-project report ibge_census_temporal_comparison --config project.toml`. Add `--from-saved` to refresh existing verified artifacts only. Code is collapsed; tables and figures below are saved execution results.
 
+## Processing code and pipeline
+
+Execution order: `harmonisation → indicators`. The [cli.py → dispatch()](../../code/brazil_project/cli.py#L22) dispatcher calls these functions; [cli.py → expand()](../../code/brazil_project/cli.py#L55) resolves dependencies. The cells below read their saved outputs and present the results.
+
+| Pipeline stage | Active processing source | Inputs | Saved outputs used by the process/report |
+| --- | --- | --- | --- |
+| `indicators` | [temporal.py → run()](../../code/brazil_project/indicators/temporal.py#L101) | Complete harmonisation bundle and year-specific census tables | `indicators/<indicator>.parquet; annual tables and spatial outputs` |
+
+Paths without an `outputs/` prefix in this table are relative to `data/intermediate/`. Municipality runs use `data/intermediate/municipality_<code>/` and publish scoped report copies under `outputs/reports/`; national-only workflows reject municipality scope. See the [complete pipeline source guide](../../docs/pipeline-source.md) for dependencies, acquisition and the report publisher.
+
+Count aggregation: [aggregate()](../../code/brazil_project/indicators/temporal.py#L15); proportions: [annual_ratio()](../../code/brazil_project/indicators/temporal.py#L41); income preparation and weighting: [prepare_income()](../../code/brazil_project/indicators/temporal.py#L71) and [income_aggregate()](../../code/brazil_project/indicators/temporal.py#L55). Inflation and density calculations remain in the linked run() function.
+
 ## How to read this analysis
 
 Counts are aggregated before ratios are calculated. Annual tables are outer joined: an absent year stays unavailable, never zero. Most count sums skip missing entries; specified combined components are coalesced to zero. Housing denominators and population-density totals stay missing if every contributing value is missing. Proportion calculations require positive denominators. Incomplete counts can bias ratios even when an estimate is available.
@@ -15,6 +27,8 @@ Annual ratio columns are fractions (0.10 = 10%). Percentage-point change is 100 
 ## Inputs, coverage and processing status
 
 Coverage is counted from final saved change columns. The original income missingness counter was recorded before those columns existed and is retained only in collapsed legacy metadata; it does not describe final income coverage. Technical fingerprints remain in run evidence.
+
+Processing source: [temporal.py → run()](../../code/brazil_project/indicators/temporal.py#L101). This report cell reads final `indicators/<indicator>.parquet` change columns to count availability; it does not recalculate the indicators. Report display: [reporting.py → table()](../../code/brazil_project/reporting.py#L13).
 
 <details>
 <summary>Read saved processing summary</summary>
@@ -192,6 +206,8 @@ Availability is calculated from the final saved change columns, including income
 </details>
 <!-- brazil:output ibge_census_temporal_comparison_1 end -->
 
+Processing source: [temporal.py → run()](../../code/brazil_project/indicators/temporal.py#L101). Saved result: `data/intermediate/indicators/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
+
 <details>
 <summary>Trace original step: Data Import</summary>
 
@@ -206,6 +222,8 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 2)
 <!-- brazil:output ibge_census_temporal_comparison_2 begin -->
 <!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output ibge_census_temporal_comparison_2 end -->
+
+Processing source: [temporal.py → run()](../../code/brazil_project/indicators/temporal.py#L101). Saved result: `data/intermediate/indicators/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
 
 <details>
 <summary>Trace original step: Check Join Keys</summary>
@@ -225,6 +243,8 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 3)
 ## Black population share
 
 Black count / total population, aggregated within each common area.
+
+Processing source: [temporal.py → annual_ratio()](../../code/brazil_project/indicators/temporal.py#L41). Saved result: `data/intermediate/indicators/black.parquet`. Report display: [reporting.py → indicator_view()](../../code/brazil_project/reporting.py#L81).
 
 <details>
 <summary>Read black population share</summary>
@@ -328,6 +348,8 @@ Median and middle 50% of available common-area estimates; whiskers follow 1.5×I
 
 Literate population aged 15+ / population aged 15+. The 2022 Pessoas table supplies its own denominator independently of the Basico join.
 
+Processing source: [temporal.py → annual_ratio()](../../code/brazil_project/indicators/temporal.py#L41). Saved result: `data/intermediate/indicators/literacy.parquet`. Report display: [reporting.py → indicator_view()](../../code/brazil_project/reporting.py#L81).
+
 <details>
 <summary>Read literacy among people aged 15+</summary>
 
@@ -425,6 +447,8 @@ First five saved common areas (a data preview, not a representative sample). Ann
 ## Rudimentary sanitation
 
 Selected rudimentary pit, ditch and water-body disposal counts / the original household denominator. This excludes the additional no-bathroom categories used in conference charts.
+
+Processing source: [temporal.py → annual_ratio()](../../code/brazil_project/indicators/temporal.py#L41). Saved result: `data/intermediate/indicators/rudimentary_sanitation.parquet`. Report display: [reporting.py → indicator_view()](../../code/brazil_project/reporting.py#L81).
 
 <details>
 <summary>Read rudimentary sanitation</summary>
@@ -524,6 +548,8 @@ First five saved common areas (a data preview, not a representative sample). Ann
 
 Water-network household counts / the original household denominator.
 
+Processing source: [temporal.py → annual_ratio()](../../code/brazil_project/indicators/temporal.py#L41). Saved result: `data/intermediate/indicators/water_network.parquet`. Report display: [reporting.py → indicator_view()](../../code/brazil_project/reporting.py#L81).
+
 <details>
 <summary>Read water-network access</summary>
 
@@ -621,6 +647,8 @@ First five saved common areas (a data preview, not a representative sample). Ann
 ## Waste collection
 
 Selected collection categories / the original household denominator. The combined 2022 components retain the original missing-component rule.
+
+Processing source: [temporal.py → annual_ratio()](../../code/brazil_project/indicators/temporal.py#L41). Saved result: `data/intermediate/indicators/waste_collection.parquet`. Report display: [reporting.py → indicator_view()](../../code/brazil_project/reporting.py#L81).
 
 <details>
 <summary>Read waste collection</summary>
@@ -720,6 +748,8 @@ First five saved common areas (a data preview, not a representative sample). Ann
 
 Selected sewer/septic disposal categories / the original household denominator. Categories follow the year-specific codes in the codebook.
 
+Processing source: [temporal.py → annual_ratio()](../../code/brazil_project/indicators/temporal.py#L41). Saved result: `data/intermediate/indicators/sewer_septic.parquet`. Report display: [reporting.py → indicator_view()](../../code/brazil_project/reporting.py#L81).
+
 <details>
 <summary>Read sewer or septic disposal</summary>
 
@@ -817,6 +847,8 @@ First five saved common areas (a data preview, not a representative sample). Ann
 ## Brown population share
 
 Brown count / total population. This retains the census category as supplied.
+
+Processing source: [temporal.py → annual_ratio()](../../code/brazil_project/indicators/temporal.py#L41). Saved result: `data/intermediate/indicators/brown.parquet`. Report display: [reporting.py → indicator_view()](../../code/brazil_project/reporting.py#L81).
 
 <details>
 <summary>Read brown population share</summary>
@@ -916,6 +948,8 @@ First five saved common areas (a data preview, not a representative sample). Ann
 
 Sum of Black and Brown counts / total population; missing component counts are coalesced to zero.
 
+Processing source: [temporal.py → annual_ratio()](../../code/brazil_project/indicators/temporal.py#L41). Saved result: `data/intermediate/indicators/black_brown.parquet`. Report display: [reporting.py → indicator_view()](../../code/brazil_project/reporting.py#L81).
+
 <details>
 <summary>Read combined black/brown population share</summary>
 
@@ -1013,6 +1047,8 @@ First five saved common areas (a data preview, not a representative sample). Ann
 ## Income in July 2022 reais
 
 2010 tract mean = total income / positive recipients. Group means are weighted by household heads using only valid mean/weight pairs; incomplete coverage is reported but does not automatically block a mean. This corrects the former report’s stronger prose restriction to describe the existing implementation. The pipeline’s configured inflation factor converts 2010 nominal income to July 2022 reais. Absolute change is BRL; relative change requires positive 2010 income.
+
+Processing source: [temporal.py → income_aggregate()](../../code/brazil_project/indicators/temporal.py#L55). Saved result: `data/intermediate/indicators/income.parquet`. Report display: [reporting.py → indicator_view()](../../code/brazil_project/reporting.py#L81).
 
 <details>
 <summary>Read income in july 2022 reais</summary>
@@ -1116,6 +1152,8 @@ Median and middle 50% of available common-area estimates; whiskers follow 1.5×I
 
 House counts / the original household denominator. All-missing group denominators remain unavailable.
 
+Processing source: [temporal.py → annual_ratio()](../../code/brazil_project/indicators/temporal.py#L41). Saved result: `data/intermediate/indicators/houses.parquet`. Report display: [reporting.py → indicator_view()](../../code/brazil_project/reporting.py#L81).
+
 <details>
 <summary>Read house dwelling share</summary>
 
@@ -1213,6 +1251,8 @@ First five saved common areas (a data preview, not a representative sample). Ann
 ## Village/condominium house share
 
 Village or condominium house counts / the original household denominator. This is a dwelling type, not a neighbourhood classification.
+
+Processing source: [temporal.py → annual_ratio()](../../code/brazil_project/indicators/temporal.py#L41). Saved result: `data/intermediate/indicators/village_condo.parquet`. Report display: [reporting.py → indicator_view()](../../code/brazil_project/reporting.py#L81).
 
 <details>
 <summary>Read village/condominium house share</summary>
@@ -1312,6 +1352,8 @@ First five saved common areas (a data preview, not a representative sample). Ann
 
 Apartment counts / the original household denominator. All-missing group denominators remain unavailable.
 
+Processing source: [temporal.py → annual_ratio()](../../code/brazil_project/indicators/temporal.py#L41). Saved result: `data/intermediate/indicators/apartments.parquet`. Report display: [reporting.py → indicator_view()](../../code/brazil_project/reporting.py#L81).
+
 <details>
 <summary>Read apartment share</summary>
 
@@ -1410,6 +1452,8 @@ First five saved common areas (a data preview, not a representative sample). Ann
 
 Population / saved common-area km². Area is computed from merged geometry in equal-area EPSG:6933. Absolute change is people/km²; percentage change requires positive 2010 density. The archived stored absolute-change column differs from current source code; see the verification record.
 
+Processing source: [temporal.py → aggregate()](../../code/brazil_project/indicators/temporal.py#L15). Saved result: `data/intermediate/indicators/population_density.parquet`. Report display: [reporting.py → indicator_view()](../../code/brazil_project/reporting.py#L81).
+
 <details>
 <summary>Read population density</summary>
 
@@ -1507,6 +1551,8 @@ First five saved common areas (a data preview, not a representative sample). Ann
 
 Median and middle 50% of available common-area estimates; whiskers follow 1.5×IQR. Outliers are hidden in the figure and retained in the data. Annual availability can differ; this is descriptive, not a paired causal comparison.
 <!-- brazil:output ibge_census_temporal_comparison_16 end -->
+
+Processing source: [temporal.py → run()](../../code/brazil_project/indicators/temporal.py#L101). Saved result: `data/intermediate/indicators/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
 
 <details>
 <summary>Trace original step: Save</summary>

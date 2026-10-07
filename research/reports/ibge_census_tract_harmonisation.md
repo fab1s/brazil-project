@@ -6,6 +6,18 @@ Link 2010 and 2022 tracts into common comparison areas, preserving the research 
 
 Refresh processing and this report with `brazil-project report ibge_census_tract_harmonisation --config project.toml`. Add `--from-saved` to refresh existing verified artifacts only. Code is collapsed; tables and figures below are saved execution results.
 
+## Processing code and pipeline
+
+Execution order: `harmonisation`. The [cli.py → dispatch()](../../code/brazil_project/cli.py#L22) dispatcher calls these functions; [cli.py → expand()](../../code/brazil_project/cli.py#L55) resolves dependencies. The cells below read their saved outputs and present the results.
+
+| Pipeline stage | Active processing source | Inputs | Saved outputs used by the process/report |
+| --- | --- | --- | --- |
+| `harmonisation` | [census.py → run()](../../code/brazil_project/harmonisation/census.py#L364) | Configured 2010/2022 tracts and original correspondence inputs | `harmonisation/current.json → bundles/<generation>/ lookups and merged geometry` |
+
+Paths without an `outputs/` prefix in this table are relative to `data/intermediate/`. Municipality runs use `data/intermediate/municipality_<code>/` and publish scoped report copies under `outputs/reports/`; national-only workflows reject municipality scope. See the [complete pipeline source guide](../../docs/pipeline-source.md) for dependencies, acquisition and the report publisher.
+
+Default imported-edge validation: [positive_baseline_edges()](../../code/brazil_project/harmonisation/census.py#L153). Explicit recomputation matcher: [largest_overlap()](../../code/brazil_project/harmonisation/census.py#L29). Connected grouping: [grouped_crosswalk()](../../code/brazil_project/harmonisation/census.py#L40). Merged geometry and measured area: [dissolved_common_geometry()](../../code/brazil_project/harmonisation/census.py#L236). Unmatched coverage: [coverage()](../../code/brazil_project/harmonisation/census.py#L260).
+
 ## How to read this analysis
 
 Each tract selects its largest strictly positive polygon-area overlap in the other year. The two directional sets of links form a graph; connected components become comparison groups. Boundary-only contact is not an overlap match. Groups can be one-to-one, split, merge or many-to-many. A municipality selects complete groups, including contributing tracts beyond its boundary.
@@ -17,6 +29,8 @@ The routine national mode validates the original correspondence; it is not a fre
 ## Inputs, coverage and processing status
 
 This summary reads the current saved processing artifacts. Technical fingerprints are available in the collapsed provenance record.
+
+Processing source: [census.py → run()](../../code/brazil_project/harmonisation/census.py#L364). Saved result: `data/intermediate/harmonisation/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
 
 <details>
 <summary>Read saved processing summary</summary>
@@ -205,6 +219,8 @@ Execution mode: `validated_original_correspondence`. Boundary differences are as
 </details>
 <!-- brazil:output ibge_census_tract_harmonisation_1 end -->
 
+Processing source: [census.py → run()](../../code/brazil_project/harmonisation/census.py#L364). Saved result: `data/intermediate/harmonisation/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
+
 <details>
 <summary>Trace original step: Data Import</summary>
 
@@ -223,6 +239,8 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Census tract harmonisation.qmd', 2)
 ## How comparison groups work
 
 The illustration explains relationship types. A common_id identifies a connected group; dissolving its 2022 pieces removes internal display boundaries.
+
+Processing source: [census.py → grouped_crosswalk()](../../code/brazil_project/harmonisation/census.py#L40). Method schematic only; the drawing does not process tract geometry. Report display: [reporting.py → harmonisation_diagram()](../../code/brazil_project/reporting.py#L102).
 
 <details>
 <summary>Draw common-area relationship schematic</summary>
@@ -244,6 +262,8 @@ Schematic only: no measured tract boundaries. Connected links form one common_id
 ## Merged analytical geography
 
 One row per common_id; inner tract boundaries are merged. Original pieces remain reference data. The preview identifies saved areas and their measured km². Dissolving preserves holes and gaps between source pieces; small holes can appear as short interior strokes in the illustration. These are not separately retained tract boundaries.
+
+Processing source: [census.py → dissolved_common_geometry()](../../code/brazil_project/harmonisation/census.py#L236). Saved result: `data/intermediate/harmonisation/bundles/<generation>/common_geometry_2022.parquet`. Report display: [reporting.py → merged_example()](../../code/brazil_project/reporting.py#L198).
 
 <details>
 <summary>Read merged common-area geometry</summary>

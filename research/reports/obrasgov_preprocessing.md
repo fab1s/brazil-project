@@ -6,6 +6,24 @@ Follow saved snapshot translation, location screening, the reported primary-stat
 
 Refresh processing and this report with `brazil-project report obrasgov_preprocessing --config project.toml`. Add `--from-saved` to refresh existing verified artifacts only. Code is collapsed; tables and figures below are saved execution results.
 
+## Processing code and pipeline
+
+Execution order: `obrasgov-snapshot` → `obrasgov-location-qa` → `obrasgov-location-plot` → `obrasgov-primary-state-check` → `obrasgov-primary-state-filter`. The [cli.py → dispatch()](../../code/brazil_project/cli.py#L22) dispatcher calls these functions; [cli.py → expand()](../../code/brazil_project/cli.py#L55) resolves dependencies. The cells below read their saved outputs and present the results.
+
+| Pipeline stage | Active processing source | Inputs | Saved outputs used by the process/report |
+| --- | --- | --- | --- |
+| `obrasgov-snapshot` | [projects.py → run()](../../code/brazil_project/infrastructure/projects.py#L47) | Configured snapshot or completed local acquisition; source=obrasgov | `obrasgov/projects.parquet; projects_clean.parquet; translated category counts` |
+| `obrasgov-location-qa` | [location_qa.py → run()](../../code/brazil_project/infrastructure/location_qa.py#L218) | Preserved source snapshot from location_qa.source and pinned reference boundaries | `obrasgov-location-qa/component_audit.parquet; map, quarantine and review tables` |
+| `obrasgov-location-plot` | [plot_location_qa.py → run()](../../code/scripts/plot_location_qa.py#L35) | Component audit and pinned municipal reference | `outputs/figures/obrasgov-location-qa/location-screening.png` |
+| `obrasgov-primary-state-check` | [check_obras_primary_state.py → run()](../../code/scripts/check_obras_primary_state.py#L54) | Complete component geometry, uf_principal and IBGE state territory | `outputs/tables/obrasgov-primary-state/summary.json and component-level checks` |
+| `obrasgov-primary-state-filter` | [filter_obras_primary_state.py → run()](../../code/scripts/filter_obras_primary_state.py#L103) | Completed QA and primary-state diagnostics | `obrasgov-primary-state-filter/map_components.parquet; exclusion audit and comparison figure` |
+
+Paths without an `outputs/` prefix in this table are relative to `data/intermediate/`. Municipality runs use `data/intermediate/municipality_<code>/` and publish scoped report copies under `outputs/reports/`; national-only workflows reject municipality scope. See the [complete pipeline source guide](../../docs/pipeline-source.md) for dependencies, acquisition and the report publisher.
+
+Original geometry cleaning: [clean_obrasgov()](../../code/brazil_project/infrastructure/projects.py#L17). Component decomposition: [decompose()](../../code/brazil_project/infrastructure/location_qa.py#L38); screening decisions: [audit()](../../code/brazil_project/infrastructure/location_qa.py#L112); exact primary-state predicates: [check_states()](../../code/scripts/check_obras_primary_state.py#L16).
+
+Approved exclusion rule: [apply_filter()](../../code/scripts/filter_obras_primary_state.py#L24).
+
 ## How to read this analysis
 
 **Two distinct paths:** the faithful original cleaning step removes empty or world-range-invalid geometries and repairs retained geometry. The later location-quality workflow starts from the preserved source snapshot, decomposes its geometries and assigns component-level status. Their counts are not interchangeable.
@@ -15,6 +33,8 @@ A component is a single point, line or polygon part. A source row or project can
 ## Inputs, coverage and processing status
 
 This summary reads the current saved processing artifacts. Technical fingerprints are available in the collapsed provenance record.
+
+Processing source: [projects.py → run()](../../code/brazil_project/infrastructure/projects.py#L47). Saved result: `data/intermediate/obrasgov/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
 
 <details>
 <summary>Read saved processing summary</summary>
@@ -80,6 +100,8 @@ Archived row-count agreement: **yes**. This checks counts only, not record ident
 </details>
 <!-- brazil:output obrasgov_preprocessing_1 end -->
 
+Processing source: [projects.py → run()](../../code/brazil_project/infrastructure/projects.py#L47). Saved result: `data/intermediate/obrasgov/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
+
 <details>
 <summary>Trace original step: Import</summary>
 
@@ -94,6 +116,8 @@ show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd', 2)
 <!-- brazil:output obrasgov_preprocessing_2 begin -->
 <!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output obrasgov_preprocessing_2 end -->
+
+Processing source: [projects.py → run()](../../code/brazil_project/infrastructure/projects.py#L47). Saved result: `data/intermediate/obrasgov/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
 
 <details>
 <summary>Trace original step: Add Translated Cols</summary>
@@ -113,6 +137,8 @@ show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd', 3)
 ## Category table
 
 Largest saved categories only. Untranslated values are excluded from classified counts; the denominator is all classified rows before the top-15 display limit.
+
+Processing source: [projects.py → counts()](../../code/brazil_project/infrastructure/projects.py#L29). Saved result: `data/intermediate/obrasgov/type_subtype_counts.parquet`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
 
 <details>
 <summary>Read saved category frequencies</summary>
@@ -206,6 +232,8 @@ show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd', 4)
 
 Figures count source rows by translated type and subtype. Repeated project IDs can appear more than once; category shares are fractions of all classified rows, not shares of investment.
 
+Processing source: [projects.py → counts()](../../code/brazil_project/infrastructure/projects.py#L29). Saved result: `data/intermediate/obrasgov/type_subtype_counts.parquet`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
+
 <details>
 <summary>Generate category figures from saved counts</summary>
 
@@ -227,6 +255,8 @@ Largest 15 saved categories; counts describe source rows, which can repeat proje
 Largest 15 saved categories; counts describe source rows, which can repeat project IDs. Missing translations are excluded from classified counts. Full classified records determine the saved share denominator, before truncation to 15 categories.
 <!-- brazil:output obrasgov_preprocessing_5 end -->
 
+Processing source: [projects.py → run()](../../code/brazil_project/infrastructure/projects.py#L47). Saved result: `data/intermediate/obrasgov/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
+
 <details>
 <summary>Trace original step: Unnamed 6</summary>
 
@@ -245,6 +275,8 @@ show_chunk(ctx, 'Scripts_Data/Obrasgov/Obrasgov - Preprocessing.qmd', 6)
 ## Location screening
 
 Checks use IBGE municipal boundaries and generalized Natural Earth coast/land references. Invalid coordinates and suspicious offshore locations are quarantined; coastal, border, marine and administrative uncertainty can require review. Small islands and reference resolution limit conclusions. No reprojection or coordinate replacement is inferred. The plot shows points only, not all geometry components.
+
+Processing source: [location_qa.py → audit()](../../code/brazil_project/infrastructure/location_qa.py#L112). QA audit and [plot_location_qa.py → run()](../../code/scripts/plot_location_qa.py#L35) produce the summary and screening figure. Report display: [reporting.py → summary()](../../code/brazil_project/reporting.py#L33).
 
 <details>
 <summary>Summarise screening and display its current figure</summary>
@@ -458,6 +490,8 @@ Eligibility is a screening decision, not verified geocoding. Coordinates correct
 ## Does geometry intersect its reported primary state?
 
 The complete component is checked against its declared primary-state territory: covered, partly intersecting, entirely outside or unassessable. The check itself does not filter. A lead state may describe a multi-state project, and administrative territory is not an offshore licensing boundary.
+
+Processing source: [check_obras_primary_state.py → run()](../../code/scripts/check_obras_primary_state.py#L54). Reads `outputs/tables/obrasgov-primary-state/summary.json`; this diagnostic does not filter. Report display: [reporting.py → summary()](../../code/brazil_project/reporting.py#L33).
 
 <details>
 <summary>Read primary-state diagnostics</summary>
@@ -796,6 +830,8 @@ Of entirely outside components, 1,678 intersect another state and 668 intersect 
 
 Components entirely outside the reported primary state are excluded from the separate map derivative. Partly intersecting components retain the baseline policy. Some outside components were already quarantined, so total outside components exceed newly excluded eligible map components. Other valid components from the same project remain. This pipeline does not publish the website.
 
+Processing source: [filter_obras_primary_state.py → run()](../../code/scripts/filter_obras_primary_state.py#L103). Reads `data/intermediate/obrasgov-primary-state-filter/report.json`; filtering affects a separate derivative. Report display: [reporting.py → table()](../../code/brazil_project/reporting.py#L13).
+
 <details>
 <summary>Read exclusion counts</summary>
 
@@ -837,6 +873,8 @@ table(pd.DataFrame({"Result": ["Components entirely outside primary state", "Map
 ## Before and after exclusions
 
 Original eligible points before and after the state filter. Lines, polygons and already quarantined points are omitted. Coordinates are unchanged.
+
+Processing source: [filter_obras_primary_state.py → run()](../../code/scripts/filter_obras_primary_state.py#L103). Reads its current `outputs/figures/obrasgov-location-qa/primary-state-filter.png`; this cell displays rather than generates the processing figure. Report display: [report_engine.py → execute_cells()](../../code/brazil_project/report_engine.py#L101) supplies `report_image()`.
 
 <details>
 <summary>Display current exclusion-comparison figure</summary>

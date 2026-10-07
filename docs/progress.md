@@ -2,8 +2,10 @@
 
 Status: implemented and validated with recorded limitations
 Last updated: 2026-10-07
-Version: 0.16
+Version: 0.17
 Scope: Current Project Progress
+
+Reports now include a pipeline/source table and direct active-file/function links beside every executable step, with saved-artifact locations and separate presentation-source links. The root README explains the processing/report split; [the source guide](pipeline-source.md) connects CLI dependencies, retained R, acquisition and protected report publication. Verified all 67 unchanged cell bodies/results and 211 source-function anchors; all nine reports refresh with authored links preserved, and 34 focused reporting/pipeline tests pass. Processing and acquisition were not rerun. [Verification evidence](evidence/pipeline-source-verification.json) records the published generations.
 
 The [reader-facing report update](report-readability.md) adds explanations, a [variable codebook](codebook.md), descriptive tables and current generated figures while retaining executable cell IDs and protected refresh. All 100 tests pass; all nine reports execute, 13 indicator tables match saved artifacts and 18 generated figures load. Scoped processing preserves national reports. The complete Obrasgov command succeeds, and all final process/figure checks are recorded in that page. Report income-change coverage uses final columns rather than the inherited incomplete metadata counter.
 

@@ -6,6 +6,18 @@ Explore changes from 2000 urban tracts to newer boundaries in Belo Horizonte. Th
 
 Refresh processing and this report with `brazil-project report ibge_dataset_overview --config project.toml`. Add `--from-saved` to refresh existing verified artifacts only. Code is collapsed; tables and figures below are saved execution results.
 
+## Processing code and pipeline
+
+Execution order: `overview`. The [cli.py → dispatch()](../../code/brazil_project/cli.py#L22) dispatcher calls these functions; [cli.py → expand()](../../code/brazil_project/cli.py#L55) resolves dependencies. The cells below read their saved outputs and present the results.
+
+| Pipeline stage | Active processing source | Inputs | Saved outputs used by the process/report |
+| --- | --- | --- | --- |
+| `overview` | [overview.py → run()](../../code/brazil_project/harmonisation/overview.py#L9) | Configured tract GeoPackage; default municipality Belo Horizonte | `overview/intersections_2000_<year>.gpkg; change_summary_2000_<year>.parquet` |
+
+Paths without an `outputs/` prefix in this table are relative to `data/intermediate/`. Municipality runs use `data/intermediate/municipality_<code>/` and publish scoped report copies under `outputs/reports/`; national-only workflows reject municipality scope. See the [complete pipeline source guide](../../docs/pipeline-source.md) for dependencies, acquisition and the report publisher.
+
+The Python adapter invokes [overview.R](../../code/scripts/r/overview.R) and [spherical_intersections.R](../../code/scripts/r/spherical_intersections.R) for the retained sf/S2 calculations.
+
 ## How to read this analysis
 
 A newer tract contributes when the original spherical overlap fraction exceeds 5%. A single qualifying match above 95% is classified as stable; multiple qualifying matches are split, and a remaining single match is reshaped. No qualifying match is unmatched. R sf/S2 retains the original geographic topology and area semantics. Example figures show actual saved inputs; labels describe the original examples and classifications may differ between comparison years.
@@ -13,6 +25,8 @@ A newer tract contributes when the original spherical overlap fraction exceeds 5
 ## Inputs, coverage and processing status
 
 This summary reads the current saved processing artifacts. Technical fingerprints are available in the collapsed provenance record.
+
+Processing source: [overview.py → run()](../../code/brazil_project/harmonisation/overview.py#L9). Saved result: `data/intermediate/overview/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
 
 <details>
 <summary>Read saved processing summary</summary>
@@ -114,6 +128,8 @@ Municipality: `3106200`; geometry calculations use R sf/S2.
 </details>
 <!-- brazil:output ibge_dataset_overview_1 end -->
 
+Processing source: [overview.py → run()](../../code/brazil_project/harmonisation/overview.py#L9). Saved result: `data/intermediate/overview/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
+
 <details>
 <summary>Trace original step: Tracts Import</summary>
 
@@ -128,6 +144,8 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 2)
 <!-- brazil:output ibge_dataset_overview_2 begin -->
 <!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output ibge_dataset_overview_2 end -->
+
+Processing source: [overview.py → run()](../../code/brazil_project/harmonisation/overview.py#L9). Saved result: `data/intermediate/overview/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
 
 <details>
 <summary>Trace original step: Census Data Import</summary>
@@ -144,6 +162,8 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 3)
 <!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output ibge_dataset_overview_3 end -->
 
+Processing source: [overview.py → run()](../../code/brazil_project/harmonisation/overview.py#L9). Saved result: `data/intermediate/overview/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
+
 <details>
 <summary>Trace original step: Compute Intersections</summary>
 
@@ -158,6 +178,8 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 4)
 <!-- brazil:output ibge_dataset_overview_4 begin -->
 <!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output ibge_dataset_overview_4 end -->
+
+Processing source: [overview.py → run()](../../code/brazil_project/harmonisation/overview.py#L9). Saved result: `data/intermediate/overview/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
 
 <details>
 <summary>Trace original step: Load Saved Computations</summary>
@@ -177,6 +199,8 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 5)
 ## Tract Change Summary 2000 2010
 
 Saved result from the original comparison flow.
+
+Processing source: [overview.py → run()](../../code/brazil_project/harmonisation/overview.py#L9). Saved result: `data/intermediate/overview/change_summary_2000_2010.parquet`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
 
 <details>
 <summary>Tract Change Summary 2000 2010</summary>
@@ -299,6 +323,8 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 6)
 </table>
 <!-- brazil:output ibge_dataset_overview_6 end -->
 
+Processing source: [overview.py → run()](../../code/brazil_project/harmonisation/overview.py#L9). Saved result: `data/intermediate/overview/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
+
 <details>
 <summary>Trace original step: Unnamed 7</summary>
 
@@ -317,6 +343,8 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 7)
 ## Example 1 Split
 
 The two panels compare the same 2000 tract with each newer year. Rose outlines mark the old tract; teal outlines mark eligible newer tracts.
+
+Processing source: [overview.py → run()](../../code/brazil_project/harmonisation/overview.py#L9). Saved result: `data/intermediate/overview/report.json`. Report display: [reporting.py → overview_example()](../../code/brazil_project/reporting.py#L115).
 
 <details>
 <summary>Draw real tract-boundary example</summary>
@@ -339,6 +367,8 @@ Real 2000 tract 310620025610001 (rose outline) and newer tracts (teal), selected
 
 The two panels compare the same 2000 tract with each newer year. Rose outlines mark the old tract; teal outlines mark eligible newer tracts.
 
+Processing source: [overview.py → run()](../../code/brazil_project/harmonisation/overview.py#L9). Saved result: `data/intermediate/overview/report.json`. Report display: [reporting.py → overview_example()](../../code/brazil_project/reporting.py#L115).
+
 <details>
 <summary>Draw real tract-boundary example</summary>
 
@@ -359,6 +389,8 @@ Real 2000 tract 310620005650306 (rose outline) and newer tracts (teal), selected
 ## Example 3 Reshape
 
 The two panels compare the same 2000 tract with each newer year. Rose outlines mark the old tract; teal outlines mark eligible newer tracts.
+
+Processing source: [overview.py → run()](../../code/brazil_project/harmonisation/overview.py#L9). Saved result: `data/intermediate/overview/report.json`. Report display: [reporting.py → overview_example()](../../code/brazil_project/reporting.py#L115).
 
 <details>
 <summary>Draw real tract-boundary example</summary>
@@ -381,6 +413,8 @@ Real 2000 tract 310620005620021 (rose outline) and newer tracts (teal), selected
 
 The two panels compare the same 2000 tract with each newer year. Rose outlines mark the old tract; teal outlines mark eligible newer tracts.
 
+Processing source: [overview.py → run()](../../code/brazil_project/harmonisation/overview.py#L9). Saved result: `data/intermediate/overview/report.json`. Report display: [reporting.py → overview_example()](../../code/brazil_project/reporting.py#L115).
+
 <details>
 <summary>Draw real tract-boundary example</summary>
 
@@ -398,6 +432,8 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 11)
 Real 2000 tract 310620005620008 (rose outline) and newer tracts (teal), selected by the original >5% overlap rule. No basemap; complete newer outlines may extend outside the old tract. This exploratory classification differs from the 2010–2022 harmonisation method.
 <!-- brazil:output ibge_dataset_overview_11 end -->
 
+Processing source: [overview.py → run()](../../code/brazil_project/harmonisation/overview.py#L9). Saved result: `data/intermediate/overview/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
+
 <details>
 <summary>Trace original step: Race Ratio Calculation</summary>
 
@@ -413,6 +449,8 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 12)
 <!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output ibge_dataset_overview_12 end -->
 
+Processing source: [overview.py → run()](../../code/brazil_project/harmonisation/overview.py#L9). Saved result: `data/intermediate/overview/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
+
 <details>
 <summary>Trace original step: Import Linha Verde</summary>
 
@@ -427,6 +465,8 @@ show_chunk(ctx, 'Scripts_Data/IBGE/IBGE - Dataset Overview.qmd', 13)
 <!-- brazil:output ibge_dataset_overview_13 begin -->
 <!-- Saved result already presented; original cell retained for traceability. -->
 <!-- brazil:output ibge_dataset_overview_13 end -->
+
+Processing source: [overview.py → run()](../../code/brazil_project/harmonisation/overview.py#L9). Saved result: `data/intermediate/overview/report.json`. Report display: [reporting.py → show_chunk()](../../code/brazil_project/reporting.py#L140).
 
 <details>
 <summary>Trace original step: Visualization Black Ratio</summary>
