@@ -1,0 +1,84 @@
+diff --git a/code/brazil_project/cli.py b/code/brazil_project/cli.py
+index c942cdc..b53793a 100644
+--- a/code/brazil_project/cli.py
++++ b/code/brazil_project/cli.py
+@@ -9,14 +9,15 @@ from brazil_project.report_engine import (REPORTS, SCOPED, OBRAS_FLOW, context,
+                                           render_report, stamp_producer, code_hashes)
+ from brazil_project.infrastructure.location_qa import fingerprint
+ 
+-STAGES = ('overview','census-exploration','harmonisation','indicators','ibama','obrasgov','land-value','charts')
++STAGES = ('overview','census-exploration','harmonisation','indicators','ibama','obrasgov','land-value','charts','infrastructure-proximity')
+ INDIVIDUAL = OBRAS_FLOW
+ DEPENDENCIES = {'indicators':['harmonisation'], 'charts':['harmonisation','indicators'],
++                'infrastructure-proximity':['harmonisation','indicators'],
+                 'obrasgov-location-qa':['obrasgov-snapshot'],
+                 'obrasgov-location-plot':['obrasgov-location-qa'],
+                 'obrasgov-primary-state-check':['obrasgov-location-plot'],
+                 'obrasgov-primary-state-filter':['obrasgov-primary-state-check']}
+-ACQUISITION=('acquire-census','acquire-ibama','acquire-obrasgov')
++ACQUISITION=('acquire-census','acquire-ibama','acquire-obrasgov','acquire-network')
+ 
+ 
+ def dispatch(ctx, stage):
+@@ -28,6 +29,8 @@ def dispatch(ctx, stage):
+         from brazil_project.indicators.temporal import run
+     elif stage=='charts':
+         from brazil_project.visualisation.charts import run
++    elif stage=='infrastructure-proximity':
++        from brazil_project.infrastructure.proximity import run
+     elif stage=='land-value':
+         from brazil_project.land_value.property import run
+     elif stage=='overview':
+@@ -45,6 +48,8 @@ def dispatch(ctx, stage):
+         from scripts.filter_obras_primary_state import run
+     elif stage=='acquire-census':
+         from brazil_project.acquisition.census import run
++    elif stage=='acquire-network':
++        from brazil_project.infrastructure.proximity import acquire_network as run
+     elif stage in ('acquire-ibama','acquire-obrasgov'):
+         from brazil_project.acquisition.infrastructure import run
+         return run(ctx,stage.removeprefix('acquire-'))
+@@ -126,6 +131,7 @@ def main(argv=None):
+                 elif stage=='overview': directories=[ctx.root/'outputs/maps'/('municipality_'+ctx.municipality if ctx.municipality else 'overview')]
+                 elif stage=='ibama': directories=[ctx.root/'outputs/maps/ibama.html']
+                 elif stage=='census-exploration': directories=[ctx.root/'outputs/maps/black_ratio_2010_2022.html']
++                elif stage=='infrastructure-proximity': directories=[ctx.root/'outputs/figures/infrastructure-proximity'/(ctx.municipality or 'configured')]
+                 for path in directories:
+                     for output in list(path.rglob('*')) if path.is_dir() else [path]:
+                         if output.is_file(): outputs[str(output.resolve())]=fingerprint(output)
+diff --git a/code/brazil_project/report_engine.py b/code/brazil_project/report_engine.py
+index 854f0c8..e752378 100644
+--- a/code/brazil_project/report_engine.py
++++ b/code/brazil_project/report_engine.py
+@@ -27,9 +27,11 @@ REPORTS = {
+     'obrasgov_data_extraction': OBRAS_FLOW,
+     'obrasgov_preprocessing': OBRAS_FLOW,
+     'property_value': ('land-value',),
++    'infrastructure_proximity': ('infrastructure-proximity',),
+ }
+ SCOPED = {'brazil_poroject_charts', 'ibge_census_temporal_comparison',
+-          'ibge_census_tract_harmonisation', 'ibge_dataset_overview'}
++          'ibge_census_tract_harmonisation', 'ibge_dataset_overview',
++          'infrastructure_proximity'}
+ CELL = re.compile(r'^<!-- brazil:cell ([a-zA-Z0-9_]+) -->\n```python\n(.*?)^```\s*$', re.M | re.S)
+ OUTPUT = re.compile(r'^<!-- brazil:output ([a-zA-Z0-9_]+) begin -->\n(.*?)^<!-- brazil:output \1 end -->$', re.M | re.S)
+ 
+diff --git a/code/tests/test_report_previews.py b/code/tests/test_report_previews.py
+index f83283e..4f19739 100644
+--- a/code/tests/test_report_previews.py
++++ b/code/tests/test_report_previews.py
+@@ -27,7 +27,13 @@ def project(tmp_path):
+ def test_all_reports_preserve_archive_and_cell_order():
+     root=Path(__file__).resolve().parents[2]
+     ledger=json.loads((root/'docs/evidence/report-integration-migration.json').read_text())
+-    assert len(ledger['reports'])==len(engine.REPORTS)==9
++    # INVARIANT: The migration ledger describes preserved original reports, not
++    # a permanent upper limit on new research reports registered afterward.
++    archived_names={Path(row['report']).stem for row in ledger['reports']}
++    assert archived_names.issubset(engine.REPORTS)
++    for name in set(engine.REPORTS)-archived_names:
++        cells, outputs=engine.parse_report((root/'research/reports'/(name+'.md')).read_text())
++        assert cells and len(cells)==len(outputs)
+     assert not (root/'code/reports').exists() and not list((root/'research').rglob('*.qmd'))
+     for row in ledger['reports']:
+         cells,_=engine.parse_report((root/row['report']).read_text())

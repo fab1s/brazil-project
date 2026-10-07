@@ -8,7 +8,7 @@ Refresh processing and this report with `brazil-project report obrasgov_data_ext
 
 ## Processing code and pipeline
 
-Execution order: `obrasgov-snapshot` → `obrasgov-location-qa` → `obrasgov-location-plot` → `obrasgov-primary-state-check` → `obrasgov-primary-state-filter`. The [cli.py → dispatch()](../../code/brazil_project/cli.py#L22) dispatcher calls these functions; [cli.py → expand()](../../code/brazil_project/cli.py#L55) resolves dependencies. The cells below read their saved outputs and present the results.
+Execution order: `obrasgov-snapshot` → `obrasgov-location-qa` → `obrasgov-location-plot` → `obrasgov-primary-state-check` → `obrasgov-primary-state-filter`. The [cli.py → dispatch()](../../code/brazil_project/cli.py#L23) dispatcher calls these functions; [cli.py → expand()](../../code/brazil_project/cli.py#L58) resolves dependencies. The cells below read their saved outputs and present the results.
 
 | Pipeline stage | Active processing source | Inputs | Saved outputs used by the process/report |
 | --- | --- | --- | --- |

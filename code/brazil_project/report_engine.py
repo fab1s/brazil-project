@@ -27,15 +27,35 @@ REPORTS = {
     'obrasgov_data_extraction': OBRAS_FLOW,
     'obrasgov_preprocessing': OBRAS_FLOW,
     'property_value': ('land-value',),
+    'gov_data_quality': ('gov-data-quality',),
+    'gov_data_quality_annex': ('gov-data-quality',),
 }
+# CONTRACT: An annex is part of its report's publication flow, rather than an
+# untracked Markdown side effect. Each still uses the protected report renderer.
+REPORT_ANNEXES = {'gov_data_quality': ('gov_data_quality_annex',)}
 SCOPED = {'brazil_poroject_charts', 'ibge_census_temporal_comparison',
           'ibge_census_tract_harmonisation', 'ibge_dataset_overview'}
 CELL = re.compile(r'^<!-- brazil:cell ([a-zA-Z0-9_]+) -->\n```python\n(.*?)^```\s*$', re.M | re.S)
+HIDDEN_CELL = re.compile(r'^<!-- brazil:cell ([a-zA-Z0-9_]+)\n(.*?)^-->[ \t]*$', re.M | re.S)
 OUTPUT = re.compile(r'^<!-- brazil:output ([a-zA-Z0-9_]+) begin -->\n(.*?)^<!-- brazil:output \1 end -->$', re.M | re.S)
 
 
+def expand_reports(names):
+    """Publish registered annexes before their summary, once per invocation."""
+    ordered=[]; visiting=set()
+    def add(name):
+        if name not in REPORTS: raise WorkflowError('Unknown report: '+name)
+        if name in visiting: raise WorkflowError('Circular report annex relationship: '+name)
+        if name in ordered: return
+        visiting.add(name)
+        for annex in REPORT_ANNEXES.get(name,()): add(annex)
+        visiting.remove(name);ordered.append(name)
+    for name in names: add(name)
+    return ordered
+
+
 def parse_report(text):
-    cells = list(CELL.finditer(text)); outputs = list(OUTPUT.finditer(text))
+    cells = sorted([*CELL.finditer(text), *HIDDEN_CELL.finditer(text)], key=lambda m: m.start()); outputs = list(OUTPUT.finditer(text))
     ids = [m[1] for m in cells]
     if not ids or len(set(ids)) != len(ids) or ids != [m[1] for m in outputs]:
         raise WorkflowError('Report requires unique ordered cells and matching output sections.')
@@ -44,6 +64,8 @@ def parse_report(text):
         raise WorkflowError('Malformed or unmatched report marker.')
     previous = -1
     for cell, output in zip(cells, outputs):
+        if cell.re is HIDDEN_CELL and re.search(r'<!--|--!?>', cell[2]):
+            raise WorkflowError('Hidden report code cannot contain HTML comment delimiters; use a visible cell.')
         if not previous < cell.start() < cell.end() < output.start():
             raise WorkflowError('Cell and output sections must be sequential and non-nested.')
         previous = output.end()

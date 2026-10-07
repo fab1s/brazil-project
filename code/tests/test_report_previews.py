@@ -27,7 +27,13 @@ def project(tmp_path):
 def test_all_reports_preserve_archive_and_cell_order():
     root=Path(__file__).resolve().parents[2]
     ledger=json.loads((root/'docs/evidence/report-integration-migration.json').read_text())
-    assert len(ledger['reports'])==len(engine.REPORTS)==9
+    # INVARIANT: The migration ledger describes preserved original reports, not
+    # a permanent upper limit on new research reports registered afterward.
+    archived_names={Path(row['report']).stem for row in ledger['reports']}
+    assert archived_names.issubset(engine.REPORTS)
+    for name in set(engine.REPORTS)-archived_names:
+        cells, outputs=engine.parse_report((root/'research/reports'/(name+'.md')).read_text())
+        assert cells and len(cells)==len(outputs)
     assert not (root/'code/reports').exists() and not list((root/'research').rglob('*.qmd'))
     for row in ledger['reports']:
         cells,_=engine.parse_report((root/row['report']).read_text())

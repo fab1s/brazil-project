@@ -2,9 +2,10 @@
 
 Status: current
 Last updated: 2026-10-07
-Version: 0.9
+Version: 0.10
 Scope: Remaining Research Tasks
 
+- Review the [national quality assessment](../research/reports/gov_data_quality.md): shared locations and category signals need provider evidence; decide treatment of tiny planned budgets, census component gaps and timing before resuming [deferred proximity work](../data/archive/project-tools/planned-proximity/README.md). No new exclusions were applied.
 - Review the [harmonisation update](harmonisation-update.md) and its footprint/coverage diagnostics under the approved boundary-change assumption. The requested implementation corrections are complete.
 - Supply the exact `20220601_regional_barreiro_cadastro_imobiliario.csv` referenced by the property report, or approve a separate dated-input methodological change.
 - Inspect the seven small overlapping-piece cases identified by the audit. Original pieces are preserved and unique part IDs are implemented.

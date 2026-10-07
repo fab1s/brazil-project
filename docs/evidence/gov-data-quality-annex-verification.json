@@ -1,0 +1,155 @@
+{
+  "status": "completed",
+  "date": "2026-10-07",
+  "scope": "National report presentation; no analytical method changes",
+  "commands": [
+    "MPLBACKEND=Agg brazil-project run gov-data-quality --config project.toml",
+    "MPLBACKEND=Agg brazil-project report gov_data_quality --from-saved --config project.toml",
+    "MPLBACKEND=Agg python -m pytest code/tests -q"
+  ],
+  "tests": {
+    "passed": 165,
+    "warnings": 311,
+    "test_log_sha256": "0daddf6e4798bea62681521da1037b595379f34d7183f6d92e27f03a7f19352c",
+    "covers": [
+      "original cell order/code and authored explanations",
+      "annex ordering and deduplication",
+      "annex failure blocks main publication while preserving completed processing status",
+      "marker validation, publication failure and source-edit protection",
+      "scope and configuration isolation",
+      "analytical checks"
+    ]
+  },
+  "preservation_manifest": "docs/evidence/gov-data-quality-annex-preservation.json",
+  "original_report_lines": 5935,
+  "original_seven_cell_bodies_unchanged": true,
+  "original_authored_body_preserved_in_annex": true,
+  "reports": [
+    {
+      "report": "gov_data_quality",
+      "path": "research/reports/gov_data_quality.md",
+      "lines": 148,
+      "cells": [
+        "gov_data_quality_summary"
+      ],
+      "figures": 3,
+      "output_sha256": "a88ba0c0dc4f2afd829209824b9236895bd60eefea5736fb1507626109f67df1",
+      "authored_sha256": "367ae09f3d46fa68a039a7a3040f64249c08c39b5a9a36637f404b3fa473c3aa",
+      "generation": "1c72c15455cc4f5faf85a16fa3f459f6",
+      "publication_evidence": "outputs/reports/evidence/national/gov_data_quality/1c72c15455cc4f5faf85a16fa3f459f6/evidence.json",
+      "repeat_bytes_identical": true
+    },
+    {
+      "report": "gov_data_quality_annex",
+      "path": "research/reports/gov_data_quality_annex.md",
+      "lines": 5937,
+      "cells": [
+        "gov_data_quality_lineage",
+        "gov_data_quality_locations",
+        "gov_data_quality_shared_coordinates",
+        "gov_data_quality_categories",
+        "gov_data_quality_dates_budgets",
+        "gov_data_quality_census",
+        "gov_data_quality_readiness"
+      ],
+      "figures": 11,
+      "output_sha256": "835b6dc0d5a117a45c61424fb0b0928a9d934e5468b35700d64b7a6772e12da0",
+      "authored_sha256": "f2c6f2a2ac87b6299a4f8a066d190f8725d973164fb2c34567602a58760c9ccd",
+      "generation": "501a3556e5dc439382786cd41e5cbcc2",
+      "publication_evidence": "outputs/reports/evidence/national/gov_data_quality_annex/501a3556e5dc439382786cd41e5cbcc2/evidence.json",
+      "repeat_bytes_identical": true
+    }
+  ],
+  "data": {
+    "tables": 32,
+    "figures": 11,
+    "table_bytes_unchanged": true,
+    "figure_bytes_unchanged": true,
+    "diagnostic_values_unchanged": true,
+    "producer_inputs_and_outputs_verified": true,
+    "table_sha256": {
+      "data/intermediate/gov-data-quality/identity_summary.parquet": "de53faac304e532318875926c04f9dccf83e5cd64afcfd60e898fabb25baa9ec",
+      "data/intermediate/gov-data-quality/missingness.parquet": "69f7b0cc0889ef9ca8024bf3c261cdaca85afebd8ddb0336d440a6b7a9f199c8",
+      "data/intermediate/gov-data-quality/field_conflicts.parquet": "73c1ae9e81b3f9c17d873ead0dca2b589b2edda11d4f6e6f1e5a72612a627b91",
+      "data/intermediate/gov-data-quality/field_conflict_summary.parquet": "e287ae3c38c9ce8b4ff65dd47bd7a0386568d3a5cbc0dcff056ebe08af56e63d",
+      "data/intermediate/gov-data-quality/duplicate_projects.parquet": "c7ddf6568b5fae308afe2b91089ae1225fc1185d59354eac6a3663deca88d143",
+      "data/intermediate/gov-data-quality/dates_summary.parquet": "759a99c7eda6250d82091b0645d6f1ca14d274a874642da5a3ec886b039cfa21",
+      "data/intermediate/gov-data-quality/dates_anomalies.parquet": "5554d574c1c3258db23dbf99a58787cfaf37f48cb12fa8984ea56ed663f469b4",
+      "data/intermediate/gov-data-quality/dates_anomalies_by_state.parquet": "48296ef6910cf1362383d902e23656874a6baab5f4a584d207c408aca33f69f8",
+      "data/intermediate/gov-data-quality/budget_anomalies.parquet": "fc48150121188dc1c5110e10298ff1726c0a8deeef9bf37fcd7abd0ee2db012e",
+      "data/intermediate/gov-data-quality/budget_summary.parquet": "af4560e9dac586225963122de428c5b982148080141e5ae61bb8a25ebc42922f",
+      "data/intermediate/gov-data-quality/budget_by_state.parquet": "5b6f45edcd46708931e9fd976391af0739c4937d8fc69cbd0e8c52f839b6ad9a",
+      "data/intermediate/gov-data-quality/category_frequency.parquet": "88a037a55912eb4624058c6125390241f744a5ac5fe8c2836a87d45ceaba5738",
+      "data/intermediate/gov-data-quality/category_consistency.parquet": "af8f741ec81e585c7d2189317778a1a1efa8604237267b67ee01ccd72f34ec3b",
+      "data/intermediate/gov-data-quality/location_summary.parquet": "cee95d22b5f6ddbabc5c287c9ba8870bed6d883b28b116c7aa5f390a157b95be",
+      "data/intermediate/gov-data-quality/location_by_state.parquet": "6cbce45e38a25cdc553d97f86829757ac7d782f52620e68d3fc740e48fb63d94",
+      "data/intermediate/gov-data-quality/geometry_summary.parquet": "e1435d635a6343476e5f4b0b92b333ffe2f70df7f56d57062ded9b863d843904",
+      "data/intermediate/gov-data-quality/coordinate_sites.parquet": "859085dfb4e6093de74dbe144128f4e37d443a1f479619ad782f51ec9e407829",
+      "data/intermediate/gov-data-quality/shared_coordinate_by_state.parquet": "6cbce45e38a25cdc553d97f86829757ac7d782f52620e68d3fc740e48fb63d94",
+      "data/intermediate/gov-data-quality/shared_coordinate_thresholds.parquet": "2cec7f25660eefa2b6cff1f6574a2c211c8bc26d86f2f85fb2cecfdc9831042d",
+      "data/intermediate/gov-data-quality/point_project_coverage.parquet": "9b650534f1d6a4a2025a8b20b94c88dd27a6ad8d0fba774302ee106740af4bb5",
+      "data/intermediate/gov-data-quality/location_examples.parquet": "9261428f23940c645dbb61ebd4bb1a80a68bdbd7e01b72ecd639e102dddb5807",
+      "data/intermediate/gov-data-quality/census_source_structure.parquet": "a5dfb95e99b99ab44e3209cd6b432749c88ba76c39402e3569a6cb783bc09990",
+      "data/intermediate/gov-data-quality/census_source_variables.parquet": "c5079fd41f504185ff90e49d3d58e07cb12c03f564f05c73ff95694ff1c12588",
+      "data/intermediate/gov-data-quality/census_race_source_quality_by_state.parquet": "d8bab20b9cf47028b289a7bec361e5d61eb72fc6dae66ee418a8ae284cc0bacf",
+      "data/intermediate/gov-data-quality/census_income_source_quality_by_state.parquet": "94d6947070b2d94d47a77cf8a6b03eca0f7c5e612bab97a2c7b8ba6e8f37aaf6",
+      "data/intermediate/gov-data-quality/census_common_area_quality_by_state.parquet": "78b5a98b543d8307bfbf5142b1da74422577f11edb1d9a45f7c7e95eb35faf13",
+      "data/intermediate/gov-data-quality/census_annual_coverage.parquet": "5beef03f7d4e82e27847d98dd77f3a4ffde9a16889d37c0fcdf981564e40ab93",
+      "data/intermediate/gov-data-quality/census_paired_coverage.parquet": "2afcac92722709b24ffd667b1dd73afb318a930357f94e6dd8a2219b693ac3af",
+      "data/intermediate/gov-data-quality/census_income_distribution.parquet": "2c74c5fe76ef82f296d75f50ecace9fa4241b0c6fbcf941ca7f382c5d6c299fa",
+      "data/intermediate/gov-data-quality/census_race_population_coverage.parquet": "c5cbba0f5453acb09c03b542a0e1073fb82df1a363ab9ae69ee33fe813ab390b",
+      "data/intermediate/gov-data-quality/census_plot_data.parquet": "32b03da2a9fff7e105ee0feebbeec3013c0c1cbf2b1fae4d05d4f20e20417e44",
+      "data/intermediate/gov-data-quality/linkage_constraints.parquet": "6f9f9b951f29c69a1491fb35e42c1d00db8b3860d82a04e72022c1ac0fe71ca2"
+    },
+    "figure_sha256": {
+      "location-overview.png": "813d8fa6341056e6e7c9ee733cf9834c24a44df78a9d5a687f5d2a91b5cec940",
+      "shared-coordinates-by-state.png": "155e4408075b3eb12f1e7d3d527aee3ab2d75a3d45b62f40d7824c5a61a711c7",
+      "shared-coordinate-distribution.png": "acb136dc30b26dfa8eeea2e85fd441c19ce2788479471549aa231f4f128bc58a",
+      "point-project-coverage.png": "6aef74d037d83fafa0c4cc5b9eaa0915f4ac50ea46ae8423b29b36062c6d3a1b",
+      "attribute-missingness.png": "18a91ae157e4bb3f9b1d6d3b257a75d5ce9f933b407aa0a818d2d7a515bfaae1",
+      "date-coverage.png": "1bac5ac585ce6a91e8dc52563651a2567c115e4046d373f0d05ab7deb229f2c1",
+      "budget-distribution.png": "d036479498f5eab246ddb2d7c256edac7291253c1ab86889a691bb61f80bd49b",
+      "category-consistency.png": "40a83c5819702d173f276c8fe49dc553fc351228ec25bd0a0f7e2cb661f1d03d",
+      "census-coverage-by-state.png": "fc4dcd791932201a1f8f166787f5da2ef16ca7ff0a28d91ff253b7a23d7329a4",
+      "income-coverage.png": "c1d179b871b2719a0ebf047d210e00206c6c2c3623e30888b4378401b5bb5bf5",
+      "income-race-observed.png": "f82fe796269066f15cca045a0a1246946d5bd5e60f76e99cc32b26bd5bd95f55"
+    }
+  },
+  "processing_run": "data/intermediate/runs/history/20261007T122041201834.json",
+  "saved_refresh": {
+    "processing_stages": 0,
+    "report_order": [
+      "gov_data_quality_annex",
+      "gov_data_quality"
+    ],
+    "run_evidence": "data/intermediate/runs/report.json"
+  },
+  "browser": {
+    "external_requests_blocked": true,
+    "documents": [
+      {
+        "name": "gov_data_quality",
+        "tables": 1,
+        "details": 1,
+        "bodyWidth": 1280,
+        "viewportWidth": 1280
+      },
+      {
+        "name": "gov_data_quality_annex",
+        "tables": 33,
+        "details": 30,
+        "bodyWidth": 1280,
+        "viewportWidth": 1280
+      }
+    ],
+    "all_fourteen_image_references_loaded": true,
+    "main_screenshot_reviewed": true
+  },
+  "publication_contract": "Each document publishes atomically; annex failure prevents the main update. Publication is not a two-document rollback transaction.",
+  "scientific_status": "Quality-review flags remain unverified source validity; no distances, regressions, corrections or additional exclusions.",
+  "documentation": {
+    "local_links_checked": 268,
+    "missing_links": 0,
+    "git_diff_check": "passed"
+  }
+}

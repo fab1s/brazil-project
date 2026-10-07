@@ -2,8 +2,10 @@
 
 Status: implemented and validated with recorded limitations
 Last updated: 2026-10-07
-Version: 0.19
+Version: 0.22
 Scope: Current Project Progress
+
+The [national government-data quality assessment](../research/reports/gov_data_quality.md) opens with an executive summary, six findings and three figures in plain language. Definitions and limits sit beside the findings; technical sources, methods and instructions remain in the [annex](../research/reports/gov_data_quality_annex.md), preserving all seven original cells and eleven figures. Both refresh through `brazil-project run gov-data-quality --config project.toml`. The review covers 129,961 Obrasgov project IDs and 287,178 census comparison areas, preserving source records and existing exclusions. The [process and final script audit](gov-data-quality-process.md) records 181 passing tests, identical data/figure hashes, exact repeated report bytes and browser checks with no visible code controls in the main report. Shared locations, sparse construction dates, R$0.01 budgets, category inconsistencies and missing census information need review before the proposed income–race distance study. No acquisition, distances or regressions ran; [unfinished drafts are preserved](../data/archive/project-tools/planned-proximity/README.md) outside the active pipeline.
 
 Original R/QMD sources, historical figures, 17 reference PDFs/workbooks, the location-reference manifest and two Belo Horizonte report snapshots with six figures are included for GitHub. All 43 original files match migration checksums; scoped figure links resolve. The [data guide](../data/README.md#research-material-included-in-github) explains these additions; the [baseline inventory](evidence/baseline-files.csv) records preserved GeoPackages kept local by researcher choice, with recovery instructions in the data guide. No analytical code, input bytes or processing results changed.
 

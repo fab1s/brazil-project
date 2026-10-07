@@ -2,7 +2,7 @@
 
 Status: current
 Last updated: 2026-10-07
-Version: 0.6
+Version: 0.8
 Scope: Research Processing Methods
 
 ## Census correspondence
@@ -64,3 +64,13 @@ The requested [location policy](obrasgov-location-policy.md) defines an independ
 ## Reporting
 
 Research reports are executable Markdown documents. Processing and result refresh share one pipeline, while reusable numerical methods remain in the Python package. This presentation change does not change acquisition, geometries, identifiers, exclusions, missingness or numerical methods.
+
+## National government-data quality assessment
+
+The [national summary](../research/reports/gov_data_quality.md) and [detailed annex](../research/reports/gov_data_quality_annex.md) present the same diagnostic, separate from faithful translation and prior approved exclusions. It audits the preserved Obrasgov snapshot and verified saved screening results, plus the complete national census bundle and income/race inputs. It does not rerun acquisition, change records, correct coordinates or apply new filters.
+
+Location counts distinguish source rows, project IDs, geometry components and exact coordinate sites. World-range-valid points include previously quarantined coordinates; existing map eligibility is reported separately. Coordinates shared by at least 25 distinct IDs are review flags, with sensitivity thresholds of 2, 5, 10, 50 and 100. No rounding, network snapping or administrative-centroid correction is applied. Repeated taxonomy rows do not increase project counts.
+
+Dates are assessed against an explicit configured date. Actual start/finish, plans and registration remain separate; already parsed dates cannot establish whether earlier ingestion lost original text. Agreed observed budgets are counted once per ID only when values do not conflict, and conflicting IDs remain explicit. R$0.01, zero values and name/category disagreements are review signals. Planned nominal values are not realised or inflation-comparable investment.
+
+Census checks retain original missingness and aggregation. Fully observed race requires valid positive denominators and observed Black/Brown counts in every contributing tract. Saved ratios can remain computable despite coalescing missing counts to zero. Complete usable income requires the existing completeness flag and finite weighted income with positive contributing heads. Saved income is checked against original head-weighted source calculations and the configured inflation factor. These coverage flags do not exclude areas automatically or identify individual income by race. See the [process and script audit](gov-data-quality-process.md) for execution evidence and limits.

@@ -2,12 +2,12 @@
 
 Status: current
 Last updated: 2026-10-07
-Version: 0.1
+Version: 0.4
 Scope: Active implementation links, stage dependencies and saved-output/report flow
 
 ## Follow a result back to its code
 
-Reports explain the process, link the active processing function beside each executable section, and identify the saved artifacts. Numerical transformations live in the package; report cells read their outputs, perform presentation/coverage checks and produce reader-facing figures. Source links identify functions with GitHub line anchors, not only archived QMD filenames.
+Technical reports and annexes explain the process, link active processing functions beside executable sections and identify saved artifacts. Reader-facing summaries focus on findings, with these details in their annex. Numerical transformations live in the package; report cells read their outputs, perform presentation/coverage checks and produce reader-facing figures. Source links identify functions with GitHub line anchors, not only archived QMD filenames.
 
 ```mermaid
 flowchart LR
@@ -35,19 +35,22 @@ Paths in the output column are under `data/intermediate/` unless prefixed with `
 | `obrasgov-location-plot` | [plot_location_qa.py → run()](../code/scripts/plot_location_qa.py#L35) | Component audit and pinned municipal reference | `outputs/figures/obrasgov-location-qa/location-screening.png` |
 | `obrasgov-primary-state-check` | [check_obras_primary_state.py → run()](../code/scripts/check_obras_primary_state.py#L54) | Complete component geometry, uf_principal and IBGE state territory | `outputs/tables/obrasgov-primary-state/summary.json and component-level checks` |
 | `obrasgov-primary-state-filter` | [filter_obras_primary_state.py → run()](../code/scripts/filter_obras_primary_state.py#L103) | Completed QA and primary-state diagnostics | `obrasgov-primary-state-filter/map_components.parquet; exclusion audit and comparison figure` |
+| `gov-data-quality` | [gov_quality.py → run()](../code/brazil_project/infrastructure/gov_quality.py#L289) | Verified frozen Obrasgov source, complete QA/state-filter lineage, national harmonisation bundle and saved/raw census variables | `gov-data-quality/*.parquet; report.json; outputs/figures/gov-data-quality/*.png` |
 | `land-value` | [property.py → run()](../code/brazil_project/land_value/property.py#L8) | Configured valuation workbook and exact dated zone/cadastral CSVs | `land-value/annex_*.parquet and zone geometry; processing blocks on absent exact CSV` |
 
 `run obrasgov` expands to snapshot → location QA → screening figure → primary-state diagnostic → approved exclusion derivative. QA reads the preserved source snapshot, not `projects_clean.parquet`; the sequence combines independent faithful cleaning and later spatial screening. Both Obrasgov reports refresh after the complete flow succeeds.
 
 `run indicators` resolves harmonisation first. `run charts` resolves harmonisation and indicators first. The overview retains an isolated [R sf/S2 adapter](../code/scripts/r/overview.R), using [spherical_intersections.R](../code/scripts/r/spherical_intersections.R). Land value remains blocked by its exact missing cadastral CSV; saved exploratory imports are not a completed analysis.
 
+`run gov-data-quality` runs the independent national diagnostic once and refreshes its [detailed annex](../research/reports/gov_data_quality_annex.md) followed by the [concise summary](../research/reports/gov_data_quality.md). It verifies saved upstream bytes and relevant policy/code contracts without automatically recomputing upstream stages. [Attribute audit](../code/brazil_project/infrastructure/gov_quality_attributes.py) and [census audit](../code/brazil_project/infrastructure/gov_quality_census.py) functions produce the diagnostics; an explicit as-of date and coordinate-sharing threshold come from `project.toml`. No acquisition, new exclusions, coordinate correction or models run. See [execution and final script audit](gov-data-quality-process.md).
+
 ## Where reports enter the pipeline
 
-- [cli.py → expand()](../code/brazil_project/cli.py#L55) orders dependencies; [cli.py → dispatch()](../code/brazil_project/cli.py#L22) selects the active processing function.
-- [report_engine.py → render_report()](../code/brazil_project/report_engine.py#L176) checks producer provenance and executes a fresh report process; [report_engine.py → execute_cells()](../code/brazil_project/report_engine.py#L101) runs cells in order and stages their results.
+- [cli.py → expand()](../code/brazil_project/cli.py#L58) orders dependencies; [cli.py → dispatch()](../code/brazil_project/cli.py#L23) selects the active processing function.
+- [report_engine.py → render_report()](../code/brazil_project/report_engine.py#L198) checks producer provenance and executes a fresh report process; [report_engine.py → execute_cells()](../code/brazil_project/report_engine.py#L123) runs cells in order and stages their results.
 - [reporting.py → show_chunk()](../code/brazil_project/reporting.py#L140) reads mapped saved artifacts; presentation functions in the same file format tables and figures. The report registry `REPORTS` in [report_engine.py](../code/brazil_project/report_engine.py) declares required stages.
 - [Original chunk mappings](../code/config/report_chunks.json) preserve the archived R/QMD lineage. They are historical identities, not active Quarto execution. The explicit source links in the reports identify the current implementation.
-- `report <name>` executes that report's processing dependencies and refreshes it. `report <name> --from-saved` verifies and reads saved artifacts without processing. Only marked output sections change; code, narrative and source links remain authored content. Missing required outputs fail. Report failures do not relabel completed processing as failed.
+- `report <name>` executes that report's processing dependencies and refreshes it. `report <name> --from-saved` verifies and reads saved artifacts without processing. Only marked output sections change; code, narrative and source links remain authored content. Missing required outputs fail. Report failures do not relabel completed processing as failed. Explicit report–annex relationships are expanded and deduplicated by `expand_reports()`; `report gov_data_quality` refreshes its annex first, including with `--from-saved`. If the annex fails, the main report is left intact. Each document retains atomic publication and source-edit protection.
 
 ## Acquisition and publication are separate
 
@@ -57,4 +60,4 @@ Website build/publication follows its [own documented workflow](web-map.md); upd
 
 ## Source-reference verification
 
-This update adds authored links and explanations; cell code and saved result sections remain unchanged. Verify every relative file target and line anchor, preserve all 67 ordered cell IDs, and check that refresh preserves the authored links. The source-reference check validates every file target and Python function line anchor, all 67 preserved cell IDs/cell bodies and unchanged generated result sections. A fresh saved-output execution verifies authored source links survive publication. Results are recorded in [verification evidence](evidence/pipeline-source-verification.json) and [progress](progress.md). No processing implementation, input, numerical method or acquisition behavior changed.
+The original nine reports retain their 67 ordered cell IDs and preserved lineage. The national quality annex preserves seven diagnostic cells; its executive summary adds one hidden presentation cell. Hidden cells use one HTML comment (`brazil:cell` plus raw Python and a closing comment), with the usual paired output markers. They receive the same ordering, compilation, source-edit and publication checks; embedded HTML comment delimiters are rejected. The main report displays findings only, with technical source links in the annex. Validate relative targets and function line anchors when code moves; protected refresh preserves authored links. Earlier source-link evidence is retained in [verification evidence](evidence/pipeline-source-verification.json); the new stage records its own [processing, publication and audit checks](gov-data-quality-process.md).

@@ -5,11 +5,12 @@ import json
 import os
 import sys
 from brazil_project.io import WorkflowError
-from brazil_project.report_engine import (REPORTS, SCOPED, OBRAS_FLOW, context,
-                                          render_report, stamp_producer, code_hashes)
+from brazil_project.report_engine import (REPORTS, REPORT_ANNEXES, SCOPED, OBRAS_FLOW,
+                                          context, expand_reports, render_report,
+                                          stamp_producer, code_hashes)
 from brazil_project.infrastructure.location_qa import fingerprint
 
-STAGES = ('overview','census-exploration','harmonisation','indicators','ibama','obrasgov','land-value','charts')
+STAGES = ('overview','census-exploration','harmonisation','indicators','ibama','obrasgov','land-value','charts','gov-data-quality')
 INDIVIDUAL = OBRAS_FLOW
 DEPENDENCIES = {'indicators':['harmonisation'], 'charts':['harmonisation','indicators'],
                 'obrasgov-location-qa':['obrasgov-snapshot'],
@@ -28,6 +29,8 @@ def dispatch(ctx, stage):
         from brazil_project.indicators.temporal import run
     elif stage=='charts':
         from brazil_project.visualisation.charts import run
+    elif stage=='gov-data-quality':
+        from brazil_project.infrastructure.gov_quality import run
     elif stage=='land-value':
         from brazil_project.land_value.property import run
     elif stage=='overview':
@@ -84,12 +87,12 @@ def main(argv=None):
         if args.command=='verify-parity':
             from brazil_project.verification import verify
             evidence=verify(ctx);print(json.dumps(evidence,indent=2));return 0 if evidence['passed'] else 1
-        requested_reports=list(REPORTS) if args.command=='report' and args.name=='all' else [args.name] if args.command=='report' else []
+        requested_reports=expand_reports(list(REPORTS) if args.command=='report' and args.name=='all' else [args.name]) if args.command=='report' else []
         if args.command=='report':
             roots=[s for name in requested_reports for s in REPORTS[name]]
         else: roots=STAGES if args.stage=='all' else [args.stage]
         stages=[] if getattr(args,'from_saved',False) else expand(roots)
-        if args.command=='run': requested_reports=[n for n,deps in REPORTS.items() if set(deps).intersection(stages)]
+        if args.command=='run': requested_reports=expand_reports([n for n,deps in REPORTS.items() if set(deps).intersection(stages)])
         # INVARIANT: Reject unsupported scope before any stage writes outputs.
         if ctx.municipality and any(n not in SCOPED for n in requested_reports):
             raise WorkflowError('Requested workflow includes national-only reports; omit --municipality or select a supported census/chart stage.')
@@ -126,6 +129,7 @@ def main(argv=None):
                 elif stage=='overview': directories=[ctx.root/'outputs/maps'/('municipality_'+ctx.municipality if ctx.municipality else 'overview')]
                 elif stage=='ibama': directories=[ctx.root/'outputs/maps/ibama.html']
                 elif stage=='census-exploration': directories=[ctx.root/'outputs/maps/black_ratio_2010_2022.html']
+                elif stage=='gov-data-quality': directories=[ctx.root/'outputs/figures/gov-data-quality']
                 for path in directories:
                     for output in list(path.rglob('*')) if path.is_dir() else [path]:
                         if output.is_file(): outputs[str(output.resolve())]=fingerprint(output)
@@ -142,14 +146,21 @@ def main(argv=None):
                 print(stage+': '+str(error),file=sys.stderr)
             finally: ctx.require=original_require;ctx.write_table=original_write;ctx.report=original_report
             evidence.append(row);outcomes[stage]=row['status']
+        report_outcomes={}
         for name in requested_reports:
             required=REPORTS[name]
             if stages and any(outcomes.get(s)!='completed' for s in required):
-                reports.append({'report':name,'status':'blocked' if any(outcomes.get(s) in ('blocked','failed') for s in required) or args.command=='report' else 'skipped','error':'Required stages did not complete in this invocation.'});continue
+                status='blocked' if any(outcomes.get(s) in ('blocked','failed') for s in required) or args.command=='report' else 'skipped'
+                reports.append({'report':name,'status':status,'error':'Required stages did not complete in this invocation.'});report_outcomes[name]=status;continue
+            # INVARIANT: A concise summary must not publish as current when its
+            # required detailed annex failed or was not published in this run.
+            blocked=[annex for annex in REPORT_ANNEXES.get(name,()) if report_outcomes.get(annex)!='completed']
+            if blocked:
+                reports.append({'report':name,'status':'blocked','error':'Required annex did not complete: '+', '.join(blocked)});report_outcomes[name]='blocked';continue
             try:
-                print('Updating report '+name,flush=True);reports.append(render_report(ctx,name))
+                print('Updating report '+name,flush=True);result=render_report(ctx,name);reports.append(result);report_outcomes[name]=result['status']
             except Exception as error:
-                reports.append({'report':name,'status':'failed','error':str(error)});print(name+': '+str(error),file=sys.stderr)
+                reports.append({'report':name,'status':'failed','error':str(error)});report_outcomes[name]='failed';print(name+': '+str(error),file=sys.stderr)
         ctx.report('runs',{'config':str(ctx.config_path),'municipality':ctx.municipality,
                           'recompute_harmonisation':ctx.config['census']['recompute_harmonisation'],
                           'stages':evidence,'reports':reports})

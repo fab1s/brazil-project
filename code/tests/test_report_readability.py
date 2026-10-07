@@ -22,6 +22,11 @@ def test_source_archive_and_all_ordered_cells_preserved():
                     assert [c[1] for c in before]==[c[1] for c in after]
     for name in report_engine.REPORTS:
         text=(root/'research/reports'/(name+'.md')).read_text()
+        if name in report_engine.REPORT_ANNEXES:
+            assert 'Executive summary' in text
+            assert all(annex+'.md' in text for annex in report_engine.REPORT_ANNEXES[name])
+            assert 'How to read this analysis' not in text
+            continue
         assert 'How to read this analysis' in text and 'docs/codebook.md' in text
         assert 'Interpretation and limits' in text
 

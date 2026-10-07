@@ -1,0 +1,140 @@
+{
+  "status": "completed",
+  "date": "2026-10-07",
+  "scope": "National quality report language and presentation; scientific methods unchanged",
+  "commands": [
+    "MPLBACKEND=Agg brazil-project run gov-data-quality --config project.toml",
+    "MPLBACKEND=Agg brazil-project report gov_data_quality --from-saved --config project.toml",
+    "MPLBACKEND=Agg python -m pytest code/tests -q"
+  ],
+  "checks": {
+    "previous_summary_archive": "data/archive/project-tools/gov-data-quality-summary-before-reader-edit-20261007.zip",
+    "archive_sha256": "92c87797969dd34d7e8574b23e95b6b5f23ec2a1223b7c14e94212367b8b2646",
+    "previous_summary_sha256": "a88ba0c0dc4f2afd829209824b9236895bd60eefea5736fb1507626109f67df1",
+    "all_32_table_hashes_unchanged": true,
+    "all_11_figure_hashes_unchanged": true,
+    "diagnostic_values_unchanged": true,
+    "producer_inputs_and_outputs_verified": true,
+    "visible_words": 639,
+    "executive_summary_first": true,
+    "visible_technical_controls": 0,
+    "source_anchor_updates": [
+      {
+        "document": "docs/pipeline-source.md",
+        "previous": "../code/brazil_project/report_engine.py#L195",
+        "target": "../code/brazil_project/report_engine.py#L198"
+      },
+      {
+        "document": "docs/pipeline-source.md",
+        "previous": "../code/brazil_project/report_engine.py#L120",
+        "target": "../code/brazil_project/report_engine.py#L123"
+      },
+      {
+        "document": "research/reports/obrasgov_preprocessing.md",
+        "previous": "../../code/brazil_project/report_engine.py#L120",
+        "target": "../../code/brazil_project/report_engine.py#L123"
+      }
+    ]
+  },
+  "tests": {
+    "passed": 181,
+    "warnings": 311,
+    "hidden_cell_tests": 16,
+    "log_sha256": "712e2c9bc4ff5c69f850747249f916c03c1519c1c71e06bd2eb8fc60045ab5aa",
+    "covers": [
+      "hidden/visible mixed execution order",
+      "malformed and unsafe comment boundaries rejected before execution",
+      "fresh process and sequential state",
+      "source edits, failures and repeat publication",
+      "absence of reader-visible technical controls",
+      "scope, configuration and annex dependencies",
+      "existing analytical invariants"
+    ]
+  },
+  "reports": [
+    {
+      "report": "gov_data_quality_annex",
+      "output": "research/reports/gov_data_quality_annex.md",
+      "generation": "18076ba0e11c4b4abd641e172988b3e0",
+      "output_sha256": "ac21dc21e45b16dc6620d1a538455a415b17af8399ed968f9810faeb52fccf2b",
+      "authored_sha256": "f2c6f2a2ac87b6299a4f8a066d190f8725d973164fb2c34567602a58760c9ccd",
+      "cells": [
+        "gov_data_quality_lineage",
+        "gov_data_quality_locations",
+        "gov_data_quality_shared_coordinates",
+        "gov_data_quality_categories",
+        "gov_data_quality_dates_budgets",
+        "gov_data_quality_census",
+        "gov_data_quality_readiness"
+      ],
+      "figure_references": 11,
+      "publication_evidence": "outputs/reports/evidence/national/gov_data_quality_annex/18076ba0e11c4b4abd641e172988b3e0/evidence.json",
+      "repeat_bytes_identical": true
+    },
+    {
+      "report": "gov_data_quality",
+      "output": "research/reports/gov_data_quality.md",
+      "generation": "38c2644504514c509e435a561d99d1fa",
+      "output_sha256": "9aeab0d51f08f9633e26a06051c4bfea91a844dbb412900f0dac97e76a34caa3",
+      "authored_sha256": "3a6cd2d50e5f8591ad8314ef3e3e45b59f27046f3f1f691664c99b02e0a95b5f",
+      "cells": [
+        "gov_data_quality_summary"
+      ],
+      "figure_references": 3,
+      "publication_evidence": "outputs/reports/evidence/national/gov_data_quality/38c2644504514c509e435a561d99d1fa/evidence.json",
+      "repeat_bytes_identical": true
+    }
+  ],
+  "annex": {
+    "original_seven_cell_ids_and_code_unchanged": true,
+    "original_authored_body_preserved": true,
+    "preservation_manifest": "docs/evidence/gov-data-quality-annex-preservation.json"
+  },
+  "processing": {
+    "stage": "gov-data-quality",
+    "times_processed": 1,
+    "status": "completed",
+    "reports_completed": [
+      "gov_data_quality_annex",
+      "gov_data_quality"
+    ]
+  },
+  "saved_refresh": {
+    "processing_stages": 0,
+    "report_order": [
+      "gov_data_quality_annex",
+      "gov_data_quality"
+    ]
+  },
+  "browser": {
+    "external_requests_blocked": true,
+    "all_fourteen_image_references_loaded": true,
+    "main_visible_code_controls": 0,
+    "main_screenshot_reviewed": true,
+    "documents": [
+      {
+        "name": "gov_data_quality",
+        "title": "Government projects and census data: national quality review",
+        "tables": 1,
+        "details": 0,
+        "bodyWidth": 1280,
+        "viewportWidth": 1280
+      },
+      {
+        "name": "gov_data_quality_annex",
+        "title": "Annex: national government-data quality assessment",
+        "tables": 33,
+        "details": 30,
+        "bodyWidth": 1280,
+        "viewportWidth": 1280
+      }
+    ]
+  },
+  "scientific_status": "Source quality concerns remain; no distances, regressions, additional exclusions or corrections.",
+  "documentation": {
+    "local_links_checked": 432,
+    "source_function_anchors_checked": 231,
+    "missing_links": 0,
+    "git_diff_check": "passed"
+  }
+}

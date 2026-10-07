@@ -2,12 +2,12 @@
 
 Status: current; describes implemented methods, not independent scientific validation
 Last updated: 2026-10-07
-Version: 0.2
+Version: 0.4
 Scope: Reader guide to report variables, units, denominators and processing stages
 
 Use the [active processing source and pipeline guide](pipeline-source.md) to locate implementations; each linked report also cites its processing and display functions.
 
-Use this guide alongside the [reports](../research/README.md#read-the-reports) and [methods](methods.md). Original provider definitions remain authoritative: [2000 dictionary](../data/reference/ibge/Questionairs%20and%20Codebooks/2000/2000_dictionary_tracts.pdf), [2010 dictionary](../data/reference/ibge/Questionairs%20and%20Codebooks/2010/2010_dictionary_tracts.pdf), [2022 dictionary](../data/reference/ibge/Questionairs%20and%20Codebooks/2022/2022_dictionary_tracts.xlsx). These reference files are preserved locally and excluded from Git; download/publication rights are not inferred. The mappings below describe what the current code calculates, including differences between workflows.
+Use this guide alongside the [reports](../research/README.md#read-the-reports) and [methods](methods.md). Original provider definitions remain authoritative: [2000 dictionary](../data/reference/ibge/Questionairs%20and%20Codebooks/2000/2000_dictionary_tracts.pdf), [2010 dictionary](../data/reference/ibge/Questionairs%20and%20Codebooks/2010/2010_dictionary_tracts.pdf), [2022 dictionary](../data/reference/ibge/Questionairs%20and%20Codebooks/2022/2022_dictionary_tracts.xlsx). These reference files are preserved unchanged; the reviewed dictionaries are included in GitHub. Full census datasets remain local; publication rights are not inferred. The mappings below describe what the current code calculates, including differences between workflows.
 
 ## Identify the unit before reading a count
 
@@ -103,6 +103,30 @@ The original race exploration uses raw annual tracts across six municipalities. 
 | Investments | Source-row sums and distinct-ID consistent-budget diagnostics are different measures. Geometry decomposition must not multiply budgets. |
 
 All Obrasgov polygons are excluded from map display at researcher request. Original geometry, project records and budgets remain preserved. A point/line eligible derivative is not a corrected source dataset. IBGE territory is not an offshore licensing boundary; Natural Earth references are generalized and may omit small islands. The [preprocessing report](../research/reports/obrasgov_preprocessing.md) shows current screening and exclusions with figures. Source totals, components and distinct IDs must never be compared as if they used the same denominator.
+
+## National quality-audit variables
+
+The [national summary](../research/reports/gov_data_quality.md) presents the key findings; its [annex](../research/reports/gov_data_quality_annex.md) contains the complete diagnostics and links to their [processing source](../code/brazil_project/infrastructure/gov_quality.py). They audit Obrasgov and census inputs for a future distance study; they do not pool IBAMA licensing records or estimate service access.
+
+| Field or flag | Unit, denominator and interpretation |
+| --- | --- |
+| `source_row`, `project_id`, `component_id` | Original row position, supplied project identifier and unique decomposed geometry identifier. Several taxonomy rows or components can belong to one project. |
+| `has_valid_point` | At least one nonempty point with finite coordinates within world longitude/latitude ranges. Includes previously quarantined points; **does not mean valid geocoding**. |
+| `has_eligible_point` | At least one point eligible after existing location QA and approved primary-state exclusions. Eligibility is not independent location verification. |
+| `coordinate_key`, `distinct_projects` | Exact supplied longitude/latitude pair and number of different project IDs at that site. No rounding or snapping; repeated taxonomy rows do not inflate IDs. |
+| `review_shared_coordinate` | At least the configured number of IDs (default 25) sharing one coordinate. Diagnostic threshold, not an exclusion or confirmed administrative address. |
+| `only_shared_valid_points` | All the project's finite world-range points satisfy that sharing threshold. A separate unshared point prevents this flag. |
+| `shared_point_pct` | Projects with at least one shared point divided by projects with finite world-range points in the reported state. Distinct-ID counts, not component or population percentages. |
+| Date coverage and anomalies | Any parsed date per ID, evaluated against explicit `gov_quality.as_of_date`. Same-day timestamps are not future dates. Registration/plans/actual events remain separate; year ranges are review flags. Already parsed snapshots cannot validate original date strings. |
+| `Agreed budget (BRL)` | One nonmissing finite budget per ID only when observed values agree. Conflicts remain unavailable. Planned nominal amounts do not establish realised or inflation-adjusted investment. |
+| R$0.01 and education/water signals | Recorded tiny-budget and name/description/provider-category review flags. Their meaning requires provider evidence; no imputation or reclassification. |
+| `race_ratio_available` | Saved finite Black + Brown share in [0,1] with a positive finite population denominator. Missing source counts may have been coalesced to zero by the preserved method. |
+| `race_ratio_fully_observed` | Available saved share and valid observed population/Black/Brown counts in every contributing tract, with positive populations and components summing no higher than population. Conservative completeness diagnostic. |
+| `income_complete_available` | Finite nonnegative saved income with positive contributing heads and the existing complete-input flag. Zero-head tracts can be complete but do not supply a mean. |
+| `joint_fully_observed` | Both fully observed racial inputs and complete usable income in that year. Denominator is all national common comparison areas, not residents. No automatic exclusion. |
+| `known_population_flagged` | Known finite nonnegative population in source tracts with the specified flag. Different from common-area counts; missing population is reported separately. |
+
+All per-ID flags can overlap. Invalid identifiers, conflicting memberships and stale provenance fail explicit contracts rather than being silently consolidated. Long record-level tables are collapsed previews; full diagnostic Parquets remain local. The income–race plot counts common areas with saved values, including incomplete inputs, and omits zero income only from its logarithmic axis. It does not disentangle individual income and race.
 
 ## Land value and provenance
 

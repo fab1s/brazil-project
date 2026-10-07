@@ -40,3 +40,8 @@ coast_tolerance_m = 5000
 border_tolerance_m = 1000
 sample_spacing_m = 1000
 max_line_samples = 250
+
+[gov_quality]
+# A diagnostic only: no source correction, exclusion, network acquisition or models.
+as_of_date = "2026-10-07"
+shared_coordinate_threshold = 25

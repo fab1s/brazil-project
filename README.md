@@ -25,11 +25,11 @@ Start with the [research reports](research/README.md#read-the-reports) to read t
 | **`code/`** | Reusable Python processing, pipeline tools, supporting R scripts and tests. | [Code guide](code/README.md) |
 | **`website/`** | Source files for the interactive project map. | [Website guide](website/README.md) |
 
-For example, read [Obrasgov preprocessing and location exclusions](research/reports/obrasgov_preprocessing.md) or [census harmonisation](research/reports/ibge_census_tract_harmonisation.md). The `.md` reports display directly on GitHub. Full datasets and generated outputs are kept locally; their folder guides explain where to find them.
+Before analysing infrastructure proximity, read the [concise national government-data quality assessment](research/reports/gov_data_quality.md), with its [detailed annex](research/reports/gov_data_quality_annex.md) for complete diagnostics. Other examples include [Obrasgov preprocessing and location exclusions](research/reports/obrasgov_preprocessing.md) and [census harmonisation](research/reports/ibge_census_tract_harmonisation.md). The `.md` reports display directly on GitHub. Full datasets and generated outputs are kept locally; their folder guides explain where to find them.
 
 ## How the pipeline and reports fit together
 
-The processing code lives in [`code/brazil_project/`](code/brazil_project/), with supporting spatial/R scripts in [`code/scripts/`](code/scripts/). The executable Markdown documents in [`research/reports/`](research/reports/) explain each process, link its active source file and function, and display saved tables and figures. They also contain presentation code and coverage checks; the full processing implementations remain in the package.
+The processing code lives in [`code/brazil_project/`](code/brazil_project/), with supporting spatial/R scripts in [`code/scripts/`](code/scripts/). The Markdown documents in [`research/reports/`](research/reports/) display the findings, tables and figures. The national quality summary starts with an executive summary; its annex holds methods, source-code links and reproduction instructions. Reports contain supporting presentation code and coverage checks; the full processing implementations remain in the package.
 
 **One command → processing functions → saved datasets → report cells → updated Markdown.** The [CLI](code/brazil_project/cli.py) runs dependencies using [project.toml](project.toml), then the [report engine](code/brazil_project/report_engine.py) refreshes only generated results, preserving explanations and source links.
 

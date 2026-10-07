@@ -8,7 +8,7 @@ Refresh processing and this report with `brazil-project report ibge_census_data_
 
 ## Processing code and pipeline
 
-Execution order: `census-exploration`. The [cli.py → dispatch()](../../code/brazil_project/cli.py#L22) dispatcher calls these functions; [cli.py → expand()](../../code/brazil_project/cli.py#L55) resolves dependencies. The cells below read their saved outputs and present the results.
+Execution order: `census-exploration`. The [cli.py → dispatch()](../../code/brazil_project/cli.py#L23) dispatcher calls these functions; [cli.py → expand()](../../code/brazil_project/cli.py#L58) resolves dependencies. The cells below read their saved outputs and present the results.
 
 | Pipeline stage | Active processing source | Inputs | Saved outputs used by the process/report |
 | --- | --- | --- | --- |

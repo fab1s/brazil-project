@@ -1,0 +1,82 @@
+{
+  "scope": "National government-data quality report presentation",
+  "archive": "data/archive/project-tools/gov-data-quality-before-annex-20261007.zip",
+  "archive_sha256": "1ed9c4a89007d5570c61c7ba29911a4ec75617ccd1671b91fdd99771bbc58fcd",
+  "member": "research/reports/gov_data_quality.md",
+  "original_sha256": "edb8ef06a2db8dacd3ee23f3fb0c97dc01bc4bbf2c8801535d75de7c0e382831",
+  "original_authored_sha256": "dbe7d0e076c1ef685b9f0e0b7b8372a703367c8eeaca26776612e4010dde5ae4",
+  "annex": "research/reports/gov_data_quality_annex.md",
+  "cells": [
+    {
+      "id": "gov_data_quality_lineage",
+      "code_sha256": "547960ce8a9198e70b03ea01b001548e177266b1214d760320f33891371bf637"
+    },
+    {
+      "id": "gov_data_quality_locations",
+      "code_sha256": "03660be78330603d2087b15d923b98df146eda0f8d52ce36444578777dd57513"
+    },
+    {
+      "id": "gov_data_quality_shared_coordinates",
+      "code_sha256": "b0bc5ecc105858ca420cd79b4d5c0c1b6b47afe1befcafc28f2b464aee84cfbf"
+    },
+    {
+      "id": "gov_data_quality_categories",
+      "code_sha256": "8949371bda73df2dd3cfe405b9784fbb4c1e375c22381b71b8f5440cfcbe0a5b"
+    },
+    {
+      "id": "gov_data_quality_dates_budgets",
+      "code_sha256": "3cb0351b1b9600f834841838bec8b435b1017efa790d173f98689e9baabf301d"
+    },
+    {
+      "id": "gov_data_quality_census",
+      "code_sha256": "9b862437d5b9371d25d09a41b1cd16be7d5bce1dc0c24b5d988c62804ed10e43"
+    },
+    {
+      "id": "gov_data_quality_readiness",
+      "code_sha256": "3a92af33bcf2429f8f3e352590816073d171aba2148ef73bab8e21e790d9a845"
+    }
+  ],
+  "original_outputs": [
+    {
+      "id": "gov_data_quality_lineage",
+      "sha256": "3003c85aa04384858d898fd8c0363c845557bdb127aad55f8e06c7cca4ddf84f"
+    },
+    {
+      "id": "gov_data_quality_locations",
+      "sha256": "fc2a2a2448e16f501d1eaa838b1c305377b08dc5e5396870604061f7a83b68cf"
+    },
+    {
+      "id": "gov_data_quality_shared_coordinates",
+      "sha256": "d139c45833b4732201b77b637e855b790d66883599fffa6728aa4e714c358fe9"
+    },
+    {
+      "id": "gov_data_quality_categories",
+      "sha256": "cd1f7eabc3edd16651897d4d0ab637cf903e769cf1d0b82d11ecbda2a92b9d25"
+    },
+    {
+      "id": "gov_data_quality_dates_budgets",
+      "sha256": "7bb67aa769b0d5ffc67a4a974de8717f1dc42c0f38992c27e7a1c96ccabbf3df"
+    },
+    {
+      "id": "gov_data_quality_census",
+      "sha256": "9a8310804f5f4eb4caa2bb4cb404aaff98a031bd1b53ccf811420f29a8841a77"
+    },
+    {
+      "id": "gov_data_quality_readiness",
+      "sha256": "ef9150deda7a4eeaac44ef9b87ff7982e98a61c769593287ef5a7763cdcd241f"
+    }
+  ],
+  "figures": {
+    "location-overview.png": "813d8fa6341056e6e7c9ee733cf9834c24a44df78a9d5a687f5d2a91b5cec940",
+    "shared-coordinates-by-state.png": "155e4408075b3eb12f1e7d3d527aee3ab2d75a3d45b62f40d7824c5a61a711c7",
+    "shared-coordinate-distribution.png": "acb136dc30b26dfa8eeea2e85fd441c19ce2788479471549aa231f4f128bc58a",
+    "point-project-coverage.png": "6aef74d037d83fafa0c4cc5b9eaa0915f4ac50ea46ae8423b29b36062c6d3a1b",
+    "attribute-missingness.png": "18a91ae157e4bb3f9b1d6d3b257a75d5ce9f933b407aa0a818d2d7a515bfaae1",
+    "date-coverage.png": "1bac5ac585ce6a91e8dc52563651a2567c115e4046d373f0d05ab7deb229f2c1",
+    "budget-distribution.png": "d036479498f5eab246ddb2d7c256edac7291253c1ab86889a691bb61f80bd49b",
+    "category-consistency.png": "40a83c5819702d173f276c8fe49dc553fc351228ec25bd0a0f7e2cb661f1d03d",
+    "census-coverage-by-state.png": "fc4dcd791932201a1f8f166787f5da2ef16ca7ff0a28d91ff253b7a23d7329a4",
+    "income-coverage.png": "c1d179b871b2719a0ebf047d210e00206c6c2c3623e30888b4378401b5bb5bf5",
+    "income-race-observed.png": "f82fe796269066f15cca045a0a1246946d5bd5e60f76e99cc32b26bd5bd95f55"
+  }
+}

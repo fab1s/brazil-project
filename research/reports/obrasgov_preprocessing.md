@@ -8,7 +8,7 @@ Refresh processing and this report with `brazil-project report obrasgov_preproce
 
 ## Processing code and pipeline
 
-Execution order: `obrasgov-snapshot` → `obrasgov-location-qa` → `obrasgov-location-plot` → `obrasgov-primary-state-check` → `obrasgov-primary-state-filter`. The [cli.py → dispatch()](../../code/brazil_project/cli.py#L22) dispatcher calls these functions; [cli.py → expand()](../../code/brazil_project/cli.py#L55) resolves dependencies. The cells below read their saved outputs and present the results.
+Execution order: `obrasgov-snapshot` → `obrasgov-location-qa` → `obrasgov-location-plot` → `obrasgov-primary-state-check` → `obrasgov-primary-state-filter`. The [cli.py → dispatch()](../../code/brazil_project/cli.py#L23) dispatcher calls these functions; [cli.py → expand()](../../code/brazil_project/cli.py#L58) resolves dependencies. The cells below read their saved outputs and present the results.
 
 | Pipeline stage | Active processing source | Inputs | Saved outputs used by the process/report |
 | --- | --- | --- | --- |
@@ -874,7 +874,7 @@ table(pd.DataFrame({"Result": ["Components entirely outside primary state", "Map
 
 Original eligible points before and after the state filter. Lines, polygons and already quarantined points are omitted. Coordinates are unchanged.
 
-Processing source: [filter_obras_primary_state.py → run()](../../code/scripts/filter_obras_primary_state.py#L103). Reads its current `outputs/figures/obrasgov-location-qa/primary-state-filter.png`; this cell displays rather than generates the processing figure. Report display: [report_engine.py → execute_cells()](../../code/brazil_project/report_engine.py#L101) supplies `report_image()`.
+Processing source: [filter_obras_primary_state.py → run()](../../code/scripts/filter_obras_primary_state.py#L103). Reads its current `outputs/figures/obrasgov-location-qa/primary-state-filter.png`; this cell displays rather than generates the processing figure. Report display: [report_engine.py → execute_cells()](../../code/brazil_project/report_engine.py#L123) supplies `report_image()`.
 
 <details>
 <summary>Display current exclusion-comparison figure</summary>

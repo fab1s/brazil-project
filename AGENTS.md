@@ -2,7 +2,7 @@
 
 Status: current
 Last updated: 2026-10-07
-Version: 0.10
+Version: 0.13
 Scope: Agent Working Instructions
 
 These rules apply to this independent research project. RISSI provided documentation patterns; its application architecture and deployment rules do not apply here.
@@ -25,6 +25,7 @@ Before nontrivial work, read `README.md`, `docs/index.md`, `docs/progress.md`, `
 - Acquisition is explicit. Routine analysis must not download data or require an interactive RStudio session.
 - Prefer Python. Retain R only for capabilities whose required equivalence has not been verified, and document each exception and exchange contract.
 - Use `rg` before moving or renaming files and inspect consumers of shared stage artifacts.
+- Quality audits flag concerns before changing data. Record the explicit as-of date, thresholds and denominators; distinguish finite/world-range coordinates from verified locations and saved indicator availability from observed input completeness. Do not infer provider-supported corrections from co-location or name/category signals.
 
 ## Code And Verification
 
@@ -42,9 +43,9 @@ Major Markdown documents use Status, Last updated, Version, and Scope. Do not ad
 
 Keep six visible working folders: `code/`, `data/`, `docs/`, `outputs/`, `research/`, and `website/`. Use the root `project.toml`. Create files and directories only when needed for real contents; no empty placeholders. Major working folders have one useful README; do not add repetitive READMEs to every subfolder. Keep documentation mostly flat and navigate through `docs/index.md`. Preserve original data/documents; when consolidating files, retain their complete contents and record the new location. Former folder READMEs are preserved in `docs/folder-notes.md`.
 
-Research reports under `research/reports/` contain executable Python cells and paired generated-result sections. Keep one report per topic. Processing commands refresh affected reports automatically; change explanations, code and captions outside generated sections. The renderer replaces only marked outputs after validation, preserves authored content, passes the actual configuration/scope and isolates report processes. National reports remain intact during municipality runs. Separate report scripts are archived; reusable analysis stays in the Python package. Reports are exempt from authored-document metadata. Never bypass producer fingerprints or mix scopes; rerun processing when saved provenance differs. Preserve originals and prior report contents in the archive and Git history.
+Research reports under `research/reports/` contain executable Python cells and paired generated-result sections. Keep one main report per topic; put extensive diagnostic detail in a linked executable annex when needed. Register annex relationships explicitly so the same command refreshes both, preserving source links, original explanations and cell IDs. Processing commands refresh affected reports automatically; change explanations, code and captions outside generated sections. The renderer replaces only marked outputs after validation, preserves authored content, passes the actual configuration/scope and isolates report processes. National reports remain intact during municipality runs. Separate report scripts are archived; reusable analysis stays in the Python package. Reports are exempt from authored-document metadata. Never bypass producer fingerprints or mix scopes; rerun processing when saved provenance differs. Preserve originals and prior report contents in the archive and Git history.
 
-Report presentation must lead with purpose, scope and interpretation. Link each processing explanation to its active source file and function, CLI stage and saved artifact; separately identify report display code and archived provenance. Maintain `docs/pipeline-source.md` when stages, functions or source locations change. Label tables with units, denominators and missingness; distinguish source rows, distinct IDs and geometry components. Put full machine provenance in collapsed details, suppress repeated results without removing cell traceability, and caption figures with their population, exclusions and limits. Maintain `docs/codebook.md` alongside changed variables; preserve original provider codebooks. Presentation changes must retain processing rules and pass report-refresh and scope tests.
+Reader-facing summaries start with an executive summary, use plain language and explain essential qualifications beside each finding. Keep processing instructions, source-code links, reproduction commands and detailed methods in the annex or technical documentation; do not add a separate how-to-read section to the main report. Supporting executable summary code may use a validated hidden HTML-comment cell; never place comment delimiters inside its Python source. Technical reports and annexes link each processing explanation to its active source file and function, CLI stage and saved artifact, separately identifying display code and archived provenance. Maintain `docs/pipeline-source.md` when stages, functions or source locations change. Label tables with units, denominators and missingness; distinguish source rows, distinct IDs and geometry components. Put full machine provenance in collapsed details, suppress repeated results without removing cell traceability, and caption figures with their population, exclusions and limits. Maintain `docs/codebook.md` alongside changed variables; preserve original provider codebooks. Presentation changes must retain processing rules and pass report-refresh and scope tests.
 
 ## Process Records And Script Audits
 

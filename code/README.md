@@ -2,7 +2,7 @@
 
 Status: current
 Last updated: 2026-10-07
-Version: 0.5
+Version: 0.7
 Scope: Project Code
 
 Reusable processing and command-line tools live here; executable report cells live alongside their explanations under `research/reports/`.
@@ -18,6 +18,7 @@ The single project configuration is [project.toml](../project.toml). Dependencie
 
 ```bash
 .venv/bin/brazil-project run indicators --config project.toml
+.venv/bin/brazil-project run gov-data-quality --config project.toml
 .venv/bin/python -m pytest -q
 ```
 
@@ -26,3 +27,5 @@ Create a directory only when real inputs or outputs need it. Preserve research m
 `brazil_project/reporting.py` formats saved results and generates descriptive figures; it does not change analytical calculations. Definitions live in [the variable codebook](../docs/codebook.md), with the [presentation audit](../docs/report-readability.md).
 
 The pipeline executes Markdown report cells after successful processing. `report_engine.py` validates markers, captures results and publishes only generated sections; the CLI passes the current configuration and scope. See [the integration contract](../docs/report-integration.md).
+
+The national `gov-data-quality` stage starts at [gov_quality.py → run()](brazil_project/infrastructure/gov_quality.py#L289). [Project-attribute](brazil_project/infrastructure/gov_quality_attributes.py) and [census-quality](brazil_project/infrastructure/gov_quality_census.py) helpers retain their source definitions and aggregation rules. The [concise quality report](../research/reports/gov_data_quality.md) presents essential findings; its [detailed annex](../research/reports/gov_data_quality_annex.md) retains the executable audit sections and complete figures. Both refresh from the same stage or `report gov_data_quality --from-saved` command and read identical saved diagnostics. The [process record](../docs/gov-data-quality-process.md) separates software checks from unresolved source review. This audit reads local inputs and makes no new exclusions, acquisitions or proximity-model estimates; the presentation split changes no study output.

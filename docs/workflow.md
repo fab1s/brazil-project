@@ -2,7 +2,7 @@
 
 Status: current
 Last updated: 2026-10-07
-Version: 0.12
+Version: 0.14
 Scope: Workflow Commands And Artifacts
 
 ## Setup
@@ -37,6 +37,7 @@ Run commands from the project root using `.venv/bin/brazil-project`.
 | obrasgov | Local project snapshot and pinned geographic references | Snapshot translation, location QA, state check, approved exclusion derivative and updated reports | No |
 | land-value | Exact dated CSVs and valuation workbook | Annex tables and property geometries | No |
 | charts | Saved census, indicators, and lookups | Conference populations, summaries, and PNGs | No |
+| gov-data-quality | Frozen national Obrasgov source, verified QA/state artifacts, configured census sources and complete saved bundles | Read-only quality tables, current figures, concise national report and detailed annex | No |
 | acquire-census | censobr and geobr sources | Versioned Parquet and tract GeoPackage | Explicit |
 | acquire-ibama | PAMGIA FeatureServer layers | Cached responses and licensed-project GeoParquet | Explicit |
 | acquire-obrasgov | Project and geometry APIs | Cached pages, enrichment provenance, project GeoParquet | Explicit |
@@ -46,6 +47,7 @@ Run commands from the project root using `.venv/bin/brazil-project`.
 .venv/bin/brazil-project run indicators
 .venv/bin/brazil-project run charts
 .venv/bin/brazil-project run obrasgov
+.venv/bin/brazil-project run gov-data-quality --config project.toml
 .venv/bin/brazil-project run land-value
 .venv/bin/brazil-project run all
 ```
@@ -91,10 +93,12 @@ Processing automatically refreshes affected reports, including their tables and 
 ```bash
 .venv/bin/brazil-project run obrasgov --config project.toml
 .venv/bin/brazil-project run indicators --config project.toml
+.venv/bin/brazil-project run gov-data-quality --config project.toml
 .venv/bin/brazil-project run all --config project.toml
 .venv/bin/brazil-project report obrasgov_preprocessing --config project.toml
 # Explicitly use already-produced artifacts; no processing:
 .venv/bin/brazil-project report obrasgov_preprocessing --from-saved --config project.toml
+.venv/bin/brazil-project report gov_data_quality --from-saved --config project.toml
 # Compatibility command for all saved reports:
 .venv/bin/python code/scripts/render_reports.py
 .venv/bin/python code/scripts/verify_reports.py
@@ -103,6 +107,14 @@ Processing automatically refreshes affected reports, including their tables and 
 `run obrasgov` executes snapshot translation, national location QA, its screening figure, the primary-state diagnostic, approved exclusions and the comparison figure, then both Obrasgov reports. Individual `obrasgov-snapshot`, `obrasgov-location-qa`, `obrasgov-location-plot`, `obrasgov-primary-state-check` and `obrasgov-primary-state-filter` commands remain available; dependencies run first. A partial flow leaves reports requiring later steps unchanged.
 
 National runs update `research/reports/`; supported municipality runs write complete scoped reports and assets under `outputs/reports/municipality_<code>/`. National-only requests reject municipality scope before processing. Missing required outputs fail report generation. Known exploratory limitations remain explicit; acquisition is always separate. `--from-saved` checks configuration, code and input/output hashes; legacy artifacts without producer records need processing first. See [process and script audit](report-integration.md).
+
+## National government-data quality assessment
+
+`gov-data-quality` audits local frozen inputs and refreshes both [the concise national quality report](../research/reports/gov_data_quality.md) and [its detailed annex](../research/reports/gov_data_quality_annex.md). The main report presents the essential findings and three figures; the annex retains the seven executable audit sections and all eleven diagnostic figures. Both use the same saved data. It has no automatic processing or acquisition dependencies: it verifies the existing source/QA/state contracts and reads the configured census sources and complete harmonisation/indicator artifacts. Missing or inconsistent inputs fail with setup or regeneration instructions. Municipality scope is rejected before processing.
+
+`brazil-project report gov_data_quality --from-saved --config project.toml` expands to refresh both documents without processing. No manual copying is needed. Moving detailed presentation into the annex changes no numerical method, source field or study output.
+
+The [processing function](../code/brazil_project/infrastructure/gov_quality.py) checks source identity, geometry and coordinate concentration, classifications, dates, budgets and census coverage. It writes `data/intermediate/gov-data-quality/` diagnostic tables and `report.json`, with figures under `outputs/figures/gov-data-quality/`. Audit completion is distinct from source validation. No coordinates, attributes, census values or existing approved exclusions change; the stage does not calculate distances, fit models or publish the website. See [the process record and script audit](gov-data-quality-process.md).
 
 ## Harmonisation products
 
