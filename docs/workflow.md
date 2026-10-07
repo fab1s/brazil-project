@@ -1,8 +1,8 @@
 # Workflow Commands And Artifacts
 
 Status: current
-Last updated: 2026-10-06
-Version: 0.9
+Last updated: 2026-10-07
+Version: 0.10
 Scope: Workflow Commands And Artifacts
 
 ## Setup
@@ -34,7 +34,7 @@ Run commands from the project root using `.venv/bin/brazil-project`.
 | harmonisation | Original tracts or baseline lookup and geometry | Versioned lookups, merged common geometry, tract references, unmatched coverage | No |
 | indicators | Census Parquet and lookups | Annual common-area estimates and spatial indicator tables | No |
 | ibama | Copied or acquired licensed projects | Sector translations and interactive map | No |
-| obrasgov | Copied or acquired project records | Category counts, charts, cleaned geometry | No |
+| obrasgov | Local project snapshot and pinned geographic references | Snapshot translation, location QA, state check, approved exclusion derivative and updated reports | No |
 | land-value | Exact dated CSVs and valuation workbook | Annex tables and property geometries | No |
 | charts | Saved census, indicators, and lookups | Conference populations, summaries, and PNGs | No |
 | acquire-census | censobr and geobr sources | Versioned Parquet and tract GeoPackage | Explicit |
@@ -80,19 +80,25 @@ The first parity command compares stored original outputs and may intentionally 
 
 Infrastructure snapshot directories are configurable through ibama_snapshot and obrasgov_snapshot. Successful request caches are immutable; start a new configured snapshot for a new harvest. A failed acquisition does not make partial new results available to analysis.
 
-## Read and refresh research reports
+## Execute Markdown reports
 
-Read or edit the single `.md` report for each topic under `research/reports/`. Processing remains in the Python package; saved-output display code is under `code/reports/`.
+Processing automatically refreshes affected reports, including their tables and figures. Markdown contains executable Python blocks in collapsible sections; edit narrative outside generated-result markers.
 
 ```bash
+.venv/bin/brazil-project run obrasgov --config project.toml
+.venv/bin/brazil-project run indicators --config project.toml
+.venv/bin/brazil-project run all --config project.toml
+.venv/bin/brazil-project report obrasgov_preprocessing --config project.toml
+# Explicitly use already-produced artifacts; no processing:
+.venv/bin/brazil-project report obrasgov_preprocessing --from-saved --config project.toml
+# Compatibility command for all saved reports:
 .venv/bin/python code/scripts/render_reports.py
-.venv/bin/python code/scripts/render_reports.py --only obrasgov_preprocessing
 .venv/bin/python code/scripts/verify_reports.py
 ```
 
-Refreshing runs each Python report in a separate process and writes Markdown review copies and figures under `outputs/reports/`. It never overwrites maintained reports. Review new values/figures, then copy approved results into the corresponding research Markdown; preserve narrative and use the small reviewed image workflow. Missing inputs remain explicit notices. Acquisition and analytical recomputation are separate stage commands.
+`run obrasgov` executes snapshot translation, national location QA, its screening figure, the primary-state diagnostic, approved exclusions and the comparison figure, then both Obrasgov reports. Individual `obrasgov-snapshot`, `obrasgov-location-qa`, `obrasgov-location-plot`, `obrasgov-primary-state-check` and `obrasgov-primary-state-filter` commands remain available; dependencies run first. A partial flow leaves reports requiring later steps unchanged.
 
-Quarto is no longer needed. Existing HTML outputs and original QMD contents are preserved as historical artifacts. Interactive maps remain local HTML under `outputs/maps/` or on the project website. See [process and audit](report-previews.md).
+National runs update `research/reports/`; supported municipality runs write complete scoped reports and assets under `outputs/reports/municipality_<code>/`. National-only requests reject municipality scope before processing. Missing required outputs fail report generation. Known exploratory limitations remain explicit; acquisition is always separate. `--from-saved` checks configuration, code and input/output hashes; legacy artifacts without producer records need processing first. See [process and script audit](report-integration.md).
 
 ## Harmonisation products
 
@@ -122,11 +128,11 @@ Then run offline from the project environment:
 
 Outputs under `data/intermediate/obrasgov-location-qa/` include source and component GeoParquet audits, eligible map components, quarantined components, a review table and a fingerprinted report. `outputs/maps/obrasgov-location-qa/locations.gpkg` has `map_components` and `quarantined_components` layers; `review.csv` exposes per-component decisions. Use project/source-row IDs when summarizing project investments, never repeated component values. The public map is not silently replaced by this new derivative. See [the policy](obrasgov-location-policy.md).
 
-## Approved primary-state map exclusion
+## Individual primary-state steps
 
 ```bash
-.venv/bin/python code/scripts/check_obras_primary_state.py --config project.toml
-.venv/bin/python code/scripts/filter_obras_primary_state.py --config project.toml
+.venv/bin/brazil-project run obrasgov-primary-state-check --config project.toml
+.venv/bin/brazil-project run obrasgov-primary-state-filter --config project.toml
 ```
 
 The second command excludes exactly `entirely_outside` original components and combines this with existing location-QA eligibility. It requires matching completed diagnostic/QA manifests and verified inputs; rerun the state check after updating its inputs or implementation. Outputs are separate under `data/intermediate/obrasgov-primary-state-filter` and `outputs/maps/obrasgov-primary-state-filter`; `locations.gpkg` contains `map_components` and `excluded_primary_state`. Read the completed report and verify artifact hashes before consumption. Original research totals and the prior QA bundle remain preserved. See [process, figure and script audit](obrasgov-primary-state-filter.md).

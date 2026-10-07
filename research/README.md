@@ -1,14 +1,14 @@
 # Research Materials
 
 Status: current
-Last updated: 2026-10-06
-Version: 0.4
+Last updated: 2026-10-07
+Version: 0.5
 Scope: Research Materials
 
 - `reports/`: nine readable Markdown reports, with saved tables, figures and narratives.
 - `cs2nordic/`: preserved conference abstract, poster and presentation.
 
-Executable report code lives under `code/reports/`; analytical processing lives in the Python package. Original research code and the former QMD files are preserved under `data/archive/` and in Git history. Create other research folders only when real documents need them.
+Executable Python cells live inside each Markdown report; reusable analytical processing lives in the Python package. Original research code and the former QMD files are preserved under `data/archive/` and in Git history. Create other research folders only when real documents need them.
 
 ## Read the reports
 
@@ -22,4 +22,4 @@ Executable report code lives under `code/reports/`; analytical processing lives 
 - [Census data extraction](reports/ibge_census_data_extraction.md)
 - [Land value](reports/property_value.md)
 
-Edit the Markdown report directly. Generate new output review copies with `.venv/bin/python code/scripts/render_reports.py`; review and copy results into reports when needed. Refreshing never overwrites your edits. See [commands and checks](../docs/report-previews.md).
+Edit explanations and code in the Markdown report directly. Run `brazil-project report <report_name>` to process its inputs and refresh results automatically. Only marked generated sections change. See [commands and checks](../docs/report-integration.md).

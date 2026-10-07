@@ -97,6 +97,10 @@ def main():
     parser.add_argument('--config', default='project.toml')
     args = parser.parse_args()
     ctx = Context(args.config)
+    return run(ctx)
+
+
+def run(ctx):
     component, source, diagnostic, expected, producer = verified_inputs(ctx)
     ref = producer['contract']['references']['municipalities']
     municipality_path = ctx.require(ctx.path('location_qa', 'references') / ref['path'])

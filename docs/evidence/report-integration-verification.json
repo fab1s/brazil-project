@@ -1,0 +1,453 @@
+{
+  "status": "software_verified_with_explicit_land_value_input_limit",
+  "date": "2026-10-07",
+  "configuration": "project.toml",
+  "configuration_sha256": "cd8a8337659f98f55d35591b4a4b3a574451ef7f08a59af4a28b9dd6f3225aa2",
+  "code_fingerprints": {
+    "code/brazil_project/verification.py": "cc07ac1abb5efe59e7d7ce68cc05d4e812eb05a27abd99f5ba2ca4b24bb59276",
+    "code/brazil_project/io.py": "da5d4a23c8749732bc65424193c7c6e3b871fb2bc874229ec11dc310db3b3ba0",
+    "code/brazil_project/__init__.py": "91447944015cec709e8aa7655f7e9d64e1e4508e7023a57fe3746911c0fc6fed",
+    "code/brazil_project/cli.py": "6f4b0385a6a41f94ea7c3cc29a0c2e8a9b044eb462ea58cd23b0e8bf3c27f3da",
+    "code/brazil_project/reporting.py": "a5f797b219659bcc0775dd6421224a60dea3ec3ad189bc36754b0ba7b7065eb9",
+    "code/brazil_project/report_engine.py": "568860497367bdeb07e19d940d5924e18dec7f780c0e5f001ada8e0a1096f23a",
+    "code/brazil_project/acquisition/census.py": "b48d2609f1ae772d7dbd8486d00dd9a3cdfd8b8bd4335a7f03dd7982d04d543f",
+    "code/brazil_project/acquisition/infrastructure.py": "3bba1d2726a2b6088d11ae22af24fc6e0ee3f5eeb4023ad0ba6107e7d0dea305",
+    "code/brazil_project/acquisition/__init__.py": "34e8ea0c8dd05fdc4324d1dd53633d6cc1955741ac332e0ee86e78a1cecd21c0",
+    "code/brazil_project/indicators/temporal.py": "180c1f3e54bb1cf0f8ba17ef70d6b47351ac0f5a35490e59ec3c781cd20893fc",
+    "code/brazil_project/indicators/__init__.py": "34e8ea0c8dd05fdc4324d1dd53633d6cc1955741ac332e0ee86e78a1cecd21c0",
+    "code/brazil_project/harmonisation/census.py": "168f4c0a9fdbc6b0d70dc399ca6add377b758995631625a7a61a0f6f49005f1a",
+    "code/brazil_project/harmonisation/__init__.py": "34e8ea0c8dd05fdc4324d1dd53633d6cc1955741ac332e0ee86e78a1cecd21c0",
+    "code/brazil_project/harmonisation/overview.py": "4b4c849154def17e0291c30d4b6b8e4af7a7d388e38fb4ca53437e53f66d0e0a",
+    "code/brazil_project/land_value/property.py": "5846b13e55c0e806732d893b04329152323b99e695e694e5935110728bf685c3",
+    "code/brazil_project/land_value/__init__.py": "34e8ea0c8dd05fdc4324d1dd53633d6cc1955741ac332e0ee86e78a1cecd21c0",
+    "code/brazil_project/visualisation/census.py": "c38a109c0b4ea8514ecb4822b8b61db5aa0dc21cdcc057f058e3b2755ce6fb32",
+    "code/brazil_project/visualisation/charts.py": "b99b9f38489f4f47d4f0274c6baa5b85e07db8267a5eb05eb9f11ed460df958d",
+    "code/brazil_project/visualisation/__init__.py": "34e8ea0c8dd05fdc4324d1dd53633d6cc1955741ac332e0ee86e78a1cecd21c0",
+    "code/brazil_project/infrastructure/__init__.py": "34e8ea0c8dd05fdc4324d1dd53633d6cc1955741ac332e0ee86e78a1cecd21c0",
+    "code/brazil_project/infrastructure/projects.py": "1eed3f05cc0cc9ba25861fb509768bc03572511e8d241fc9a0936f32560ef2a6",
+    "code/brazil_project/infrastructure/location_qa.py": "f8c0d12ef77c89f81122516b92c005fcf250c01ab7b5a555e65cf95340093915",
+    "code/scripts/r/restore.R": "f3d283dcb454fcd18d18abcfc04ab7c2f0d14cf26f21b6c257285fb9bcae77db",
+    "code/scripts/r/spherical_intersections.R": "65841ffb98f380aeeb080eaf80be1beeb753fc203ce09c18ae448f0322b8f5c7",
+    "code/scripts/r/test_overview.R": "9ef9b17af3d9f2edc83f4678a625dc8cbaef792992031acc236170046f678403",
+    "code/scripts/r/validate_reference.R": "6d7837d74003eee12bf528ce7241a83823b64204ccc83dd7b930bb2be2cae62d",
+    "code/scripts/r/bootstrap.R": "b40206c787a0fc59f465569930a4f279a7588af5394f3218c23dce96ac88f18d",
+    "code/scripts/r/overview.R": "027d94854f5981136273f208593a27c2bdb9b77366b377bd7be1c7e7732f2be2",
+    "code/scripts/r/harmonisation_reference.R": "46fa5a3f6d0df3ce92640ea316542925707a255582e9d4b87f782599aea56a65",
+    "code/scripts/r/acquire_census.R": "5ac4f9ec68d78ef64e2734d16d2befc162a0f7ceda9233407ac664d1427fc0b4",
+    "code/config/report_chunks.json": "48a15f3ff7caf40b3e81d3f52e6d508a6048035408a7d57c7a1e39315302b671",
+    "code/config/obrasgov_translations.json": "5ef0459099cecc56882066444afd636b9ff8d2e95eead57d2ae86a56aaa3a0be",
+    "code/scripts/plot_location_qa.py": "43a574631cd1381599f953738e4545dbaa3105d40b825cf0f55ca101fdfe454b",
+    "code/scripts/check_obras_primary_state.py": "e747480b47dc9661227c55481f845bbc4353f7e63c505f703a3a30a9d3b444c4",
+    "code/scripts/filter_obras_primary_state.py": "8bd2253f83faeebe3bfb88dab1ae33708d499e8d8374ed1be34d5d8e0a4d3d3c"
+  },
+  "tests": {
+    "passed": 86,
+    "dependency_warnings": 23,
+    "command": ".venv/bin/python -m pytest code/tests -q",
+    "log_sha256": "38d7124131a51dacb11905bfdf334aee29b998e95aeddb1676f6009a989582c0"
+  },
+  "full_national_run": {
+    "generated_at": "2026-10-07T07:09:44.418632+00:00",
+    "stages": [
+      {
+        "stage": "overview",
+        "status": "completed"
+      },
+      {
+        "stage": "census-exploration",
+        "status": "completed"
+      },
+      {
+        "stage": "harmonisation",
+        "status": "completed"
+      },
+      {
+        "stage": "indicators",
+        "status": "completed"
+      },
+      {
+        "stage": "ibama",
+        "status": "completed"
+      },
+      {
+        "stage": "obrasgov-snapshot",
+        "status": "completed"
+      },
+      {
+        "stage": "obrasgov-location-qa",
+        "status": "completed"
+      },
+      {
+        "stage": "obrasgov-location-plot",
+        "status": "completed"
+      },
+      {
+        "stage": "obrasgov-primary-state-check",
+        "status": "completed"
+      },
+      {
+        "stage": "obrasgov-primary-state-filter",
+        "status": "completed"
+      },
+      {
+        "stage": "land-value",
+        "status": "blocked",
+        "error": "Land value workbook imported; exact original CSV inputs are absent: data/raw/land_value/Belo Horizonte/Data/20220601_regional_barreiro_cadastro_imobiliario.csv. Different dated snapshots have been preserved without substitution."
+      },
+      {
+        "stage": "charts",
+        "status": "completed"
+      }
+    ],
+    "reports": [
+      {
+        "report": "brazil_poroject_charts",
+        "status": "completed",
+        "generation": "8636f9352c9a4d998f08b9e9f5154e4b",
+        "output": "research/reports/brazil_poroject_charts.md",
+        "output_sha256": "412ae37db74fe4f3e09f20b1676c3314ea7fbb73dd08be3eff00e65f14f962a5",
+        "evidence": "outputs/reports/evidence/national/brazil_poroject_charts/8636f9352c9a4d998f08b9e9f5154e4b/evidence.json"
+      },
+      {
+        "report": "ibama_data_extraction",
+        "status": "completed",
+        "generation": "32a19fb3077148c891067fb83752d428",
+        "output": "research/reports/ibama_data_extraction.md",
+        "output_sha256": "6964f0596e0e13bd3197737c77c1774d6fb92f1d6f21ce282ea7de0cccb56672",
+        "evidence": "outputs/reports/evidence/national/ibama_data_extraction/32a19fb3077148c891067fb83752d428/evidence.json"
+      },
+      {
+        "report": "ibge_census_data_extraction",
+        "status": "completed",
+        "generation": "44b2c77e80e8421d851a52c0efe543a0",
+        "output": "research/reports/ibge_census_data_extraction.md",
+        "output_sha256": "6ced7d13d294520cc78011d88ce558aebb2b31c08cea9a42b163b2cf1836ae70",
+        "evidence": "outputs/reports/evidence/national/ibge_census_data_extraction/44b2c77e80e8421d851a52c0efe543a0/evidence.json"
+      },
+      {
+        "report": "ibge_census_temporal_comparison",
+        "status": "completed",
+        "generation": "dcf81589ad4b4dbd8acba047803c2d51",
+        "output": "research/reports/ibge_census_temporal_comparison.md",
+        "output_sha256": "9df05aae07dad62910f0421392cb454ac325e203a178466930097a00b1a43b7c",
+        "evidence": "outputs/reports/evidence/national/ibge_census_temporal_comparison/dcf81589ad4b4dbd8acba047803c2d51/evidence.json"
+      },
+      {
+        "report": "ibge_census_tract_harmonisation",
+        "status": "completed",
+        "generation": "d8702df426064849a82bb3197ecd62e5",
+        "output": "research/reports/ibge_census_tract_harmonisation.md",
+        "output_sha256": "f630837dc5fa586ceb2aae8ac4a426c13f1e6d83d03e69826ade3376dd7bd682",
+        "evidence": "outputs/reports/evidence/national/ibge_census_tract_harmonisation/d8702df426064849a82bb3197ecd62e5/evidence.json"
+      },
+      {
+        "report": "ibge_dataset_overview",
+        "status": "completed",
+        "generation": "6094898419894928927c45f9623ffacc",
+        "output": "research/reports/ibge_dataset_overview.md",
+        "output_sha256": "68e27c26347d3d60e1884611c5040f3ad417273e5d27d4eece8fb5fdef89c48b",
+        "evidence": "outputs/reports/evidence/national/ibge_dataset_overview/6094898419894928927c45f9623ffacc/evidence.json"
+      },
+      {
+        "report": "obrasgov_data_extraction",
+        "status": "completed",
+        "generation": "ae7dc9bf3b4944f8aab7ac0f0d34f061",
+        "output": "research/reports/obrasgov_data_extraction.md",
+        "output_sha256": "6ed297bba5d3170d483af54507721c8641cca80b4924c59e3bdf0fbd68058d83",
+        "evidence": "outputs/reports/evidence/national/obrasgov_data_extraction/ae7dc9bf3b4944f8aab7ac0f0d34f061/evidence.json"
+      },
+      {
+        "report": "obrasgov_preprocessing",
+        "status": "completed",
+        "generation": "84ca0dbe43624c3daed1fd686e0547ba",
+        "output": "research/reports/obrasgov_preprocessing.md",
+        "output_sha256": "b8dba2f8dc28622f26bc09c30398e88789ffc88edf3cb1113ba6c3f996fed86c",
+        "evidence": "outputs/reports/evidence/national/obrasgov_preprocessing/84ca0dbe43624c3daed1fd686e0547ba/evidence.json"
+      },
+      {
+        "report": "property_value",
+        "status": "blocked",
+        "error": "Required stages did not complete in this invocation."
+      }
+    ]
+  },
+  "standalone_obrasgov": {
+    "generated_at": "2026-10-07T07:13:22.022243+00:00",
+    "stages": [
+      {
+        "stage": "obrasgov-snapshot",
+        "status": "completed"
+      },
+      {
+        "stage": "obrasgov-location-qa",
+        "status": "completed"
+      },
+      {
+        "stage": "obrasgov-location-plot",
+        "status": "completed"
+      },
+      {
+        "stage": "obrasgov-primary-state-check",
+        "status": "completed"
+      },
+      {
+        "stage": "obrasgov-primary-state-filter",
+        "status": "completed"
+      }
+    ],
+    "reports": [
+      {
+        "report": "obrasgov_data_extraction",
+        "status": "completed",
+        "generation": "6b5ab0333a23497786231f31e176de5a",
+        "output": "research/reports/obrasgov_data_extraction.md",
+        "output_sha256": "3720bbf8d74a57d7aa2a05830ccc954a8035eb92fe79fb6987a946b84d3ac312",
+        "evidence": "outputs/reports/evidence/national/obrasgov_data_extraction/6b5ab0333a23497786231f31e176de5a/evidence.json"
+      },
+      {
+        "report": "obrasgov_preprocessing",
+        "status": "completed",
+        "generation": "94bddd96620e40e8a17ce0cc96922231",
+        "output": "research/reports/obrasgov_preprocessing.md",
+        "output_sha256": "dd037f52c1f4a4d3174c552ba02191eb86b971cc6a974ad2a23b2f21b352003d",
+        "evidence": "outputs/reports/evidence/national/obrasgov_preprocessing/94bddd96620e40e8a17ce0cc96922231/evidence.json"
+      }
+    ]
+  },
+  "saved_report_refresh": {
+    "generated_at": "2026-10-07T07:14:26.674046+00:00",
+    "stages": [],
+    "reports": [
+      {
+        "report": "brazil_poroject_charts",
+        "status": "completed",
+        "generation": "9a2e41a1161344c8a31efd6ce44a5862",
+        "output": "research/reports/brazil_poroject_charts.md",
+        "output_sha256": "412ae37db74fe4f3e09f20b1676c3314ea7fbb73dd08be3eff00e65f14f962a5",
+        "evidence": "outputs/reports/evidence/national/brazil_poroject_charts/9a2e41a1161344c8a31efd6ce44a5862/evidence.json"
+      },
+      {
+        "report": "ibama_data_extraction",
+        "status": "completed",
+        "generation": "9fd920707eba45969c158f359bbb33f4",
+        "output": "research/reports/ibama_data_extraction.md",
+        "output_sha256": "6964f0596e0e13bd3197737c77c1774d6fb92f1d6f21ce282ea7de0cccb56672",
+        "evidence": "outputs/reports/evidence/national/ibama_data_extraction/9fd920707eba45969c158f359bbb33f4/evidence.json"
+      },
+      {
+        "report": "ibge_census_data_extraction",
+        "status": "completed",
+        "generation": "ee6579ce1332454c99b38733a74aec74",
+        "output": "research/reports/ibge_census_data_extraction.md",
+        "output_sha256": "6ced7d13d294520cc78011d88ce558aebb2b31c08cea9a42b163b2cf1836ae70",
+        "evidence": "outputs/reports/evidence/national/ibge_census_data_extraction/ee6579ce1332454c99b38733a74aec74/evidence.json"
+      },
+      {
+        "report": "ibge_census_temporal_comparison",
+        "status": "completed",
+        "generation": "d485e91d5f27416ca5a16cb0d9780606",
+        "output": "research/reports/ibge_census_temporal_comparison.md",
+        "output_sha256": "9df05aae07dad62910f0421392cb454ac325e203a178466930097a00b1a43b7c",
+        "evidence": "outputs/reports/evidence/national/ibge_census_temporal_comparison/d485e91d5f27416ca5a16cb0d9780606/evidence.json"
+      },
+      {
+        "report": "ibge_census_tract_harmonisation",
+        "status": "completed",
+        "generation": "f8887e568abe4f6da22afdb91ea71d4b",
+        "output": "research/reports/ibge_census_tract_harmonisation.md",
+        "output_sha256": "326f229fc32f8778c154a29146436d0fd57eb02f4152d0ce51a02c4bd0deaf3c",
+        "evidence": "outputs/reports/evidence/national/ibge_census_tract_harmonisation/f8887e568abe4f6da22afdb91ea71d4b/evidence.json"
+      },
+      {
+        "report": "ibge_dataset_overview",
+        "status": "completed",
+        "generation": "a5339eab101e431f9c4864f506edecee",
+        "output": "research/reports/ibge_dataset_overview.md",
+        "output_sha256": "68e27c26347d3d60e1884611c5040f3ad417273e5d27d4eece8fb5fdef89c48b",
+        "evidence": "outputs/reports/evidence/national/ibge_dataset_overview/a5339eab101e431f9c4864f506edecee/evidence.json"
+      },
+      {
+        "report": "obrasgov_data_extraction",
+        "status": "completed",
+        "generation": "cce2e7dbf06a406ba802eca36206c71b",
+        "output": "research/reports/obrasgov_data_extraction.md",
+        "output_sha256": "3720bbf8d74a57d7aa2a05830ccc954a8035eb92fe79fb6987a946b84d3ac312",
+        "evidence": "outputs/reports/evidence/national/obrasgov_data_extraction/cce2e7dbf06a406ba802eca36206c71b/evidence.json"
+      },
+      {
+        "report": "obrasgov_preprocessing",
+        "status": "completed",
+        "generation": "801a7270eda3405c836ed838d9258a9f",
+        "output": "research/reports/obrasgov_preprocessing.md",
+        "output_sha256": "dd037f52c1f4a4d3174c552ba02191eb86b971cc6a974ad2a23b2f21b352003d",
+        "evidence": "outputs/reports/evidence/national/obrasgov_preprocessing/801a7270eda3405c836ed838d9258a9f/evidence.json"
+      },
+      {
+        "report": "property_value",
+        "status": "completed",
+        "generation": "1ccda9c9138c4006adcd2ce94a9a0973",
+        "output": "research/reports/property_value.md",
+        "output_sha256": "1d78d70800f2cde63c5eb632d3e1edea5c85ee529ef8ce7e1fd8a59b3f6f8523",
+        "evidence": "outputs/reports/evidence/national/property_value/1ccda9c9138c4006adcd2ce94a9a0973/evidence.json"
+      }
+    ]
+  },
+  "result_verification": {
+    "reports": [
+      {
+        "report": "brazil_poroject_charts",
+        "cells": 1,
+        "generation": "9a2e41a1161344c8a31efd6ce44a5862",
+        "output_sha256": "412ae37db74fe4f3e09f20b1676c3314ea7fbb73dd08be3eff00e65f14f962a5",
+        "evidence": "outputs/reports/evidence/national/brazil_poroject_charts/9a2e41a1161344c8a31efd6ce44a5862/evidence.json"
+      },
+      {
+        "report": "ibama_data_extraction",
+        "cells": 5,
+        "generation": "9fd920707eba45969c158f359bbb33f4",
+        "output_sha256": "6964f0596e0e13bd3197737c77c1774d6fb92f1d6f21ce282ea7de0cccb56672",
+        "evidence": "outputs/reports/evidence/national/ibama_data_extraction/9fd920707eba45969c158f359bbb33f4/evidence.json"
+      },
+      {
+        "report": "ibge_census_data_extraction",
+        "cells": 6,
+        "generation": "ee6579ce1332454c99b38733a74aec74",
+        "output_sha256": "6ced7d13d294520cc78011d88ce558aebb2b31c08cea9a42b163b2cf1836ae70",
+        "evidence": "outputs/reports/evidence/national/ibge_census_data_extraction/ee6579ce1332454c99b38733a74aec74/evidence.json"
+      },
+      {
+        "report": "ibge_census_temporal_comparison",
+        "cells": 17,
+        "generation": "d485e91d5f27416ca5a16cb0d9780606",
+        "output_sha256": "9df05aae07dad62910f0421392cb454ac325e203a178466930097a00b1a43b7c",
+        "evidence": "outputs/reports/evidence/national/ibge_census_temporal_comparison/d485e91d5f27416ca5a16cb0d9780606/evidence.json"
+      },
+      {
+        "report": "ibge_census_tract_harmonisation",
+        "cells": 4,
+        "generation": "f8887e568abe4f6da22afdb91ea71d4b",
+        "output_sha256": "326f229fc32f8778c154a29146436d0fd57eb02f4152d0ce51a02c4bd0deaf3c",
+        "evidence": "outputs/reports/evidence/national/ibge_census_tract_harmonisation/f8887e568abe4f6da22afdb91ea71d4b/evidence.json"
+      },
+      {
+        "report": "ibge_dataset_overview",
+        "cells": 14,
+        "generation": "a5339eab101e431f9c4864f506edecee",
+        "output_sha256": "68e27c26347d3d60e1884611c5040f3ad417273e5d27d4eece8fb5fdef89c48b",
+        "evidence": "outputs/reports/evidence/national/ibge_dataset_overview/a5339eab101e431f9c4864f506edecee/evidence.json"
+      },
+      {
+        "report": "obrasgov_data_extraction",
+        "cells": 7,
+        "generation": "cce2e7dbf06a406ba802eca36206c71b",
+        "output_sha256": "3720bbf8d74a57d7aa2a05830ccc954a8035eb92fe79fb6987a946b84d3ac312",
+        "evidence": "outputs/reports/evidence/national/obrasgov_data_extraction/cce2e7dbf06a406ba802eca36206c71b/evidence.json"
+      },
+      {
+        "report": "obrasgov_preprocessing",
+        "cells": 10,
+        "generation": "801a7270eda3405c836ed838d9258a9f",
+        "output_sha256": "dd037f52c1f4a4d3174c552ba02191eb86b971cc6a974ad2a23b2f21b352003d",
+        "evidence": "outputs/reports/evidence/national/obrasgov_preprocessing/801a7270eda3405c836ed838d9258a9f/evidence.json"
+      },
+      {
+        "report": "property_value",
+        "cells": 3,
+        "generation": "1ccda9c9138c4006adcd2ce94a9a0973",
+        "output_sha256": "1d78d70800f2cde63c5eb632d3e1edea5c85ee529ef8ce7e1fd8a59b3f6f8523",
+        "evidence": "outputs/reports/evidence/national/property_value/1ccda9c9138c4006adcd2ce94a9a0973/evidence.json"
+      }
+    ],
+    "artifact_table_comparisons": 20,
+    "state_exclusion_table_exact": true,
+    "current_figure_bytes_exact": true,
+    "counts": {
+      "excluded_components": 2346,
+      "map_components_before": 226309,
+      "map_components_after": 224495
+    }
+  },
+  "location_verification": {
+    "passed": true,
+    "source_rows_and_attributes_exact": true,
+    "original_geometry_wkb_exact": true,
+    "map_and_quarantine_geometry_wkb_exact": true,
+    "component_partition_complete": true,
+    "gpkg_map_geometry_wkb_exact": true,
+    "gpkg_quarantine_membership_exact": true,
+    "project_investment_coverage_preserved": true,
+    "investment_total_brl": 1115218098001.23,
+    "investment_relative_tolerance": 1e-12,
+    "gpkg_layers": [
+      "map_components",
+      "quarantined_components"
+    ],
+    "source_records": 134929,
+    "map_components": 226309,
+    "quarantined_components": 2037
+  },
+  "municipality_verification": {
+    "scope": "3106200",
+    "national_reports_unchanged": {
+      "ibge_census_temporal_comparison": "9df05aae07dad62910f0421392cb454ac325e203a178466930097a00b1a43b7c",
+      "ibge_census_tract_harmonisation": "326f229fc32f8778c154a29146436d0fd57eb02f4152d0ce51a02c4bd0deaf3c"
+    },
+    "processing_and_reports": {
+      "generated_at": "2026-10-07T07:03:48.168257+00:00",
+      "stages": [
+        {
+          "stage": "harmonisation",
+          "status": "completed"
+        },
+        {
+          "stage": "indicators",
+          "status": "completed"
+        }
+      ],
+      "reports": [
+        {
+          "report": "ibge_census_temporal_comparison",
+          "status": "completed",
+          "generation": "9e0f48f6e2e644108cbe3f44c3697fa7",
+          "output": "outputs/reports/municipality_3106200/ibge_census_temporal_comparison.md",
+          "output_sha256": "de27da9882d09c9afa54e16ed9bdf76919c3b4ac3ce10633457c0f3a263857d1",
+          "evidence": "outputs/reports/evidence/3106200/ibge_census_temporal_comparison/9e0f48f6e2e644108cbe3f44c3697fa7/evidence.json"
+        },
+        {
+          "report": "ibge_census_tract_harmonisation",
+          "status": "completed",
+          "generation": "84b7ae76ac644a25a529492b33a30ec6",
+          "output": "outputs/reports/municipality_3106200/ibge_census_tract_harmonisation.md",
+          "output_sha256": "c75378ab345fe50c3756d980070825dc5195d23d64872bb123f0ce0a56696ac3",
+          "evidence": "outputs/reports/evidence/3106200/ibge_census_tract_harmonisation/84b7ae76ac644a25a529492b33a30ec6/evidence.json"
+        }
+      ]
+    }
+  },
+  "figures": [
+    {
+      "processing_output": "outputs/figures/obrasgov-location-qa/location-screening.png",
+      "report_asset": "research/reports/assets/f81b4461ea34094d2e3f25742d834bbdb18e8c7e128b3ee6459d43be4466371d.png",
+      "sha256": "f81b4461ea34094d2e3f25742d834bbdb18e8c7e128b3ee6459d43be4466371d",
+      "bytes": 876419
+    },
+    {
+      "processing_output": "outputs/figures/obrasgov-location-qa/primary-state-filter.png",
+      "report_asset": "research/reports/assets/0ac43a2ef9a91c20ff6cfa1a4c7d98596a3834341b713641184dfe2f62279224.png",
+      "sha256": "0ac43a2ef9a91c20ff6cfa1a4c7d98596a3834341b713641184dfe2f62279224",
+      "bytes": 678563
+    }
+  ],
+  "preview": {
+    "method": "Offline Pandoc GFM conversion and Chromium; network blocked",
+    "executable_cells": 10,
+    "tables": 3,
+    "figures": 2,
+    "figures_visually_reviewed": true
+  },
+  "wheel_sha256": "27261f09b7e5bc14c067152cae5f1527d8135541c8aab8da84d820ede632bb99",
+  "limitations": [
+    "Exact cadastral CSV is absent; full run remains nonzero and processing blocked. Saved property report explicitly shows exploratory partial results.",
+    "Scientific parity, provider geocoding verification, live acquisition and website publication are outside this integration."
+  ]
+}

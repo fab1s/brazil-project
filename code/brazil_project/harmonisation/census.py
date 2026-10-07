@@ -320,7 +320,7 @@ def load_bundle(ctx, names=None):
     pointer = folder / 'current.json'
     if not pointer.exists():
         raise WorkflowError('No versioned harmonisation bundle. Run brazil-project run harmonisation first.')
-    active = json.loads(pointer.read_text())
+    active = json.loads(ctx.require(pointer).read_text())
     generation = active['generation']
     if len(generation) != 32 or any(c not in '0123456789abcdef' for c in generation):
         raise WorkflowError('Invalid harmonisation generation')

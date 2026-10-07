@@ -20,9 +20,9 @@ Start with the [research reports](research/README.md#read-the-reports) to read t
 | --- | --- | --- |
 | **`research/`** | Readable Markdown reports in `reports/`; conference abstracts, posters and presentations in `cs2nordic/`. | [Report list](research/README.md#read-the-reports) |
 | **`docs/`** | Methods, processing explanations, quality checks, decisions and project progress. | [Documentation index](docs/index.md) |
-| **`outputs/`** | Generated figures, interactive maps, exported tables and fresh report review copies. | [Output guide](outputs/README.md) |
+| **`outputs/`** | Generated figures, interactive maps, exported tables and municipality-specific report copies. | [Output guide](outputs/README.md) |
 | **`data/`** | Source datasets, reference material, processing intermediates and preserved originals in `archive/`. | [Data guide](data/README.md) |
-| **`code/`** | Python processing, report scripts, supporting R scripts and tests. | [Code guide](code/README.md) |
+| **`code/`** | Reusable Python processing, pipeline tools, supporting R scripts and tests. | [Code guide](code/README.md) |
 | **`website/`** | Source files for the interactive project map. | [Website guide](website/README.md) |
 
 For example, read [Obrasgov preprocessing and location exclusions](research/reports/obrasgov_preprocessing.md) or [census harmonisation](research/reports/ibge_census_tract_harmonisation.md). The `.md` reports display directly on GitHub. Full datasets and generated outputs are kept locally; their folder guides explain where to find them.

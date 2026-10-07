@@ -1,13 +1,13 @@
 # Project Documentation
 
 Status: current
-Last updated: 2026-10-06
-Version: 0.11
+Last updated: 2026-10-07
+Version: 0.12
 Scope: Project Documentation
 
 Start with [progress](progress.md), [tasks](tasks.md), [methods](methods.md) and [commands](workflow.md).
 
-[Read the research reports](../research/README.md#read-the-reports) · [Markdown reports and execution](report-previews.md)
+[Read the research reports](../research/README.md#read-the-reports) · [Executable Markdown and pipeline audit](report-integration.md)
 
 ## Research and workflow
 

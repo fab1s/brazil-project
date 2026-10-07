@@ -29,6 +29,10 @@ def verified_plot_inputs(ctx):
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--config',default='project.toml');a=p.parse_args()
     ctx=Context(a.config)
+    return run(ctx)
+
+
+def run(ctx):
     component,municipalities=verified_plot_inputs(ctx)
     points=gpd.read_parquet(component)
     points=points[points.geom_type.eq('Point') & ~points.out_of_range & ~points.nonfinite_coordinates & ~points.invalid_geometry & ~points.empty_geometry].copy()
@@ -50,6 +54,7 @@ def main():
     out=ctx.root/'outputs/figures/obrasgov-location-qa';out.mkdir(parents=True,exist_ok=True)
     fig.savefig(out/'location-screening.png',dpi=160,facecolor='white');plt.close(fig)
     print(out/'location-screening.png')
+    return {'figure': str((out/'location-screening.png').relative_to(ctx.root)), 'sha256': fingerprint(out/'location-screening.png')}
 
 
 if __name__=='__main__':main()

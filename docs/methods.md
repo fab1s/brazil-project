@@ -1,8 +1,8 @@
 # Research Processing Methods
 
 Status: current
-Last updated: 2026-10-06
-Version: 0.5
+Last updated: 2026-10-07
+Version: 0.6
 Scope: Research Processing Methods
 
 ## Census correspondence
@@ -63,4 +63,4 @@ The requested [location policy](obrasgov-location-policy.md) defines an independ
 
 ## Reporting
 
-Research reports are Markdown snapshots of saved results. Separate Python scripts preserve the former notebook code and execution order. This presentation change does not change acquisition, geometries, identifiers, exclusions, missingness or numerical methods.
+Research reports are executable Markdown documents. Processing and result refresh share one pipeline, while reusable numerical methods remain in the Python package. This presentation change does not change acquisition, geometries, identifiers, exclusions, missingness or numerical methods.

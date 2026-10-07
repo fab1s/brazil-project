@@ -23,17 +23,18 @@ def run(ctx):
         ctx.write_table(summary,'overview',f'change_summary_2000_{year}')
         counts[str(year)]=summary.change_type.value_counts().to_dict()
         ctx.require(out/f'intersections_2000_{year}.gpkg')
-    destination=ctx.root/'outputs/maps/overview'
+    destination=ctx.root/'outputs/maps'/('municipality_'+ctx.municipality if ctx.municipality else 'overview')
     destination.mkdir(parents=True,exist_ok=True)
+    # COMPATIBILITY: this GeoPackage stores integral tract codes as REAL; TEXT alone adds .0.
     for tract in ['310620025610001','310620005650306','310620005620021','310620005620008']:
-        old=gpd.read_file(ctx.path('census','tracts'),layer='2000_urban',where=f"CAST(code_tract AS TEXT) = '{tract}'")
+        old=gpd.read_file(ctx.path('census','tracts'),layer='2000_urban',where=f"CAST(CAST(code_tract AS INTEGER) AS TEXT) = '{tract}'")
         if old.empty: continue
         mapping=old.to_crs(4326).explore(name='2000 tract',color='red',style_kwds={'fillOpacity':.4})
         for year,color in [(2010,'orange'),(2022,'steelblue')]:
-            overlaps=gpd.read_file(out/f'intersections_2000_{year}.gpkg',where=f"CAST(code_tract_2000 AS TEXT) = '{tract}'")
+            overlaps=gpd.read_file(out/f'intersections_2000_{year}.gpkg',where=f"CAST(CAST(code_tract_2000 AS INTEGER) AS TEXT) = '{tract}'")
             eligible=identifiers(overlaps.loc[overlaps.overlap_pct>.05,'code_tract_new']).dropna().unique()
             if len(eligible):
-                where='CAST(code_tract AS TEXT) IN ('+','.join("'"+v+"'" for v in eligible)+')'
+                where='CAST(CAST(code_tract AS INTEGER) AS TEXT) IN ('+','.join("'"+v+"'" for v in eligible)+')'
                 geometry=gpd.read_file(ctx.path('census','tracts'),layer=str(year),where=where)
                 geometry.to_crs(4326).explore(m=mapping,name=f'{year} tracts (>5%)',color=color,style_kwds={'fillOpacity':.4})
         folium.LayerControl().add_to(mapping);mapping.save(destination/(tract+'.html'))

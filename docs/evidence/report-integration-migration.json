@@ -1,0 +1,491 @@
+{
+  "archive": "data/archive/report-integration-before-2026-10-06.zip",
+  "archive_sha256": "f81ee7b1b8f7c03c548c92b0663e43a9e7470da20fb03b32847e00836c46cd8d",
+  "files": [
+    {
+      "path": "code/reports/brazil_poroject_charts.py",
+      "sha256": "003c4059bb0bc9b10c9a2c0a92ba6912ed857ef01864c584d0107550332311eb"
+    },
+    {
+      "path": "code/reports/ibama_data_extraction.py",
+      "sha256": "211271417a15091bf540394eaa421fb68c4185103cca45eed0c2dc11e30a1fee"
+    },
+    {
+      "path": "code/reports/ibge_census_data_extraction.py",
+      "sha256": "027ecc2439266c63c46599e8ff6afd02a834d1b134e2831a23d0d344e9442947"
+    },
+    {
+      "path": "code/reports/ibge_census_temporal_comparison.py",
+      "sha256": "ce139d0c12feede5e4898fadddbfc259aa0064dc8a5430fa3ace778a5e7baf29"
+    },
+    {
+      "path": "code/reports/ibge_census_tract_harmonisation.py",
+      "sha256": "155cacd3010a0e6a94169355836daa252c516565efe6dd3144c09d6fbb1b07d6"
+    },
+    {
+      "path": "code/reports/ibge_dataset_overview.py",
+      "sha256": "f62180587bf951606b7fdcbd2933d76ca2be5885f0a2b513597c30c21b64ed21"
+    },
+    {
+      "path": "code/reports/obrasgov_data_extraction.py",
+      "sha256": "c1a582c2f792ae0f0b8130b67e9fcb580a962c8a67c626192a5f4741981e8346"
+    },
+    {
+      "path": "code/reports/obrasgov_preprocessing.py",
+      "sha256": "f52703db158e6b4f962e454d690441e0550b87cb96116d1bf7cdf7086877523d"
+    },
+    {
+      "path": "code/reports/property_value.py",
+      "sha256": "af4b71ac2f8070b477c6e078d24e627744f21f3f670aac1f5a898db013f3f0ca"
+    },
+    {
+      "path": "research/reports/ibge_census_data_extraction.md",
+      "sha256": "4a33aca689a523a85aec56443fdbaa6d1d8da7fb77a12e48cd3a7d440b7d76fa"
+    },
+    {
+      "path": "research/reports/ibama_data_extraction.md",
+      "sha256": "38946aedab6b45c8cce430c50800950514589f298c52d7b313973838840bcebb"
+    },
+    {
+      "path": "research/reports/ibge_census_tract_harmonisation.md",
+      "sha256": "b281ae6481c40322cacb8ba260ca1c7382c6e1364e04391944f61a9e54f3ae27"
+    },
+    {
+      "path": "research/reports/obrasgov_data_extraction.md",
+      "sha256": "27d45866d3179cd70a214e3cc312be43e152e3346de9e76dfe6f447acccb8fc3"
+    },
+    {
+      "path": "research/reports/ibge_census_temporal_comparison.md",
+      "sha256": "b7a7059121d353ca35f02a47ee4140d31a31480db7133614373934b3de4de422"
+    },
+    {
+      "path": "research/reports/brazil_poroject_charts.md",
+      "sha256": "76f3a8f94db3c56e1b7778df47aac85e8ad3c7f867f64d016ca09812e93b938f"
+    },
+    {
+      "path": "research/reports/property_value.md",
+      "sha256": "738984d584589d9ec15d4181bad8f1b057efa23752a0fb2ec266014ea50096ba"
+    },
+    {
+      "path": "research/reports/obrasgov_preprocessing.md",
+      "sha256": "4a903275c88e69a9cffb1265bdf242f135d12285e604acb36aa4294acee477f2"
+    },
+    {
+      "path": "research/reports/ibge_dataset_overview.md",
+      "sha256": "9050d9fa5873c7b75a6c1adc2e04fda858f0170f67a8403b05d04e0ad0e7d731"
+    },
+    {
+      "path": "code/scripts/render_reports.py",
+      "sha256": "c6582110df74382f9e66a21c16194213280ad77f788587337bcf7d59c4f72402"
+    },
+    {
+      "path": "code/scripts/verify_reports.py",
+      "sha256": "8aec1bbe1dec153c2fd0d8e0721af248562450ee32f2b5552b116e7d64fbbc1b"
+    },
+    {
+      "path": "code/tests/test_report_previews.py",
+      "sha256": "5d0763851df764ed026d88ad4d068351ed3b86309a927b56b0f8db1ab883ea8c"
+    },
+    {
+      "path": "code/config/report_chunks.json",
+      "sha256": "99cd0acc9cd0e4293b075fa1e88e848b37475fc6bd28966859577e5ab6a64f43"
+    },
+    {
+      "path": "docs/evidence/workflow_mapping.csv",
+      "sha256": "d9cdf39738198bac853614be63e51082e773ba982c1e9b2f9d47ac3a151b0ac3"
+    }
+  ],
+  "reports": [
+    {
+      "report": "research/reports/brazil_poroject_charts.md",
+      "retired_script": "code/reports/brazil_poroject_charts.py",
+      "original_cells": [
+        {
+          "id": "brazil_poroject_charts_1",
+          "sha256": "36487d9341bcfffa63b17afb37f96447e7e5e862201d74847a716dca8c5b4d38"
+        }
+      ],
+      "cell_ids": [
+        "brazil_poroject_charts_1"
+      ]
+    },
+    {
+      "report": "research/reports/ibama_data_extraction.md",
+      "retired_script": "code/reports/ibama_data_extraction.py",
+      "original_cells": [
+        {
+          "id": "ibama_data_extraction_1",
+          "sha256": "3777d0e103fbc967b26875ae2c7888e9cace61c9be091ce1d8dbcf8c49e282a3"
+        },
+        {
+          "id": "ibama_data_extraction_2",
+          "sha256": "707316d7285d82b01ecc2bd22aa749dd57dae4bcaa8c3228ea758751cb58520c"
+        },
+        {
+          "id": "ibama_data_extraction_3",
+          "sha256": "23dca0e676dd025e160f854b1e4b91e6816becf83b349fc9a9bc905907c513de"
+        },
+        {
+          "id": "ibama_data_extraction_4",
+          "sha256": "913aac7b0cfac0b0629b8eef975761041540acff2c865cf1a263c9ab8a54364e"
+        },
+        {
+          "id": "ibama_data_extraction_5",
+          "sha256": "44f629399c0493e158df7e9f1c511bf93546f0e73fdea75176a30236cbe38c34"
+        }
+      ],
+      "cell_ids": [
+        "ibama_data_extraction_1",
+        "ibama_data_extraction_2",
+        "ibama_data_extraction_3",
+        "ibama_data_extraction_4",
+        "ibama_data_extraction_5"
+      ]
+    },
+    {
+      "report": "research/reports/ibge_census_data_extraction.md",
+      "retired_script": "code/reports/ibge_census_data_extraction.py",
+      "original_cells": [
+        {
+          "id": "ibge_census_data_extraction_1",
+          "sha256": "b376880a70eb747d0f0c6674bc9b6e18c5175110fd9f404a587f0e6afddd1a97"
+        },
+        {
+          "id": "ibge_census_data_extraction_2",
+          "sha256": "21ffe60e4ed5e8854b5158fccdc35171d6b00ce6c841e487313f3e98c6ba6d76"
+        },
+        {
+          "id": "ibge_census_data_extraction_3",
+          "sha256": "fdcccac55c7f244fae8a7e00f1d7b510dfb258d021089d3f152a3c3d67ed0b9a"
+        },
+        {
+          "id": "ibge_census_data_extraction_4",
+          "sha256": "f0d52697500b40330275036c2a67630487e602bcd5b9ab58852a2799461b48ca"
+        },
+        {
+          "id": "ibge_census_data_extraction_5",
+          "sha256": "d7c2393669b21d8536e29cf13189bba116dc41896945e31be373cb9c400b2f4b"
+        },
+        {
+          "id": "ibge_census_data_extraction_6",
+          "sha256": "b9d0c3e1272be4d0daa81acb1e0a9e344d4e26e84c4ae37f76c3b1c3a4c53fcf"
+        }
+      ],
+      "cell_ids": [
+        "ibge_census_data_extraction_1",
+        "ibge_census_data_extraction_2",
+        "ibge_census_data_extraction_3",
+        "ibge_census_data_extraction_4",
+        "ibge_census_data_extraction_5",
+        "ibge_census_data_extraction_6"
+      ]
+    },
+    {
+      "report": "research/reports/ibge_census_temporal_comparison.md",
+      "retired_script": "code/reports/ibge_census_temporal_comparison.py",
+      "original_cells": [
+        {
+          "id": "ibge_census_temporal_comparison_1",
+          "sha256": "d3ba474d76f282a91e65da6ab277b923d643e985fbacca663e60ae68acf89c3c"
+        },
+        {
+          "id": "ibge_census_temporal_comparison_2",
+          "sha256": "ca7a7f3420517f2bca0db501f65a6f59eb3da136d8529c0bf2806dd7b830b896"
+        },
+        {
+          "id": "ibge_census_temporal_comparison_3",
+          "sha256": "63ad9605884a336e24e9dda36740aef94b657ae3dc011f5954fa306c4c814521"
+        },
+        {
+          "id": "ibge_census_temporal_comparison_4",
+          "sha256": "d0978df01cfb0e0aa0abb4543f7feb541d0de088262bd420ee49d419a7f417de"
+        },
+        {
+          "id": "ibge_census_temporal_comparison_5",
+          "sha256": "7242c04022a4135cdc7f2e53c367606a032f91f185c8d7146899760919e3b0dc"
+        },
+        {
+          "id": "ibge_census_temporal_comparison_6",
+          "sha256": "510f545b0459ee9fbeb13d6966d654d6bf5fca4a49f0d7c259e860727a1916ae"
+        },
+        {
+          "id": "ibge_census_temporal_comparison_7",
+          "sha256": "9b38d97a9f4631e66ec11c84c1e3ec26b46fe6b63cac1f98e30d9eca65e0787d"
+        },
+        {
+          "id": "ibge_census_temporal_comparison_8",
+          "sha256": "8133a6b6d108f5506aedede298c99d0e27b65ea70f6dcbc19ea6cd7f3aa17a51"
+        },
+        {
+          "id": "ibge_census_temporal_comparison_9",
+          "sha256": "0bd1a882242768db34c8448e9f50e9e662f3afdfddd3bacec191219f39126f6b"
+        },
+        {
+          "id": "ibge_census_temporal_comparison_10",
+          "sha256": "75234704ce62ba5d86bf70a2ce560739bbd3225994347c9ba921dd9ed9f541ac"
+        },
+        {
+          "id": "ibge_census_temporal_comparison_11",
+          "sha256": "79d512f2a1e1dd3e51c82c8c5cbd9a0f828cd7dbdb94512c630c418ea37d34b1"
+        },
+        {
+          "id": "ibge_census_temporal_comparison_12",
+          "sha256": "944d2b324b3170677607221e57c9e696e9274252440e81142aa9a34f87094145"
+        },
+        {
+          "id": "ibge_census_temporal_comparison_13",
+          "sha256": "0c60521e81b4b2032082bacb5b5df82d34ccbab9469df49e15f2091aeec5f1d8"
+        },
+        {
+          "id": "ibge_census_temporal_comparison_14",
+          "sha256": "caa8d6709e7dcaa3f4ab94dad53e56c0cb39e2926a1f90cd40de32cc81ee7096"
+        },
+        {
+          "id": "ibge_census_temporal_comparison_15",
+          "sha256": "7c5bf164523733246d81cf61b43f99da9db7eac4ee4a74074be4d77a965ce035"
+        },
+        {
+          "id": "ibge_census_temporal_comparison_16",
+          "sha256": "4d666c27eafd9904988a9bfb86793a93f85f7142f0864541e722efc97d1d5ce8"
+        },
+        {
+          "id": "ibge_census_temporal_comparison_17",
+          "sha256": "803a530ff045c831b102899880dc19075ca2aa22d4e2f0944bade6d57d7d7d02"
+        }
+      ],
+      "cell_ids": [
+        "ibge_census_temporal_comparison_1",
+        "ibge_census_temporal_comparison_2",
+        "ibge_census_temporal_comparison_3",
+        "ibge_census_temporal_comparison_4",
+        "ibge_census_temporal_comparison_5",
+        "ibge_census_temporal_comparison_6",
+        "ibge_census_temporal_comparison_7",
+        "ibge_census_temporal_comparison_8",
+        "ibge_census_temporal_comparison_9",
+        "ibge_census_temporal_comparison_10",
+        "ibge_census_temporal_comparison_11",
+        "ibge_census_temporal_comparison_12",
+        "ibge_census_temporal_comparison_13",
+        "ibge_census_temporal_comparison_14",
+        "ibge_census_temporal_comparison_15",
+        "ibge_census_temporal_comparison_16",
+        "ibge_census_temporal_comparison_17"
+      ]
+    },
+    {
+      "report": "research/reports/ibge_census_tract_harmonisation.md",
+      "retired_script": "code/reports/ibge_census_tract_harmonisation.py",
+      "original_cells": [
+        {
+          "id": "ibge_census_tract_harmonisation_1",
+          "sha256": "cd9fdca1893beb9e9f08403dfbd8b732c48a50aa93d29c6a063dbed9d49ca25b"
+        },
+        {
+          "id": "ibge_census_tract_harmonisation_2",
+          "sha256": "780d072872b875cdcb6f4f37647d74cc8bd3d6267634bae0a42956015a55c189"
+        },
+        {
+          "id": "ibge_census_tract_harmonisation_3",
+          "sha256": "b97ca49e2da42d8c8edecf36cd9f7f1e9da9baf9be411406e901b66a5ce599bc"
+        }
+      ],
+      "cell_ids": [
+        "ibge_census_tract_harmonisation_1",
+        "ibge_census_tract_harmonisation_2",
+        "reference_diagram",
+        "ibge_census_tract_harmonisation_3"
+      ]
+    },
+    {
+      "report": "research/reports/ibge_dataset_overview.md",
+      "retired_script": "code/reports/ibge_dataset_overview.py",
+      "original_cells": [
+        {
+          "id": "ibge_dataset_overview_1",
+          "sha256": "791307b4f294179aa13ebec5d2c923c1c76baeeb65181e90061732715bc11898"
+        },
+        {
+          "id": "ibge_dataset_overview_2",
+          "sha256": "6c16e8f0b636cccc6cef855afeae1ab98591206e8cf22fddbfa7751072438bc6"
+        },
+        {
+          "id": "ibge_dataset_overview_3",
+          "sha256": "8fb6b8076669870343fb93346d0ee042279f7519d946c3bbe92bd67da72b56cb"
+        },
+        {
+          "id": "ibge_dataset_overview_4",
+          "sha256": "b6f4cdd6cd7f5da907a7eda090ead2885141ee38f1bda3df6aeb55757499ca23"
+        },
+        {
+          "id": "ibge_dataset_overview_5",
+          "sha256": "868c6211c6aa9927067404f36ec605818a742a9128833c76c48f779638caf573"
+        },
+        {
+          "id": "ibge_dataset_overview_6",
+          "sha256": "cb09a0650197052b687e13f41a2703b9e758466fc3bba8a40e0acaf2b071c700"
+        },
+        {
+          "id": "ibge_dataset_overview_7",
+          "sha256": "83ae027c051f379fe421f4346cb1602322679670fe9f830b984c8293d2ef25e3"
+        },
+        {
+          "id": "ibge_dataset_overview_8",
+          "sha256": "ded903ba171f956d437f6a8ca70b4c8ffef0a98e3e07eb9abbf4e1bba9bd7f79"
+        },
+        {
+          "id": "ibge_dataset_overview_9",
+          "sha256": "5322fee5ee2ccedcf18f6ec9442995e15ffc40816be4e253a79bcb8f2139f177"
+        },
+        {
+          "id": "ibge_dataset_overview_10",
+          "sha256": "b2a8d022d9de0f670834bdc60a96dbbeca78e606858f86c9ab2b2d009799b7b5"
+        },
+        {
+          "id": "ibge_dataset_overview_11",
+          "sha256": "fb48c7fcf6be42d43b87cd251df6c3ffd69ea9d76f42b3ec690be734205fd4a3"
+        },
+        {
+          "id": "ibge_dataset_overview_12",
+          "sha256": "74923714b06d8fd3ac7f29bb8eaa0c8cc698fc25755a6253ac1148e65af53555"
+        },
+        {
+          "id": "ibge_dataset_overview_13",
+          "sha256": "c2b6f4e5be28492814603212ed8ecc4ebaac00fb4cacf53050743684a4225987"
+        },
+        {
+          "id": "ibge_dataset_overview_14",
+          "sha256": "9239adffeafc7e694c0f9ce88e418e6069e01e56e893998c64d3c9e68db3ea70"
+        }
+      ],
+      "cell_ids": [
+        "ibge_dataset_overview_1",
+        "ibge_dataset_overview_2",
+        "ibge_dataset_overview_3",
+        "ibge_dataset_overview_4",
+        "ibge_dataset_overview_5",
+        "ibge_dataset_overview_6",
+        "ibge_dataset_overview_7",
+        "ibge_dataset_overview_8",
+        "ibge_dataset_overview_9",
+        "ibge_dataset_overview_10",
+        "ibge_dataset_overview_11",
+        "ibge_dataset_overview_12",
+        "ibge_dataset_overview_13",
+        "ibge_dataset_overview_14"
+      ]
+    },
+    {
+      "report": "research/reports/obrasgov_data_extraction.md",
+      "retired_script": "code/reports/obrasgov_data_extraction.py",
+      "original_cells": [
+        {
+          "id": "obrasgov_data_extraction_1",
+          "sha256": "84ea122436adf08b1cfb8446f69a94ebb584e61e98795ca3e2628865c3159e52"
+        },
+        {
+          "id": "obrasgov_data_extraction_2",
+          "sha256": "8e6444756d3eae411dc6421bdf963f735809687acd23e2d69a81fb72f0679311"
+        },
+        {
+          "id": "obrasgov_data_extraction_3",
+          "sha256": "d005a284d6350f54b6bf76a121b28d6ce6fa1a483b2a3caf1b5f4f5d2c530ed0"
+        },
+        {
+          "id": "obrasgov_data_extraction_4",
+          "sha256": "26aac2732a5b5d46343fea09ee8287e928ba727a03f3bdf6f9d4abde9c73d663"
+        },
+        {
+          "id": "obrasgov_data_extraction_5",
+          "sha256": "fae3df9281c89136bc2ae9b468ae04313ad8497ccc8025fe9683c829286804b7"
+        },
+        {
+          "id": "obrasgov_data_extraction_6",
+          "sha256": "d849dae49565d4a9a41fe749b2e1cfd388db16d71fd077ced76506f611f5dd80"
+        },
+        {
+          "id": "obrasgov_data_extraction_7",
+          "sha256": "c4bbee137bace34d5245800d2f0c0f9612d8857ebbe38ea94b1dde79be0125a6"
+        }
+      ],
+      "cell_ids": [
+        "obrasgov_data_extraction_1",
+        "obrasgov_data_extraction_2",
+        "obrasgov_data_extraction_3",
+        "obrasgov_data_extraction_4",
+        "obrasgov_data_extraction_5",
+        "obrasgov_data_extraction_6",
+        "obrasgov_data_extraction_7"
+      ]
+    },
+    {
+      "report": "research/reports/obrasgov_preprocessing.md",
+      "retired_script": "code/reports/obrasgov_preprocessing.py",
+      "original_cells": [
+        {
+          "id": "obrasgov_preprocessing_1",
+          "sha256": "e22ddc7564a4561e4789d12209c7bb31411d9c457de899274d65109f21b80e36"
+        },
+        {
+          "id": "obrasgov_preprocessing_2",
+          "sha256": "de1ab1eb289ae37f35f2c86666b48851d531dcd65337618a13a218cda9c871eb"
+        },
+        {
+          "id": "obrasgov_preprocessing_3",
+          "sha256": "4aad91831b8c747d12c66470eb0a79aef655d1022e91a608ca7c958eaf717437"
+        },
+        {
+          "id": "obrasgov_preprocessing_4",
+          "sha256": "55a4bd5f62401ec93232a1ba613ef9cae8e5664cb18cc71ef0d29b756f0230e6"
+        },
+        {
+          "id": "obrasgov_preprocessing_5",
+          "sha256": "7e0f753e1e609c242eda9b771aaf7260e586d3ee22545a9ad2d59a463f1bd7ef"
+        },
+        {
+          "id": "obrasgov_preprocessing_6",
+          "sha256": "5e664e44b1bb25644dfb034e1cca8ad6dfb3b64946336813e5bf57e2b77071a3"
+        },
+        {
+          "id": "obrasgov_state_filter_summary",
+          "sha256": "195eda2855d99522b7f8f2564687abf7844c6965b0da18387ef5915dcf807d38"
+        }
+      ],
+      "cell_ids": [
+        "obrasgov_preprocessing_1",
+        "obrasgov_preprocessing_2",
+        "obrasgov_preprocessing_3",
+        "obrasgov_preprocessing_4",
+        "obrasgov_preprocessing_5",
+        "obrasgov_preprocessing_6",
+        "location_qa",
+        "primary_state_check",
+        "obrasgov_state_filter_summary",
+        "state_filter_figure"
+      ]
+    },
+    {
+      "report": "research/reports/property_value.md",
+      "retired_script": "code/reports/property_value.py",
+      "original_cells": [
+        {
+          "id": "property_value_1",
+          "sha256": "91ecb8a1bca76c35fab126d4abcc22986aec4fbfa220c24141d4eae1fc79b110"
+        },
+        {
+          "id": "property_value_2",
+          "sha256": "1be1de56ad4536daa35d1f3e8187e5efdd96d7baac0c9057f9bc70e97c579193"
+        },
+        {
+          "id": "property_value_3",
+          "sha256": "a3b9460820c33dd7be15bc00f85a4860637111efb82a3247175b1559fc1faba5"
+        }
+      ],
+      "cell_ids": [
+        "property_value_1",
+        "property_value_2",
+        "property_value_3"
+      ]
+    }
+  ]
+}

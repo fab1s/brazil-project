@@ -1,8 +1,8 @@
 # Remaining Research Tasks
 
 Status: current
-Last updated: 2026-10-06
-Version: 0.8
+Last updated: 2026-10-07
+Version: 0.9
 Scope: Remaining Research Tasks
 
 - Review the [harmonisation update](harmonisation-update.md) and its footprint/coverage diagnostics under the approved boundary-change assumption. The requested implementation corrections are complete.
@@ -11,7 +11,7 @@ Scope: Remaining Research Tasks
 - Review the original stored density absolute-change discrepancy and the income prose/code discrepancy separately from translation.
 - Verify full national correspondence recomputation before replacing the original default crosswalk.
 - Record live IBAMA and Obrasgov acquisition comparisons against provider snapshots when acquisition is requested.
-- Review generated research reports and figures before publication. Fresh Python outputs are review copies; update the maintained Markdown only after reviewing values and figures.
+- Review generated research reports and figures before publication. The pipeline refreshes marked results automatically; review values and figures before publication.
 - Supply the original Linha Verde shapefile to restore the optional overlay; no substitute was inferred.
 - Do not mark scientific or publication review complete merely because software tests pass.
 

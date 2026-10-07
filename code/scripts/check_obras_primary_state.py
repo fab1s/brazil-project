@@ -10,7 +10,7 @@ import shapely
 
 from brazil_project.io import Context, WorkflowError
 from brazil_project.infrastructure.location_qa import fingerprint
-from plot_location_qa import verified_plot_inputs
+from scripts.plot_location_qa import verified_plot_inputs
 
 
 def check_states(parts, states):
@@ -48,6 +48,10 @@ def main():
     parser.add_argument('--config', default='project.toml')
     args = parser.parse_args()
     ctx = Context(args.config)
+    return run(ctx)
+
+
+def run(ctx):
     component, reference = verified_plot_inputs(ctx)
     input_hashes = {str(path.relative_to(ctx.root)): fingerprint(path) for path in (component, reference, ctx.path('location_qa', 'source'))}
     parts = gpd.read_parquet(component).reset_index(drop=True)
@@ -110,6 +114,7 @@ def main():
     (output / 'summary.json.tmp').replace(output / 'summary.json')
     print(json.dumps(summary['component_counts'], indent=2))
     print(output)
+    return summary
 
 
 if __name__ == '__main__':

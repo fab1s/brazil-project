@@ -1,8 +1,8 @@
 # Project Layout Simplification
 
 Status: implemented and preservation verified
-Last updated: 2026-10-06
-Version: 0.2
+Last updated: 2026-10-07
+Version: 0.3
 Scope: Human navigation, content preservation and executable path updates
 
 ## Where things are
@@ -52,4 +52,4 @@ Rscript code/scripts/r/test_overview.R
 
 Existing analytical methods and numerical data are unchanged; restructuring does not publish a new website. Runtime caches stay hidden under `.cache/` and `.venv/`. New files/folders are created only when they have real contents.
 
-Reports now live under `research/reports/` as Markdown only; their former executable cells live under `code/reports/`. [Preservation and workflow](report-previews.md) records the original QMD archive and code mapping.
+Reports now live under `research/reports/` as Markdown only; their executable cells live inside the same Markdown document. [Preservation and workflow](report-previews.md) records the original QMD archive and code mapping.

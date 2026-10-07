@@ -1,8 +1,8 @@
 # Current Project Progress
 
 Status: implemented and validated with recorded limitations
-Last updated: 2026-10-06
-Version: 0.13
+Last updated: 2026-10-07
+Version: 0.14
 Scope: Current Project Progress
 
 The complete original file collection is copied, organized, and checksum verified. The Python package and CLI are installed locally. Python dependencies and retained R dependencies are locked.
@@ -11,7 +11,7 @@ Python annual indicators and conference chart populations are implemented, and n
 
 All 13 indicator calculations and conference chart populations match a fresh original R reference on complete common areas intersecting Belo Horizonte. Prepared geometry boundaries agree within the original one micrometre precision grid; the historical local R matcher’s point-only contact intentionally differs under the approved positive-area policy. Twelve national stored indicator outputs match; the remaining density absolute-change discrepancy is documented in [results](checks.md).
 
-The spherical overview preserves R sf/S2 and produces original comparison classifications and example maps. All nine report scripts execute independently in Python. Maintained documents are single Markdown files under `research/reports/`; fresh result review copies are under `outputs/reports/`. Quarto is no longer required. Previous QMD/HTML contents remain preserved, and reporting checks are in [the process record](report-previews.md). The full suite covers analytical, map, location, state, path and reporting behavior; all 64 tests pass. National crosswalk recomputation and live external harvest parity are not declared validated. The original Linha Verde overlay is absent and is reported without substituting another geometry.
+The spherical overview preserves R sf/S2 and produces original comparison classifications and example maps. All nine reports contain executable Python cells in Markdown. Processing refreshes generated results automatically; supported municipality copies are isolated under `outputs/reports/`. Integration checks are recorded in [the processing and audit record](report-integration.md). Quarto is no longer required. Previous QMD/HTML contents remain preserved, and reporting checks are in [the process record](report-previews.md). The full suite covers analytical, map, location, state, path and reporting behavior; the latest integration verification is recorded separately. National crosswalk recomputation and live external harvest parity are not declared validated. The original Linha Verde overlay is absent and is reported without substituting another geometry.
 
 The [harmonisation update](harmonisation-update.md) addresses the audit findings: positive-area matching, complete groups, atomic versioned geometry/lookup bundles, merged analytical polygons, unique part IDs, and unmatched coverage inventories. The researcher accepts the documented boundary-change assumption; footprint diagnostics remain available and do not block groups automatically. National baseline processing has been regenerated under this policy. Explicit full-national geometric recomputation has not been run as part of this update.
 
@@ -31,4 +31,6 @@ The researcher subsequently approved excluding all 2,346 entirely outside primar
 
 The [simplified layout](project-layout.md) has six visible working folders; the root [README](../README.md#where-to-find-things) now guides readers through reports, documentation and supporting materials. Executable code/configuration/tests are under `code/`, active reports under `research/reports/`, original material under `data/archive/`, and project configuration is `project.toml`. Documentation is flat with `docs/evidence/` and `docs/assets/`; 33 former folder READMEs are preserved verbatim. Empty placeholders are removed and input path lookups no longer create directories. All 59 tests, nine notebook executions and the R adapter check pass after relocation; layout preservation is recorded in the linked manifest.
 
-[Markdown consolidation](report-previews.md) records the nine single readable reports, preserved ordered Python cells, exact source archive and fresh-process verification. The [research index](../research/README.md#read-the-reports) links each report. Refreshing produces review copies without overwriting narrative; no analytical stages or research inputs changed.
+[Markdown consolidation](report-previews.md) records the nine single readable reports, preserved ordered Python cells, exact source archive and fresh-process verification. The [research index](../research/README.md#read-the-reports) links each report. Processing refreshes only marked outputs without overwriting narrative; no analytical stages or research inputs changed.
+
+The [executable Markdown integration](report-integration.md) has passed 86 tests and a fresh national run of all available stages. Eleven processing steps completed; only the exact cadastral CSV blocks land-value processing. Eight reports refreshed automatically, and the saved exploratory property report was refreshed separately with its limitation visible. Scoped Belo Horizonte indicators and reports, current-source figures, protected publication and the installable package were checked. This verification does not supersede the scientific limitations above.

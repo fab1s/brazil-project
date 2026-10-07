@@ -24,26 +24,31 @@ def show_chunk(ctx,source,index):
     folder=ctx.intermediate/stage
     if artifact=='report':
         path=folder/'report.json'
-        if path.exists(): display(json.loads(path.read_text()))
-        else: display({'stage':stage,'status':'not generated','command':f'brazil-project run {stage}'})
+        result=json.loads(ctx.require(path).read_text())
+        if stage=='harmonisation':
+            pointer=json.loads(ctx.require(ctx.intermediate/'harmonisation/current.json').read_text())
+            if result.get('generation')!=pointer.get('generation'): raise WorkflowError('Report and harmonisation pointer differ; rerun processing.')
+        display(result)
     else:
         path=ctx.artifact(stage, artifact+'.parquet')
-        if path.exists():
-            frame=pd.read_parquet(path)
+        if ctx.require(path):
+            if stage=='harmonisation':
+                from brazil_project.harmonisation.census import load_bundle
+                frames,_=load_bundle(ctx,[artifact]);frame=frames[artifact]
+            else: frame=pd.read_parquet(path)
             display(frame.drop(columns='geometry',errors='ignore').head(20))
             display({'artifact_rows':len(frame),'path':str(path.relative_to(ctx.root))})
-        else: display({'artifact':artifact,'status':'not generated','stage':stage})
     if stage=='charts':
         for name in ['urban_inadequate_sanitation_2010_2022.png','urban_inadequate_sanitation_income_boxplots_2022.png']:
-            path=ctx.root/'outputs/figures/brazil'/name
-            if path.exists(): display(Image(filename=str(path)))
+            path=ctx.root/'outputs/figures'/('municipality_'+ctx.municipality if ctx.municipality else 'brazil')/name
+            display(Image(filename=str(ctx.require(path))))
     if stage=='ibama' and entry['chunk_label']=='vizualisation':
         path=ctx.root/'outputs/maps/ibama.html'
-        if path.exists(): show_map(path)
+        show_map(ctx.require(path))
     if stage=='overview' and entry['chunk_label'].startswith('example_'):
         examples={'example_1_split':'310620025610001','example_2_split':'310620005650306','example_3_reshape':'310620005620021','example_3_stable':'310620005620008'}
-        path=ctx.root/'outputs/maps/overview'/(examples[entry['chunk_label']]+'.html')
-        if path.exists(): show_map(path)
+        path=ctx.root/'outputs/maps'/('municipality_'+ctx.municipality if ctx.municipality else 'overview')/(examples[entry['chunk_label']]+'.html')
+        show_map(ctx.require(path))
     if stage=='census-exploration' and entry['chunk_label']=='visualization_black_ratio':
         path=ctx.root/'outputs/maps/black_ratio_2010_2022.html'
-        if path.exists(): show_map(path)
+        show_map(ctx.require(path))

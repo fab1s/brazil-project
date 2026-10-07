@@ -140,7 +140,7 @@ def test_all_continues_independent_stages_but_blocks_failed_dependencies(tmp_pat
         return {'stage':stage}
     monkeypatch.setattr(cli,'dispatch',dispatch)
     assert cli.main(['run','all','--config',str(config)])==1
-    assert 'obrasgov' in executed and 'land-value' in executed
+    assert 'obrasgov-snapshot' in executed and 'land-value' in executed
     assert 'charts' not in executed
     report=json.loads((tmp_path/'data/intermediate/runs/report.json').read_text())
     assert next(r for r in report['stages'] if r['stage']=='charts')['status']=='blocked'
@@ -152,3 +152,31 @@ def test_outer_year_estimates_do_not_fill_absent_years_with_zero():
     newer=pd.DataFrame({'common_id':['b'],'ratio_2022':[.8]})
     compared=older.merge(newer,on='common_id',how='outer',validate='one_to_one')
     assert (compared.ratio_2022-compared.ratio_2010).isna().all()
+
+
+def test_overview_map_lookup_handles_original_real_tract_ids(tmp_path, monkeypatch):
+    """Exercise the map-producing path with the source's REAL identifier storage."""
+    from types import SimpleNamespace
+    from brazil_project.harmonisation import overview
+    from brazil_project.io import Context
+    import subprocess
+    import shutil
+    codes=['310620025610001','310620005650306','310620005620021','310620005620008']
+    raw=tmp_path/'tracts.gpkg'
+    geometries=[box(-44+i*.01,-20,-43.999+i*.01,-19.999) for i in range(4)]
+    tracts=gpd.GeoDataFrame({'code_tract':[float(v) for v in codes]},geometry=geometries,crs=4326)
+    for layer in ('2000_urban','2010','2022'): tracts.to_file(raw,layer=layer,driver='GPKG')
+    config=tmp_path/'project.toml'
+    config.write_text('[project]\nroot="."\n[census]\ntracts="tracts.gpkg"\n')
+    ctx=Context(config);out=ctx.artifact('overview','report.json').parent;out.mkdir(parents=True)
+    for year in (2010,2022):
+        pd.DataFrame({'code_tract_2000':codes,'change_type':['stable']*4}).to_csv(out/f'change_summary_2000_{year}.csv',index=False)
+        intersections=gpd.GeoDataFrame({'code_tract_2000':[float(v) for v in codes],'code_tract_new':[float(v) for v in codes],'overlap_pct':[1.]*4},geometry=geometries,crs=4326)
+        intersections.to_file(out/f'intersections_2000_{year}.gpkg',driver='GPKG')
+    original_which=shutil.which;original_run=subprocess.run
+    monkeypatch.setattr(shutil,'which',lambda name: 'Rscript' if name=='Rscript' else original_which(name))
+    monkeypatch.setattr(subprocess,'run',lambda command,*a,**kw: SimpleNamespace(returncode=0) if isinstance(command,list) and command[0]=='Rscript' else original_run(command,*a,**kw))
+    overview.run(ctx)
+    for code in codes:
+        html=(tmp_path/'outputs/maps/overview'/f'{code}.html').read_text()
+        assert '2000 tract' in html and '2010 tracts' in html and '2022 tracts' in html

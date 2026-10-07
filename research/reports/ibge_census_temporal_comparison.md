@@ -1,434 +1,4836 @@
 # IBGE Census - Temporal Comparison
 
-Research report · [Python report script](../../code/reports/ibge_census_temporal_comparison.py) · Saved local results; full datasets stay outside Git.
+Executable research report. Refresh with `brazil-project report ibge_census_temporal_comparison`. Code is collapsed below each explanation.
+
+Spatial indicator outputs now contain one merged 2022 feature per `common_id`. Original tract pieces remain reference data. The [approved harmonisation policy](../../docs/harmonisation-policy.md) records the boundary-change assumption, complete-group scope, and explicit unmatched coverage.
 
 
-Spatial indicator outputs now contain one merged 2022 feature per
-`common_id`. Original tract pieces remain reference data. The [approved
-harmonisation policy](../../docs/harmonisation-policy.md) records the
-boundary-change assumption, complete-group scope, and explicit unmatched
-coverage.
+<details>
+<summary>Python code</summary>
 
-    {'harmonisation_version': '8f67986ba3b1f50731be40dc11a183fdda6b8caecd893ed0d9ea5f83ddec1650',
-     'spatial_unit': 'common_id',
-     'black': {'common_areas': 287178, 'missing_change': 3505},
-     'brown': {'common_areas': 287178, 'missing_change': 3505},
-     'black_brown': {'common_areas': 287178, 'missing_change': 3505},
-     'literacy': {'common_areas': 285714, 'missing_change': 5738},
-     'rudimentary_sanitation': {'common_areas': 285714, 'missing_change': 3821},
-     'water_network': {'common_areas': 285714, 'missing_change': 3821},
-     'waste_collection': {'common_areas': 285714, 'missing_change': 3821},
-     'sewer_septic': {'common_areas': 285714, 'missing_change': 3821},
-     'houses': {'common_areas': 287178, 'missing_change': 5285},
-     'village_condo': {'common_areas': 287178, 'missing_change': 5285},
-     'apartments': {'common_areas': 287178, 'missing_change': 5285},
-     'income': {'common_areas': 287178, 'missing_change': 0},
-     'population_density': {'common_areas': 287178},
-     'generated_at': '2026-10-05T12:42:28.559266+00:00'}
+<!-- brazil:cell ibge_census_temporal_comparison_1 -->
+```python
+#| label: ibge_census_temporal_comparison_1
+from pathlib import Path
+from brazil_project.io import Context
+from brazil_project.reporting import show_chunk
+show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 1)
+```
+
+</details>
+
+<!-- brazil:output ibge_census_temporal_comparison_1 begin -->
+```text
+{'harmonisation_version': '8f67986ba3b1f50731be40dc11a183fdda6b8caecd893ed0d9ea5f83ddec1650',
+ 'spatial_unit': 'common_id',
+ 'black': {'common_areas': 287178, 'missing_change': 3505},
+ 'brown': {'common_areas': 287178, 'missing_change': 3505},
+ 'black_brown': {'common_areas': 287178, 'missing_change': 3505},
+ 'literacy': {'common_areas': 285714, 'missing_change': 5738},
+ 'rudimentary_sanitation': {'common_areas': 285714, 'missing_change': 3821},
+ 'water_network': {'common_areas': 285714, 'missing_change': 3821},
+ 'waste_collection': {'common_areas': 285714, 'missing_change': 3821},
+ 'sewer_septic': {'common_areas': 285714, 'missing_change': 3821},
+ 'houses': {'common_areas': 287178, 'missing_change': 5285},
+ 'village_condo': {'common_areas': 287178, 'missing_change': 5285},
+ 'apartments': {'common_areas': 287178, 'missing_change': 5285},
+ 'income': {'common_areas': 287178, 'missing_change': 0},
+ 'population_density': {'common_areas': 287178},
+ 'generated_at': '2026-10-07T07:05:26.333989+00:00'}
+```
+<!-- brazil:output ibge_census_temporal_comparison_1 end -->
 
 ## Black population
 
-    {'harmonisation_version': '8f67986ba3b1f50731be40dc11a183fdda6b8caecd893ed0d9ea5f83ddec1650',
-     'spatial_unit': 'common_id',
-     'black': {'common_areas': 287178, 'missing_change': 3505},
-     'brown': {'common_areas': 287178, 'missing_change': 3505},
-     'black_brown': {'common_areas': 287178, 'missing_change': 3505},
-     'literacy': {'common_areas': 285714, 'missing_change': 5738},
-     'rudimentary_sanitation': {'common_areas': 285714, 'missing_change': 3821},
-     'water_network': {'common_areas': 285714, 'missing_change': 3821},
-     'waste_collection': {'common_areas': 285714, 'missing_change': 3821},
-     'sewer_septic': {'common_areas': 285714, 'missing_change': 3821},
-     'houses': {'common_areas': 287178, 'missing_change': 5285},
-     'village_condo': {'common_areas': 287178, 'missing_change': 5285},
-     'apartments': {'common_areas': 287178, 'missing_change': 5285},
-     'income': {'common_areas': 287178, 'missing_change': 0},
-     'population_density': {'common_areas': 287178},
-     'generated_at': '2026-10-05T12:42:28.559266+00:00'}
+
+<details>
+<summary>Python code</summary>
+
+<!-- brazil:cell ibge_census_temporal_comparison_2 -->
+```python
+#| label: ibge_census_temporal_comparison_2
+show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 2)
+```
+
+</details>
+
+<!-- brazil:output ibge_census_temporal_comparison_2 begin -->
+```text
+{'harmonisation_version': '8f67986ba3b1f50731be40dc11a183fdda6b8caecd893ed0d9ea5f83ddec1650',
+ 'spatial_unit': 'common_id',
+ 'black': {'common_areas': 287178, 'missing_change': 3505},
+ 'brown': {'common_areas': 287178, 'missing_change': 3505},
+ 'black_brown': {'common_areas': 287178, 'missing_change': 3505},
+ 'literacy': {'common_areas': 285714, 'missing_change': 5738},
+ 'rudimentary_sanitation': {'common_areas': 285714, 'missing_change': 3821},
+ 'water_network': {'common_areas': 285714, 'missing_change': 3821},
+ 'waste_collection': {'common_areas': 285714, 'missing_change': 3821},
+ 'sewer_septic': {'common_areas': 285714, 'missing_change': 3821},
+ 'houses': {'common_areas': 287178, 'missing_change': 5285},
+ 'village_condo': {'common_areas': 287178, 'missing_change': 5285},
+ 'apartments': {'common_areas': 287178, 'missing_change': 5285},
+ 'income': {'common_areas': 287178, 'missing_change': 0},
+ 'population_density': {'common_areas': 287178},
+ 'generated_at': '2026-10-07T07:05:26.333989+00:00'}
+```
+<!-- brazil:output ibge_census_temporal_comparison_2 end -->
 
 ## Calculation conventions
 
-All eight indicators retain available annual common-area estimates with
-`full_join()`. Counts are summed with `na.rm = TRUE`; missing components
-of combined counts are also treated as zero before addition. This
-preserves the requested Black-only aggregation approach, but incomplete
-counts can bias proportions. Ratios with zero total
-population/households remain unavailable. An absent year is never filled
-with zero, so percentage-point change requires both annual ratios. These
-are common-area estimates displayed on 2022 geometry.
+All eight indicators retain available annual common-area estimates with `full_join()`. Counts are summed with `na.rm = TRUE`; missing components of combined counts are also treated as zero before addition. This preserves the requested Black-only aggregation approach, but incomplete counts can bias proportions. Ratios with zero total population/households remain unavailable. An absent year is never filled with zero, so percentage-point change requires both annual ratios. These are common-area estimates displayed on 2022 geometry.
 
-    {'harmonisation_version': '8f67986ba3b1f50731be40dc11a183fdda6b8caecd893ed0d9ea5f83ddec1650',
-     'spatial_unit': 'common_id',
-     'black': {'common_areas': 287178, 'missing_change': 3505},
-     'brown': {'common_areas': 287178, 'missing_change': 3505},
-     'black_brown': {'common_areas': 287178, 'missing_change': 3505},
-     'literacy': {'common_areas': 285714, 'missing_change': 5738},
-     'rudimentary_sanitation': {'common_areas': 285714, 'missing_change': 3821},
-     'water_network': {'common_areas': 285714, 'missing_change': 3821},
-     'waste_collection': {'common_areas': 285714, 'missing_change': 3821},
-     'sewer_septic': {'common_areas': 285714, 'missing_change': 3821},
-     'houses': {'common_areas': 287178, 'missing_change': 5285},
-     'village_condo': {'common_areas': 287178, 'missing_change': 5285},
-     'apartments': {'common_areas': 287178, 'missing_change': 5285},
-     'income': {'common_areas': 287178, 'missing_change': 0},
-     'population_density': {'common_areas': 287178},
-     'generated_at': '2026-10-05T12:42:28.559266+00:00'}
 
-|  | common_id | pop_2010 | black_pop_2010 | black_ratio_2010 | pop_2022 | black_pop_2022 | black_ratio_2022 | black_ratio_change | black_ratio_change_pp | n_2010 | n_2022 | relationship |
-|----|----|----|----|----|----|----|----|----|----|----|----|----|
-| 0 | 1 | 859.0 | 57.0 | 0.066356 | 928.0 | 87.0 | 0.093750 | 0.027394 | 2.739377 | 1 | 1 | 1:1 |
-| 1 | 10 | 491.0 | 22.0 | 0.044807 | 311.0 | 21.0 | 0.067524 | 0.022718 | 2.271760 | 1 | 1 | 1:1 |
-| 2 | 100 | 1314.0 | 92.0 | 0.070015 | 1060.0 | 97.0 | 0.091509 | 0.021494 | 2.149421 | 1 | 1 | 1:1 |
-| 3 | 1000 | 811.0 | 109.0 | 0.134402 | 683.0 | 63.0 | 0.092240 | -0.042162 | -4.216186 | 1 | 1 | 1:1 |
-| 4 | 10000 | 915.0 | 52.0 | 0.056831 | 842.0 | 96.0 | 0.114014 | 0.057184 | 5.718365 | 1 | 1 | 1:1 |
-| 5 | 100000 | 519.0 | 15.0 | 0.028902 | 491.0 | 24.0 | 0.048880 | 0.019978 | 1.997810 | 2 | 3 | many_to_many |
-| 6 | 100001 | 329.0 | 8.0 | 0.024316 | 381.0 | 11.0 | 0.028871 | 0.004555 | 0.455528 | 1 | 1 | 1:1 |
-| 7 | 100002 | 470.0 | 26.0 | 0.055319 | 421.0 | 7.0 | 0.016627 | -0.038692 | -3.869207 | 1 | 1 | 1:1 |
-| 8 | 100003 | 635.0 | 22.0 | 0.034646 | 466.0 | 25.0 | 0.053648 | 0.019002 | 1.900240 | 1 | 1 | 1:1 |
-| 9 | 100004 | 469.0 | 5.0 | 0.010661 | 316.0 | 7.0 | 0.022152 | 0.011491 | 1.149092 | 1 | 1 | 1:1 |
-| 10 | 100005 | 519.0 | 21.0 | 0.040462 | 411.0 | 14.0 | 0.034063 | -0.006399 | -0.639917 | 1 | 1 | 1:1 |
-| 11 | 100006 | 524.0 | 20.0 | 0.038168 | 411.0 | 18.0 | 0.043796 | 0.005628 | 0.562768 | 1 | 1 | 1:1 |
-| 12 | 100007 | 424.0 | 53.0 | 0.125000 | 311.0 | 37.0 | 0.118971 | -0.006029 | -0.602894 | 1 | 1 | 1:1 |
-| 13 | 100008 | 559.0 | 4.0 | 0.007156 | 646.0 | 20.0 | 0.030960 | 0.023804 | 2.380412 | 1 | 1 | 1:1 |
-| 14 | 100009 | 614.0 | 5.0 | 0.008143 | 554.0 | 16.0 | 0.028881 | 0.020738 | 2.073754 | 1 | 1 | 1:1 |
-| 15 | 10001 | 696.0 | 46.0 | 0.066092 | 810.0 | 99.0 | 0.122222 | 0.056130 | 5.613027 | 1 | 1 | 1:1 |
-| 16 | 100010 | 620.0 | 10.0 | 0.016129 | 625.0 | 18.0 | 0.028800 | 0.012671 | 1.267097 | 1 | 1 | 1:1 |
-| 17 | 100011 | 421.0 | 42.0 | 0.099762 | 348.0 | 42.0 | 0.120690 | 0.020927 | 2.092718 | 1 | 1 | 1:1 |
-| 18 | 100012 | 848.0 | 38.0 | 0.044811 | 1296.0 | 144.0 | 0.111111 | 0.066300 | 6.629979 | 1 | 3 | 2010_to_2022_split |
-| 19 | 100013 | 412.0 | 26.0 | 0.063107 | 701.0 | 70.0 | 0.099857 | 0.036751 | 3.675055 | 1 | 1 | 1:1 |
+<details>
+<summary>Python code</summary>
 
-    {'artifact_rows': 287178, 'path': 'data/intermediate/indicators/black.parquet'}
+<!-- brazil:cell ibge_census_temporal_comparison_3 -->
+```python
+#| label: ibge_census_temporal_comparison_3
+show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 3)
+```
 
-|  | common_id | pop_15plus_2010 | literate_15plus_2010 | literacy_ratio_2010 | pop_15plus_2022 | literate_15plus_2022 | literacy_ratio_2022 | literacy_ratio_change | literacy_ratio_change_pp | n_2010 | n_2022 | relationship |
-|----|----|----|----|----|----|----|----|----|----|----|----|----|
-| 0 | 1 | 647.0 | 588.0 | 0.908810 | 730.0 | 666.0 | 0.912329 | 0.003519 | 0.351888 | 1 | 1 | 1:1 |
-| 1 | 10 | 400.0 | 384.0 | 0.960000 | 258.0 | 251.0 | 0.972868 | 0.012868 | 1.286822 | 1 | 1 | 1:1 |
-| 2 | 100 | 991.0 | 906.0 | 0.914228 | 860.0 | 822.0 | 0.955814 | 0.041586 | 4.158590 | 1 | 1 | 1:1 |
-| 3 | 1000 | 582.0 | 553.0 | 0.950172 | 522.0 | 504.0 | 0.965517 | 0.015345 | 1.534542 | 1 | 1 | 1:1 |
-| 4 | 10000 | 653.0 | 641.0 | 0.981623 | 656.0 | 644.0 | 0.981707 | 0.000084 | 0.008404 | 1 | 1 | 1:1 |
-| 5 | 100000 | 402.0 | 325.0 | 0.808458 | 412.0 | 372.0 | 0.902913 | 0.094455 | 9.445491 | 2 | 3 | many_to_many |
-| 6 | 100001 | 276.0 | 269.0 | 0.974638 | 327.0 | 325.0 | 0.993884 | 0.019246 | 1.924611 | 1 | 1 | 1:1 |
-| 7 | 100002 | 360.0 | 360.0 | 1.000000 | 359.0 | 355.0 | 0.988858 | -0.011142 | -1.114206 | 1 | 1 | 1:1 |
-| 8 | 100003 | 527.0 | 504.0 | 0.956357 | 409.0 | 389.0 | 0.951100 | -0.005256 | -0.525649 | 1 | 1 | 1:1 |
-| 9 | 100004 | 415.0 | 405.0 | 0.975904 | 290.0 | 287.0 | 0.989655 | 0.013752 | 1.375156 | 1 | 1 | 1:1 |
-| 10 | 100005 | 439.0 | 426.0 | 0.970387 | 359.0 | 341.0 | 0.949861 | -0.020527 | -2.052652 | 1 | 1 | 1:1 |
-| 11 | 100006 | 437.0 | 434.0 | 0.993135 | 367.0 | 361.0 | 0.983651 | -0.009484 | -0.948379 | 1 | 1 | 1:1 |
-| 12 | 100007 | 333.0 | 297.0 | 0.891892 | 261.0 | 238.0 | 0.911877 | 0.019986 | 1.998550 | 1 | 1 | 1:1 |
-| 13 | 100008 | 411.0 | 410.0 | 0.997567 | 509.0 | 501.0 | 0.984283 | -0.013284 | -1.328400 | 1 | 1 | 1:1 |
-| 14 | 100009 | 497.0 | 486.0 | 0.977867 | 482.0 | 469.0 | 0.973029 | -0.004838 | -0.483816 | 1 | 1 | 1:1 |
-| 15 | 10001 | 482.0 | 467.0 | 0.968880 | 635.0 | 625.0 | 0.984252 | 0.015372 | 1.537230 | 1 | 1 | 1:1 |
-| 16 | 100010 | 479.0 | 474.0 | 0.989562 | 511.0 | 508.0 | 0.994129 | 0.004568 | 0.456757 | 1 | 1 | 1:1 |
-| 17 | 100011 | 350.0 | 332.0 | 0.948571 | 301.0 | 289.0 | 0.960133 | 0.011561 | 1.156146 | 1 | 1 | 1:1 |
-| 18 | 100012 | 609.0 | 574.0 | 0.942529 | 993.0 | 937.0 | 0.943605 | 0.001077 | 0.107650 | 1 | 3 | 2010_to_2022_split |
-| 19 | 100013 | 305.0 | 276.0 | 0.904918 | 551.0 | 522.0 | 0.947368 | 0.042450 | 4.245039 | 1 | 1 | 1:1 |
+</details>
 
-    {'artifact_rows': 285714,
-     'path': 'data/intermediate/indicators/literacy.parquet'}
+<!-- brazil:output ibge_census_temporal_comparison_3 begin -->
+```text
+{'harmonisation_version': '8f67986ba3b1f50731be40dc11a183fdda6b8caecd893ed0d9ea5f83ddec1650',
+ 'spatial_unit': 'common_id',
+ 'black': {'common_areas': 287178, 'missing_change': 3505},
+ 'brown': {'common_areas': 287178, 'missing_change': 3505},
+ 'black_brown': {'common_areas': 287178, 'missing_change': 3505},
+ 'literacy': {'common_areas': 285714, 'missing_change': 5738},
+ 'rudimentary_sanitation': {'common_areas': 285714, 'missing_change': 3821},
+ 'water_network': {'common_areas': 285714, 'missing_change': 3821},
+ 'waste_collection': {'common_areas': 285714, 'missing_change': 3821},
+ 'sewer_septic': {'common_areas': 285714, 'missing_change': 3821},
+ 'houses': {'common_areas': 287178, 'missing_change': 5285},
+ 'village_condo': {'common_areas': 287178, 'missing_change': 5285},
+ 'apartments': {'common_areas': 287178, 'missing_change': 5285},
+ 'income': {'common_areas': 287178, 'missing_change': 0},
+ 'population_density': {'common_areas': 287178},
+ 'generated_at': '2026-10-07T07:05:26.333989+00:00'}
+```
+<!-- brazil:output ibge_census_temporal_comparison_3 end -->
 
-|  | common_id | households_2010 | rudimentary_sanitation_households_2010 | rudimentary_sanitation_ratio_2010 | households_2022 | rudimentary_sanitation_households_2022 | rudimentary_sanitation_ratio_2022 | rudimentary_sanitation_ratio_change | rudimentary_sanitation_ratio_change_pp | n_2010 | n_2022 | relationship |
-|----|----|----|----|----|----|----|----|----|----|----|----|----|
-| 0 | 1 | 264.0 | 261.0 | 0.988636 | 336.0 | 329.0 | 0.979167 | -0.009470 | -0.946970 | 1 | 1 | 1:1 |
-| 1 | 10 | 168.0 | 166.0 | 0.988095 | 123.0 | 0.0 | 0.000000 | -0.988095 | -98.809524 | 1 | 1 | 1:1 |
-| 2 | 100 | 384.0 | 23.0 | 0.059896 | 391.0 | 5.0 | 0.012788 | -0.047108 | -4.710811 | 1 | 1 | 1:1 |
-| 3 | 1000 | 213.0 | 194.0 | 0.910798 | 216.0 | 187.0 | 0.865741 | -0.045057 | -4.505738 | 1 | 1 | 1:1 |
-| 4 | 10000 | 261.0 | 149.0 | 0.570881 | 263.0 | 20.0 | 0.076046 | -0.494836 | -49.483560 | 1 | 1 | 1:1 |
-| 5 | 100000 | 181.0 | 102.0 | 0.563536 | 213.0 | 90.0 | 0.422535 | -0.141001 | -14.100070 | 2 | 3 | many_to_many |
-| 6 | 100001 | 117.0 | 0.0 | 0.000000 | 151.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 7 | 100002 | 146.0 | 0.0 | 0.000000 | 147.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 8 | 100003 | 207.0 | 0.0 | 0.000000 | 175.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 9 | 100004 | 169.0 | 4.0 | 0.023669 | 142.0 | 0.0 | 0.000000 | -0.023669 | -2.366864 | 1 | 1 | 1:1 |
-| 10 | 100005 | 172.0 | 1.0 | 0.005814 | 162.0 | 0.0 | 0.000000 | -0.005814 | -0.581395 | 1 | 1 | 1:1 |
-| 11 | 100006 | 174.0 | 1.0 | 0.005747 | 166.0 | 0.0 | 0.000000 | -0.005747 | -0.574713 | 1 | 1 | 1:1 |
-| 12 | 100007 | 138.0 | 1.0 | 0.007246 | 124.0 | 0.0 | 0.000000 | -0.007246 | -0.724638 | 1 | 1 | 1:1 |
-| 13 | 100008 | 175.0 | 0.0 | 0.000000 | 223.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 14 | 100009 | 183.0 | 0.0 | 0.000000 | 194.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 15 | 10001 | 197.0 | 173.0 | 0.878173 | 255.0 | 0.0 | 0.000000 | -0.878173 | -87.817259 | 1 | 1 | 1:1 |
-| 16 | 100010 | 183.0 | 0.0 | 0.000000 | 220.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 17 | 100011 | 134.0 | 0.0 | 0.000000 | 130.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 18 | 100012 | 252.0 | 7.0 | 0.027778 | 439.0 | 0.0 | 0.000000 | -0.027778 | -2.777778 | 1 | 3 | 2010_to_2022_split |
-| 19 | 100013 | 127.0 | 0.0 | 0.000000 | 243.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
 
-    {'artifact_rows': 285714,
-     'path': 'data/intermediate/indicators/rudimentary_sanitation.parquet'}
+<details>
+<summary>Python code</summary>
 
-|  | common_id | households_2010 | water_network_households_2010 | water_network_ratio_2010 | households_2022 | water_network_households_2022 | water_network_ratio_2022 | water_network_ratio_change | water_network_ratio_change_pp | n_2010 | n_2022 | relationship |
-|----|----|----|----|----|----|----|----|----|----|----|----|----|
-| 0 | 1 | 264.0 | 68.0 | 0.257576 | 336.0 | 69.0 | 0.205357 | -0.052219 | -5.221861 | 1 | 1 | 1:1 |
-| 1 | 10 | 168.0 | 103.0 | 0.613095 | 123.0 | 111.0 | 0.902439 | 0.289344 | 28.934379 | 1 | 1 | 1:1 |
-| 2 | 100 | 384.0 | 155.0 | 0.403646 | 391.0 | 198.0 | 0.506394 | 0.102748 | 10.274803 | 1 | 1 | 1:1 |
-| 3 | 1000 | 213.0 | 161.0 | 0.755869 | 216.0 | 185.0 | 0.856481 | 0.100613 | 10.061294 | 1 | 1 | 1:1 |
-| 4 | 10000 | 261.0 | 235.0 | 0.900383 | 263.0 | 202.0 | 0.768061 | -0.132322 | -13.232231 | 1 | 1 | 1:1 |
-| 5 | 100000 | 181.0 | 97.0 | 0.535912 | 213.0 | 105.0 | 0.492958 | -0.042954 | -4.295386 | 2 | 3 | many_to_many |
-| 6 | 100001 | 117.0 | 117.0 | 1.000000 | 151.0 | 136.0 | 0.900662 | -0.099338 | -9.933775 | 1 | 1 | 1:1 |
-| 7 | 100002 | 146.0 | 146.0 | 1.000000 | 147.0 | 147.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 8 | 100003 | 207.0 | 207.0 | 1.000000 | 175.0 | 175.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 9 | 100004 | 169.0 | 169.0 | 1.000000 | 142.0 | 142.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 10 | 100005 | 172.0 | 172.0 | 1.000000 | 162.0 | 162.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 11 | 100006 | 174.0 | 174.0 | 1.000000 | 166.0 | 166.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 12 | 100007 | 138.0 | 138.0 | 1.000000 | 124.0 | 124.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 13 | 100008 | 175.0 | 175.0 | 1.000000 | 223.0 | 222.0 | 0.995516 | -0.004484 | -0.448430 | 1 | 1 | 1:1 |
-| 14 | 100009 | 183.0 | 183.0 | 1.000000 | 194.0 | 194.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 15 | 10001 | 197.0 | 185.0 | 0.939086 | 255.0 | 229.0 | 0.898039 | -0.041047 | -4.104708 | 1 | 1 | 1:1 |
-| 16 | 100010 | 183.0 | 183.0 | 1.000000 | 220.0 | 220.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 17 | 100011 | 134.0 | 133.0 | 0.992537 | 130.0 | 130.0 | 1.000000 | 0.007463 | 0.746269 | 1 | 1 | 1:1 |
-| 18 | 100012 | 252.0 | 245.0 | 0.972222 | 439.0 | 436.0 | 0.993166 | 0.020944 | 2.094406 | 1 | 3 | 2010_to_2022_split |
-| 19 | 100013 | 127.0 | 127.0 | 1.000000 | 243.0 | 243.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
+<!-- brazil:cell ibge_census_temporal_comparison_4 -->
+```python
+#| label: ibge_census_temporal_comparison_4
+show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 4)
+```
 
-    {'artifact_rows': 285714,
-     'path': 'data/intermediate/indicators/water_network.parquet'}
+</details>
 
-|  | common_id | households_2010 | waste_collection_households_2010 | waste_collection_ratio_2010 | households_2022 | waste_collection_households_2022 | waste_collection_ratio_2022 | waste_collection_ratio_change | waste_collection_ratio_change_pp | n_2010 | n_2022 | relationship |
-|----|----|----|----|----|----|----|----|----|----|----|----|----|
-| 0 | 1 | 264.0 | 256.0 | 0.969697 | 336.0 | 333.0 | 0.991071 | 0.021374 | 2.137446 | 1 | 1 | 1:1 |
-| 1 | 10 | 168.0 | 168.0 | 1.000000 | 123.0 | 123.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 2 | 100 | 384.0 | 382.0 | 0.994792 | 391.0 | 391.0 | 1.000000 | 0.005208 | 0.520833 | 1 | 1 | 1:1 |
-| 3 | 1000 | 213.0 | 213.0 | 1.000000 | 216.0 | 216.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 4 | 10000 | 261.0 | 261.0 | 1.000000 | 263.0 | 262.0 | 0.996198 | -0.003802 | -0.380228 | 1 | 1 | 1:1 |
-| 5 | 100000 | 181.0 | 99.0 | 0.546961 | 213.0 | 169.0 | 0.793427 | 0.246466 | 24.646590 | 2 | 3 | many_to_many |
-| 6 | 100001 | 117.0 | 117.0 | 1.000000 | 151.0 | 150.0 | 0.993377 | -0.006623 | -0.662252 | 1 | 1 | 1:1 |
-| 7 | 100002 | 146.0 | 146.0 | 1.000000 | 147.0 | 146.0 | 0.993197 | -0.006803 | -0.680272 | 1 | 1 | 1:1 |
-| 8 | 100003 | 207.0 | 207.0 | 1.000000 | 175.0 | 174.0 | 0.994286 | -0.005714 | -0.571429 | 1 | 1 | 1:1 |
-| 9 | 100004 | 169.0 | 169.0 | 1.000000 | 142.0 | 141.0 | 0.992958 | -0.007042 | -0.704225 | 1 | 1 | 1:1 |
-| 10 | 100005 | 172.0 | 172.0 | 1.000000 | 162.0 | 153.0 | 0.944444 | -0.055556 | -5.555556 | 1 | 1 | 1:1 |
-| 11 | 100006 | 174.0 | 174.0 | 1.000000 | 166.0 | 166.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 12 | 100007 | 138.0 | 138.0 | 1.000000 | 124.0 | 124.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 13 | 100008 | 175.0 | 175.0 | 1.000000 | 223.0 | 223.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 14 | 100009 | 183.0 | 183.0 | 1.000000 | 194.0 | 194.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 15 | 10001 | 197.0 | 197.0 | 1.000000 | 255.0 | 255.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 16 | 100010 | 183.0 | 183.0 | 1.000000 | 220.0 | 220.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 17 | 100011 | 134.0 | 134.0 | 1.000000 | 130.0 | 130.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 18 | 100012 | 252.0 | 242.0 | 0.960317 | 439.0 | 428.0 | 0.974943 | 0.014626 | 1.462559 | 1 | 3 | 2010_to_2022_split |
-| 19 | 100013 | 127.0 | 126.0 | 0.992126 | 243.0 | 243.0 | 1.000000 | 0.007874 | 0.787402 | 1 | 1 | 1:1 |
+<!-- brazil:output ibge_census_temporal_comparison_4 begin -->
 
-    {'artifact_rows': 285714,
-     'path': 'data/intermediate/indicators/waste_collection.parquet'}
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>common_id</th>
+      <th>pop_2010</th>
+      <th>black_pop_2010</th>
+      <th>black_ratio_2010</th>
+      <th>pop_2022</th>
+      <th>black_pop_2022</th>
+      <th>black_ratio_2022</th>
+      <th>black_ratio_change</th>
+      <th>black_ratio_change_pp</th>
+      <th>n_2010</th>
+      <th>n_2022</th>
+      <th>relationship</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>859.0</td>
+      <td>57.0</td>
+      <td>0.066356</td>
+      <td>928.0</td>
+      <td>87.0</td>
+      <td>0.093750</td>
+      <td>0.027394</td>
+      <td>2.739377</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10</td>
+      <td>491.0</td>
+      <td>22.0</td>
+      <td>0.044807</td>
+      <td>311.0</td>
+      <td>21.0</td>
+      <td>0.067524</td>
+      <td>0.022718</td>
+      <td>2.271760</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>100</td>
+      <td>1314.0</td>
+      <td>92.0</td>
+      <td>0.070015</td>
+      <td>1060.0</td>
+      <td>97.0</td>
+      <td>0.091509</td>
+      <td>0.021494</td>
+      <td>2.149421</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1000</td>
+      <td>811.0</td>
+      <td>109.0</td>
+      <td>0.134402</td>
+      <td>683.0</td>
+      <td>63.0</td>
+      <td>0.092240</td>
+      <td>-0.042162</td>
+      <td>-4.216186</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10000</td>
+      <td>915.0</td>
+      <td>52.0</td>
+      <td>0.056831</td>
+      <td>842.0</td>
+      <td>96.0</td>
+      <td>0.114014</td>
+      <td>0.057184</td>
+      <td>5.718365</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>100000</td>
+      <td>519.0</td>
+      <td>15.0</td>
+      <td>0.028902</td>
+      <td>491.0</td>
+      <td>24.0</td>
+      <td>0.048880</td>
+      <td>0.019978</td>
+      <td>1.997810</td>
+      <td>2</td>
+      <td>3</td>
+      <td>many_to_many</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>100001</td>
+      <td>329.0</td>
+      <td>8.0</td>
+      <td>0.024316</td>
+      <td>381.0</td>
+      <td>11.0</td>
+      <td>0.028871</td>
+      <td>0.004555</td>
+      <td>0.455528</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>100002</td>
+      <td>470.0</td>
+      <td>26.0</td>
+      <td>0.055319</td>
+      <td>421.0</td>
+      <td>7.0</td>
+      <td>0.016627</td>
+      <td>-0.038692</td>
+      <td>-3.869207</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>100003</td>
+      <td>635.0</td>
+      <td>22.0</td>
+      <td>0.034646</td>
+      <td>466.0</td>
+      <td>25.0</td>
+      <td>0.053648</td>
+      <td>0.019002</td>
+      <td>1.900240</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>100004</td>
+      <td>469.0</td>
+      <td>5.0</td>
+      <td>0.010661</td>
+      <td>316.0</td>
+      <td>7.0</td>
+      <td>0.022152</td>
+      <td>0.011491</td>
+      <td>1.149092</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>100005</td>
+      <td>519.0</td>
+      <td>21.0</td>
+      <td>0.040462</td>
+      <td>411.0</td>
+      <td>14.0</td>
+      <td>0.034063</td>
+      <td>-0.006399</td>
+      <td>-0.639917</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>100006</td>
+      <td>524.0</td>
+      <td>20.0</td>
+      <td>0.038168</td>
+      <td>411.0</td>
+      <td>18.0</td>
+      <td>0.043796</td>
+      <td>0.005628</td>
+      <td>0.562768</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>100007</td>
+      <td>424.0</td>
+      <td>53.0</td>
+      <td>0.125000</td>
+      <td>311.0</td>
+      <td>37.0</td>
+      <td>0.118971</td>
+      <td>-0.006029</td>
+      <td>-0.602894</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>100008</td>
+      <td>559.0</td>
+      <td>4.0</td>
+      <td>0.007156</td>
+      <td>646.0</td>
+      <td>20.0</td>
+      <td>0.030960</td>
+      <td>0.023804</td>
+      <td>2.380412</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>100009</td>
+      <td>614.0</td>
+      <td>5.0</td>
+      <td>0.008143</td>
+      <td>554.0</td>
+      <td>16.0</td>
+      <td>0.028881</td>
+      <td>0.020738</td>
+      <td>2.073754</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>10001</td>
+      <td>696.0</td>
+      <td>46.0</td>
+      <td>0.066092</td>
+      <td>810.0</td>
+      <td>99.0</td>
+      <td>0.122222</td>
+      <td>0.056130</td>
+      <td>5.613027</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>100010</td>
+      <td>620.0</td>
+      <td>10.0</td>
+      <td>0.016129</td>
+      <td>625.0</td>
+      <td>18.0</td>
+      <td>0.028800</td>
+      <td>0.012671</td>
+      <td>1.267097</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>100011</td>
+      <td>421.0</td>
+      <td>42.0</td>
+      <td>0.099762</td>
+      <td>348.0</td>
+      <td>42.0</td>
+      <td>0.120690</td>
+      <td>0.020927</td>
+      <td>2.092718</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>100012</td>
+      <td>848.0</td>
+      <td>38.0</td>
+      <td>0.044811</td>
+      <td>1296.0</td>
+      <td>144.0</td>
+      <td>0.111111</td>
+      <td>0.066300</td>
+      <td>6.629979</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2010_to_2022_split</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>100013</td>
+      <td>412.0</td>
+      <td>26.0</td>
+      <td>0.063107</td>
+      <td>701.0</td>
+      <td>70.0</td>
+      <td>0.099857</td>
+      <td>0.036751</td>
+      <td>3.675055</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+  </tbody>
+</table>
 
-|  | common_id | households_2010 | sewer_septic_households_2010 | sewer_septic_ratio_2010 | households_2022 | sewer_septic_households_2022 | sewer_septic_ratio_2022 | sewer_septic_ratio_change | sewer_septic_ratio_change_pp | n_2010 | n_2022 | relationship |
-|----|----|----|----|----|----|----|----|----|----|----|----|----|
-| 0 | 1 | 264.0 | 1.0 | 0.003788 | 336.0 | 6.0 | 0.017857 | 0.014069 | 1.406926 | 1 | 1 | 1:1 |
-| 1 | 10 | 168.0 | 2.0 | 0.011905 | 123.0 | 122.0 | 0.991870 | 0.979965 | 97.996516 | 1 | 1 | 1:1 |
-| 2 | 100 | 384.0 | 359.0 | 0.934896 | 391.0 | 386.0 | 0.987212 | 0.052316 | 5.231644 | 1 | 1 | 1:1 |
-| 3 | 1000 | 213.0 | 19.0 | 0.089202 | 216.0 | 29.0 | 0.134259 | 0.045057 | 4.505738 | 1 | 1 | 1:1 |
-| 4 | 10000 | 261.0 | 112.0 | 0.429119 | 263.0 | 243.0 | 0.923954 | 0.494836 | 49.483560 | 1 | 1 | 1:1 |
-| 5 | 100000 | 181.0 | 78.0 | 0.430939 | 213.0 | 122.0 | 0.572770 | 0.141831 | 14.183073 | 2 | 3 | many_to_many |
-| 6 | 100001 | 117.0 | 117.0 | 1.000000 | 151.0 | 151.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 7 | 100002 | 146.0 | 146.0 | 1.000000 | 147.0 | 147.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 8 | 100003 | 207.0 | 207.0 | 1.000000 | 175.0 | 173.0 | 0.988571 | -0.011429 | -1.142857 | 1 | 1 | 1:1 |
-| 9 | 100004 | 169.0 | 165.0 | 0.976331 | 142.0 | 142.0 | 1.000000 | 0.023669 | 2.366864 | 1 | 1 | 1:1 |
-| 10 | 100005 | 172.0 | 171.0 | 0.994186 | 162.0 | 162.0 | 1.000000 | 0.005814 | 0.581395 | 1 | 1 | 1:1 |
-| 11 | 100006 | 174.0 | 172.0 | 0.988506 | 166.0 | 165.0 | 0.993976 | 0.005470 | 0.547016 | 1 | 1 | 1:1 |
-| 12 | 100007 | 138.0 | 137.0 | 0.992754 | 124.0 | 123.0 | 0.991935 | -0.000818 | -0.081814 | 1 | 1 | 1:1 |
-| 13 | 100008 | 175.0 | 175.0 | 1.000000 | 223.0 | 222.0 | 0.995516 | -0.004484 | -0.448430 | 1 | 1 | 1:1 |
-| 14 | 100009 | 183.0 | 183.0 | 1.000000 | 194.0 | 194.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 15 | 10001 | 197.0 | 24.0 | 0.121827 | 255.0 | 252.0 | 0.988235 | 0.866408 | 86.640788 | 1 | 1 | 1:1 |
-| 16 | 100010 | 183.0 | 183.0 | 1.000000 | 220.0 | 220.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 17 | 100011 | 134.0 | 134.0 | 1.000000 | 130.0 | 130.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 18 | 100012 | 252.0 | 242.0 | 0.960317 | 439.0 | 435.0 | 0.990888 | 0.030571 | 3.057092 | 1 | 3 | 2010_to_2022_split |
-| 19 | 100013 | 127.0 | 127.0 | 1.000000 | 243.0 | 243.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
 
-    {'artifact_rows': 285714,
-     'path': 'data/intermediate/indicators/sewer_septic.parquet'}
+```text
+{'artifact_rows': 287178, 'path': 'data/intermediate/indicators/black.parquet'}
+```
+<!-- brazil:output ibge_census_temporal_comparison_4 end -->
 
-|  | common_id | pop_2010 | brown_pop_2010 | brown_ratio_2010 | pop_2022 | brown_pop_2022 | brown_ratio_2022 | brown_ratio_change | brown_ratio_change_pp | n_2010 | n_2022 | relationship |
-|----|----|----|----|----|----|----|----|----|----|----|----|----|
-| 0 | 1 | 859.0 | 404.0 | 0.470314 | 928.0 | 514.0 | 0.553879 | 0.083565 | 8.356499 | 1 | 1 | 1:1 |
-| 1 | 10 | 491.0 | 236.0 | 0.480652 | 311.0 | 166.0 | 0.533762 | 0.053110 | 5.311033 | 1 | 1 | 1:1 |
-| 2 | 100 | 1314.0 | 692.0 | 0.526636 | 1060.0 | 582.0 | 0.549057 | 0.022420 | 2.242038 | 1 | 1 | 1:1 |
-| 3 | 1000 | 811.0 | 469.0 | 0.578298 | 683.0 | 448.0 | 0.655930 | 0.077631 | 7.763132 | 1 | 1 | 1:1 |
-| 4 | 10000 | 915.0 | 641.0 | 0.700546 | 842.0 | 541.0 | 0.642518 | -0.058029 | -5.802863 | 1 | 1 | 1:1 |
-| 5 | 100000 | 519.0 | 229.0 | 0.441233 | 491.0 | 204.0 | 0.415479 | -0.025755 | -2.575453 | 2 | 3 | many_to_many |
-| 6 | 100001 | 329.0 | 86.0 | 0.261398 | 381.0 | 115.0 | 0.301837 | 0.040439 | 4.043909 | 1 | 1 | 1:1 |
-| 7 | 100002 | 470.0 | 140.0 | 0.297872 | 421.0 | 166.0 | 0.394299 | 0.096427 | 9.642695 | 1 | 1 | 1:1 |
-| 8 | 100003 | 635.0 | 254.0 | 0.400000 | 466.0 | 144.0 | 0.309013 | -0.090987 | -9.098712 | 1 | 1 | 1:1 |
-| 9 | 100004 | 469.0 | 113.0 | 0.240938 | 316.0 | 98.0 | 0.310127 | 0.069188 | 6.918842 | 1 | 1 | 1:1 |
-| 10 | 100005 | 519.0 | 148.0 | 0.285164 | 411.0 | 148.0 | 0.360097 | 0.074934 | 7.493355 | 1 | 1 | 1:1 |
-| 11 | 100006 | 524.0 | 124.0 | 0.236641 | 411.0 | 123.0 | 0.299270 | 0.062629 | 6.262885 | 1 | 1 | 1:1 |
-| 12 | 100007 | 424.0 | 224.0 | 0.528302 | 311.0 | 153.0 | 0.491961 | -0.036340 | -3.634047 | 1 | 1 | 1:1 |
-| 13 | 100008 | 559.0 | 136.0 | 0.243292 | 646.0 | 229.0 | 0.354489 | 0.111198 | 11.119757 | 1 | 1 | 1:1 |
-| 14 | 100009 | 614.0 | 145.0 | 0.236156 | 554.0 | 184.0 | 0.332130 | 0.095974 | 9.597361 | 1 | 1 | 1:1 |
-| 15 | 10001 | 696.0 | 448.0 | 0.643678 | 810.0 | 534.0 | 0.659259 | 0.015581 | 1.558110 | 1 | 1 | 1:1 |
-| 16 | 100010 | 620.0 | 135.0 | 0.217742 | 625.0 | 173.0 | 0.276800 | 0.059058 | 5.905806 | 1 | 1 | 1:1 |
-| 17 | 100011 | 421.0 | 120.0 | 0.285036 | 348.0 | 148.0 | 0.425287 | 0.140252 | 14.025173 | 1 | 1 | 1:1 |
-| 18 | 100012 | 848.0 | 425.0 | 0.501179 | 1296.0 | 584.0 | 0.450617 | -0.050562 | -5.056196 | 1 | 3 | 2010_to_2022_split |
-| 19 | 100013 | 412.0 | 193.0 | 0.468447 | 701.0 | 385.0 | 0.549215 | 0.080769 | 8.076880 | 1 | 1 | 1:1 |
 
-    {'artifact_rows': 287178, 'path': 'data/intermediate/indicators/brown.parquet'}
+<details>
+<summary>Python code</summary>
 
-|  | common_id | pop_2010 | black_brown_pop_2010 | black_brown_ratio_2010 | pop_2022 | black_brown_pop_2022 | black_brown_ratio_2022 | black_brown_ratio_change | black_brown_ratio_change_pp | n_2010 | n_2022 | relationship |
-|----|----|----|----|----|----|----|----|----|----|----|----|----|
-| 0 | 1 | 859.0 | 461.0 | 0.536671 | 928.0 | 601.0 | 0.647629 | 0.110959 | 11.095876 | 1 | 1 | 1:1 |
-| 1 | 10 | 491.0 | 258.0 | 0.525458 | 311.0 | 187.0 | 0.601286 | 0.075828 | 7.582793 | 1 | 1 | 1:1 |
-| 2 | 100 | 1314.0 | 784.0 | 0.596651 | 1060.0 | 679.0 | 0.640566 | 0.043915 | 4.391459 | 1 | 1 | 1:1 |
-| 3 | 1000 | 811.0 | 578.0 | 0.712700 | 683.0 | 511.0 | 0.748170 | 0.035469 | 3.546947 | 1 | 1 | 1:1 |
-| 4 | 10000 | 915.0 | 693.0 | 0.757377 | 842.0 | 637.0 | 0.756532 | -0.000845 | -0.084498 | 1 | 1 | 1:1 |
-| 5 | 100000 | 519.0 | 244.0 | 0.470135 | 491.0 | 228.0 | 0.464358 | -0.005776 | -0.577642 | 2 | 3 | many_to_many |
-| 6 | 100001 | 329.0 | 94.0 | 0.285714 | 381.0 | 126.0 | 0.330709 | 0.044994 | 4.499438 | 1 | 1 | 1:1 |
-| 7 | 100002 | 470.0 | 166.0 | 0.353191 | 421.0 | 173.0 | 0.410926 | 0.057735 | 5.773488 | 1 | 1 | 1:1 |
-| 8 | 100003 | 635.0 | 276.0 | 0.434646 | 466.0 | 169.0 | 0.362661 | -0.071985 | -7.198473 | 1 | 1 | 1:1 |
-| 9 | 100004 | 469.0 | 118.0 | 0.251599 | 316.0 | 105.0 | 0.332278 | 0.080679 | 8.067933 | 1 | 1 | 1:1 |
-| 10 | 100005 | 519.0 | 169.0 | 0.325626 | 411.0 | 162.0 | 0.394161 | 0.068534 | 6.853438 | 1 | 1 | 1:1 |
-| 11 | 100006 | 524.0 | 144.0 | 0.274809 | 411.0 | 141.0 | 0.343066 | 0.068257 | 6.825653 | 1 | 1 | 1:1 |
-| 12 | 100007 | 424.0 | 277.0 | 0.653302 | 311.0 | 190.0 | 0.610932 | -0.042369 | -4.236941 | 1 | 1 | 1:1 |
-| 13 | 100008 | 559.0 | 140.0 | 0.250447 | 646.0 | 249.0 | 0.385449 | 0.135002 | 13.500169 | 1 | 1 | 1:1 |
-| 14 | 100009 | 614.0 | 150.0 | 0.244300 | 554.0 | 200.0 | 0.361011 | 0.116711 | 11.671116 | 1 | 1 | 1:1 |
-| 15 | 10001 | 696.0 | 494.0 | 0.709770 | 810.0 | 633.0 | 0.781481 | 0.071711 | 7.171137 | 1 | 1 | 1:1 |
-| 16 | 100010 | 620.0 | 145.0 | 0.233871 | 625.0 | 191.0 | 0.305600 | 0.071729 | 7.172903 | 1 | 1 | 1:1 |
-| 17 | 100011 | 421.0 | 162.0 | 0.384798 | 348.0 | 190.0 | 0.545977 | 0.161179 | 16.117891 | 1 | 1 | 1:1 |
-| 18 | 100012 | 848.0 | 463.0 | 0.545991 | 1296.0 | 728.0 | 0.561728 | 0.015738 | 1.573783 | 1 | 3 | 2010_to_2022_split |
-| 19 | 100013 | 412.0 | 219.0 | 0.531553 | 701.0 | 455.0 | 0.649073 | 0.117519 | 11.751936 | 1 | 1 | 1:1 |
+<!-- brazil:cell ibge_census_temporal_comparison_5 -->
+```python
+#| label: ibge_census_temporal_comparison_5
+show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 5)
+```
 
-    {'artifact_rows': 287178,
-     'path': 'data/intermediate/indicators/black_brown.parquet'}
+</details>
 
-Income is harmonised by common_id. Multi-tract groups require validated
-counts of income-receiving household heads for the matching household
-universe; without those counts their means remain unavailable.
-Single-tract means are retained independently in each year.
+<!-- brazil:output ibge_census_temporal_comparison_5 begin -->
 
-|  | common_id | n_2010_x | n_used_2010 | missing_weights_2010 | missing_means_2010 | heads_used_2010 | weighted_sum_2010 | complete_2010 | tract_coverage_pct_2010 | income_2010 | ... | complete_2022 | tract_coverage_pct_2022 | income_2022 | n_2010_y | n_2022_y | relationship | valid_income_change | valid_income_change_pct | income_change_brl | income_change_pct |
-|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
-| 0 | 1 | 1 | 1 | 0 | 0 | 264.0 | 275732.205128 | True | 100.0 | 2169.046150 | ... | True | 100.0 | 2453.030000 | 1 | 1 | 1:1 | True | True | 283.983850 | 13.092568 |
-| 1 | 10 | 1 | 1 | 0 | 0 | 168.0 | 231121.271523 | True | 100.0 | 2857.036979 | ... | True | 100.0 | 5100.070000 | 1 | 1 | 1:1 | True | True | 2243.033021 | 78.509065 |
-| 2 | 100 | 1 | 1 | 0 | 0 | 384.0 | 423391.906706 | True | 100.0 | 2289.794737 | ... | True | 100.0 | 2464.930000 | 1 | 1 | 1:1 | True | True | 175.135263 | 7.648514 |
-| 3 | 1000 | 1 | 1 | 0 | 0 | 213.0 | 174906.910448 | True | 100.0 | 1705.346327 | ... | True | 100.0 | 2066.330000 | 1 | 1 | 1:1 | True | True | 360.983673 | 21.167763 |
-| 4 | 10000 | 1 | 1 | 0 | 0 | 261.0 | 302518.207792 | True | 100.0 | 2407.111661 | ... | True | 100.0 | 2337.080000 | 1 | 1 | 1:1 | True | True | -70.031661 | -2.909365 |
-| 5 | 100000 | 2 | 2 | 0 | 0 | 182.0 | 166167.137500 | True | 100.0 | 1896.090122 | ... | True | 100.0 | 2360.569296 | 2 | 3 | many_to_many | True | True | 464.479174 | 24.496682 |
-| 6 | 100001 | 1 | 1 | 0 | 0 | 117.0 | 221499.313043 | True | 100.0 | 3931.621914 | ... | True | 100.0 | 5277.410000 | 1 | 1 | 1:1 | True | True | 1345.788086 | 34.229845 |
-| 7 | 100002 | 1 | 1 | 0 | 0 | 147.0 | 447022.829787 | True | 100.0 | 6315.352465 | ... | True | 100.0 | 4893.760000 | 1 | 1 | 1:1 | True | True | -1421.592465 | -22.510105 |
-| 8 | 100003 | 1 | 1 | 0 | 0 | 207.0 | 353641.296482 | True | 100.0 | 3547.952965 | ... | True | 100.0 | 3259.990000 | 1 | 1 | 1:1 | True | True | -287.962965 | -8.116313 |
-| 9 | 100004 | 1 | 1 | 0 | 0 | 169.0 | 230319.512048 | True | 100.0 | 2830.279022 | ... | True | 100.0 | 2591.070000 | 1 | 1 | 1:1 | True | True | -239.209022 | -8.451782 |
-| 10 | 100005 | 1 | 1 | 0 | 0 | 172.0 | 215373.546012 | True | 100.0 | 2600.453766 | ... | True | 100.0 | 2334.490000 | 1 | 1 | 1:1 | True | True | -265.963766 | -10.227591 |
-| 11 | 100006 | 1 | 1 | 0 | 0 | 174.0 | 363099.105882 | True | 100.0 | 4333.723074 | ... | True | 100.0 | 4184.260000 | 1 | 1 | 1:1 | True | True | -149.463074 | -3.448838 |
-| 12 | 100007 | 1 | 1 | 0 | 0 | 138.0 | 127461.720930 | True | 100.0 | 1918.164798 | ... | True | 100.0 | 1943.760000 | 1 | 1 | 1:1 | True | True | 25.595202 | 1.334359 |
-| 13 | 100008 | 1 | 1 | 0 | 0 | 175.0 | 371165.209790 | True | 100.0 | 4404.680772 | ... | True | 100.0 | 4276.720000 | 1 | 1 | 1:1 | True | True | -127.960772 | -2.905109 |
-| 14 | 100009 | 1 | 1 | 0 | 0 | 184.0 | 323943.821229 | True | 100.0 | 3656.260267 | ... | True | 100.0 | 3808.430000 | 1 | 1 | 1:1 | True | True | 152.169733 | 4.161896 |
-| 15 | 10001 | 1 | 1 | 0 | 0 | 197.0 | 195056.121547 | True | 100.0 | 2056.262634 | ... | True | 100.0 | 2250.680000 | 1 | 1 | 1:1 | True | True | 194.417366 | 9.454890 |
-| 16 | 100010 | 1 | 1 | 0 | 0 | 183.0 | 645415.297753 | True | 100.0 | 7324.422539 | ... | True | 100.0 | 5912.840000 | 1 | 1 | 1:1 | True | True | -1411.582539 | -19.272271 |
-| 17 | 100011 | 1 | 1 | 0 | 0 | 134.0 | 125666.875000 | True | 100.0 | 1947.606621 | ... | True | 100.0 | 1818.120000 | 1 | 1 | 1:1 | True | True | -129.486621 | -6.648500 |
-| 18 | 100012 | 1 | 1 | 0 | 0 | 252.0 | 253448.470588 | True | 100.0 | 2088.691788 | ... | True | 100.0 | 1813.466674 | 1 | 3 | 2010_to_2022_split | True | True | -275.225114 | -13.176914 |
-| 19 | 100013 | 1 | 1 | 0 | 0 | 127.0 | 99254.163462 | True | 100.0 | 1623.043791 | ... | True | 100.0 | 1841.000000 | 1 | 1 | 1:1 | True | True | 217.956209 | 13.428856 |
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>common_id</th>
+      <th>pop_15plus_2010</th>
+      <th>literate_15plus_2010</th>
+      <th>literacy_ratio_2010</th>
+      <th>pop_15plus_2022</th>
+      <th>literate_15plus_2022</th>
+      <th>literacy_ratio_2022</th>
+      <th>literacy_ratio_change</th>
+      <th>literacy_ratio_change_pp</th>
+      <th>n_2010</th>
+      <th>n_2022</th>
+      <th>relationship</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>647.0</td>
+      <td>588.0</td>
+      <td>0.908810</td>
+      <td>730.0</td>
+      <td>666.0</td>
+      <td>0.912329</td>
+      <td>0.003519</td>
+      <td>0.351888</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10</td>
+      <td>400.0</td>
+      <td>384.0</td>
+      <td>0.960000</td>
+      <td>258.0</td>
+      <td>251.0</td>
+      <td>0.972868</td>
+      <td>0.012868</td>
+      <td>1.286822</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>100</td>
+      <td>991.0</td>
+      <td>906.0</td>
+      <td>0.914228</td>
+      <td>860.0</td>
+      <td>822.0</td>
+      <td>0.955814</td>
+      <td>0.041586</td>
+      <td>4.158590</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1000</td>
+      <td>582.0</td>
+      <td>553.0</td>
+      <td>0.950172</td>
+      <td>522.0</td>
+      <td>504.0</td>
+      <td>0.965517</td>
+      <td>0.015345</td>
+      <td>1.534542</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10000</td>
+      <td>653.0</td>
+      <td>641.0</td>
+      <td>0.981623</td>
+      <td>656.0</td>
+      <td>644.0</td>
+      <td>0.981707</td>
+      <td>0.000084</td>
+      <td>0.008404</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>100000</td>
+      <td>402.0</td>
+      <td>325.0</td>
+      <td>0.808458</td>
+      <td>412.0</td>
+      <td>372.0</td>
+      <td>0.902913</td>
+      <td>0.094455</td>
+      <td>9.445491</td>
+      <td>2</td>
+      <td>3</td>
+      <td>many_to_many</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>100001</td>
+      <td>276.0</td>
+      <td>269.0</td>
+      <td>0.974638</td>
+      <td>327.0</td>
+      <td>325.0</td>
+      <td>0.993884</td>
+      <td>0.019246</td>
+      <td>1.924611</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>100002</td>
+      <td>360.0</td>
+      <td>360.0</td>
+      <td>1.000000</td>
+      <td>359.0</td>
+      <td>355.0</td>
+      <td>0.988858</td>
+      <td>-0.011142</td>
+      <td>-1.114206</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>100003</td>
+      <td>527.0</td>
+      <td>504.0</td>
+      <td>0.956357</td>
+      <td>409.0</td>
+      <td>389.0</td>
+      <td>0.951100</td>
+      <td>-0.005256</td>
+      <td>-0.525649</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>100004</td>
+      <td>415.0</td>
+      <td>405.0</td>
+      <td>0.975904</td>
+      <td>290.0</td>
+      <td>287.0</td>
+      <td>0.989655</td>
+      <td>0.013752</td>
+      <td>1.375156</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>100005</td>
+      <td>439.0</td>
+      <td>426.0</td>
+      <td>0.970387</td>
+      <td>359.0</td>
+      <td>341.0</td>
+      <td>0.949861</td>
+      <td>-0.020527</td>
+      <td>-2.052652</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>100006</td>
+      <td>437.0</td>
+      <td>434.0</td>
+      <td>0.993135</td>
+      <td>367.0</td>
+      <td>361.0</td>
+      <td>0.983651</td>
+      <td>-0.009484</td>
+      <td>-0.948379</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>100007</td>
+      <td>333.0</td>
+      <td>297.0</td>
+      <td>0.891892</td>
+      <td>261.0</td>
+      <td>238.0</td>
+      <td>0.911877</td>
+      <td>0.019986</td>
+      <td>1.998550</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>100008</td>
+      <td>411.0</td>
+      <td>410.0</td>
+      <td>0.997567</td>
+      <td>509.0</td>
+      <td>501.0</td>
+      <td>0.984283</td>
+      <td>-0.013284</td>
+      <td>-1.328400</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>100009</td>
+      <td>497.0</td>
+      <td>486.0</td>
+      <td>0.977867</td>
+      <td>482.0</td>
+      <td>469.0</td>
+      <td>0.973029</td>
+      <td>-0.004838</td>
+      <td>-0.483816</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>10001</td>
+      <td>482.0</td>
+      <td>467.0</td>
+      <td>0.968880</td>
+      <td>635.0</td>
+      <td>625.0</td>
+      <td>0.984252</td>
+      <td>0.015372</td>
+      <td>1.537230</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>100010</td>
+      <td>479.0</td>
+      <td>474.0</td>
+      <td>0.989562</td>
+      <td>511.0</td>
+      <td>508.0</td>
+      <td>0.994129</td>
+      <td>0.004568</td>
+      <td>0.456757</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>100011</td>
+      <td>350.0</td>
+      <td>332.0</td>
+      <td>0.948571</td>
+      <td>301.0</td>
+      <td>289.0</td>
+      <td>0.960133</td>
+      <td>0.011561</td>
+      <td>1.156146</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>100012</td>
+      <td>609.0</td>
+      <td>574.0</td>
+      <td>0.942529</td>
+      <td>993.0</td>
+      <td>937.0</td>
+      <td>0.943605</td>
+      <td>0.001077</td>
+      <td>0.107650</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2010_to_2022_split</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>100013</td>
+      <td>305.0</td>
+      <td>276.0</td>
+      <td>0.904918</td>
+      <td>551.0</td>
+      <td>522.0</td>
+      <td>0.947368</td>
+      <td>0.042450</td>
+      <td>4.245039</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>20 rows × 27 columns</p>
 
-    {'artifact_rows': 287178,
-     'path': 'data/intermediate/indicators/income.parquet'}
+```text
+{'artifact_rows': 285714,
+ 'path': 'data/intermediate/indicators/literacy.parquet'}
+```
+<!-- brazil:output ibge_census_temporal_comparison_5 end -->
 
-|  | common_id | households_2010 | houses_2010 | houses_ratio_2010 | households_2022 | houses_2022 | houses_ratio_2022 | houses_ratio_change | houses_ratio_change_pp | n_2010 | n_2022 | relationship |
-|----|----|----|----|----|----|----|----|----|----|----|----|----|
-| 0 | 1 | 264.0 | 264.0 | 1.000000 | 336.0 | 335.0 | 0.997024 | -0.002976 | -0.297619 | 1 | 1 | 1:1 |
-| 1 | 10 | 168.0 | 168.0 | 1.000000 | 123.0 | 121.0 | 0.983740 | -0.016260 | -1.626016 | 1 | 1 | 1:1 |
-| 2 | 100 | 384.0 | 358.0 | 0.932292 | 391.0 | 362.0 | 0.925831 | -0.006460 | -0.646046 | 1 | 1 | 1:1 |
-| 3 | 1000 | 213.0 | 207.0 | 0.971831 | 216.0 | 214.0 | 0.990741 | 0.018910 | 1.890975 | 1 | 1 | 1:1 |
-| 4 | 10000 | 261.0 | 260.0 | 0.996169 | 263.0 | 259.0 | 0.984791 | -0.011378 | -1.137771 | 1 | 1 | 1:1 |
-| 5 | 100000 | 181.0 | 179.0 | 0.988950 | 213.0 | 213.0 | 1.000000 | 0.011050 | 1.104972 | 2 | 3 | many_to_many |
-| 6 | 100001 | 117.0 | 72.0 | 0.615385 | 151.0 | 50.0 | 0.331126 | -0.284259 | -28.425879 | 1 | 1 | 1:1 |
-| 7 | 100002 | 146.0 | 118.0 | 0.808219 | 147.0 | 124.0 | 0.843537 | 0.035318 | 3.531824 | 1 | 1 | 1:1 |
-| 8 | 100003 | 207.0 | 188.0 | 0.908213 | 175.0 | 156.0 | 0.891429 | -0.016784 | -1.678399 | 1 | 1 | 1:1 |
-| 9 | 100004 | 169.0 | 144.0 | 0.852071 | 142.0 | 112.0 | 0.788732 | -0.063339 | -6.333861 | 1 | 1 | 1:1 |
-| 10 | 100005 | 172.0 | 160.0 | 0.930233 | 162.0 | 141.0 | 0.870370 | -0.059862 | -5.986219 | 1 | 1 | 1:1 |
-| 11 | 100006 | 174.0 | 174.0 | 1.000000 | 166.0 | 160.0 | 0.963855 | -0.036145 | -3.614458 | 1 | 1 | 1:1 |
-| 12 | 100007 | 138.0 | 138.0 | 1.000000 | 124.0 | 124.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 13 | 100008 | 175.0 | 162.0 | 0.925714 | 223.0 | 203.0 | 0.910314 | -0.015400 | -1.540038 | 1 | 1 | 1:1 |
-| 14 | 100009 | 183.0 | 178.0 | 0.972678 | 194.0 | 186.0 | 0.958763 | -0.013915 | -1.391471 | 1 | 1 | 1:1 |
-| 15 | 10001 | 197.0 | 196.0 | 0.994924 | 255.0 | 198.0 | 0.776471 | -0.218453 | -21.845327 | 1 | 1 | 1:1 |
-| 16 | 100010 | 183.0 | 180.0 | 0.983607 | 220.0 | 207.0 | 0.940909 | -0.042697 | -4.269747 | 1 | 1 | 1:1 |
-| 17 | 100011 | 134.0 | 129.0 | 0.962687 | 130.0 | 127.0 | 0.976923 | 0.014237 | 1.423651 | 1 | 1 | 1:1 |
-| 18 | 100012 | 252.0 | 252.0 | 1.000000 | 439.0 | 439.0 | 1.000000 | 0.000000 | 0.000000 | 1 | 3 | 2010_to_2022_split |
-| 19 | 100013 | 127.0 | 127.0 | 1.000000 | 243.0 | 235.0 | 0.967078 | -0.032922 | -3.292181 | 1 | 1 | 1:1 |
 
-    {'artifact_rows': 287178,
-     'path': 'data/intermediate/indicators/houses.parquet'}
+<details>
+<summary>Python code</summary>
 
-|  | common_id | households_2010 | village_condo_2010 | village_condo_ratio_2010 | households_2022 | village_condo_2022 | village_condo_ratio_2022 | village_condo_ratio_change | village_condo_ratio_change_pp | n_2010 | n_2022 | relationship |
-|----|----|----|----|----|----|----|----|----|----|----|----|----|
-| 0 | 1 | 264.0 | 0.0 | 0.000000 | 336.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 1 | 10 | 168.0 | 0.0 | 0.000000 | 123.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 2 | 100 | 384.0 | 1.0 | 0.002604 | 391.0 | 14.0 | 0.035806 | 0.033201 | 3.320146 | 1 | 1 | 1:1 |
-| 3 | 1000 | 213.0 | 0.0 | 0.000000 | 216.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 4 | 10000 | 261.0 | 1.0 | 0.003831 | 263.0 | 0.0 | 0.000000 | -0.003831 | -0.383142 | 1 | 1 | 1:1 |
-| 5 | 100000 | 181.0 | 2.0 | 0.011050 | 213.0 | 0.0 | 0.000000 | -0.011050 | -1.104972 | 2 | 3 | many_to_many |
-| 6 | 100001 | 117.0 | 0.0 | 0.000000 | 151.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 7 | 100002 | 146.0 | 0.0 | 0.000000 | 147.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 8 | 100003 | 207.0 | 0.0 | 0.000000 | 175.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 9 | 100004 | 169.0 | 0.0 | 0.000000 | 142.0 | 6.0 | 0.042254 | 0.042254 | 4.225352 | 1 | 1 | 1:1 |
-| 10 | 100005 | 172.0 | 0.0 | 0.000000 | 162.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 11 | 100006 | 174.0 | 0.0 | 0.000000 | 166.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 12 | 100007 | 138.0 | 0.0 | 0.000000 | 124.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 13 | 100008 | 175.0 | 0.0 | 0.000000 | 223.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 14 | 100009 | 183.0 | 0.0 | 0.000000 | 194.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 15 | 10001 | 197.0 | 0.0 | 0.000000 | 255.0 | 3.0 | 0.011765 | 0.011765 | 1.176471 | 1 | 1 | 1:1 |
-| 16 | 100010 | 183.0 | 0.0 | 0.000000 | 220.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 17 | 100011 | 134.0 | 0.0 | 0.000000 | 130.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 18 | 100012 | 252.0 | 0.0 | 0.000000 | 439.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 3 | 2010_to_2022_split |
-| 19 | 100013 | 127.0 | 0.0 | 0.000000 | 243.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
+<!-- brazil:cell ibge_census_temporal_comparison_6 -->
+```python
+#| label: ibge_census_temporal_comparison_6
+show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 6)
+```
 
-    {'artifact_rows': 287178,
-     'path': 'data/intermediate/indicators/village_condo.parquet'}
+</details>
 
-|  | common_id | households_2010 | apartments_2010 | apartments_ratio_2010 | households_2022 | apartments_2022 | apartments_ratio_2022 | apartments_ratio_change | apartments_ratio_change_pp | n_2010 | n_2022 | relationship |
-|----|----|----|----|----|----|----|----|----|----|----|----|----|
-| 0 | 1 | 264.0 | 0.0 | 0.000000 | 336.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 1 | 10 | 168.0 | 0.0 | 0.000000 | 123.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 2 | 100 | 384.0 | 25.0 | 0.065104 | 391.0 | 15.0 | 0.038363 | -0.026741 | -2.674100 | 1 | 1 | 1:1 |
-| 3 | 1000 | 213.0 | 6.0 | 0.028169 | 216.0 | 0.0 | 0.000000 | -0.028169 | -2.816901 | 1 | 1 | 1:1 |
-| 4 | 10000 | 261.0 | 0.0 | 0.000000 | 263.0 | 3.0 | 0.011407 | 0.011407 | 1.140684 | 1 | 1 | 1:1 |
-| 5 | 100000 | 181.0 | 0.0 | 0.000000 | 213.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 2 | 3 | many_to_many |
-| 6 | 100001 | 117.0 | 45.0 | 0.384615 | 151.0 | 101.0 | 0.668874 | 0.284259 | 28.425879 | 1 | 1 | 1:1 |
-| 7 | 100002 | 146.0 | 28.0 | 0.191781 | 147.0 | 23.0 | 0.156463 | -0.035318 | -3.531824 | 1 | 1 | 1:1 |
-| 8 | 100003 | 207.0 | 19.0 | 0.091787 | 175.0 | 18.0 | 0.102857 | 0.011070 | 1.106970 | 1 | 1 | 1:1 |
-| 9 | 100004 | 169.0 | 24.0 | 0.142012 | 142.0 | 24.0 | 0.169014 | 0.027002 | 2.700225 | 1 | 1 | 1:1 |
-| 10 | 100005 | 172.0 | 12.0 | 0.069767 | 162.0 | 21.0 | 0.129630 | 0.059862 | 5.986219 | 1 | 1 | 1:1 |
-| 11 | 100006 | 174.0 | 0.0 | 0.000000 | 166.0 | 6.0 | 0.036145 | 0.036145 | 3.614458 | 1 | 1 | 1:1 |
-| 12 | 100007 | 138.0 | 0.0 | 0.000000 | 124.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 1 | 1:1 |
-| 13 | 100008 | 175.0 | 13.0 | 0.074286 | 223.0 | 20.0 | 0.089686 | 0.015400 | 1.540038 | 1 | 1 | 1:1 |
-| 14 | 100009 | 183.0 | 5.0 | 0.027322 | 194.0 | 8.0 | 0.041237 | 0.013915 | 1.391471 | 1 | 1 | 1:1 |
-| 15 | 10001 | 197.0 | 0.0 | 0.000000 | 255.0 | 53.0 | 0.207843 | 0.207843 | 20.784314 | 1 | 1 | 1:1 |
-| 16 | 100010 | 183.0 | 3.0 | 0.016393 | 220.0 | 13.0 | 0.059091 | 0.042697 | 4.269747 | 1 | 1 | 1:1 |
-| 17 | 100011 | 134.0 | 4.0 | 0.029851 | 130.0 | 3.0 | 0.023077 | -0.006774 | -0.677382 | 1 | 1 | 1:1 |
-| 18 | 100012 | 252.0 | 0.0 | 0.000000 | 439.0 | 0.0 | 0.000000 | 0.000000 | 0.000000 | 1 | 3 | 2010_to_2022_split |
-| 19 | 100013 | 127.0 | 0.0 | 0.000000 | 243.0 | 8.0 | 0.032922 | 0.032922 | 3.292181 | 1 | 1 | 1:1 |
+<!-- brazil:output ibge_census_temporal_comparison_6 begin -->
 
-    {'artifact_rows': 287178,
-     'path': 'data/intermediate/indicators/apartments.parquet'}
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>common_id</th>
+      <th>households_2010</th>
+      <th>rudimentary_sanitation_households_2010</th>
+      <th>rudimentary_sanitation_ratio_2010</th>
+      <th>households_2022</th>
+      <th>rudimentary_sanitation_households_2022</th>
+      <th>rudimentary_sanitation_ratio_2022</th>
+      <th>rudimentary_sanitation_ratio_change</th>
+      <th>rudimentary_sanitation_ratio_change_pp</th>
+      <th>n_2010</th>
+      <th>n_2022</th>
+      <th>relationship</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>264.0</td>
+      <td>261.0</td>
+      <td>0.988636</td>
+      <td>336.0</td>
+      <td>329.0</td>
+      <td>0.979167</td>
+      <td>-0.009470</td>
+      <td>-0.946970</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10</td>
+      <td>168.0</td>
+      <td>166.0</td>
+      <td>0.988095</td>
+      <td>123.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>-0.988095</td>
+      <td>-98.809524</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>100</td>
+      <td>384.0</td>
+      <td>23.0</td>
+      <td>0.059896</td>
+      <td>391.0</td>
+      <td>5.0</td>
+      <td>0.012788</td>
+      <td>-0.047108</td>
+      <td>-4.710811</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1000</td>
+      <td>213.0</td>
+      <td>194.0</td>
+      <td>0.910798</td>
+      <td>216.0</td>
+      <td>187.0</td>
+      <td>0.865741</td>
+      <td>-0.045057</td>
+      <td>-4.505738</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10000</td>
+      <td>261.0</td>
+      <td>149.0</td>
+      <td>0.570881</td>
+      <td>263.0</td>
+      <td>20.0</td>
+      <td>0.076046</td>
+      <td>-0.494836</td>
+      <td>-49.483560</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>100000</td>
+      <td>181.0</td>
+      <td>102.0</td>
+      <td>0.563536</td>
+      <td>213.0</td>
+      <td>90.0</td>
+      <td>0.422535</td>
+      <td>-0.141001</td>
+      <td>-14.100070</td>
+      <td>2</td>
+      <td>3</td>
+      <td>many_to_many</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>100001</td>
+      <td>117.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>151.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>100002</td>
+      <td>146.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>147.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>100003</td>
+      <td>207.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>175.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>100004</td>
+      <td>169.0</td>
+      <td>4.0</td>
+      <td>0.023669</td>
+      <td>142.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>-0.023669</td>
+      <td>-2.366864</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>100005</td>
+      <td>172.0</td>
+      <td>1.0</td>
+      <td>0.005814</td>
+      <td>162.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>-0.005814</td>
+      <td>-0.581395</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>100006</td>
+      <td>174.0</td>
+      <td>1.0</td>
+      <td>0.005747</td>
+      <td>166.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>-0.005747</td>
+      <td>-0.574713</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>100007</td>
+      <td>138.0</td>
+      <td>1.0</td>
+      <td>0.007246</td>
+      <td>124.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>-0.007246</td>
+      <td>-0.724638</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>100008</td>
+      <td>175.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>223.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>100009</td>
+      <td>183.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>194.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>10001</td>
+      <td>197.0</td>
+      <td>173.0</td>
+      <td>0.878173</td>
+      <td>255.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>-0.878173</td>
+      <td>-87.817259</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>100010</td>
+      <td>183.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>220.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>100011</td>
+      <td>134.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>130.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>100012</td>
+      <td>252.0</td>
+      <td>7.0</td>
+      <td>0.027778</td>
+      <td>439.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>-0.027778</td>
+      <td>-2.777778</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2010_to_2022_split</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>100013</td>
+      <td>127.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>243.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+  </tbody>
+</table>
 
-|  | common_id | pop_2010 | pop_2022 | area_km2 | population_density_2010 | population_density_2022 | population_density_change | population_density_change_pct |
-|----|----|----|----|----|----|----|----|----|
-| 0 | 1 | 859.0 | 928.0 | 0.539979 | 1590.801283 | 1718.583924 | 127.782641 | 8.032596 |
-| 1 | 10 | 491.0 | 311.0 | 0.183445 | 2676.546444 | 1695.327788 | -981.218656 | -36.659878 |
-| 2 | 100 | 1314.0 | 1060.0 | 0.217012 | 6054.966154 | 4884.523686 | -1170.442468 | -19.330289 |
-| 3 | 1000 | 811.0 | 683.0 | 0.067295 | 12051.438254 | 10149.361686 | -1902.076568 | -15.782984 |
-| 4 | 10000 | 915.0 | 842.0 | 0.119492 | 7657.395010 | 7046.477157 | -610.917853 | -7.978142 |
-| 5 | 100000 | 519.0 | 491.0 | 91.040011 | 5.700790 | 5.393233 | -0.307557 | -5.394990 |
-| 6 | 100001 | 329.0 | 381.0 | 0.056755 | 5796.821910 | 6713.036923 | 916.215013 | 15.805471 |
-| 7 | 100002 | 470.0 | 421.0 | 0.090660 | 5184.224043 | 4643.741111 | -540.482932 | -10.425532 |
-| 8 | 100003 | 635.0 | 466.0 | 0.085019 | 7468.919665 | 5481.128447 | -1987.791218 | -26.614173 |
-| 9 | 100004 | 469.0 | 316.0 | 0.105918 | 4427.941762 | 2983.431976 | -1444.509786 | -32.622601 |
-| 10 | 100005 | 519.0 | 411.0 | 0.087685 | 5918.888578 | 4687.212342 | -1231.676236 | -20.809249 |
-| 11 | 100006 | 524.0 | 411.0 | 0.079447 | 6595.628267 | 5173.288584 | -1422.339684 | -21.564885 |
-| 12 | 100007 | 424.0 | 311.0 | 0.051121 | 8294.084807 | 6083.632960 | -2210.451847 | -26.650943 |
-| 13 | 100008 | 559.0 | 646.0 | 0.448989 | 1245.018772 | 1438.787346 | 193.768575 | 15.563506 |
-| 14 | 100009 | 614.0 | 554.0 | 0.098064 | 6261.201857 | 5649.358027 | -611.843830 | -9.771987 |
-| 15 | 10001 | 696.0 | 810.0 | 0.071374 | 9751.473591 | 11348.697713 | 1597.224123 | 16.379310 |
-| 16 | 100010 | 620.0 | 625.0 | 0.156026 | 3973.692268 | 4005.738173 | 32.045905 | 0.806452 |
-| 17 | 100011 | 421.0 | 348.0 | 0.045247 | 9304.446209 | 7691.086178 | -1613.360032 | -17.339667 |
-| 18 | 100012 | 848.0 | 1296.0 | 2.000736 | 423.844050 | 647.761662 | 223.917611 | 52.830189 |
-| 19 | 100013 | 412.0 | 701.0 | 0.165580 | 2488.226443 | 4233.608584 | 1745.382141 | 70.145631 |
 
-    {'artifact_rows': 287178,
-     'path': 'data/intermediate/indicators/population_density.parquet'}
+```text
+{'artifact_rows': 285714,
+ 'path': 'data/intermediate/indicators/rudimentary_sanitation.parquet'}
+```
+<!-- brazil:output ibge_census_temporal_comparison_6 end -->
 
-    {'harmonisation_version': '8f67986ba3b1f50731be40dc11a183fdda6b8caecd893ed0d9ea5f83ddec1650',
-     'spatial_unit': 'common_id',
-     'black': {'common_areas': 287178, 'missing_change': 3505},
-     'brown': {'common_areas': 287178, 'missing_change': 3505},
-     'black_brown': {'common_areas': 287178, 'missing_change': 3505},
-     'literacy': {'common_areas': 285714, 'missing_change': 5738},
-     'rudimentary_sanitation': {'common_areas': 285714, 'missing_change': 3821},
-     'water_network': {'common_areas': 285714, 'missing_change': 3821},
-     'waste_collection': {'common_areas': 285714, 'missing_change': 3821},
-     'sewer_septic': {'common_areas': 285714, 'missing_change': 3821},
-     'houses': {'common_areas': 287178, 'missing_change': 5285},
-     'village_condo': {'common_areas': 287178, 'missing_change': 5285},
-     'apartments': {'common_areas': 287178, 'missing_change': 5285},
-     'income': {'common_areas': 287178, 'missing_change': 0},
-     'population_density': {'common_areas': 287178},
-     'generated_at': '2026-10-05T12:42:28.559266+00:00'}
+
+<details>
+<summary>Python code</summary>
+
+<!-- brazil:cell ibge_census_temporal_comparison_7 -->
+```python
+#| label: ibge_census_temporal_comparison_7
+show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 7)
+```
+
+</details>
+
+<!-- brazil:output ibge_census_temporal_comparison_7 begin -->
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>common_id</th>
+      <th>households_2010</th>
+      <th>water_network_households_2010</th>
+      <th>water_network_ratio_2010</th>
+      <th>households_2022</th>
+      <th>water_network_households_2022</th>
+      <th>water_network_ratio_2022</th>
+      <th>water_network_ratio_change</th>
+      <th>water_network_ratio_change_pp</th>
+      <th>n_2010</th>
+      <th>n_2022</th>
+      <th>relationship</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>264.0</td>
+      <td>68.0</td>
+      <td>0.257576</td>
+      <td>336.0</td>
+      <td>69.0</td>
+      <td>0.205357</td>
+      <td>-0.052219</td>
+      <td>-5.221861</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10</td>
+      <td>168.0</td>
+      <td>103.0</td>
+      <td>0.613095</td>
+      <td>123.0</td>
+      <td>111.0</td>
+      <td>0.902439</td>
+      <td>0.289344</td>
+      <td>28.934379</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>100</td>
+      <td>384.0</td>
+      <td>155.0</td>
+      <td>0.403646</td>
+      <td>391.0</td>
+      <td>198.0</td>
+      <td>0.506394</td>
+      <td>0.102748</td>
+      <td>10.274803</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1000</td>
+      <td>213.0</td>
+      <td>161.0</td>
+      <td>0.755869</td>
+      <td>216.0</td>
+      <td>185.0</td>
+      <td>0.856481</td>
+      <td>0.100613</td>
+      <td>10.061294</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10000</td>
+      <td>261.0</td>
+      <td>235.0</td>
+      <td>0.900383</td>
+      <td>263.0</td>
+      <td>202.0</td>
+      <td>0.768061</td>
+      <td>-0.132322</td>
+      <td>-13.232231</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>100000</td>
+      <td>181.0</td>
+      <td>97.0</td>
+      <td>0.535912</td>
+      <td>213.0</td>
+      <td>105.0</td>
+      <td>0.492958</td>
+      <td>-0.042954</td>
+      <td>-4.295386</td>
+      <td>2</td>
+      <td>3</td>
+      <td>many_to_many</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>100001</td>
+      <td>117.0</td>
+      <td>117.0</td>
+      <td>1.000000</td>
+      <td>151.0</td>
+      <td>136.0</td>
+      <td>0.900662</td>
+      <td>-0.099338</td>
+      <td>-9.933775</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>100002</td>
+      <td>146.0</td>
+      <td>146.0</td>
+      <td>1.000000</td>
+      <td>147.0</td>
+      <td>147.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>100003</td>
+      <td>207.0</td>
+      <td>207.0</td>
+      <td>1.000000</td>
+      <td>175.0</td>
+      <td>175.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>100004</td>
+      <td>169.0</td>
+      <td>169.0</td>
+      <td>1.000000</td>
+      <td>142.0</td>
+      <td>142.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>100005</td>
+      <td>172.0</td>
+      <td>172.0</td>
+      <td>1.000000</td>
+      <td>162.0</td>
+      <td>162.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>100006</td>
+      <td>174.0</td>
+      <td>174.0</td>
+      <td>1.000000</td>
+      <td>166.0</td>
+      <td>166.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>100007</td>
+      <td>138.0</td>
+      <td>138.0</td>
+      <td>1.000000</td>
+      <td>124.0</td>
+      <td>124.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>100008</td>
+      <td>175.0</td>
+      <td>175.0</td>
+      <td>1.000000</td>
+      <td>223.0</td>
+      <td>222.0</td>
+      <td>0.995516</td>
+      <td>-0.004484</td>
+      <td>-0.448430</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>100009</td>
+      <td>183.0</td>
+      <td>183.0</td>
+      <td>1.000000</td>
+      <td>194.0</td>
+      <td>194.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>10001</td>
+      <td>197.0</td>
+      <td>185.0</td>
+      <td>0.939086</td>
+      <td>255.0</td>
+      <td>229.0</td>
+      <td>0.898039</td>
+      <td>-0.041047</td>
+      <td>-4.104708</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>100010</td>
+      <td>183.0</td>
+      <td>183.0</td>
+      <td>1.000000</td>
+      <td>220.0</td>
+      <td>220.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>100011</td>
+      <td>134.0</td>
+      <td>133.0</td>
+      <td>0.992537</td>
+      <td>130.0</td>
+      <td>130.0</td>
+      <td>1.000000</td>
+      <td>0.007463</td>
+      <td>0.746269</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>100012</td>
+      <td>252.0</td>
+      <td>245.0</td>
+      <td>0.972222</td>
+      <td>439.0</td>
+      <td>436.0</td>
+      <td>0.993166</td>
+      <td>0.020944</td>
+      <td>2.094406</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2010_to_2022_split</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>100013</td>
+      <td>127.0</td>
+      <td>127.0</td>
+      <td>1.000000</td>
+      <td>243.0</td>
+      <td>243.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+  </tbody>
+</table>
+
+
+```text
+{'artifact_rows': 285714,
+ 'path': 'data/intermediate/indicators/water_network.parquet'}
+```
+<!-- brazil:output ibge_census_temporal_comparison_7 end -->
+
+
+<details>
+<summary>Python code</summary>
+
+<!-- brazil:cell ibge_census_temporal_comparison_8 -->
+```python
+#| label: ibge_census_temporal_comparison_8
+show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 8)
+```
+
+</details>
+
+<!-- brazil:output ibge_census_temporal_comparison_8 begin -->
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>common_id</th>
+      <th>households_2010</th>
+      <th>waste_collection_households_2010</th>
+      <th>waste_collection_ratio_2010</th>
+      <th>households_2022</th>
+      <th>waste_collection_households_2022</th>
+      <th>waste_collection_ratio_2022</th>
+      <th>waste_collection_ratio_change</th>
+      <th>waste_collection_ratio_change_pp</th>
+      <th>n_2010</th>
+      <th>n_2022</th>
+      <th>relationship</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>264.0</td>
+      <td>256.0</td>
+      <td>0.969697</td>
+      <td>336.0</td>
+      <td>333.0</td>
+      <td>0.991071</td>
+      <td>0.021374</td>
+      <td>2.137446</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10</td>
+      <td>168.0</td>
+      <td>168.0</td>
+      <td>1.000000</td>
+      <td>123.0</td>
+      <td>123.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>100</td>
+      <td>384.0</td>
+      <td>382.0</td>
+      <td>0.994792</td>
+      <td>391.0</td>
+      <td>391.0</td>
+      <td>1.000000</td>
+      <td>0.005208</td>
+      <td>0.520833</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1000</td>
+      <td>213.0</td>
+      <td>213.0</td>
+      <td>1.000000</td>
+      <td>216.0</td>
+      <td>216.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10000</td>
+      <td>261.0</td>
+      <td>261.0</td>
+      <td>1.000000</td>
+      <td>263.0</td>
+      <td>262.0</td>
+      <td>0.996198</td>
+      <td>-0.003802</td>
+      <td>-0.380228</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>100000</td>
+      <td>181.0</td>
+      <td>99.0</td>
+      <td>0.546961</td>
+      <td>213.0</td>
+      <td>169.0</td>
+      <td>0.793427</td>
+      <td>0.246466</td>
+      <td>24.646590</td>
+      <td>2</td>
+      <td>3</td>
+      <td>many_to_many</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>100001</td>
+      <td>117.0</td>
+      <td>117.0</td>
+      <td>1.000000</td>
+      <td>151.0</td>
+      <td>150.0</td>
+      <td>0.993377</td>
+      <td>-0.006623</td>
+      <td>-0.662252</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>100002</td>
+      <td>146.0</td>
+      <td>146.0</td>
+      <td>1.000000</td>
+      <td>147.0</td>
+      <td>146.0</td>
+      <td>0.993197</td>
+      <td>-0.006803</td>
+      <td>-0.680272</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>100003</td>
+      <td>207.0</td>
+      <td>207.0</td>
+      <td>1.000000</td>
+      <td>175.0</td>
+      <td>174.0</td>
+      <td>0.994286</td>
+      <td>-0.005714</td>
+      <td>-0.571429</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>100004</td>
+      <td>169.0</td>
+      <td>169.0</td>
+      <td>1.000000</td>
+      <td>142.0</td>
+      <td>141.0</td>
+      <td>0.992958</td>
+      <td>-0.007042</td>
+      <td>-0.704225</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>100005</td>
+      <td>172.0</td>
+      <td>172.0</td>
+      <td>1.000000</td>
+      <td>162.0</td>
+      <td>153.0</td>
+      <td>0.944444</td>
+      <td>-0.055556</td>
+      <td>-5.555556</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>100006</td>
+      <td>174.0</td>
+      <td>174.0</td>
+      <td>1.000000</td>
+      <td>166.0</td>
+      <td>166.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>100007</td>
+      <td>138.0</td>
+      <td>138.0</td>
+      <td>1.000000</td>
+      <td>124.0</td>
+      <td>124.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>100008</td>
+      <td>175.0</td>
+      <td>175.0</td>
+      <td>1.000000</td>
+      <td>223.0</td>
+      <td>223.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>100009</td>
+      <td>183.0</td>
+      <td>183.0</td>
+      <td>1.000000</td>
+      <td>194.0</td>
+      <td>194.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>10001</td>
+      <td>197.0</td>
+      <td>197.0</td>
+      <td>1.000000</td>
+      <td>255.0</td>
+      <td>255.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>100010</td>
+      <td>183.0</td>
+      <td>183.0</td>
+      <td>1.000000</td>
+      <td>220.0</td>
+      <td>220.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>100011</td>
+      <td>134.0</td>
+      <td>134.0</td>
+      <td>1.000000</td>
+      <td>130.0</td>
+      <td>130.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>100012</td>
+      <td>252.0</td>
+      <td>242.0</td>
+      <td>0.960317</td>
+      <td>439.0</td>
+      <td>428.0</td>
+      <td>0.974943</td>
+      <td>0.014626</td>
+      <td>1.462559</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2010_to_2022_split</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>100013</td>
+      <td>127.0</td>
+      <td>126.0</td>
+      <td>0.992126</td>
+      <td>243.0</td>
+      <td>243.0</td>
+      <td>1.000000</td>
+      <td>0.007874</td>
+      <td>0.787402</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+  </tbody>
+</table>
+
+
+```text
+{'artifact_rows': 285714,
+ 'path': 'data/intermediate/indicators/waste_collection.parquet'}
+```
+<!-- brazil:output ibge_census_temporal_comparison_8 end -->
+
+
+<details>
+<summary>Python code</summary>
+
+<!-- brazil:cell ibge_census_temporal_comparison_9 -->
+```python
+#| label: ibge_census_temporal_comparison_9
+show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 9)
+```
+
+</details>
+
+<!-- brazil:output ibge_census_temporal_comparison_9 begin -->
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>common_id</th>
+      <th>households_2010</th>
+      <th>sewer_septic_households_2010</th>
+      <th>sewer_septic_ratio_2010</th>
+      <th>households_2022</th>
+      <th>sewer_septic_households_2022</th>
+      <th>sewer_septic_ratio_2022</th>
+      <th>sewer_septic_ratio_change</th>
+      <th>sewer_septic_ratio_change_pp</th>
+      <th>n_2010</th>
+      <th>n_2022</th>
+      <th>relationship</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>264.0</td>
+      <td>1.0</td>
+      <td>0.003788</td>
+      <td>336.0</td>
+      <td>6.0</td>
+      <td>0.017857</td>
+      <td>0.014069</td>
+      <td>1.406926</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10</td>
+      <td>168.0</td>
+      <td>2.0</td>
+      <td>0.011905</td>
+      <td>123.0</td>
+      <td>122.0</td>
+      <td>0.991870</td>
+      <td>0.979965</td>
+      <td>97.996516</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>100</td>
+      <td>384.0</td>
+      <td>359.0</td>
+      <td>0.934896</td>
+      <td>391.0</td>
+      <td>386.0</td>
+      <td>0.987212</td>
+      <td>0.052316</td>
+      <td>5.231644</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1000</td>
+      <td>213.0</td>
+      <td>19.0</td>
+      <td>0.089202</td>
+      <td>216.0</td>
+      <td>29.0</td>
+      <td>0.134259</td>
+      <td>0.045057</td>
+      <td>4.505738</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10000</td>
+      <td>261.0</td>
+      <td>112.0</td>
+      <td>0.429119</td>
+      <td>263.0</td>
+      <td>243.0</td>
+      <td>0.923954</td>
+      <td>0.494836</td>
+      <td>49.483560</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>100000</td>
+      <td>181.0</td>
+      <td>78.0</td>
+      <td>0.430939</td>
+      <td>213.0</td>
+      <td>122.0</td>
+      <td>0.572770</td>
+      <td>0.141831</td>
+      <td>14.183073</td>
+      <td>2</td>
+      <td>3</td>
+      <td>many_to_many</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>100001</td>
+      <td>117.0</td>
+      <td>117.0</td>
+      <td>1.000000</td>
+      <td>151.0</td>
+      <td>151.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>100002</td>
+      <td>146.0</td>
+      <td>146.0</td>
+      <td>1.000000</td>
+      <td>147.0</td>
+      <td>147.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>100003</td>
+      <td>207.0</td>
+      <td>207.0</td>
+      <td>1.000000</td>
+      <td>175.0</td>
+      <td>173.0</td>
+      <td>0.988571</td>
+      <td>-0.011429</td>
+      <td>-1.142857</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>100004</td>
+      <td>169.0</td>
+      <td>165.0</td>
+      <td>0.976331</td>
+      <td>142.0</td>
+      <td>142.0</td>
+      <td>1.000000</td>
+      <td>0.023669</td>
+      <td>2.366864</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>100005</td>
+      <td>172.0</td>
+      <td>171.0</td>
+      <td>0.994186</td>
+      <td>162.0</td>
+      <td>162.0</td>
+      <td>1.000000</td>
+      <td>0.005814</td>
+      <td>0.581395</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>100006</td>
+      <td>174.0</td>
+      <td>172.0</td>
+      <td>0.988506</td>
+      <td>166.0</td>
+      <td>165.0</td>
+      <td>0.993976</td>
+      <td>0.005470</td>
+      <td>0.547016</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>100007</td>
+      <td>138.0</td>
+      <td>137.0</td>
+      <td>0.992754</td>
+      <td>124.0</td>
+      <td>123.0</td>
+      <td>0.991935</td>
+      <td>-0.000818</td>
+      <td>-0.081814</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>100008</td>
+      <td>175.0</td>
+      <td>175.0</td>
+      <td>1.000000</td>
+      <td>223.0</td>
+      <td>222.0</td>
+      <td>0.995516</td>
+      <td>-0.004484</td>
+      <td>-0.448430</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>100009</td>
+      <td>183.0</td>
+      <td>183.0</td>
+      <td>1.000000</td>
+      <td>194.0</td>
+      <td>194.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>10001</td>
+      <td>197.0</td>
+      <td>24.0</td>
+      <td>0.121827</td>
+      <td>255.0</td>
+      <td>252.0</td>
+      <td>0.988235</td>
+      <td>0.866408</td>
+      <td>86.640788</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>100010</td>
+      <td>183.0</td>
+      <td>183.0</td>
+      <td>1.000000</td>
+      <td>220.0</td>
+      <td>220.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>100011</td>
+      <td>134.0</td>
+      <td>134.0</td>
+      <td>1.000000</td>
+      <td>130.0</td>
+      <td>130.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>100012</td>
+      <td>252.0</td>
+      <td>242.0</td>
+      <td>0.960317</td>
+      <td>439.0</td>
+      <td>435.0</td>
+      <td>0.990888</td>
+      <td>0.030571</td>
+      <td>3.057092</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2010_to_2022_split</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>100013</td>
+      <td>127.0</td>
+      <td>127.0</td>
+      <td>1.000000</td>
+      <td>243.0</td>
+      <td>243.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+  </tbody>
+</table>
+
+
+```text
+{'artifact_rows': 285714,
+ 'path': 'data/intermediate/indicators/sewer_septic.parquet'}
+```
+<!-- brazil:output ibge_census_temporal_comparison_9 end -->
+
+
+<details>
+<summary>Python code</summary>
+
+<!-- brazil:cell ibge_census_temporal_comparison_10 -->
+```python
+#| label: ibge_census_temporal_comparison_10
+show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 10)
+```
+
+</details>
+
+<!-- brazil:output ibge_census_temporal_comparison_10 begin -->
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>common_id</th>
+      <th>pop_2010</th>
+      <th>brown_pop_2010</th>
+      <th>brown_ratio_2010</th>
+      <th>pop_2022</th>
+      <th>brown_pop_2022</th>
+      <th>brown_ratio_2022</th>
+      <th>brown_ratio_change</th>
+      <th>brown_ratio_change_pp</th>
+      <th>n_2010</th>
+      <th>n_2022</th>
+      <th>relationship</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>859.0</td>
+      <td>404.0</td>
+      <td>0.470314</td>
+      <td>928.0</td>
+      <td>514.0</td>
+      <td>0.553879</td>
+      <td>0.083565</td>
+      <td>8.356499</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10</td>
+      <td>491.0</td>
+      <td>236.0</td>
+      <td>0.480652</td>
+      <td>311.0</td>
+      <td>166.0</td>
+      <td>0.533762</td>
+      <td>0.053110</td>
+      <td>5.311033</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>100</td>
+      <td>1314.0</td>
+      <td>692.0</td>
+      <td>0.526636</td>
+      <td>1060.0</td>
+      <td>582.0</td>
+      <td>0.549057</td>
+      <td>0.022420</td>
+      <td>2.242038</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1000</td>
+      <td>811.0</td>
+      <td>469.0</td>
+      <td>0.578298</td>
+      <td>683.0</td>
+      <td>448.0</td>
+      <td>0.655930</td>
+      <td>0.077631</td>
+      <td>7.763132</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10000</td>
+      <td>915.0</td>
+      <td>641.0</td>
+      <td>0.700546</td>
+      <td>842.0</td>
+      <td>541.0</td>
+      <td>0.642518</td>
+      <td>-0.058029</td>
+      <td>-5.802863</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>100000</td>
+      <td>519.0</td>
+      <td>229.0</td>
+      <td>0.441233</td>
+      <td>491.0</td>
+      <td>204.0</td>
+      <td>0.415479</td>
+      <td>-0.025755</td>
+      <td>-2.575453</td>
+      <td>2</td>
+      <td>3</td>
+      <td>many_to_many</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>100001</td>
+      <td>329.0</td>
+      <td>86.0</td>
+      <td>0.261398</td>
+      <td>381.0</td>
+      <td>115.0</td>
+      <td>0.301837</td>
+      <td>0.040439</td>
+      <td>4.043909</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>100002</td>
+      <td>470.0</td>
+      <td>140.0</td>
+      <td>0.297872</td>
+      <td>421.0</td>
+      <td>166.0</td>
+      <td>0.394299</td>
+      <td>0.096427</td>
+      <td>9.642695</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>100003</td>
+      <td>635.0</td>
+      <td>254.0</td>
+      <td>0.400000</td>
+      <td>466.0</td>
+      <td>144.0</td>
+      <td>0.309013</td>
+      <td>-0.090987</td>
+      <td>-9.098712</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>100004</td>
+      <td>469.0</td>
+      <td>113.0</td>
+      <td>0.240938</td>
+      <td>316.0</td>
+      <td>98.0</td>
+      <td>0.310127</td>
+      <td>0.069188</td>
+      <td>6.918842</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>100005</td>
+      <td>519.0</td>
+      <td>148.0</td>
+      <td>0.285164</td>
+      <td>411.0</td>
+      <td>148.0</td>
+      <td>0.360097</td>
+      <td>0.074934</td>
+      <td>7.493355</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>100006</td>
+      <td>524.0</td>
+      <td>124.0</td>
+      <td>0.236641</td>
+      <td>411.0</td>
+      <td>123.0</td>
+      <td>0.299270</td>
+      <td>0.062629</td>
+      <td>6.262885</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>100007</td>
+      <td>424.0</td>
+      <td>224.0</td>
+      <td>0.528302</td>
+      <td>311.0</td>
+      <td>153.0</td>
+      <td>0.491961</td>
+      <td>-0.036340</td>
+      <td>-3.634047</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>100008</td>
+      <td>559.0</td>
+      <td>136.0</td>
+      <td>0.243292</td>
+      <td>646.0</td>
+      <td>229.0</td>
+      <td>0.354489</td>
+      <td>0.111198</td>
+      <td>11.119757</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>100009</td>
+      <td>614.0</td>
+      <td>145.0</td>
+      <td>0.236156</td>
+      <td>554.0</td>
+      <td>184.0</td>
+      <td>0.332130</td>
+      <td>0.095974</td>
+      <td>9.597361</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>10001</td>
+      <td>696.0</td>
+      <td>448.0</td>
+      <td>0.643678</td>
+      <td>810.0</td>
+      <td>534.0</td>
+      <td>0.659259</td>
+      <td>0.015581</td>
+      <td>1.558110</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>100010</td>
+      <td>620.0</td>
+      <td>135.0</td>
+      <td>0.217742</td>
+      <td>625.0</td>
+      <td>173.0</td>
+      <td>0.276800</td>
+      <td>0.059058</td>
+      <td>5.905806</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>100011</td>
+      <td>421.0</td>
+      <td>120.0</td>
+      <td>0.285036</td>
+      <td>348.0</td>
+      <td>148.0</td>
+      <td>0.425287</td>
+      <td>0.140252</td>
+      <td>14.025173</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>100012</td>
+      <td>848.0</td>
+      <td>425.0</td>
+      <td>0.501179</td>
+      <td>1296.0</td>
+      <td>584.0</td>
+      <td>0.450617</td>
+      <td>-0.050562</td>
+      <td>-5.056196</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2010_to_2022_split</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>100013</td>
+      <td>412.0</td>
+      <td>193.0</td>
+      <td>0.468447</td>
+      <td>701.0</td>
+      <td>385.0</td>
+      <td>0.549215</td>
+      <td>0.080769</td>
+      <td>8.076880</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+  </tbody>
+</table>
+
+
+```text
+{'artifact_rows': 287178, 'path': 'data/intermediate/indicators/brown.parquet'}
+```
+<!-- brazil:output ibge_census_temporal_comparison_10 end -->
+
+
+<details>
+<summary>Python code</summary>
+
+<!-- brazil:cell ibge_census_temporal_comparison_11 -->
+```python
+#| label: ibge_census_temporal_comparison_11
+show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 11)
+```
+
+</details>
+
+<!-- brazil:output ibge_census_temporal_comparison_11 begin -->
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>common_id</th>
+      <th>pop_2010</th>
+      <th>black_brown_pop_2010</th>
+      <th>black_brown_ratio_2010</th>
+      <th>pop_2022</th>
+      <th>black_brown_pop_2022</th>
+      <th>black_brown_ratio_2022</th>
+      <th>black_brown_ratio_change</th>
+      <th>black_brown_ratio_change_pp</th>
+      <th>n_2010</th>
+      <th>n_2022</th>
+      <th>relationship</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>859.0</td>
+      <td>461.0</td>
+      <td>0.536671</td>
+      <td>928.0</td>
+      <td>601.0</td>
+      <td>0.647629</td>
+      <td>0.110959</td>
+      <td>11.095876</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10</td>
+      <td>491.0</td>
+      <td>258.0</td>
+      <td>0.525458</td>
+      <td>311.0</td>
+      <td>187.0</td>
+      <td>0.601286</td>
+      <td>0.075828</td>
+      <td>7.582793</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>100</td>
+      <td>1314.0</td>
+      <td>784.0</td>
+      <td>0.596651</td>
+      <td>1060.0</td>
+      <td>679.0</td>
+      <td>0.640566</td>
+      <td>0.043915</td>
+      <td>4.391459</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1000</td>
+      <td>811.0</td>
+      <td>578.0</td>
+      <td>0.712700</td>
+      <td>683.0</td>
+      <td>511.0</td>
+      <td>0.748170</td>
+      <td>0.035469</td>
+      <td>3.546947</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10000</td>
+      <td>915.0</td>
+      <td>693.0</td>
+      <td>0.757377</td>
+      <td>842.0</td>
+      <td>637.0</td>
+      <td>0.756532</td>
+      <td>-0.000845</td>
+      <td>-0.084498</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>100000</td>
+      <td>519.0</td>
+      <td>244.0</td>
+      <td>0.470135</td>
+      <td>491.0</td>
+      <td>228.0</td>
+      <td>0.464358</td>
+      <td>-0.005776</td>
+      <td>-0.577642</td>
+      <td>2</td>
+      <td>3</td>
+      <td>many_to_many</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>100001</td>
+      <td>329.0</td>
+      <td>94.0</td>
+      <td>0.285714</td>
+      <td>381.0</td>
+      <td>126.0</td>
+      <td>0.330709</td>
+      <td>0.044994</td>
+      <td>4.499438</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>100002</td>
+      <td>470.0</td>
+      <td>166.0</td>
+      <td>0.353191</td>
+      <td>421.0</td>
+      <td>173.0</td>
+      <td>0.410926</td>
+      <td>0.057735</td>
+      <td>5.773488</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>100003</td>
+      <td>635.0</td>
+      <td>276.0</td>
+      <td>0.434646</td>
+      <td>466.0</td>
+      <td>169.0</td>
+      <td>0.362661</td>
+      <td>-0.071985</td>
+      <td>-7.198473</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>100004</td>
+      <td>469.0</td>
+      <td>118.0</td>
+      <td>0.251599</td>
+      <td>316.0</td>
+      <td>105.0</td>
+      <td>0.332278</td>
+      <td>0.080679</td>
+      <td>8.067933</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>100005</td>
+      <td>519.0</td>
+      <td>169.0</td>
+      <td>0.325626</td>
+      <td>411.0</td>
+      <td>162.0</td>
+      <td>0.394161</td>
+      <td>0.068534</td>
+      <td>6.853438</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>100006</td>
+      <td>524.0</td>
+      <td>144.0</td>
+      <td>0.274809</td>
+      <td>411.0</td>
+      <td>141.0</td>
+      <td>0.343066</td>
+      <td>0.068257</td>
+      <td>6.825653</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>100007</td>
+      <td>424.0</td>
+      <td>277.0</td>
+      <td>0.653302</td>
+      <td>311.0</td>
+      <td>190.0</td>
+      <td>0.610932</td>
+      <td>-0.042369</td>
+      <td>-4.236941</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>100008</td>
+      <td>559.0</td>
+      <td>140.0</td>
+      <td>0.250447</td>
+      <td>646.0</td>
+      <td>249.0</td>
+      <td>0.385449</td>
+      <td>0.135002</td>
+      <td>13.500169</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>100009</td>
+      <td>614.0</td>
+      <td>150.0</td>
+      <td>0.244300</td>
+      <td>554.0</td>
+      <td>200.0</td>
+      <td>0.361011</td>
+      <td>0.116711</td>
+      <td>11.671116</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>10001</td>
+      <td>696.0</td>
+      <td>494.0</td>
+      <td>0.709770</td>
+      <td>810.0</td>
+      <td>633.0</td>
+      <td>0.781481</td>
+      <td>0.071711</td>
+      <td>7.171137</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>100010</td>
+      <td>620.0</td>
+      <td>145.0</td>
+      <td>0.233871</td>
+      <td>625.0</td>
+      <td>191.0</td>
+      <td>0.305600</td>
+      <td>0.071729</td>
+      <td>7.172903</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>100011</td>
+      <td>421.0</td>
+      <td>162.0</td>
+      <td>0.384798</td>
+      <td>348.0</td>
+      <td>190.0</td>
+      <td>0.545977</td>
+      <td>0.161179</td>
+      <td>16.117891</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>100012</td>
+      <td>848.0</td>
+      <td>463.0</td>
+      <td>0.545991</td>
+      <td>1296.0</td>
+      <td>728.0</td>
+      <td>0.561728</td>
+      <td>0.015738</td>
+      <td>1.573783</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2010_to_2022_split</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>100013</td>
+      <td>412.0</td>
+      <td>219.0</td>
+      <td>0.531553</td>
+      <td>701.0</td>
+      <td>455.0</td>
+      <td>0.649073</td>
+      <td>0.117519</td>
+      <td>11.751936</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+  </tbody>
+</table>
+
+
+```text
+{'artifact_rows': 287178,
+ 'path': 'data/intermediate/indicators/black_brown.parquet'}
+```
+<!-- brazil:output ibge_census_temporal_comparison_11 end -->
+
+Income is harmonised by common_id. Multi-tract groups require validated counts of income-receiving household heads for the matching household universe; without those counts their means remain unavailable. Single-tract means are retained independently in each year.
+
+
+<details>
+<summary>Python code</summary>
+
+<!-- brazil:cell ibge_census_temporal_comparison_12 -->
+```python
+#| label: ibge_census_temporal_comparison_12
+show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 12)
+```
+
+</details>
+
+<!-- brazil:output ibge_census_temporal_comparison_12 begin -->
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>common_id</th>
+      <th>n_2010_x</th>
+      <th>n_used_2010</th>
+      <th>missing_weights_2010</th>
+      <th>missing_means_2010</th>
+      <th>heads_used_2010</th>
+      <th>weighted_sum_2010</th>
+      <th>complete_2010</th>
+      <th>tract_coverage_pct_2010</th>
+      <th>income_2010</th>
+      <th>income_2010_nominal</th>
+      <th>n_2022_x</th>
+      <th>n_used_2022</th>
+      <th>missing_weights_2022</th>
+      <th>missing_means_2022</th>
+      <th>heads_used_2022</th>
+      <th>weighted_sum_2022</th>
+      <th>complete_2022</th>
+      <th>tract_coverage_pct_2022</th>
+      <th>income_2022</th>
+      <th>n_2010_y</th>
+      <th>n_2022_y</th>
+      <th>relationship</th>
+      <th>valid_income_change</th>
+      <th>valid_income_change_pct</th>
+      <th>income_change_brl</th>
+      <th>income_change_pct</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>264.0</td>
+      <td>275732.205128</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>2169.046150</td>
+      <td>1044.440171</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>336.0</td>
+      <td>824218.08</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>2453.030000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+      <td>True</td>
+      <td>True</td>
+      <td>283.983850</td>
+      <td>13.092568</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>168.0</td>
+      <td>231121.271523</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>2857.036979</td>
+      <td>1375.721854</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>123.0</td>
+      <td>627308.61</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>5100.070000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+      <td>True</td>
+      <td>True</td>
+      <td>2243.033021</td>
+      <td>78.509065</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>100</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>384.0</td>
+      <td>423391.906706</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>2289.794737</td>
+      <td>1102.583090</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>391.0</td>
+      <td>963787.63</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>2464.930000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+      <td>True</td>
+      <td>True</td>
+      <td>175.135263</td>
+      <td>7.648514</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>213.0</td>
+      <td>174906.910448</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>1705.346327</td>
+      <td>821.159204</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>216.0</td>
+      <td>446327.28</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>2066.330000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+      <td>True</td>
+      <td>True</td>
+      <td>360.983673</td>
+      <td>21.167763</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>261.0</td>
+      <td>302518.207792</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>2407.111661</td>
+      <td>1159.073593</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>263.0</td>
+      <td>614652.04</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>2337.080000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+      <td>True</td>
+      <td>True</td>
+      <td>-70.031661</td>
+      <td>-2.909365</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>100000</td>
+      <td>2</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>182.0</td>
+      <td>166167.137500</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>1896.090122</td>
+      <td>913.006250</td>
+      <td>3</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>213.0</td>
+      <td>502801.26</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>2360.569296</td>
+      <td>2</td>
+      <td>3</td>
+      <td>many_to_many</td>
+      <td>True</td>
+      <td>True</td>
+      <td>464.479174</td>
+      <td>24.496682</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>100001</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>117.0</td>
+      <td>221499.313043</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>3931.621914</td>
+      <td>1893.156522</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>151.0</td>
+      <td>796888.91</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>5277.410000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+      <td>True</td>
+      <td>True</td>
+      <td>1345.788086</td>
+      <td>34.229845</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>100002</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>147.0</td>
+      <td>447022.829787</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>6315.352465</td>
+      <td>3040.971631</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>147.0</td>
+      <td>719382.72</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>4893.760000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+      <td>True</td>
+      <td>True</td>
+      <td>-1421.592465</td>
+      <td>-22.510105</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>100003</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>207.0</td>
+      <td>353641.296482</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>3547.952965</td>
+      <td>1708.412060</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>175.0</td>
+      <td>570498.25</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>3259.990000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+      <td>True</td>
+      <td>True</td>
+      <td>-287.962965</td>
+      <td>-8.116313</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>100004</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>169.0</td>
+      <td>230319.512048</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>2830.279022</td>
+      <td>1362.837349</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>142.0</td>
+      <td>367931.94</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>2591.070000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+      <td>True</td>
+      <td>True</td>
+      <td>-239.209022</td>
+      <td>-8.451782</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>100005</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>172.0</td>
+      <td>215373.546012</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>2600.453766</td>
+      <td>1252.171779</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>162.0</td>
+      <td>378187.38</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>2334.490000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+      <td>True</td>
+      <td>True</td>
+      <td>-265.963766</td>
+      <td>-10.227591</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>100006</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>174.0</td>
+      <td>363099.105882</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>4333.723074</td>
+      <td>2086.776471</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>166.0</td>
+      <td>694587.16</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>4184.260000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+      <td>True</td>
+      <td>True</td>
+      <td>-149.463074</td>
+      <td>-3.448838</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>100007</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>138.0</td>
+      <td>127461.720930</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>1918.164798</td>
+      <td>923.635659</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>124.0</td>
+      <td>241026.24</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>1943.760000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+      <td>True</td>
+      <td>True</td>
+      <td>25.595202</td>
+      <td>1.334359</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>100008</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>175.0</td>
+      <td>371165.209790</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>4404.680772</td>
+      <td>2120.944056</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>223.0</td>
+      <td>953708.56</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>4276.720000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+      <td>True</td>
+      <td>True</td>
+      <td>-127.960772</td>
+      <td>-2.905109</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>100009</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>184.0</td>
+      <td>323943.821229</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>3656.260267</td>
+      <td>1760.564246</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>194.0</td>
+      <td>738835.42</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>3808.430000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+      <td>True</td>
+      <td>True</td>
+      <td>152.169733</td>
+      <td>4.161896</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>10001</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>197.0</td>
+      <td>195056.121547</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>2056.262634</td>
+      <td>990.132597</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>255.0</td>
+      <td>573923.40</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>2250.680000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+      <td>True</td>
+      <td>True</td>
+      <td>194.417366</td>
+      <td>9.454890</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>100010</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>183.0</td>
+      <td>645415.297753</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>7324.422539</td>
+      <td>3526.859551</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>220.0</td>
+      <td>1300824.80</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>5912.840000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+      <td>True</td>
+      <td>True</td>
+      <td>-1411.582539</td>
+      <td>-19.272271</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>100011</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>134.0</td>
+      <td>125666.875000</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>1947.606621</td>
+      <td>937.812500</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>130.0</td>
+      <td>236355.60</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>1818.120000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+      <td>True</td>
+      <td>True</td>
+      <td>-129.486621</td>
+      <td>-6.648500</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>100012</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>252.0</td>
+      <td>253448.470588</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>2088.691788</td>
+      <td>1005.747899</td>
+      <td>3</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>439.0</td>
+      <td>796111.87</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>1813.466674</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2010_to_2022_split</td>
+      <td>True</td>
+      <td>True</td>
+      <td>-275.225114</td>
+      <td>-13.176914</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>100013</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>127.0</td>
+      <td>99254.163462</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>1623.043791</td>
+      <td>781.528846</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>243.0</td>
+      <td>447363.00</td>
+      <td>True</td>
+      <td>100.0</td>
+      <td>1841.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+      <td>True</td>
+      <td>True</td>
+      <td>217.956209</td>
+      <td>13.428856</td>
+    </tr>
+  </tbody>
+</table>
+
+
+```text
+{'artifact_rows': 287178,
+ 'path': 'data/intermediate/indicators/income.parquet'}
+```
+<!-- brazil:output ibge_census_temporal_comparison_12 end -->
+
+
+<details>
+<summary>Python code</summary>
+
+<!-- brazil:cell ibge_census_temporal_comparison_13 -->
+```python
+#| label: ibge_census_temporal_comparison_13
+show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 13)
+```
+
+</details>
+
+<!-- brazil:output ibge_census_temporal_comparison_13 begin -->
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>common_id</th>
+      <th>households_2010</th>
+      <th>houses_2010</th>
+      <th>houses_ratio_2010</th>
+      <th>households_2022</th>
+      <th>houses_2022</th>
+      <th>houses_ratio_2022</th>
+      <th>houses_ratio_change</th>
+      <th>houses_ratio_change_pp</th>
+      <th>n_2010</th>
+      <th>n_2022</th>
+      <th>relationship</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>264.0</td>
+      <td>264.0</td>
+      <td>1.000000</td>
+      <td>336.0</td>
+      <td>335.0</td>
+      <td>0.997024</td>
+      <td>-0.002976</td>
+      <td>-0.297619</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10</td>
+      <td>168.0</td>
+      <td>168.0</td>
+      <td>1.000000</td>
+      <td>123.0</td>
+      <td>121.0</td>
+      <td>0.983740</td>
+      <td>-0.016260</td>
+      <td>-1.626016</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>100</td>
+      <td>384.0</td>
+      <td>358.0</td>
+      <td>0.932292</td>
+      <td>391.0</td>
+      <td>362.0</td>
+      <td>0.925831</td>
+      <td>-0.006460</td>
+      <td>-0.646046</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1000</td>
+      <td>213.0</td>
+      <td>207.0</td>
+      <td>0.971831</td>
+      <td>216.0</td>
+      <td>214.0</td>
+      <td>0.990741</td>
+      <td>0.018910</td>
+      <td>1.890975</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10000</td>
+      <td>261.0</td>
+      <td>260.0</td>
+      <td>0.996169</td>
+      <td>263.0</td>
+      <td>259.0</td>
+      <td>0.984791</td>
+      <td>-0.011378</td>
+      <td>-1.137771</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>100000</td>
+      <td>181.0</td>
+      <td>179.0</td>
+      <td>0.988950</td>
+      <td>213.0</td>
+      <td>213.0</td>
+      <td>1.000000</td>
+      <td>0.011050</td>
+      <td>1.104972</td>
+      <td>2</td>
+      <td>3</td>
+      <td>many_to_many</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>100001</td>
+      <td>117.0</td>
+      <td>72.0</td>
+      <td>0.615385</td>
+      <td>151.0</td>
+      <td>50.0</td>
+      <td>0.331126</td>
+      <td>-0.284259</td>
+      <td>-28.425879</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>100002</td>
+      <td>146.0</td>
+      <td>118.0</td>
+      <td>0.808219</td>
+      <td>147.0</td>
+      <td>124.0</td>
+      <td>0.843537</td>
+      <td>0.035318</td>
+      <td>3.531824</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>100003</td>
+      <td>207.0</td>
+      <td>188.0</td>
+      <td>0.908213</td>
+      <td>175.0</td>
+      <td>156.0</td>
+      <td>0.891429</td>
+      <td>-0.016784</td>
+      <td>-1.678399</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>100004</td>
+      <td>169.0</td>
+      <td>144.0</td>
+      <td>0.852071</td>
+      <td>142.0</td>
+      <td>112.0</td>
+      <td>0.788732</td>
+      <td>-0.063339</td>
+      <td>-6.333861</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>100005</td>
+      <td>172.0</td>
+      <td>160.0</td>
+      <td>0.930233</td>
+      <td>162.0</td>
+      <td>141.0</td>
+      <td>0.870370</td>
+      <td>-0.059862</td>
+      <td>-5.986219</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>100006</td>
+      <td>174.0</td>
+      <td>174.0</td>
+      <td>1.000000</td>
+      <td>166.0</td>
+      <td>160.0</td>
+      <td>0.963855</td>
+      <td>-0.036145</td>
+      <td>-3.614458</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>100007</td>
+      <td>138.0</td>
+      <td>138.0</td>
+      <td>1.000000</td>
+      <td>124.0</td>
+      <td>124.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>100008</td>
+      <td>175.0</td>
+      <td>162.0</td>
+      <td>0.925714</td>
+      <td>223.0</td>
+      <td>203.0</td>
+      <td>0.910314</td>
+      <td>-0.015400</td>
+      <td>-1.540038</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>100009</td>
+      <td>183.0</td>
+      <td>178.0</td>
+      <td>0.972678</td>
+      <td>194.0</td>
+      <td>186.0</td>
+      <td>0.958763</td>
+      <td>-0.013915</td>
+      <td>-1.391471</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>10001</td>
+      <td>197.0</td>
+      <td>196.0</td>
+      <td>0.994924</td>
+      <td>255.0</td>
+      <td>198.0</td>
+      <td>0.776471</td>
+      <td>-0.218453</td>
+      <td>-21.845327</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>100010</td>
+      <td>183.0</td>
+      <td>180.0</td>
+      <td>0.983607</td>
+      <td>220.0</td>
+      <td>207.0</td>
+      <td>0.940909</td>
+      <td>-0.042697</td>
+      <td>-4.269747</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>100011</td>
+      <td>134.0</td>
+      <td>129.0</td>
+      <td>0.962687</td>
+      <td>130.0</td>
+      <td>127.0</td>
+      <td>0.976923</td>
+      <td>0.014237</td>
+      <td>1.423651</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>100012</td>
+      <td>252.0</td>
+      <td>252.0</td>
+      <td>1.000000</td>
+      <td>439.0</td>
+      <td>439.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2010_to_2022_split</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>100013</td>
+      <td>127.0</td>
+      <td>127.0</td>
+      <td>1.000000</td>
+      <td>243.0</td>
+      <td>235.0</td>
+      <td>0.967078</td>
+      <td>-0.032922</td>
+      <td>-3.292181</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+  </tbody>
+</table>
+
+
+```text
+{'artifact_rows': 287178,
+ 'path': 'data/intermediate/indicators/houses.parquet'}
+```
+<!-- brazil:output ibge_census_temporal_comparison_13 end -->
+
+
+<details>
+<summary>Python code</summary>
+
+<!-- brazil:cell ibge_census_temporal_comparison_14 -->
+```python
+#| label: ibge_census_temporal_comparison_14
+show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 14)
+```
+
+</details>
+
+<!-- brazil:output ibge_census_temporal_comparison_14 begin -->
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>common_id</th>
+      <th>households_2010</th>
+      <th>village_condo_2010</th>
+      <th>village_condo_ratio_2010</th>
+      <th>households_2022</th>
+      <th>village_condo_2022</th>
+      <th>village_condo_ratio_2022</th>
+      <th>village_condo_ratio_change</th>
+      <th>village_condo_ratio_change_pp</th>
+      <th>n_2010</th>
+      <th>n_2022</th>
+      <th>relationship</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>264.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>336.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10</td>
+      <td>168.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>123.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>100</td>
+      <td>384.0</td>
+      <td>1.0</td>
+      <td>0.002604</td>
+      <td>391.0</td>
+      <td>14.0</td>
+      <td>0.035806</td>
+      <td>0.033201</td>
+      <td>3.320146</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1000</td>
+      <td>213.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>216.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10000</td>
+      <td>261.0</td>
+      <td>1.0</td>
+      <td>0.003831</td>
+      <td>263.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>-0.003831</td>
+      <td>-0.383142</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>100000</td>
+      <td>181.0</td>
+      <td>2.0</td>
+      <td>0.011050</td>
+      <td>213.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>-0.011050</td>
+      <td>-1.104972</td>
+      <td>2</td>
+      <td>3</td>
+      <td>many_to_many</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>100001</td>
+      <td>117.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>151.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>100002</td>
+      <td>146.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>147.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>100003</td>
+      <td>207.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>175.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>100004</td>
+      <td>169.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>142.0</td>
+      <td>6.0</td>
+      <td>0.042254</td>
+      <td>0.042254</td>
+      <td>4.225352</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>100005</td>
+      <td>172.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>162.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>100006</td>
+      <td>174.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>166.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>100007</td>
+      <td>138.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>124.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>100008</td>
+      <td>175.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>223.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>100009</td>
+      <td>183.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>194.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>10001</td>
+      <td>197.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>255.0</td>
+      <td>3.0</td>
+      <td>0.011765</td>
+      <td>0.011765</td>
+      <td>1.176471</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>100010</td>
+      <td>183.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>220.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>100011</td>
+      <td>134.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>130.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>100012</td>
+      <td>252.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>439.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2010_to_2022_split</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>100013</td>
+      <td>127.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>243.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+  </tbody>
+</table>
+
+
+```text
+{'artifact_rows': 287178,
+ 'path': 'data/intermediate/indicators/village_condo.parquet'}
+```
+<!-- brazil:output ibge_census_temporal_comparison_14 end -->
+
+
+<details>
+<summary>Python code</summary>
+
+<!-- brazil:cell ibge_census_temporal_comparison_15 -->
+```python
+#| label: ibge_census_temporal_comparison_15
+show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 15)
+```
+
+</details>
+
+<!-- brazil:output ibge_census_temporal_comparison_15 begin -->
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>common_id</th>
+      <th>households_2010</th>
+      <th>apartments_2010</th>
+      <th>apartments_ratio_2010</th>
+      <th>households_2022</th>
+      <th>apartments_2022</th>
+      <th>apartments_ratio_2022</th>
+      <th>apartments_ratio_change</th>
+      <th>apartments_ratio_change_pp</th>
+      <th>n_2010</th>
+      <th>n_2022</th>
+      <th>relationship</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>264.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>336.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10</td>
+      <td>168.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>123.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>100</td>
+      <td>384.0</td>
+      <td>25.0</td>
+      <td>0.065104</td>
+      <td>391.0</td>
+      <td>15.0</td>
+      <td>0.038363</td>
+      <td>-0.026741</td>
+      <td>-2.674100</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1000</td>
+      <td>213.0</td>
+      <td>6.0</td>
+      <td>0.028169</td>
+      <td>216.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>-0.028169</td>
+      <td>-2.816901</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10000</td>
+      <td>261.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>263.0</td>
+      <td>3.0</td>
+      <td>0.011407</td>
+      <td>0.011407</td>
+      <td>1.140684</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>100000</td>
+      <td>181.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>213.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>2</td>
+      <td>3</td>
+      <td>many_to_many</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>100001</td>
+      <td>117.0</td>
+      <td>45.0</td>
+      <td>0.384615</td>
+      <td>151.0</td>
+      <td>101.0</td>
+      <td>0.668874</td>
+      <td>0.284259</td>
+      <td>28.425879</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>100002</td>
+      <td>146.0</td>
+      <td>28.0</td>
+      <td>0.191781</td>
+      <td>147.0</td>
+      <td>23.0</td>
+      <td>0.156463</td>
+      <td>-0.035318</td>
+      <td>-3.531824</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>100003</td>
+      <td>207.0</td>
+      <td>19.0</td>
+      <td>0.091787</td>
+      <td>175.0</td>
+      <td>18.0</td>
+      <td>0.102857</td>
+      <td>0.011070</td>
+      <td>1.106970</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>100004</td>
+      <td>169.0</td>
+      <td>24.0</td>
+      <td>0.142012</td>
+      <td>142.0</td>
+      <td>24.0</td>
+      <td>0.169014</td>
+      <td>0.027002</td>
+      <td>2.700225</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>100005</td>
+      <td>172.0</td>
+      <td>12.0</td>
+      <td>0.069767</td>
+      <td>162.0</td>
+      <td>21.0</td>
+      <td>0.129630</td>
+      <td>0.059862</td>
+      <td>5.986219</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>100006</td>
+      <td>174.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>166.0</td>
+      <td>6.0</td>
+      <td>0.036145</td>
+      <td>0.036145</td>
+      <td>3.614458</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>100007</td>
+      <td>138.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>124.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>100008</td>
+      <td>175.0</td>
+      <td>13.0</td>
+      <td>0.074286</td>
+      <td>223.0</td>
+      <td>20.0</td>
+      <td>0.089686</td>
+      <td>0.015400</td>
+      <td>1.540038</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>100009</td>
+      <td>183.0</td>
+      <td>5.0</td>
+      <td>0.027322</td>
+      <td>194.0</td>
+      <td>8.0</td>
+      <td>0.041237</td>
+      <td>0.013915</td>
+      <td>1.391471</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>10001</td>
+      <td>197.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>255.0</td>
+      <td>53.0</td>
+      <td>0.207843</td>
+      <td>0.207843</td>
+      <td>20.784314</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>100010</td>
+      <td>183.0</td>
+      <td>3.0</td>
+      <td>0.016393</td>
+      <td>220.0</td>
+      <td>13.0</td>
+      <td>0.059091</td>
+      <td>0.042697</td>
+      <td>4.269747</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>100011</td>
+      <td>134.0</td>
+      <td>4.0</td>
+      <td>0.029851</td>
+      <td>130.0</td>
+      <td>3.0</td>
+      <td>0.023077</td>
+      <td>-0.006774</td>
+      <td>-0.677382</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>100012</td>
+      <td>252.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>439.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2010_to_2022_split</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>100013</td>
+      <td>127.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>243.0</td>
+      <td>8.0</td>
+      <td>0.032922</td>
+      <td>0.032922</td>
+      <td>3.292181</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1:1</td>
+    </tr>
+  </tbody>
+</table>
+
+
+```text
+{'artifact_rows': 287178,
+ 'path': 'data/intermediate/indicators/apartments.parquet'}
+```
+<!-- brazil:output ibge_census_temporal_comparison_15 end -->
+
+
+<details>
+<summary>Python code</summary>
+
+<!-- brazil:cell ibge_census_temporal_comparison_16 -->
+```python
+#| label: ibge_census_temporal_comparison_16
+show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 16)
+```
+
+</details>
+
+<!-- brazil:output ibge_census_temporal_comparison_16 begin -->
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>common_id</th>
+      <th>pop_2010</th>
+      <th>pop_2022</th>
+      <th>area_km2</th>
+      <th>population_density_2010</th>
+      <th>population_density_2022</th>
+      <th>population_density_change</th>
+      <th>population_density_change_pct</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>859.0</td>
+      <td>928.0</td>
+      <td>0.539979</td>
+      <td>1590.801283</td>
+      <td>1718.583924</td>
+      <td>127.782641</td>
+      <td>8.032596</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10</td>
+      <td>491.0</td>
+      <td>311.0</td>
+      <td>0.183445</td>
+      <td>2676.546444</td>
+      <td>1695.327788</td>
+      <td>-981.218656</td>
+      <td>-36.659878</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>100</td>
+      <td>1314.0</td>
+      <td>1060.0</td>
+      <td>0.217012</td>
+      <td>6054.966154</td>
+      <td>4884.523686</td>
+      <td>-1170.442468</td>
+      <td>-19.330289</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1000</td>
+      <td>811.0</td>
+      <td>683.0</td>
+      <td>0.067295</td>
+      <td>12051.438254</td>
+      <td>10149.361686</td>
+      <td>-1902.076568</td>
+      <td>-15.782984</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10000</td>
+      <td>915.0</td>
+      <td>842.0</td>
+      <td>0.119492</td>
+      <td>7657.395010</td>
+      <td>7046.477157</td>
+      <td>-610.917853</td>
+      <td>-7.978142</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>100000</td>
+      <td>519.0</td>
+      <td>491.0</td>
+      <td>91.040011</td>
+      <td>5.700790</td>
+      <td>5.393233</td>
+      <td>-0.307557</td>
+      <td>-5.394990</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>100001</td>
+      <td>329.0</td>
+      <td>381.0</td>
+      <td>0.056755</td>
+      <td>5796.821910</td>
+      <td>6713.036923</td>
+      <td>916.215013</td>
+      <td>15.805471</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>100002</td>
+      <td>470.0</td>
+      <td>421.0</td>
+      <td>0.090660</td>
+      <td>5184.224043</td>
+      <td>4643.741111</td>
+      <td>-540.482932</td>
+      <td>-10.425532</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>100003</td>
+      <td>635.0</td>
+      <td>466.0</td>
+      <td>0.085019</td>
+      <td>7468.919665</td>
+      <td>5481.128447</td>
+      <td>-1987.791218</td>
+      <td>-26.614173</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>100004</td>
+      <td>469.0</td>
+      <td>316.0</td>
+      <td>0.105918</td>
+      <td>4427.941762</td>
+      <td>2983.431976</td>
+      <td>-1444.509786</td>
+      <td>-32.622601</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>100005</td>
+      <td>519.0</td>
+      <td>411.0</td>
+      <td>0.087685</td>
+      <td>5918.888578</td>
+      <td>4687.212342</td>
+      <td>-1231.676236</td>
+      <td>-20.809249</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>100006</td>
+      <td>524.0</td>
+      <td>411.0</td>
+      <td>0.079447</td>
+      <td>6595.628267</td>
+      <td>5173.288584</td>
+      <td>-1422.339684</td>
+      <td>-21.564885</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>100007</td>
+      <td>424.0</td>
+      <td>311.0</td>
+      <td>0.051121</td>
+      <td>8294.084807</td>
+      <td>6083.632960</td>
+      <td>-2210.451847</td>
+      <td>-26.650943</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>100008</td>
+      <td>559.0</td>
+      <td>646.0</td>
+      <td>0.448989</td>
+      <td>1245.018772</td>
+      <td>1438.787346</td>
+      <td>193.768575</td>
+      <td>15.563506</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>100009</td>
+      <td>614.0</td>
+      <td>554.0</td>
+      <td>0.098064</td>
+      <td>6261.201857</td>
+      <td>5649.358027</td>
+      <td>-611.843830</td>
+      <td>-9.771987</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>10001</td>
+      <td>696.0</td>
+      <td>810.0</td>
+      <td>0.071374</td>
+      <td>9751.473591</td>
+      <td>11348.697713</td>
+      <td>1597.224123</td>
+      <td>16.379310</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>100010</td>
+      <td>620.0</td>
+      <td>625.0</td>
+      <td>0.156026</td>
+      <td>3973.692268</td>
+      <td>4005.738173</td>
+      <td>32.045905</td>
+      <td>0.806452</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>100011</td>
+      <td>421.0</td>
+      <td>348.0</td>
+      <td>0.045247</td>
+      <td>9304.446209</td>
+      <td>7691.086178</td>
+      <td>-1613.360032</td>
+      <td>-17.339667</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>100012</td>
+      <td>848.0</td>
+      <td>1296.0</td>
+      <td>2.000736</td>
+      <td>423.844050</td>
+      <td>647.761662</td>
+      <td>223.917611</td>
+      <td>52.830189</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>100013</td>
+      <td>412.0</td>
+      <td>701.0</td>
+      <td>0.165580</td>
+      <td>2488.226443</td>
+      <td>4233.608584</td>
+      <td>1745.382141</td>
+      <td>70.145631</td>
+    </tr>
+  </tbody>
+</table>
+
+
+```text
+{'artifact_rows': 287178,
+ 'path': 'data/intermediate/indicators/population_density.parquet'}
+```
+<!-- brazil:output ibge_census_temporal_comparison_16 end -->
+
+
+<details>
+<summary>Python code</summary>
+
+<!-- brazil:cell ibge_census_temporal_comparison_17 -->
+```python
+#| label: ibge_census_temporal_comparison_17
+show_chunk(ctx, 'Scripts_Data/IBGE/IBGE Census - Temporal Comparison.qmd', 17)
+```
+
+</details>
+
+<!-- brazil:output ibge_census_temporal_comparison_17 begin -->
+```text
+{'harmonisation_version': '8f67986ba3b1f50731be40dc11a183fdda6b8caecd893ed0d9ea5f83ddec1650',
+ 'spatial_unit': 'common_id',
+ 'black': {'common_areas': 287178, 'missing_change': 3505},
+ 'brown': {'common_areas': 287178, 'missing_change': 3505},
+ 'black_brown': {'common_areas': 287178, 'missing_change': 3505},
+ 'literacy': {'common_areas': 285714, 'missing_change': 5738},
+ 'rudimentary_sanitation': {'common_areas': 285714, 'missing_change': 3821},
+ 'water_network': {'common_areas': 285714, 'missing_change': 3821},
+ 'waste_collection': {'common_areas': 285714, 'missing_change': 3821},
+ 'sewer_septic': {'common_areas': 285714, 'missing_change': 3821},
+ 'houses': {'common_areas': 287178, 'missing_change': 5285},
+ 'village_condo': {'common_areas': 287178, 'missing_change': 5285},
+ 'apartments': {'common_areas': 287178, 'missing_change': 5285},
+ 'income': {'common_areas': 287178, 'missing_change': 0},
+ 'population_density': {'common_areas': 287178},
+ 'generated_at': '2026-10-07T07:05:26.333989+00:00'}
+```
+<!-- brazil:output ibge_census_temporal_comparison_17 end -->

@@ -1,14 +1,13 @@
 # Project Code
 
 Status: current
-Last updated: 2026-10-06
-Version: 0.2
+Last updated: 2026-10-07
+Version: 0.3
 Scope: Project Code
 
-Everything executable lives here:
+Reusable processing and command-line tools live here; executable report cells live alongside their explanations under `research/reports/`.
 
 - `brazil_project/`: installable Python package; processing, analysis and CLI.
-- `reports/`: executable Python cells extracted from the former QMD sources, in their original order.
 - `scripts/`: acquisition, export, auditing and verification commands; `scripts/r/` contains necessary R adapters.
 - `tests/`: automated verification.
 - `config/`: category translations and report chunk mappings.
@@ -22,4 +21,4 @@ The single project configuration is [project.toml](../project.toml). Dependencie
 
 Create a directory only when real inputs or outputs need it. Preserve research methods and update [progress](../docs/progress.md) after material changes.
 
-Capture fresh saved-artifact outputs with `.venv/bin/python code/scripts/render_reports.py`; maintained reports are Markdown under `research/reports/`. The command writes review copies only under `outputs/reports/`.
+The pipeline executes Markdown report cells after successful processing. `report_engine.py` validates markers, captures results and publishes only generated sections; the CLI passes the current configuration and scope. See [the integration contract](../docs/report-integration.md).

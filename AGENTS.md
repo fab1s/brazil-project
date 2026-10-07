@@ -1,8 +1,8 @@
 # Agent Working Instructions
 
 Status: current
-Last updated: 2026-10-06
-Version: 0.7
+Last updated: 2026-10-07
+Version: 0.8
 Scope: Agent Working Instructions
 
 These rules apply to this independent research project. RISSI provided documentation patterns; its application architecture and deployment rules do not apply here.
@@ -42,7 +42,7 @@ Major Markdown documents use Status, Last updated, Version, and Scope. Do not ad
 
 Keep six visible working folders: `code/`, `data/`, `docs/`, `outputs/`, `research/`, and `website/`. Use the root `project.toml`. Create files and directories only when needed for real contents; no empty placeholders. Major working folders have one useful README; do not add repetitive READMEs to every subfolder. Keep documentation mostly flat and navigate through `docs/index.md`. Preserve original data/documents; when consolidating files, retain their complete contents and record the new location. Former folder READMEs are preserved in `docs/folder-notes.md`.
 
-Research reports are maintained Markdown under `research/reports/`; executable report code lives under `code/reports/`. Keep one readable report per topic. Refresh scripts write review copies under `outputs/reports/` and never overwrite maintained narratives. Preserve prior QMD contents in the archive and Git history. Saved report snapshots are exempt from authored-document metadata.
+Research reports under `research/reports/` contain executable Python cells and paired generated-result sections. Keep one report per topic. Processing commands refresh affected reports automatically; change explanations, code and captions outside generated sections. The renderer replaces only marked outputs after validation, preserves authored content, passes the actual configuration/scope and isolates report processes. National reports remain intact during municipality runs. Separate report scripts are archived; reusable analysis stays in the Python package. Reports are exempt from authored-document metadata. Never bypass producer fingerprints or mix scopes; rerun processing when saved provenance differs. Preserve originals and prior report contents in the archive and Git history.
 
 ## Process Records And Script Audits
 

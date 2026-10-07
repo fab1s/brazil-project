@@ -1,8 +1,8 @@
 # Brazil Project Migration Plan
 
 Status: current
-Last updated: 2026-10-06
-Version: 0.4
+Last updated: 2026-10-07
+Version: 0.5
 Scope: Brazil Project Migration Plan
 
 ## Implemented project organization
@@ -17,7 +17,7 @@ The Python runner exposes explicit acquisition, overview, harmonisation, indicat
 
 Census and boundary acquisition remain isolated R adapters. The exploratory geographic overview retains sf/S2 to preserve spherical intersection behavior. Python performs projected correspondence, annual indicators, income, population density, infrastructure processing, and conference chart calculations.
 
-The original workflow ordering and narrative are retained through Markdown reports and separate Python report scripts. Each original executable chunk is mapped to its implementation and artifact contract. Original R code remains available for independent reference validation.
+The original workflow ordering and narrative are retained through executable Markdown reports with reusable Python processing. Each original executable chunk is mapped to its implementation and artifact contract. Original R code remains available for independent reference validation.
 
 ## Validation strategy
 
