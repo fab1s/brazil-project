@@ -4,7 +4,9 @@ A research project exploring changes in population, housing, income, and access 
 
 The project harmonises census tracts across 2010 and 2022 so that demographic and socioeconomic indicators can be compared over time. It also brings together IBAMA licensing records, Obrasgov infrastructure projects, and exploratory property-value data, producing maps, charts, and research reports.
 
-**Find your work:** `research/` reports and presentations · `outputs/` maps, figures and tables · `data/` datasets and originals · `code/` processing and tests · `docs/` methods and progress · `website/` map source.
+**Start with the [four final dataset notebooks](datasets/README.md).** Each folder explains its methods, runs the local processing or baseline verification, and points to its GeoPackage. Full datasets remain local; GitHub shows the notebooks, code and small saved results.
+
+Other work: `research/` reports and presentations · `outputs/` maps, figures and tables · `data/` datasets and originals · `code/` processing and tests · `docs/` methods and progress · `website/` map source.
 
 [Research methods and documentation](docs/index.md) · [Setup and workflow instructions](docs/workflow.md)
 
@@ -18,6 +20,7 @@ Start with the [research reports](research/README.md#read-the-reports) to read t
 
 | Folder | What it contains | Where to start |
 | --- | --- | --- |
+| **`datasets/`** | Four readable, runnable notebooks and local final GeoPackage copies for the website-related datasets. | [Dataset notebooks](datasets/README.md) |
 | **`research/`** | Readable Markdown reports in `reports/`; conference abstracts, posters and presentations in `cs2nordic/`. | [Report list](research/README.md#read-the-reports) |
 | **`docs/`** | Methods, processing explanations, quality checks, decisions and project progress. | [Documentation index](docs/index.md) |
 | **`outputs/`** | Generated figures, interactive maps, exported tables and municipality-specific report copies. | [Output guide](outputs/README.md) |

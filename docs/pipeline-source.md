@@ -1,11 +1,13 @@
 # Pipeline, Source Code and Report Connections
 
 Status: current
-Last updated: 2026-10-07
-Version: 0.4
+Last updated: 2026-10-26
+Version: 0.7
 Scope: Active implementation links, stage dependencies and saved-output/report flow
 
 ## Follow a result back to its code
+
+The [dataset notebooks](../datasets/README.md) are a readable entry point over these active stages. Their adjacent `processing.py` files call the existing CLI or map functions and verify the final local GeoPackages; they do not replace the package's analytical implementations. The census notebook runs `indicators` and prepares the same map fields and geometries before the English-field export. Obrasgov runs the existing combined command. IBAMA verifies its active translation against the preserved baseline. Communities verifies an unchanged baseline copy. The [notebook process record](dataset-notebook-handoff.md) distinguishes fresh builds from saved-output previews.
 
 Technical reports and annexes explain the process, link active processing functions beside executable sections and identify saved artifacts. Reader-facing summaries focus on findings, with these details in their annex. Numerical transformations live in the package; report cells read their outputs, perform presentation/coverage checks and produce reader-facing figures. Source links identify functions with GitHub line anchors, not only archived QMD filenames.
 
@@ -57,6 +59,8 @@ Paths in the output column are under `data/intermediate/` unless prefixed with `
 Explicit `acquire-census` uses [census.py → run()](../code/brazil_project/acquisition/census.py#L42); `acquire-ibama` and `acquire-obrasgov` use [infrastructure.py → run()](../code/brazil_project/acquisition/infrastructure.py#L94). These stages do not run automatically when refreshing an extraction report. The original source inputs and archived code remain preserved.
 
 Website build/publication follows its [own documented workflow](web-map.md); updating a processing report does not deploy here.now. Read [all reports](../research/README.md#read-the-reports), [methods](methods.md), [the variable codebook](codebook.md) and [commands](workflow.md) together when tracing a finding.
+
+The national GIS copy follows [build_web_map.py → main()](../code/scripts/build_web_map.py) with `--gpkg-only`, calls the original [measure_fields()](../code/scripts/build_web_map.py) calculation and the [concise field exporter](../code/scripts/export_social_gpkg.py), and writes `outputs/maps/social-clean/social.gpkg` plus the requested user copy. Its embedded long `field_dictionary` links original field codes to English names. The [process record](social-gpkg-export.md) documents the exact saved input contracts and verification.
 
 ## Source-reference verification
 

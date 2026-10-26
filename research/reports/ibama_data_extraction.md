@@ -74,7 +74,7 @@ Input source: `copied_snapshot`; this refresh does not harvest live records.
   "records": 8494,
   "unknown_sectors": 0,
   "source": "copied_snapshot",
-  "generated_at": "2026-10-07T08:17:27.893827+00:00"
+  "generated_at": "2026-10-26T14:27:07.137633+00:00"
 }
 ```
 

@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-26",
+  "status": "complete",
+  "command": ".venv/bin/python code/scripts/build_web_map.py --config project.toml --work .cache/map-update/build --gpkg-only --gpkg-output outputs/maps/social-clean/social.gpkg",
+  "output": "outputs/maps/social-clean/social.gpkg",
+  "sha256": "23eb6c1d60ba62e6fbb5112838f76c486534e340e36c4716631e7191aab0e4d7",
+  "bytes": 599494656,
+  "crs_epsg": 5880,
+  "counts": {
+    "social": 287178,
+    "overview": 5570,
+    "field_dictionary": 187,
+    "export_metadata": 9
+  },
+  "layers": {
+    "social": {
+      "rows": 287178,
+      "source_fields": 102,
+      "english_fields": 86,
+      "exact_duplicate_columns_collapsed": 16
+    },
+    "overview": {
+      "rows": 5570,
+      "source_fields": 85,
+      "english_fields": 70,
+      "exact_duplicate_columns_collapsed": 15
+    }
+  },
+  "all_original_codes_mapped": true,
+  "every_original_value_null_and_geometry_checked_by_exporter": true,
+  "source_polygon_to_gpkg_multipolygon_geometrically_equal": true,
+  "sample_common_id_1": {
+    "black_brown_population_2022": 601,
+    "population_for_race_2022": 928,
+    "black_brown_share_2022": 0.6476293103448276
+  },
+  "areas_with_density_population_but_no_race_denominator": 2184,
+  "tests": {
+    "full_suite_passed": 199,
+    "focused_passed": 18
+  },
+  "website_publication": "unchanged",
+  "scientific_validation": "not established by software checks",
+  "user_copy": {
+    "path": "/Users/fa4850sc/Documents/Data/social.gpkg",
+    "bytes": 599494656,
+    "sha256": "23eb6c1d60ba62e6fbb5112838f76c486534e340e36c4716631e7191aab0e4d7",
+    "gpkg_integrity": "ok"
+  }
+}

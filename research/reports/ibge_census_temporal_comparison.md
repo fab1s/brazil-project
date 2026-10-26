@@ -199,7 +199,7 @@ Availability is calculated from the final saved change columns, including income
   "population_density": {
     "common_areas": 287178
   },
-  "generated_at": "2026-10-07T08:17:10.795067+00:00"
+  "generated_at": "2026-10-26T14:38:45.572060+00:00"
 }
 ```
 

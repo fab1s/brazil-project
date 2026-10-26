@@ -5,6 +5,7 @@ import hashlib
 import json
 import shutil
 import re
+import runpy
 import sqlite3
 import subprocess
 from pathlib import Path
@@ -125,7 +126,18 @@ def main():
     parser.add_argument('--output',type=Path,default=Path('outputs/maps/website'))
     parser.add_argument('--work',type=Path,default=Path('.cache/map-update/build'))
     parser.add_argument('--reuse-prepared',action='store_true',help='Resume tiles only after checking the prepared database input fingerprints.')
+    parser.add_argument('--gpkg-only',action='store_true',help='Export verified national GIS layers with concise English fields and an original-code dictionary; do not build or publish website tiles.')
+    parser.add_argument('--gpkg-output',type=Path,help='Destination for --gpkg-only; existing files are never overwritten.')
     args = parser.parse_args(); ctx = Context(args.config)
+    if args.gpkg_only:
+        if args.reuse_prepared or not args.gpkg_output:
+            raise WorkflowError('Use --gpkg-only with --gpkg-output, without --reuse-prepared.')
+        export = runpy.run_path(str(Path(__file__).with_name('export_social_gpkg.py')))
+        result = export['run'](ctx,args.gpkg_output,source=args.work/'social.gpkg')
+        print(json.dumps(result,indent=2),flush=True)
+        return
+    if args.gpkg_output:
+        raise WorkflowError('--gpkg-output requires --gpkg-only.')
     if ctx.municipality: raise WorkflowError('The public map requires a national bundle, with municipality empty.')
     bundle, manifest = load_bundle(ctx,names=['comparison_geometry'])
     indicator_report = json.loads(ctx.require(ctx.artifact('indicators','report.json')).read_text())

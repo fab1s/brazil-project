@@ -93,7 +93,7 @@ Archived row-count agreement: **yes**. This checks counts only, not record ident
   "baseline_cleaned_records": 133417,
   "count_matches_baseline": true,
   "source": "copied_snapshot",
-  "generated_at": "2026-10-07T08:24:30.388195+00:00"
+  "generated_at": "2026-10-26T14:29:25.709140+00:00"
 }
 ```
 

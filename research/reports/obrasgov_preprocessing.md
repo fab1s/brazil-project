@@ -93,7 +93,7 @@ Archived row-count agreement: **yes**. This checks counts only, not record ident
   "baseline_cleaned_records": 133417,
   "count_matches_baseline": true,
   "source": "copied_snapshot",
-  "generated_at": "2026-10-07T08:24:30.388195+00:00"
+  "generated_at": "2026-10-26T14:29:25.709140+00:00"
 }
 ```
 
@@ -478,7 +478,7 @@ Eligibility is a screening decision, not verified geocoding. Coordinates correct
     "quarantined_components": "d34beb533c55ecc97fed473e9e9e4c807431c32d88ea61a2342a8e8d924bbab2",
     "review_table": "d6646ca021901c08c91523d25142b7a44069512650f66800b648b83719621c8b"
   },
-  "generated_at": "2026-10-07T08:26:48.236080+00:00"
+  "generated_at": "2026-10-26T14:31:25.904671+00:00"
 }
 ```
 

@@ -31,6 +31,9 @@ research/**/*.pdf
 !**/README.md
 
 .cache/
+datasets/*/final.gpkg
+datasets/*/.final-gpkg*.json
+**/.ipynb_checkpoints/
 .cache/renv-project/bootstrap/
 .quarto/
 

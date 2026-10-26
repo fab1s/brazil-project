@@ -1,8 +1,8 @@
 # Variable and Dataset Codebook
 
 Status: current; describes implemented methods, not independent scientific validation
-Last updated: 2026-10-07
-Version: 0.4
+Last updated: 2026-10-26
+Version: 0.6
 Scope: Reader guide to report variables, units, denominators and processing stages
 
 Use the [active processing source and pipeline guide](pipeline-source.md) to locate implementations; each linked report also cites its processing and display functions.
@@ -53,6 +53,10 @@ Prefixes identify the imported census tables; codes are year-specific. For each 
 Annual `*_ratio_2010` and `*_ratio_2022` fields are fractions: 0.10 means 10%. `*_ratio_change` is 2022 minus 2010 in fractions. `*_ratio_change_pp` multiplies that difference by 100: 10% → 15% means +5 percentage points. This differs from relative percentage growth.
 
 **Missingness:** outer joins preserve a missing year. Ratios require positive denominators. Specified combined-count components are coalesced to zero; most grouped count sums skip missing values and can become zero if all entries are missing. Housing denominators retain missingness when all contributors are missing. Missing-component treatment can bias available ratios; an available estimate does not prove complete coverage. Literacy uses the 2022 Pessoas denominator independently of the Basico table. Details and calculation exceptions are in [methods](methods.md).
+
+### Readable names in the national GeoPackage
+
+The [GIS export](social-gpkg-export.md) has **one English-named column per distinct measure**. Its long `field_dictionary` table has `original_column` and `english_column` beside the unit and definition, so original codes remain traceable without doubling the spatial fields. For example, `black_brown_n2022` maps to `black_brown_population_2022`, `black_brown_d2022` to `population_for_race_2022`, and `black_brown_2022` to `black_brown_share_2022`. The 2022 Black, Brown and combined racial denominators are exactly equal, including missingness, so they share `population_for_race_2022`. The density population `total_population_2022` remains separate because its missingness differs. The share is a **fraction**, so 0.25 means 25%. `black_brown_change_pp` is in **percentage points**, while density and income relative changes are in **percent**. The complete original values and source codes remain in the prepared map GeoPackage and versioned research artifacts; the simpler export records how each source field was represented.
 
 ## Income and inflation
 

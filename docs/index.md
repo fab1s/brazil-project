@@ -1,13 +1,17 @@
 # Project Documentation
 
 Status: current
-Last updated: 2026-10-07
-Version: 0.18
+Last updated: 2026-10-26
+Version: 0.21
 Scope: Project Documentation
 
 Start with [progress](progress.md), [tasks](tasks.md), [methods](methods.md) and [commands](workflow.md).
 
+For a collaborator, start with the [four runnable dataset notebooks](../datasets/README.md) and the [short final-file handoff](collaborator-data-handoff.md). The [notebook process and script audit](dataset-notebook-handoff.md) records what was verified.
+
 [Pipeline stages and active source code](pipeline-source.md) · [Variable and dataset codebook](codebook.md) · [Readable-report process and audit](report-readability.md)
+
+[Concise census GeoPackage: English fields, original-code dictionary and verification](social-gpkg-export.md)
 
 [Read the research reports](../research/README.md#read-the-reports) · [Executable Markdown and pipeline audit](report-integration.md)
 

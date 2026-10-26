@@ -1,8 +1,8 @@
 # Workflow Commands And Artifacts
 
 Status: current
-Last updated: 2026-10-07
-Version: 0.14
+Last updated: 2026-10-26
+Version: 0.17
 Scope: Workflow Commands And Artifacts
 
 ## Setup
@@ -24,6 +24,8 @@ Rscript code/scripts/r/restore.R
 
 
 ## Stage commands
+
+For a readable dataset-by-dataset workflow, open the [four Jupyter notebooks](../datasets/README.md). Each defaults to running its actual local processing/verification and writes a local `final.gpkg` copy; the source GeoPackages and here.now publication remain unchanged. The same locked environment supplies `ipykernel` and `nbconvert`. For example, to execute the census notebook headlessly from the project root, run `.venv/bin/jupyter nbconvert --to notebook --execute datasets/census/build.ipynb --output census.executed.ipynb --output-dir outputs/notebooks`; restore local inputs first. Change `census` to another dataset folder to run its notebook. The executed copy and GeoPackage stay outside Git. `BRAZIL_NOTEBOOK_REBUILD=0` reads existing outputs for a preview and does not establish a fresh build.
 
 Run commands from the project root using `.venv/bin/brazil-project`.
 
@@ -61,6 +63,14 @@ Indicators run harmonisation first; charts run both dependencies. `all` attempts
 The overview retains its original Belo Horizonte scope when no municipality override is supplied. Explicit correspondence recomputation uses all national tract geometries and caches the result before selecting complete municipality groups. The historical local R comparison script checks its named reference scope; it does not validate production national recomputation.
 
 ## Artifact contracts
+
+To create a concise GIS GeoPackage with English field names and a separate source-code dictionary, use the existing national map exporter:
+
+```sh
+.venv/bin/python code/scripts/build_web_map.py --config project.toml --work .cache/map-update/build --gpkg-only --gpkg-output outputs/maps/social-clean/social.gpkg
+```
+
+The `social` layer has one merged feature per `common_id`; `overview` has municipality display summaries. Both contain one English-named column for each distinct saved measure. Exactly equal source columns are shared only when their units, values and nulls match. The long `field_dictionary` and `export_metadata` tables are inside the GeoPackage. The command checks saved census inputs and the prepared map database, refuses municipality scope and existing destinations, and does not rebuild tiles or publish the site. See the [export record](social-gpkg-export.md) for field interpretation and checks. To refresh the prepared map database from current saved inputs, follow the [map workflow](web-map.md) with a fresh work folder first.
 
 Tables use Parquet and spatial artifacts use GeoParquet. Identifiers are normalized to strings without float suffixes. Lookup keys must be unique after deduplicating repeated tract-to-group records. Original geometry pieces are preserved as reference rows, with a unique part ID. Active `*_sf` indicator outputs use one feature per common group.
 

@@ -201,7 +201,7 @@ Execution mode: `validated_original_correspondence`. Boundary differences are as
     }
   },
   "assumption": "Boundary differences are assumed not to materially change the inhabited population; not independently verified.",
-  "generation": "b8b2c1c8082e4defa8e70bcdca4eb3bc",
+  "generation": "21aace79ee344606b988bcc6459f1173",
   "tracts_2022": 472778,
   "groups": 287178,
   "duplicate_base_ids": 4681,
@@ -212,7 +212,7 @@ Execution mode: `validated_original_correspondence`. Boundary differences are as
     "2022": 24
   },
   "footprint_difference_above_10pct": 131222,
-  "generated_at": "2026-10-07T08:15:57.844141+00:00"
+  "generated_at": "2026-10-26T14:38:03.694095+00:00"
 }
 ```
 

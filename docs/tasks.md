@@ -2,8 +2,10 @@
 
 Status: current
 Last updated: 2026-10-07
-Version: 0.10
+Version: 0.11
 Scope: Remaining Research Tasks
+
+- Resolve why two IBAMA source IDs (`136441`, `3347413`) are absent from the locally saved highest-zoom website tiles. All 12,348 community IDs are present. Compare tile attributes and geometry separately before claiming exact website parity; the [dataset notebooks](../datasets/README.md) show the identifier checks.
 
 - Review the [national quality assessment](../research/reports/gov_data_quality.md): shared locations and category signals need provider evidence; decide treatment of tiny planned budgets, census component gaps and timing before resuming [deferred proximity work](../data/archive/project-tools/planned-proximity/README.md). No new exclusions were applied.
 - Review the [harmonisation update](harmonisation-update.md) and its footprint/coverage diagnostics under the approved boundary-change assumption. The requested implementation corrections are complete.
