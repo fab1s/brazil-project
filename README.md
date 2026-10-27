@@ -1,39 +1,30 @@
 # Brazil Research Project
 
-A research project exploring changes in population, housing, income, and access to basic services in Brazil, alongside infrastructure, environmental licensing, and land value. It combines national datasets with local exploration in Belo Horizonte and surrounding municipalities.
+Four national GeoPackages support research on Brazilian census change, government infrastructure, environmental licensing, and favelas and urban communities. The [interactive map](https://sandy-ivory-k65c.here.now/) displays related data; its browser code is in [website/](website/).
 
-The project harmonises census tracts across 2010 and 2022 so that demographic and socioeconomic indicators can be compared over time. It also brings together IBAMA licensing records, Obrasgov infrastructure projects, and exploratory property-value data, producing maps, charts, and research reports.
+![Interactive Brazil project map](website/preview.png)
 
-**Start with the [four final dataset notebooks](datasets/README.md).** Each folder explains its methods, runs the local processing or baseline verification, and points to its GeoPackage. Full datasets remain local; GitHub shows the notebooks, code and small saved results.
+## The four datasets
 
-Other work: `research/` reports and presentations · `outputs/` maps, figures and tables · `data/` datasets and originals · `code/` processing and tests · `docs/` methods and progress · `website/` map source.
+Open a notebook to read the method and run its processing. Each folder also contains `processing.py`, the code that connects the notebook to the shared methods in [code/](code/). The output is a local `final.gpkg` beside the notebook.
 
-[Research methods and documentation](docs/index.md) · [Setup and workflow instructions](docs/workflow.md)
-
-![Brazil project website showing the interactive map and data layers](docs/assets/website-screenshot.png)
-
-[Website: interactive project data map](https://sandy-ivory-k65c.here.now/)
-
-## Where to find things
-
-Start with the [research reports](research/README.md#read-the-reports) to read the analyses, tables and figures. Use [methods](docs/methods.md), [progress](docs/progress.md) and [remaining tasks](docs/tasks.md) to understand the decisions, current state and open questions.
-
-| Folder | What it contains | Where to start |
+| Folder and notebook | Final GeoPackage | What it contains |
 | --- | --- | --- |
-| **`datasets/`** | Four readable, runnable notebooks and local final GeoPackage copies for the website-related datasets. | [Dataset notebooks](datasets/README.md) |
-| **`research/`** | Readable Markdown reports in `reports/`; conference abstracts, posters and presentations in `cs2nordic/`. | [Report list](research/README.md#read-the-reports) |
-| **`docs/`** | Methods, processing explanations, quality checks, decisions and project progress. | [Documentation index](docs/index.md) |
-| **`outputs/`** | Generated figures, interactive maps, exported tables and municipality-specific report copies. | [Output guide](outputs/README.md) |
-| **`data/`** | Source datasets, reference material, processing intermediates and preserved originals in `archive/`. | [Data guide](data/README.md) |
-| **`code/`** | Reusable Python processing, pipeline tools, supporting R scripts and tests. | [Code guide](code/README.md) |
-| **`website/`** | Source files for the interactive project map. | [Website guide](website/README.md) |
+| [Census](datasets/census/build.ipynb) | `datasets/census/final.gpkg` | 287,178 merged 2010–2022 comparison areas, indicators, municipality overview, and a table mapping original field codes to clear English names. |
+| [Obrasgov](datasets/obrasgov/build.ipynb) | `datasets/obrasgov/final.gpkg` | 224,495 map-eligible point/line components and 2,346 components excluded for lying entirely outside their reported primary state. |
+| [IBAMA](datasets/ibama/build.ipynb) | `datasets/ibama/final.gpkg` | 8,494 preserved licensing records with translated sector labels. |
+| [Communities](datasets/communities/build.ipynb) | `datasets/communities/final.gpkg` | 12,348 preserved IBGE 2022 community polygons. |
 
-Before analysing infrastructure proximity, read the [national government-data quality assessment](research/reports/gov_data_quality.md), with its [detailed annex](research/reports/gov_data_quality_annex.md) for complete diagnostics. Other examples include [Obrasgov preprocessing and location exclusions](research/reports/obrasgov_preprocessing.md) and [census harmonisation](research/reports/ibge_census_tract_harmonisation.md). The `.md` reports display directly on GitHub. Full datasets and generated outputs are kept locally; their folder guides explain where to find them.
+The GeoPackages are too large for ordinary GitHub storage and stay local. Their **2026-10-27 local-copy SHA-256 checksums**, in the same order as the table, are `715ad5e567f6ac8285c52cbdbe794f891e4e7d933093c981d09875b8fea66929`, `5dd958d0a43c931dd1d3e953b9cb3bdf432100c50852cbfec69d58063b15bda1`, `0df410feb5e5aaa975851107fc501c408d2ed7ceb15a72e21a573462e0773863`, and `aec748dc609a00eb89e652b7c289c7728255d209286e1d58be2fa881e4d2e9f0`. Share the four local files separately with collaborators and compare these hashes after transfer. A rebuild can record new generation metadata and change a whole-file hash even when its research rows are identical. Census geometry uses EPSG:5880; the other three files use EPSG:4674.
 
-## How the pipeline and reports fit together
+## Rebuild locally
 
-The processing code lives in [`code/brazil_project/`](code/brazil_project/), with supporting spatial/R scripts in [`code/scripts/`](code/scripts/). The Markdown documents in [`research/reports/`](research/reports/) display the findings, tables and figures. The national quality summary starts with an executive summary; its annex holds methods, source-code links and reproduction instructions. Reports contain supporting presentation code and coverage checks; the full processing implementations remain in the package.
+Restore the original `data/` inputs at the paths in [project.toml](project.toml), including the census tables, preserved IBAMA and community GeoPackages, Obrasgov source GeoPackage, and the IBGE/Natural Earth location references. The inputs are excluded from Git; obtain them from the preserved local project or the source custodian. The [archived input checksum inventory](https://github.com/fab1s/brazil-project/blob/archive/full-project-2026-10-27/docs/evidence/baseline-files.csv) helps verify restored baselines. Neither notebook downloads source data. Then run from the repository root:
 
-**One command → processing functions → saved datasets → report cells → updated Markdown.** The [CLI](code/brazil_project/cli.py) runs dependencies using [project.toml](project.toml), then the [report engine](code/brazil_project/report_engine.py) refreshes only generated results, preserving explanations and source links.
+```bash
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.lock
+.venv/bin/jupyter nbconvert --to notebook --execute --inplace datasets/census/build.ipynb
+```
 
-For example, `brazil-project run obrasgov --config project.toml` processes the snapshot, checks locations and primary states, applies approved exclusions, and updates both Obrasgov reports. Acquisition and website publication are separate explicit actions. See the [pipeline stages, source code and data flow](docs/pipeline-source.md).
+Replace `census` with `obrasgov`, `ibama`, or `communities` to build another file. Without Jupyter, run `.venv/bin/python datasets/run.py census` (or another dataset name). Outputs and intermediate files stay local. The complete earlier research workspace, documents, reports, and original code are preserved on the [archive branch](https://github.com/fab1s/brazil-project/tree/archive/full-project-2026-10-27); the original OneDrive folder is untouched.

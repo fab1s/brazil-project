@@ -1,6 +1,6 @@
 [project]
 root = "."
-# Empty means the original national research scope. Validation can use a subset.
+# The four handoff files are national.
 municipality = ""
 
 [census]
@@ -14,23 +14,12 @@ crs = 5880
 precision_grid = 0.000001
 inflation_2010 = 3200.06
 inflation_2022 = 6645.74
-# Routine runs validate archived links for positive area; originals remain unchanged.
-# Recompute is explicit and national before municipality selection.
+# Validate the preserved national correspondence; never clip before matching.
 recompute_harmonisation = false
 
 [infrastructure]
 ibama = "data/processed/ibama/licensed_projects_st.gpkg"
 obrasgov = "data/processed/obrasgov/projects_st.gpkg"
-
-ibama_snapshot = "data/raw/ibama/api_snapshot"
-obrasgov_snapshot = "data/raw/obrasgov/api_snapshot"
-
-[land_value]
-raw = "data/raw/land_value/Belo Horizonte/Data"
-workbook = "data/reference/land_value/Belo Horizonte/Data/lei9795-anexoI, II, III, IV e V - parsed.xlsx"
-# These exact inputs are referenced by the original notebook; never substitute another date.
-zone_file = "20220601_zona_homogenea_iptu.csv"
-property_file = "20220601_regional_barreiro_cadastro_imobiliario.csv"
 
 [location_qa]
 # Independent derivative of the frozen map input; never overwrites translation outputs.
@@ -40,8 +29,3 @@ coast_tolerance_m = 5000
 border_tolerance_m = 1000
 sample_spacing_m = 1000
 max_line_samples = 250
-
-[gov_quality]
-# A diagnostic only: no source correction, exclusion, network acquisition or models.
-as_of_date = "2026-10-07"
-shared_coordinate_threshold = 25

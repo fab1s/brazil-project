@@ -1,19 +1,4 @@
 * text=auto
-*.csv text eol=lf
 *.py text eol=lf
 *.md text eol=lf
-*.R text eol=lf
-*.qmd text eol=lf
-
-# Original reference notes must retain their source bytes and formatting.
-data/archive/original_notes/** -text -whitespace
-
-# Preserve imported browser modules and the original map source formatting.
 website/vendor/** -whitespace
-website/social-indicators.js -whitespace
-
-# Preserve immutable research originals byte for byte.
-data/archive/original_code/** -text -diff
-data/archive/original_outputs/** -text
-*.pdf binary
-*.xlsx binary

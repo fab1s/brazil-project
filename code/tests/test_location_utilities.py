@@ -1,7 +1,5 @@
 """Post-implementation audit fixes: provenance, durable manifests and checks."""
 import json
-import subprocess
-import sys
 from pathlib import Path
 import pytest
 from brazil_project.io import WorkflowError
@@ -49,8 +47,3 @@ def test_plot_rejects_changed_component_or_reference(tmp_path):
     with pytest.raises(WorkflowError,match='changed'):verified_plot_inputs(ctx)
     component.write_bytes(b'components');mun.write_bytes(b'changed')
     with pytest.raises(WorkflowError,match='changed'):verified_plot_inputs(ctx)
-
-
-def test_verification_rejects_optimized_python():
-    result=subprocess.run([sys.executable,'-O','-c','from scripts.verify_location_qa import verify; verify(None)'],capture_output=True,text=True)
-    assert result.returncode!=0 and 'assertion checks would be disabled' in result.stderr

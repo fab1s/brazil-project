@@ -20,7 +20,8 @@ def test_notebook_has_real_build_and_saved_readable_results(name):
     code = "\n".join(cell.source for cell in notebook.cells if cell.cell_type == "code")
     assert 'BRAZIL_NOTEBOOK_REBUILD", "1"' in code
     assert "build(PROJECT)" in code or "calculate_indicators(PROJECT)" in code
-    assert any(cell.cell_type == "markdown" and "**Why:**" in cell.source for cell in notebook.cells)
+    assert any(cell.cell_type == "markdown" and ("**Purpose:**" in cell.source or "**Purpose and method:**" in cell.source)
+               for cell in notebook.cells)
     assert any(output.output_type == "display_data" and "image/png" in output.data
                for cell in notebook.cells if cell.cell_type == "code"
                for output in cell.get("outputs", []))

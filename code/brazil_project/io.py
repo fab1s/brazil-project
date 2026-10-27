@@ -1,5 +1,6 @@
 """Project-relative paths and explicit stage artifacts."""
 import json
+import hashlib
 from datetime import datetime, timezone
 import os
 from pathlib import Path
@@ -92,3 +93,26 @@ def lookup_keys(frame, year):
     result[name] = identifiers(result[name])
     result['common_id'] = identifiers(result['common_id'])
     return keys(result, name)
+
+
+def code_hashes(root):
+    """Fingerprint the code that actually produces the census export."""
+    root = Path(root)
+    paths = [root / name for name in (
+        'code/brazil_project/io.py',
+        'code/brazil_project/acquisition/census.py',
+        'code/brazil_project/harmonisation/census.py',
+        'code/brazil_project/indicators/temporal.py',
+        'code/scripts/build_web_map.py',
+        'code/scripts/export_social_gpkg.py',
+    )]
+    result = {}
+    for path in paths:
+        if not path.is_file():
+            raise FileNotFoundError('Missing census implementation: ' + str(path))
+        digest = hashlib.sha256()
+        with path.open('rb') as stream:
+            for block in iter(lambda: stream.read(8 * 1024 * 1024), b''):
+                digest.update(block)
+        result[str(path.relative_to(root))] = digest.hexdigest()
+    return result

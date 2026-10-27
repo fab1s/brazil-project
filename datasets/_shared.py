@@ -1,6 +1,5 @@
 """Small local-output checks shared by the four readable dataset notebooks."""
 
-import csv
 import hashlib
 import json
 import os
@@ -20,23 +19,29 @@ def sha256(path):
 
 
 def run_stage(project, stage):
-    executable = project / ".venv/bin/brazil-project"
+    executable = project / ".venv/bin/python"
     if not executable.is_file():
-        raise FileNotFoundError("Install the locked environment from docs/workflow.md first.")
-    command = [str(executable), "run", stage, "--config", str(project / "project.toml")]
-    subprocess.run(command, cwd=project, check=True)
+        raise FileNotFoundError("Install the locked environment using the root README first.")
+    environment = os.environ.copy()
+    environment["PYTHONPATH"] = str(project / "code") + os.pathsep + environment.get("PYTHONPATH", "")
+    command = [str(executable), "-m", "brazil_project.cli", "run", stage,
+               "--config", str(project / "project.toml")]
+    subprocess.run(command, cwd=project, env=environment, check=True)
 
 
 def baseline_checksum(project, source):
     relative = str(Path(source).resolve().relative_to(project.resolve()))
-    with (project / "docs/evidence/baseline-files.csv").open(newline="") as stream:
-        rows = {row["path"]: row for row in csv.DictReader(stream)}
-    if relative not in rows:
+    # CONTRACT: These preserved source files are exact, inventoried baselines.
+    baselines = {
+        "data/processed/ibama/licensed_projects_st.gpkg": (78471168, "0df410feb5e5aaa975851107fc501c408d2ed7ceb15a72e21a573462e0773863"),
+        "data/processed/ibge/Data/favelas_2022.gpkg": (16105472, "aec748dc609a00eb89e652b7c289c7728255d209286e1d58be2fa881e4d2e9f0"),
+    }
+    if relative not in baselines:
         raise ValueError("No preserved-baseline inventory entry: " + relative)
-    row = rows[relative]
-    if int(row["size_bytes"]) != Path(source).stat().st_size or row["sha256"] != sha256(source):
+    size, expected = baselines[relative]
+    if size != Path(source).stat().st_size or expected != sha256(source):
         raise ValueError("Preserved baseline differs from the inventory: " + relative)
-    return row["sha256"]
+    return expected
 
 
 def geopackage_summary(path, layer, expected_crs=None, unique_key=None):

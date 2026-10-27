@@ -1,17 +1,17 @@
 # Sources And Attribution
 
 Status: current
-Last updated: 2026-10-06
-Version: 0.4
+Last updated: 2026-10-27
+Version: 0.5
 Scope: Sources And Attribution
 
 The original research material was copied from the user's Brazil Project folder in OneDrive. It includes IBGE census data and boundaries, IBAMA environmental licensing geometries, Obrasgov infrastructure records, Belo Horizonte property references, and CS2Nordic research material. Original license and attribution documents are retained where present. This notice does not grant redistribution rights.
 
 Documentation and agent-rule patterns were adapted from the user's RISSI repository, specifically its root AGENTS.md. Brazil remains an independent research project; no RISSI application code, operational defaults, or deployment infrastructure was copied.
 
-Python processing was translated from the user's original R and Quarto workflows. `data/archive/original_code/` and `docs/evidence/workflow_mapping.csv` preserve their provenance.
+Python processing was translated from the user's original R and Quarto workflows. The complete original material, reports, migration mapping and attribution records remain on the [archive branch](https://github.com/fab1s/brazil-project/tree/archive/full-project-2026-10-27). Local `data/archive/` retains the original files where available.
 
-Retained R packages include censobr, geobr, and sf/S2. Python uses pandas, GeoPandas, Shapely, NetworkX, PyArrow, requests, matplotlib, openpyxl, and Folium. Their own licenses remain applicable. Dependency versions are recorded in the Python and R locks.
+The focused notebooks use Python for processing. The archived full project retains the earlier R acquisition and spherical-analysis components, with their `renv` lock. Python dependencies are recorded in `requirements.lock`; their own licenses remain applicable.
 
 Generated interactive maps retain the selected basemap's visible attribution. External basemap tiles may require network access when viewing a map; producing the analysis does not download original research data by default.
 

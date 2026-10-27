@@ -1,1 +1,0 @@
-See interactive project data map under https://sandy-ivory-k65c.here.now

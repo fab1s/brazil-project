@@ -45,10 +45,9 @@ def plot_counts(table,columns,title,path):
 
 
 def run(ctx,source):
-    acquired=ctx.artifact('acquire-'+source,'projects.parquet')
-    acquisition_report=ctx.artifact('acquire-'+source,'report.json')
-    use_acquired=acquired.exists() and acquisition_report.exists() and json.loads(acquisition_report.read_text()).get('status')=='completed'
-    frame=gpd.read_parquet(acquired) if use_acquired else gpd.read_file(ctx.require(ctx.path('infrastructure',source)))
+    # CONTRACT: The four-file handoff always uses the configured preserved source.
+    # A leftover acquisition artifact must never silently change a final dataset.
+    frame=gpd.read_file(ctx.require(ctx.path('infrastructure',source)))
     if frame.crs is None or frame.crs.to_epsg()!=4674:
         raise WorkflowError(f'{source} requires the original EPSG:4674 coordinate system')
     destination=ctx.root/'outputs/figures'/source
@@ -62,7 +61,7 @@ def run(ctx,source):
         ctx.write_table(categories,'ibama','sector_counts')
         mapping=frame.to_crs(4326).explore(column='tp_sector_en',name='IBAMA licensed projects',legend=True)
         out=ctx.root/'outputs/maps/ibama.html';out.parent.mkdir(parents=True,exist_ok=True);mapping.save(out)
-        return ctx.report(source,{'records':len(frame),'unknown_sectors':int(frame.tp_sector_en.isna().sum()),'source':'acquired' if use_acquired else 'copied_snapshot'})
+        return ctx.report(source,{'records':len(frame),'unknown_sectors':int(frame.tp_sector_en.isna().sum()),'source':'copied_snapshot'})
     translations=json.loads((ctx.root/'code/config/obrasgov_translations.json').read_text())
     for field,target,kind in [('tipo','type_en','type'),('subtipo','subtype_en','subtype')]:
         if field not in frame: raise WorkflowError(f'Obrasgov {field} missing')
@@ -82,4 +81,4 @@ def run(ctx,source):
             count=connection.execute(f'SELECT COUNT(*) FROM "{table}"').fetchone()[0]
     return ctx.report(source,{'records':len(frame),'cleaned_records':len(cleaned),'removed':len(frame)-len(cleaned),
                               'baseline_cleaned_records':count,'count_matches_baseline':len(cleaned)==count,
-                              'source':'acquired' if use_acquired else 'copied_snapshot'})
+                              'source':'copied_snapshot'})

@@ -13,8 +13,7 @@ import pandas as pd
 import shapely
 
 from brazil_project.harmonisation.census import load_bundle, sha256
-from brazil_project.io import WorkflowError, keys
-from brazil_project.report_engine import code_hashes
+from brazil_project.io import WorkflowError, keys, code_hashes
 
 WEB = runpy.run_path(str(Path(__file__).with_name('build_web_map.py')))
 INDICATORS = WEB['INDICATORS']
