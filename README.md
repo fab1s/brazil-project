@@ -6,6 +6,8 @@ This research project studies changes in population, housing, income, and basic 
 
 Each dataset folder contains a processing notebook, a short codebook, and its named GeoPackage stored locally outside GitHub. The notebook follows source records through decisions, transformations, and checked results. Final fields use English names; original field mappings and reviewed original/English category pairs remain in the GeoPackage.
 
+Code opens collapsed in JupyterLab so explanations and saved results are visible first. Expand a cell's input bar to read its code; GitHub uses its own static notebook display.
+
 - **Census:** `census_comparison_areas_2010_2022.gpkg`, layer `comparison_areas` · [codebook](datasets/census/CODEBOOK.md) · [processing notebook](datasets/census/build.ipynb).
 - **Obrasgov:** `obrasgov_screened_locations.gpkg` · [codebook](datasets/obrasgov/CODEBOOK.md) · [processing notebook](datasets/obrasgov/build.ipynb).
 - **IBAMA:** `ibama_licensed_projects.gpkg` · [codebook](datasets/ibama/CODEBOOK.md) · [processing notebook](datasets/ibama/build.ipynb).

@@ -14,41 +14,6 @@ from brazil_project.harmonisation.census import load_bundle
 from brazil_project.io import Context, WorkflowError
 
 
-def plot_harmonisation_flow():
-    """Show the current crosswalk and common-area construction as a schematic."""
-    import matplotlib.pyplot as plt
-    from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
-
-    fig, ax = plt.subplots(figsize=(10, 6))
-    ax.set(xlim=(0, 1), ylim=(0, 1))
-    ax.axis("off")
-
-    def box(x, y, width, height, label, colour):
-        ax.add_patch(FancyBboxPatch((x - width / 2, y - height / 2), width, height,
-                                    boxstyle="round,pad=0.012", facecolor=colour,
-                                    edgecolor="#45606a", linewidth=1.2))
-        ax.text(x, y, label, ha="center", va="center", fontsize=10.5, color="#172b36")
-
-    def arrow(start, end):
-        ax.add_patch(FancyArrowPatch(start, end, arrowstyle="-|>", mutation_scale=15,
-                                     linewidth=1.2, color="#45606a"))
-
-    box(.5, .91, .40, .09, "2010 and 2022 tract polygons", "#e8f1f3")
-    box(.25, .70, .39, .13, "Usual run: check saved overlap links\nfor positive polygon area", "#edf2f8")
-    box(.75, .70, .39, .13, "Optional: recompute largest overlap\nin both directions nationally", "#edf2f8")
-    box(.5, .48, .53, .14, "Connect all eligible links into groups\n1:1 · split · merge · many-to-many", "#dceeed")
-    box(.25, .26, .39, .11, "Dissolve all 2022 pieces\nwithin each common_id", "#e8f1f3")
-    box(.75, .26, .39, .11, "Aggregate each year's counts\nwithin the same common_id", "#e8f1f3")
-    box(.5, .07, .46, .09, "One comparison-area record per common_id", "#c8e4df")
-    for start, end in [((.5, .86), (.25, .78)), ((.5, .86), (.75, .78)),
-                       ((.25, .62), (.5, .56)), ((.75, .62), (.5, .56)),
-                       ((.5, .40), (.25, .33)), ((.5, .40), (.75, .33)),
-                       ((.25, .19), (.5, .13)), ((.75, .19), (.5, .13))]:
-        arrow(start, end)
-    fig.tight_layout()
-    return fig
-
-
 def example_tracts(ctx, bundle):
     """Read a small real split for display; all analytical operations stay in cells."""
     from brazil_project.harmonisation.census import prepare, read_ids

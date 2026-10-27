@@ -96,9 +96,9 @@ def show_figure(figure):
     plt.close(figure)
 
 
-def show_image(ctx, relative):
+def show_image(ctx, relative, width=None):
     from IPython.display import Image, display
-    display(Image(filename=str(ctx.require(ctx.root / relative))))
+    display(Image(filename=str(ctx.require(ctx.root / relative)), width=width))
 
 
 def sha256(path):

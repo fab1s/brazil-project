@@ -150,6 +150,11 @@ def execute_notebook(root, dataset, from_saved=False):
     try:
         source = path.read_bytes()
         notebook = nbformat.reads(source.decode(), as_version=4)
+        for cell in notebook.cells:
+            if cell.cell_type == 'code':
+                cell.metadata.setdefault('jupyter', {})['source_hidden'] = True
+                cell.metadata['jupyter'].pop('outputs_hidden', None)
+                cell.metadata.pop('collapsed', None)
         nbformat.validate(notebook)
         environment = os.environ.copy()
         environment['BRAZIL_NOTEBOOK_FROM_SAVED'] = '1' if from_saved else '0'
