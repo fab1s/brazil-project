@@ -13,6 +13,8 @@ Start with a dataset notebook. It explains the source, processing decisions, che
 
 Each notebook follows its preserved input through processing to `final.gpkg`. The [build command](datasets/run.py) runs the same processing without Jupyter. Input locations are in [project settings](datasets/project.toml); [shared code](datasets/shared/) and [locked dependencies](datasets/requirements.lock) support all four folders.
 
+For collaborators, `.venv/bin/python datasets/run.py handoff --output-dir PATH` verifies those four files and copies them into one local folder with descriptive filenames.
+
 ## 2. Interactive map
 
 - **[Website source](website/):** code for the published map.

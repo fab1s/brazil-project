@@ -1,4 +1,4 @@
-"""Build one of the four final GeoPackages without opening Jupyter.
+"""Build a final GeoPackage or copy four verified files for a collaborator.
 
 Restore the configured local ``data/`` inputs first; their paths are in
 ``datasets/project.toml``. The baseline inventory is preserved on the
@@ -12,22 +12,120 @@ From the repository root::
     .venv/bin/python datasets/run.py census
 
 Use ``obrasgov``, ``ibama``, or ``communities`` in place of ``census``.
-The output is the local ``datasets/<name>/final.gpkg``; transfer it separately
-from GitHub and compare its SHA-256 with the value in the dataset notebook.
+The output is the local ``datasets/<name>/final.gpkg``. To copy all four under
+descriptive names after building them::
+
+    .venv/bin/python datasets/run.py handoff --output-dir /path/to/handoff
+
+The handoff verifies the final files, their producer receipts and the copied
+bytes. It does not remove other files from the chosen directory. If interrupted,
+run it again; copies already matching their sources are skipped.
 """
 
 import argparse
 import importlib.util
+import json
 import os
 from pathlib import Path
+import shutil
+import sqlite3
 import sys
+import tempfile
+
+
+HANDOFF = {
+    "census": ("census_comparison_areas_2010_2022.gpkg", "social", 5880, "common_id",
+               ("overview", "field_dictionary", "export_metadata")),
+    "obrasgov": ("obrasgov_screened_locations.gpkg", "map_components", 4674,
+                 "component_id", ("excluded_primary_state",)),
+    "ibama": ("ibama_licensed_projects.gpkg", "licensed_projects_st", 4674,
+              "objectid", ()),
+    "communities": ("ibge_favelas_communities_2022.gpkg", "favelas_2022", 4674,
+                    "cd_fcu", ()),
+}
+
+
+def checked_final(root, dataset, specification):
+    """Require a current producer receipt and the expected GeoPackage schema."""
+    from _shared import geopackage_summary, sha256
+
+    folder = root / "datasets" / dataset
+    final = folder / "final.gpkg"
+    receipt = json.loads((folder / ".final-gpkg.json").read_text())
+    expected = receipt.get("sha256")
+    if not isinstance(expected, str) or len(expected) != 64:
+        raise ValueError(f"{dataset}: missing final-file checksum receipt")
+    producer = (folder / receipt["source"]).resolve(strict=True)
+    if not producer.is_relative_to(root.resolve()):
+        raise ValueError(f"{dataset}: producer is outside the project")
+    _, layer, epsg, key, other_layers = specification
+    summary = geopackage_summary(final, layer, expected_crs=epsg, unique_key=key)
+    if summary["sha256"] != expected or sha256(producer) != expected:
+        raise ValueError(f"{dataset}: final file differs from its checked producer")
+    with sqlite3.connect(f"file:{final}?mode=ro", uri=True) as connection:
+        layers = {row[0] for row in connection.execute("SELECT table_name FROM gpkg_contents")}
+    if not set(other_layers).issubset(layers):
+        raise ValueError(f"{dataset}: a required GeoPackage layer is missing")
+    return final, summary
+
+
+def handoff(root, output_dir):
+    """Stage and verify every copy before publishing any named handoff file."""
+    from _shared import sha256
+
+    output_dir = Path(output_dir).expanduser().resolve()
+    if not output_dir.is_dir():
+        raise NotADirectoryError(f"Handoff directory does not exist: {output_dir}")
+    sources = {name: checked_final(root, name, spec)
+               for name, spec in HANDOFF.items()}
+    result = {}
+    present_names = {entry.name for entry in output_dir.iterdir()}
+    with tempfile.TemporaryDirectory(prefix=".brazil-handoff-", dir=output_dir) as temporary:
+        staged = {}
+        for name, (filename, *_rest) in HANDOFF.items():
+            source, summary = sources[name]
+            target = output_dir / filename
+            # A case-insensitive filesystem can resolve an old spelling as this target.
+            if target.exists() and filename not in present_names:
+                raise FileExistsError(f"Case-only filename collision; move the old file first: {target}")
+            if target.is_symlink():
+                raise ValueError(f"Refusing to replace a symlink: {target}")
+            if target.exists() and not target.is_file():
+                raise ValueError(f"Handoff destination is not a file: {target}")
+            if target.is_file() and sha256(target) == summary["sha256"]:
+                result[name] = {"file": str(target), "sha256": summary["sha256"],
+                                "features": summary["features"], "status": "already_current"}
+                continue
+            candidate = Path(temporary) / filename
+            shutil.copyfile(source, candidate)
+            if sha256(candidate) != summary["sha256"] or sha256(source) != summary["sha256"]:
+                raise ValueError(f"{name}: handoff copy failed checksum verification")
+            staged[name] = candidate
+        for name, candidate in staged.items():
+            filename = HANDOFF[name][0]
+            target = output_dir / filename
+            os.replace(candidate, target)
+            summary = sources[name][1]
+            result[name] = {"file": str(target), "sha256": summary["sha256"],
+                            "features": summary["features"], "status": "copied"}
+    return result
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("dataset", choices=("census", "obrasgov", "ibama", "communities"))
+    parser = argparse.ArgumentParser(description=__doc__,
+                                     formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("dataset", choices=(*HANDOFF, "handoff"))
+    parser.add_argument("--output-dir", type=Path, help="Existing directory for named handoff copies")
     args = parser.parse_args(argv)
     root = Path(__file__).resolve().parents[1]
+    if args.dataset == "handoff":
+        if args.output_dir is None:
+            parser.error("handoff requires --output-dir")
+        sys.path.insert(0, str(root / "datasets"))
+        print(json.dumps(handoff(root, args.output_dir), indent=2))
+        return
+    if args.output_dir is not None:
+        parser.error("--output-dir is only used with handoff")
     folder = root / "datasets" / args.dataset
     sys.path.insert(0, str(root / "datasets" / "shared"))
     cache = root / ".cache" / "matplotlib"
