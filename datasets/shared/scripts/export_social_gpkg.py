@@ -165,7 +165,7 @@ def run(ctx, output, source=None):
     output = Path(output).resolve()
     if output.exists():
         raise WorkflowError('Refusing to overwrite an existing file: ' + str(output))
-    source = Path(source or ctx.root / '.cache/map-update/build/social.gpkg').resolve()
+    source = Path(source or ctx.root / '.cache/map-update/build/census_comparison_areas_2010_2022.gpkg').resolve()
     prepared = source.with_name('prepared.json')
     source_record = json.loads(ctx.require(prepared).read_text())
     ctx.require(source)
@@ -205,8 +205,8 @@ def run(ctx, output, source=None):
     descriptor = os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
     os.close(descriptor)
     try:
-        with tempfile.TemporaryDirectory(prefix='.social-export-', dir=output.parent) as temporary:
-            staged = Path(temporary) / 'social.gpkg'
+        with tempfile.TemporaryDirectory(prefix='.census-export-', dir=output.parent) as temporary:
+            staged = Path(temporary) / 'census_comparison_areas_2010_2022.gpkg'
             dictionaries = []
             for name, frame in layers.items():
                 print('Writing concise English fields:', name, len(frame), flush=True)

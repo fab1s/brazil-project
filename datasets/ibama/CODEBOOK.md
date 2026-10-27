@@ -3,7 +3,7 @@
 Status: current  
 Last updated: 2026-10-27  
 Version: 1.0  
-Scope: `final.gpkg`, the preserved licensing-record handoff
+Scope: `ibama_licensed_projects.gpkg`, the preserved licensing-record handoff
 
 The `licensed_projects_st` layer contains 8,494 spatial **source records** in EPSG:4674. A record represents an IBAMA licensing entry or its mapped element, not proof that a project is operating or that an environmental impact occurred. `record_id` is the unique source object ID; names and case numbers may recur. `fid` is the GeoPackage row ID, and `geom` is the preserved point, line or polygon geometry.
 

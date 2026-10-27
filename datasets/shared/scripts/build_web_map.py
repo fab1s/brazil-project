@@ -133,7 +133,7 @@ def main():
         if args.reuse_prepared or not args.gpkg_output:
             raise WorkflowError('Use --gpkg-only with --gpkg-output, without --reuse-prepared.')
         export = runpy.run_path(str(Path(__file__).with_name('export_social_gpkg.py')))
-        result = export['run'](ctx,args.gpkg_output,source=args.work/'social.gpkg')
+        result = export['run'](ctx,args.gpkg_output,source=args.work/'census_comparison_areas_2010_2022.gpkg')
         print(json.dumps(result,indent=2),flush=True)
         return
     if args.gpkg_output:
@@ -146,7 +146,7 @@ def main():
     contract = {'harmonisation_version':manifest['version'],'indicator_checksums':inputs,'export_policy':'merged-common-area-v1'}
     args.work.mkdir(parents=True,exist_ok=True); args.output.mkdir(parents=True,exist_ok=True)
     data = args.output/'data'; data.mkdir(exist_ok=True)
-    source = args.work/'social.gpkg'; prepared = args.work/'prepared.json'
+    source = args.work/'census_comparison_areas_2010_2022.gpkg'; prepared = args.work/'prepared.json'
     suffix = 'common' + hashlib.sha256(json.dumps(contract,sort_keys=True).encode()).hexdigest()[:12]
     if args.reuse_prepared:
         evidence = json.loads(prepared.read_text())

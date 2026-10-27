@@ -7,7 +7,7 @@ import tempfile
 
 import pyogrio
 
-from _shared import baseline_checksum, geopackage_summary, local_copy
+from _shared import FINAL_FILENAMES, baseline_checksum, geopackage_summary, local_copy, sha256
 from english_export import export, verify_export
 from brazil_project.io import WorkflowError
 
@@ -20,7 +20,7 @@ def build(project):
     """Keep the source intact; give its seven attributes clear English names."""
     source = source_file(project)
     expected = baseline_checksum(project, source)
-    destination = project / "outputs/maps/notebook-exports/communities.gpkg"
+    destination = project / "outputs/maps/notebook-exports" / FINAL_FILENAMES["communities"]
     destination.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(prefix=".communities-", suffix=".gpkg", dir=destination.parent, delete=False) as temp:
         staged = Path(temp.name)
@@ -39,13 +39,17 @@ def build(project):
 def inspect_final(project, preview=False):
     source = source_file(project)
     expected = baseline_checksum(project, source)
-    path = project / "outputs/maps/notebook-exports/communities.gpkg"
+    path = project / "outputs/maps/notebook-exports" / FINAL_FILENAMES["communities"]
     if preview and not path.exists():
         raise WorkflowError("Build the English export before previewing it.")
     result = geopackage_summary(path, "favelas_2022", expected_crs=4674, unique_key="community_code")
     verify_export(source, path, "communities", expected)
     if not preview:
-        local_copy(project / "datasets/communities", path)
+        result["file"] = str(local_copy(project / "datasets/communities", path))
+    else:
+        local = project / "datasets/communities" / FINAL_FILENAMES["communities"]
+        if local.is_file() and sha256(local) == result["sha256"]:
+            result["file"] = str(local)
     return result
 
 

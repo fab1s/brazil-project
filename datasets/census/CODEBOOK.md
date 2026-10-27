@@ -3,9 +3,9 @@
 Status: current  
 Last updated: 2026-10-27  
 Version: 1.0  
-Scope: `final.gpkg`, the national 2010–2022 census handoff
+Scope: `census_comparison_areas_2010_2022.gpkg`, the national 2010–2022 census handoff
 
-**Start with `social`.** Its 287,178 rows are merged comparison areas, one per text `common_id`, in EPSG:5880. A common ID joins 2010 and 2022 tracts through their largest positive-area overlaps; it is an identifier, not a geographic rank. Text sorting places `1`, `10`, `100` before `2`. `tracts_2010` and `tracts_2022` count member tracts. `tract_relationship` is `1:1`, `2010_to_2022_split`, `2010_to_2022_merge`, or `many_to_many`. Geometry is the merged **2022** group footprint, not an intersection or a fixed-area reconstruction of both years. `fid` is only the GeoPackage row ID; `geom` holds the geometry.
+The `social` layer contains 287,178 merged comparison areas, one per text `common_id`, in EPSG:5880. A common ID joins 2010 and 2022 tracts through their largest positive-area overlaps; it is an identifier, not a geographic rank. Text sorting places `1`, `10`, `100` before `2`. `tracts_2010` and `tracts_2022` count member tracts. `tract_relationship` is `1:1`, `2010_to_2022_split`, `2010_to_2022_merge`, or `many_to_many`. Geometry is the merged **2022** group footprint, not an intersection or a fixed-area reconstruction of both years. `fid` is only the GeoPackage row ID; `geom` holds the geometry.
 
 | Fields in `social` | Read them as |
 | --- | --- |

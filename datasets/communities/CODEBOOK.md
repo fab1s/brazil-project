@@ -3,7 +3,7 @@
 Status: current  
 Last updated: 2026-10-27  
 Version: 1.0  
-Scope: `final.gpkg`, the preserved 2022 IBGE community handoff
+Scope: `ibge_favelas_communities_2022.gpkg`, the preserved 2022 IBGE community handoff
 
 The `favelas_2022` layer has 12,348 community polygons in EPSG:4674, one per `community_code`. All seven source values and geometry blobs were preserved; only column **names** changed to English. Codes are identifiers, not numbers to calculate with. `fid` is the GeoPackage row ID; `geom` is the original multipolygon. This file has no population or service-access measure.
 

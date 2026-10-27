@@ -12,9 +12,9 @@ From the repository root::
     .venv/bin/python datasets/run.py census
 
 Use ``obrasgov``, ``ibama``, or ``communities`` in place of ``census``.
-The output is the local ``datasets/<name>/final.gpkg`` with English field names
-and documented original-to-English mappings. To copy all four under
-descriptive names after building them::
+The output is a descriptively named GeoPackage in ``datasets/<name>/``, with
+English field names and documented original-to-English mappings. To copy all
+four verified files into one folder::
 
     .venv/bin/python datasets/run.py handoff --output-dir /path/to/handoff
 
@@ -33,15 +33,17 @@ import sqlite3
 import sys
 import tempfile
 
+from _shared import FINAL_FILENAMES
+
 
 HANDOFF = {
-    "census": ("census_comparison_areas_2010_2022.gpkg", "social", 5880, "common_id",
+    "census": (FINAL_FILENAMES["census"], "social", 5880, "common_id",
                ("overview", "field_dictionary", "export_metadata")),
-    "obrasgov": ("obrasgov_screened_locations.gpkg", "map_components", 4674,
+    "obrasgov": (FINAL_FILENAMES["obrasgov"], "map_components", 4674,
                  "component_id", ("excluded_primary_state", "field_dictionary", "export_metadata")),
-    "ibama": ("ibama_licensed_projects.gpkg", "licensed_projects_st", 4674,
+    "ibama": (FINAL_FILENAMES["ibama"], "licensed_projects_st", 4674,
               "record_id", ("field_dictionary", "export_metadata")),
-    "communities": ("ibge_favelas_communities_2022.gpkg", "favelas_2022", 4674,
+    "communities": (FINAL_FILENAMES["communities"], "favelas_2022", 4674,
                     "community_code", ("field_dictionary", "export_metadata")),
 }
 
@@ -51,7 +53,7 @@ def checked_final(root, dataset, specification):
     from _shared import baseline_checksum, geopackage_summary, sha256
 
     folder = root / "datasets" / dataset
-    final = folder / "final.gpkg"
+    final = folder / specification[0]
     receipt = json.loads((folder / ".final-gpkg.json").read_text())
     expected = receipt.get("sha256")
     if not isinstance(expected, str) or len(expected) != 64:

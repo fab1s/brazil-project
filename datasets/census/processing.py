@@ -9,7 +9,7 @@ import uuid
 
 import shapely
 
-from _shared import geopackage_summary, local_copy, run_stage, sha256
+from _shared import FINAL_FILENAMES, geopackage_summary, local_copy, run_stage, sha256
 from brazil_project.harmonisation.census import load_bundle
 from brazil_project.io import Context, WorkflowError
 
@@ -59,30 +59,29 @@ def export_geopackage(project):
     ctx = Context(project / "datasets/project.toml")
     if ctx.municipality:
         raise WorkflowError("The collaborator GeoPackage requires national scope.")
-    destination = project / "outputs/maps/notebook-exports/social.gpkg"
+    destination = project / "outputs/maps/notebook-exports" / FINAL_FILENAMES["census"]
     destination.parent.mkdir(parents=True, exist_ok=True)
     cache = project / ".cache/dataset-notebooks"
     cache.mkdir(parents=True, exist_ok=True)
     exporter = runpy.run_path(str(project / "datasets/shared/scripts/export_social_gpkg.py"))
     with tempfile.TemporaryDirectory(prefix="census-", dir=cache) as temporary:
-        source = Path(temporary) / "social.gpkg"
+        source = Path(temporary) / "census_source.gpkg"
         prepare_map_geometries(ctx, source)
-        staged = destination.with_name(".social-" + uuid.uuid4().hex + ".gpkg")
+        staged = destination.with_name(".census-export-" + uuid.uuid4().hex + ".gpkg")
         try:
             exporter["run"](ctx, staged, source=source)
             result = geopackage_summary(staged, "social", expected_crs=5880, unique_key="common_id")
             os.replace(staged, destination)
         finally:
             staged.unlink(missing_ok=True)
-    local_copy(project / "datasets/census", destination)
-    result["file"] = str(destination)
+    result["file"] = str(local_copy(project / "datasets/census", destination))
     return result
 
 
 def inspect_final(project, preview=False):
-    path = project / "outputs/maps/notebook-exports/social.gpkg"
+    path = project / "outputs/maps/notebook-exports" / FINAL_FILENAMES["census"]
     if preview and not path.exists():
-        path = project / "outputs/maps/social-clean/social.gpkg"
+        raise WorkflowError("Build the named census export before previewing it.")
     summary = geopackage_summary(path, "social", expected_crs=5880, unique_key="common_id")
     # The other tables are part of the same deliverable, not separate datasets.
     import sqlite3
@@ -90,5 +89,9 @@ def inspect_final(project, preview=False):
         for layer in ("overview", "field_dictionary", "export_metadata"):
             summary[layer + "_rows"] = connection.execute(f'SELECT COUNT(*) FROM "{layer}"').fetchone()[0]
     if not preview:
-        local_copy(project / "datasets/census", path)
+        summary["file"] = str(local_copy(project / "datasets/census", path))
+    else:
+        local = project / "datasets/census" / FINAL_FILENAMES["census"]
+        if local.is_file() and sha256(local) == summary["sha256"]:
+            summary["file"] = str(local)
     return summary

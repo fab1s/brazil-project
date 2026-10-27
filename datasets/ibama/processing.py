@@ -11,7 +11,7 @@ import pandas as pd
 import pyogrio
 import shapely
 
-from _shared import baseline_checksum, geopackage_summary, local_copy, run_stage
+from _shared import FINAL_FILENAMES, baseline_checksum, geopackage_summary, local_copy, run_stage, sha256
 from english_export import export, verify_export
 from brazil_project.io import Context, WorkflowError
 
@@ -42,7 +42,7 @@ def build(project):
     run_stage(project, "ibama")
     ctx = Context(project / "datasets/project.toml")
     source = verify_translation(ctx)
-    destination = project / "outputs/maps/notebook-exports/ibama.gpkg"
+    destination = project / "outputs/maps/notebook-exports" / FINAL_FILENAMES["ibama"]
     destination.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(prefix=".ibama-", suffix=".gpkg", dir=destination.parent, delete=False) as temp:
         staged = Path(temp.name)
@@ -62,13 +62,17 @@ def inspect_final(project, preview=False):
     ctx = Context(project / "datasets/project.toml")
     source = ctx.require(ctx.path("infrastructure", "ibama"))
     baseline = baseline_checksum(project, source)
-    path = project / "outputs/maps/notebook-exports/ibama.gpkg"
+    path = project / "outputs/maps/notebook-exports" / FINAL_FILENAMES["ibama"]
     if preview and not path.exists():
         raise WorkflowError("Build the English export before previewing it.")
     summary = geopackage_summary(path, "licensed_projects_st", expected_crs=4674, unique_key="record_id")
     verify_export(source, path, "ibama", baseline)
     if not preview:
-        local_copy(project / "datasets/ibama", path)
+        summary["file"] = str(local_copy(project / "datasets/ibama", path))
+    else:
+        local = project / "datasets/ibama" / FINAL_FILENAMES["ibama"]
+        if local.is_file() and sha256(local) == summary["sha256"]:
+            summary["file"] = str(local)
     return summary
 
 

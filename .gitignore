@@ -16,6 +16,6 @@ __pycache__/
 .RData*
 data/
 outputs/
-datasets/*/final.gpkg
+datasets/*/*.gpkg
 datasets/*/.final-gpkg*.json
 website/data/

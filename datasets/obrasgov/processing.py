@@ -6,7 +6,7 @@ from pathlib import Path
 import sqlite3
 import tempfile
 
-from _shared import geopackage_summary, local_copy, run_stage, sha256
+from _shared import FINAL_FILENAMES, geopackage_summary, local_copy, run_stage, sha256
 from english_export import export, verify_export
 from brazil_project.io import Context, WorkflowError
 from scripts.filter_obras_primary_state import verified_inputs
@@ -48,7 +48,7 @@ def verify_producer(project):
 def export_saved(project):
     """Apply English handoff labels to the verified saved map derivative."""
     source, source_summary = verify_producer(project)
-    destination = project / "outputs/maps/notebook-exports/obrasgov.gpkg"
+    destination = project / "outputs/maps/notebook-exports" / FINAL_FILENAMES["obrasgov"]
     destination.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(prefix=".obrasgov-", suffix=".gpkg", dir=destination.parent, delete=False) as temp:
         staged = Path(temp.name)
@@ -64,7 +64,7 @@ def export_saved(project):
 
 def inspect_final(project):
     source, source_summary = verify_producer(project)
-    path = project / "outputs/maps/notebook-exports/obrasgov.gpkg"
+    path = project / "outputs/maps/notebook-exports" / FINAL_FILENAMES["obrasgov"]
     summary = geopackage_summary(path, "map_components", expected_crs=4674,
                                  unique_key="component_id")
     verify_export(source, path, "obrasgov", source_summary["sha256"])
@@ -75,5 +75,5 @@ def inspect_final(project):
     if excluded != source_summary["excluded_primary_state"]:
         raise WorkflowError("Obrasgov English export changed the excluded component count.")
     summary["excluded_primary_state"] = excluded
-    local_copy(project / "datasets/obrasgov", path)
+    summary["file"] = str(local_copy(project / "datasets/obrasgov", path))
     return summary

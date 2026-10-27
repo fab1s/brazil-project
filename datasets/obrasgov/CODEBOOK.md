@@ -3,9 +3,9 @@
 Status: current  
 Last updated: 2026-10-27  
 Version: 1.0  
-Scope: `final.gpkg`, the national map-location handoff
+Scope: `obrasgov_screened_locations.gpkg`, the national map-location handoff
 
-**Start with `map_components`.** It has 224,495 retained components (200,643 points and 23,852 lines) in EPSG:4674. One provider row can produce several components, and several rows can share a project ID. Count distinct `project_id` for projects; **do not sum investment over components**. `component_id` uniquely identifies a decomposed part; `source_row` is its original row position. `fid` is a GeoPackage row ID, and `geom` is the unchanged location geometry. The separate `excluded_primary_state` layer holds all 2,346 components entirely outside their reported primary state, including some that were already absent from the earlier eligible map. Source records were not deleted.
+The `map_components` layer has 224,495 retained components (200,643 points and 23,852 lines) in EPSG:4674. One provider row can produce several components, and several rows can share a project ID. Count distinct `project_id` for projects; **do not sum investment over components**. `component_id` uniquely identifies a decomposed part; `source_row` is its original row position. `fid` is a GeoPackage row ID, and `geom` is the unchanged location geometry. The separate `excluded_primary_state` layer holds all 2,346 components entirely outside their reported primary state, including some that were already absent from the earlier eligible map. Source records were not deleted.
 
 ### Location screening fields
 

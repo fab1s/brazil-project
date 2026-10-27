@@ -10,6 +10,14 @@ import subprocess
 import tempfile
 
 
+FINAL_FILENAMES = {
+    "census": "census_comparison_areas_2010_2022.gpkg",
+    "obrasgov": "obrasgov_screened_locations.gpkg",
+    "ibama": "ibama_licensed_projects.gpkg",
+    "communities": "ibge_favelas_communities_2022.gpkg",
+}
+
+
 def sha256(path):
     digest = hashlib.sha256()
     with Path(path).open("rb") as stream:
@@ -69,10 +77,11 @@ def geopackage_summary(path, layer, expected_crs=None, unique_key=None):
 
 
 def local_copy(notebook_folder, source):
-    """Publish a self-contained, checked GeoPackage beside its notebook."""
+    """Publish the descriptively named, checked GeoPackage beside its notebook."""
     source = Path(source).resolve(strict=True)
     folder = Path(notebook_folder)
-    target = folder / "final.gpkg"
+    target = folder / FINAL_FILENAMES[folder.name]
+    legacy = folder / "final.gpkg"
     receipt = folder / ".final-gpkg.json"
     relative_source = os.path.relpath(source, start=folder)
     expected = sha256(source)
@@ -80,9 +89,20 @@ def local_copy(notebook_folder, source):
         temporary_receipt = receipt.with_suffix(".tmp.json")
         temporary_receipt.write_text(json.dumps({"source": relative_source, "sha256": expected}) + "\n")
         os.replace(temporary_receipt, receipt)
+    if legacy.exists() and not target.exists():
+        # COMPATIBILITY: Rename only an exact, previously checked deliverable.
+        # This avoids copying large GeoPackages and preserves their bytes.
+        if legacy.is_symlink() or not receipt.exists():
+            raise FileExistsError("Unverified legacy final.gpkg: " + str(legacy))
+        saved = json.loads(receipt.read_text())
+        if saved.get("sha256") != expected or sha256(legacy) != expected:
+            raise FileExistsError("Legacy final.gpkg differs from the checked producer: " + str(legacy))
+        os.replace(legacy, target)
+        write_receipt()
+        return target
     if target.is_symlink():
         if target.resolve() != source:
-            raise FileExistsError("A different final.gpkg link already exists: " + str(target))
+            raise FileExistsError("A different final GeoPackage link already exists: " + str(target))
     elif target.exists():
         current = sha256(target)
         if receipt.exists():
@@ -92,11 +112,11 @@ def local_copy(notebook_folder, source):
                     # RECOVERY: Publication may have finished before its receipt.
                     write_receipt()
                     return target
-                raise FileExistsError("The local final.gpkg changed outside this pipeline: " + str(target))
+                raise FileExistsError("The local final GeoPackage changed outside this pipeline: " + str(target))
             # COMPATIBILITY: A checked prior producer may be replaced after an
             # export-policy change; its receipt still proves the old bytes.
         elif current != expected:
-            raise FileExistsError("An unrelated final.gpkg already exists: " + str(target))
+            raise FileExistsError("An unrelated final GeoPackage already exists: " + str(target))
         if current == expected:
             write_receipt()
             return target
