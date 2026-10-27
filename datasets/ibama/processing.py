@@ -11,7 +11,7 @@ import pandas as pd
 import pyogrio
 import shapely
 
-from _shared import FINAL_FILENAMES, baseline_checksum, geopackage_summary, local_copy, run_stage, sha256
+from _shared import FINAL_FILENAMES, baseline_checksum, geopackage_summary, local_copy, sha256
 from english_export import export, verify_export
 from brazil_project.io import Context, WorkflowError
 
@@ -38,8 +38,7 @@ def verify_translation(ctx):
     return source
 
 
-def build(project):
-    run_stage(project, "ibama")
+def export_geopackage(project):
     ctx = Context(project / "datasets/project.toml")
     source = verify_translation(ctx)
     destination = project / "outputs/maps/notebook-exports" / FINAL_FILENAMES["ibama"]

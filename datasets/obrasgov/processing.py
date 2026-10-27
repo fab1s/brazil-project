@@ -6,16 +6,10 @@ from pathlib import Path
 import sqlite3
 import tempfile
 
-from _shared import FINAL_FILENAMES, geopackage_summary, local_copy, run_stage, sha256
+from _shared import FINAL_FILENAMES, geopackage_summary, local_copy, sha256
 from english_export import export, verify_export
 from brazil_project.io import Context, WorkflowError
 from scripts.filter_obras_primary_state import verified_inputs
-
-
-def build(project):
-    """Snapshot translation → component QA → state check → approved exclusion."""
-    run_stage(project, "obrasgov")
-    return export_saved(project)
 
 
 def verify_producer(project):

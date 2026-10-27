@@ -9,7 +9,7 @@ import uuid
 
 import shapely
 
-from _shared import FINAL_FILENAMES, geopackage_summary, local_copy, run_stage, sha256
+from _shared import FINAL_FILENAMES, geopackage_summary, local_copy, sha256
 from brazil_project.harmonisation.census import load_bundle
 from brazil_project.io import Context, WorkflowError
 
@@ -49,15 +49,51 @@ def plot_harmonisation_flow():
     return fig
 
 
-def calculate_indicators(project):
-    """Run validated complete-group harmonisation, then the 2010/2022 indicators."""
-    run_stage(project, "indicators")
+def example_tracts(ctx, bundle):
+    """Read a small real split for display; all analytical operations stay in cells."""
+    from brazil_project.harmonisation.census import prepare, read_ids
+    sizes, lookup = bundle['group_sizes'], bundle['lookup_2022']
+    local = set(lookup.loc[lookup.id_2022.str.startswith('3106200'), 'common_id'])
+    choices = sizes[(sizes.n_2010 == 1) & (sizes.n_2022 == 2)].copy()
+    preferred = choices[choices.common_id.isin(local)]
+    if len(preferred):
+        choices = preferred
+    cid = str(choices.sort_values('common_id').iloc[0].common_id)
+    ids = {year: bundle[f'lookup_{year}'].loc[
+        bundle[f'lookup_{year}'].common_id.eq(cid), f'id_{year}'] for year in (2010, 2022)}
+    cfg = ctx.config['census']
+    old = prepare(read_ids(ctx.path('census', 'tracts'), 2010, ids[2010], '2010'),
+                  2010, cfg['crs'], cfg['precision_grid'])
+    if cfg.get('recompute_harmonisation', False):
+        new = prepare(read_ids(ctx.path('census', 'tracts'), 2022, ids[2022], '2022'),
+                      2022, cfg['crs'], cfg['precision_grid'])
+    else:
+        new = read_ids(ctx.path('census', 'baseline_geometry'), 2022, ids[2022], baseline=True).to_crs(cfg['crs'])
+    return cid, old, new
 
 
-def build(project):
-    """Recalculate the census stages and publish one checked local GeoPackage."""
-    calculate_indicators(project)
-    return export_geopackage(project)
+def plot_group(old, new, merged, common_id):
+    """Keep map styling out of the visible transformation cells."""
+    import matplotlib.pyplot as plt
+    fig, axes = plt.subplots(1, 3, figsize=(11, 3.6))
+    old.plot(ax=axes[0], facecolor='#e7c19a', edgecolor='#71502f')
+    new.plot(ax=axes[1], column='id_2022', categorical=True, cmap='Set2', edgecolor='#45606a')
+    merged.plot(ax=axes[2], facecolor='#9acfc1', edgecolor='#24564b')
+    for frame, year, ax in [(old, 2010, axes[0]), (new, 2022, axes[1])]:
+        for _, row in frame.iterrows():
+            point = row.geometry.representative_point()
+            ax.text(point.x, point.y, str(row[f'id_{year}'])[-5:], ha='center', fontsize=8)
+    a, b = old.total_bounds, new.total_bounds
+    xmin, ymin, xmax, ymax = min(a[0], b[0]), min(a[1], b[1]), max(a[2], b[2]), max(a[3], b[3])
+    margin = max(xmax - xmin, ymax - ymin) * .06
+    for ax, title in zip(axes, ['2010 member tract', '2022 member pieces', 'Final merged comparison area']):
+        ax.set_xlim(xmin - margin, xmax + margin)
+        ax.set_ylim(ymin - margin, ymax + margin)
+        ax.set_title(title, fontsize=11)
+        ax.axis('off')
+    fig.suptitle('Real split group ' + common_id + ' · same scale; labels show tract-code suffixes')
+    fig.tight_layout()
+    return fig
 
 
 def prepare_map_geometries(ctx, source):
@@ -109,8 +145,8 @@ def export_geopackage(project):
             os.replace(staged, destination)
         finally:
             staged.unlink(missing_ok=True)
-    result["file"] = str(local_copy(project / "datasets/census", destination))
-    return result
+    local_copy(project / "datasets/census", destination)
+    return inspect_final(project)
 
 
 def inspect_final(project, preview=False):

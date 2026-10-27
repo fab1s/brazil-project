@@ -1,9 +1,4 @@
-"""Build the four published research datasets from local, configured inputs.
-
-The notebooks in ``datasets/`` are the readable entry points. This small runner
-keeps their processing stages in the original order and never acquires data or
-publishes the website.
-"""
+"""Dispatch individual analytical stages; dataset notebooks own their order."""
 
 import argparse
 import os
@@ -12,23 +7,14 @@ import sys
 from brazil_project.io import Context, WorkflowError
 
 
-OBRAS_FLOW = (
+STAGES = (
+    'harmonisation', 'indicators', 'ibama',
     "obrasgov-snapshot",
     "obrasgov-location-qa",
     "obrasgov-location-plot",
     "obrasgov-primary-state-check",
     "obrasgov-primary-state-filter",
 )
-
-
-def stages_for(requested):
-    if requested == "indicators":
-        return ("harmonisation", "indicators")
-    if requested == "obrasgov":
-        return OBRAS_FLOW
-    if requested in ("harmonisation", "ibama", *OBRAS_FLOW):
-        return (requested,)
-    raise WorkflowError("Unknown dataset stage: " + requested)
 
 
 def dispatch(ctx, stage):
@@ -55,7 +41,7 @@ def dispatch(ctx, stage):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=("run",))
-    parser.add_argument("stage", choices=("harmonisation", "indicators", "ibama", "obrasgov", *OBRAS_FLOW))
+    parser.add_argument("stage", choices=STAGES)
     parser.add_argument("--config", default="datasets/project.toml")
     args = parser.parse_args(argv)
     try:
@@ -63,9 +49,8 @@ def main(argv=None):
         if ctx.municipality:
             raise WorkflowError("The four final GeoPackages require national scope; clear project.municipality.")
         os.environ.setdefault("MPLCONFIGDIR", str(ctx.root / ".cache/matplotlib"))
-        for stage in stages_for(args.stage):
-            print("Running " + stage, flush=True)
-            dispatch(ctx, stage)
+        print("Running " + args.stage, flush=True)
+        dispatch(ctx, args.stage)
         return 0
     except (WorkflowError, FileNotFoundError) as error:
         print(str(error), file=sys.stderr)

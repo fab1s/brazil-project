@@ -4,14 +4,14 @@ This research project studies changes in population, housing, income, and basic 
 
 ## 1. Datasets and their methods
 
-Each dataset folder contains a codebook, a runnable processing notebook, and its descriptively named GeoPackage stored locally outside GitHub. Final spatial fields use English names; each GeoPackage also contains a `field_dictionary` connecting source and output fields. Reviewed categories have original and English values; place names and free-form descriptions retain their original wording.
+Each dataset folder contains a processing notebook, a short codebook, and its named GeoPackage stored locally outside GitHub. The notebook follows source records through decisions, transformations, and checked results. Final fields use English names; original field mappings and reviewed original/English category pairs remain in the GeoPackage.
 
 - **Census:** `census_comparison_areas_2010_2022.gpkg`, layer `comparison_areas` · [codebook](datasets/census/CODEBOOK.md) · [processing notebook](datasets/census/build.ipynb).
 - **Obrasgov:** `obrasgov_screened_locations.gpkg` · [codebook](datasets/obrasgov/CODEBOOK.md) · [processing notebook](datasets/obrasgov/build.ipynb).
 - **IBAMA:** `ibama_licensed_projects.gpkg` · [codebook](datasets/ibama/CODEBOOK.md) · [processing notebook](datasets/ibama/build.ipynb).
 - **Communities:** `ibge_favelas_communities_2022.gpkg` · [codebook](datasets/communities/CODEBOOK.md) · [processing notebook](datasets/communities/build.ipynb).
 
-Each notebook follows its preserved input through processing to the named GeoPackage. The [build command](datasets/run.py) runs the same processing without Jupyter. Input locations are in [project settings](datasets/project.toml); [shared code](datasets/shared/) and [locked dependencies](datasets/requirements.lock) support all four folders.
+The [build command](datasets/run.py) executes that same notebook and saves its tables and figures: `.venv/bin/python datasets/run.py census` (or `obrasgov`, `ibama`, `communities`). Add `--from-saved` to refresh the explanation's evidence using verified existing outputs. Open a notebook in its own folder to run it interactively. The notebook owns stage order; the adjacent `processing.py` supplies display/export helpers, and [shared code](datasets/shared/) implements the analytical methods. [Project settings](datasets/project.toml) locate the preserved inputs; [locked dependencies](datasets/requirements.lock) define the environment.
 
 For collaborators, `.venv/bin/python datasets/run.py handoff --output-dir PATH` verifies those four files and copies them into one local folder with descriptive filenames.
 

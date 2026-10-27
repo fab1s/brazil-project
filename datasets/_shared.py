@@ -6,8 +6,8 @@ import os
 from pathlib import Path
 import shutil
 import sqlite3
-import subprocess
 import tempfile
+import sys
 
 
 FINAL_FILENAMES = {
@@ -17,6 +17,89 @@ FINAL_FILENAMES = {
     "communities": "ibge_favelas_communities_2022.gpkg",
 }
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+
+def notebook_context(dataset):
+    """Set up one national notebook without exposing path plumbing in its cells."""
+    sys.path[:0] = [str(PROJECT_ROOT / 'datasets/shared'), str(PROJECT_ROOT / 'datasets'),
+                    str(PROJECT_ROOT / 'datasets' / dataset)]
+    os.environ.setdefault('MPLCONFIGDIR', str(PROJECT_ROOT / '.cache/matplotlib'))
+    from brazil_project.io import Context, WorkflowError
+    ctx = Context(PROJECT_ROOT / 'datasets/project.toml')
+    if ctx.municipality:
+        raise WorkflowError('These four notebooks require national scope; clear project.municipality.')
+    ctx.notebook_from_saved = os.environ.get('BRAZIL_NOTEBOOK_FROM_SAVED', '0') == '1'
+    return ctx
+
+
+def process_stage(ctx, stage):
+    """The notebook owns stage order; saved mode only refreshes its evidence."""
+    if ctx.notebook_from_saved:
+        print('Using saved ' + stage + ' outputs')
+        return
+    from brazil_project.cli import dispatch
+    from contextlib import redirect_stdout, redirect_stderr
+    from io import StringIO
+    log = StringIO()
+    completed = False
+    try:
+        with redirect_stdout(log), redirect_stderr(log):
+            dispatch(ctx, stage)
+        completed = True
+    finally:
+        # PRESENTATION: retain diagnostic logs locally; cells show the analytical evidence.
+        output = log.getvalue().replace(str(ctx.root) + os.sep, '')
+        if output:
+            path = ctx.root / 'outputs/logs/notebooks' / (stage + '.txt')
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(output)
+        if completed:
+            print('Completed ' + stage)
+        elif output:
+            print('Stage failed; see ' + str(path.relative_to(ctx.root)))
+
+
+def sql_table(path, query, params=()):
+    """Read a small, explicit result table without modifying the GeoPackage."""
+    import pandas as pd
+    with sqlite3.connect('file:' + str(path) + '?mode=ro', uri=True) as connection:
+        return pd.read_sql_query(query, connection, params=params)
+
+
+def geopackage_inventory(path):
+    """Describe source layers without loading every geometry."""
+    import pandas as pd
+    import pyogrio
+    rows = []
+    for name, geometry in pyogrio.list_layers(path):
+        info = pyogrio.read_info(path, layer=name)
+        rows.append({'Layer': name, 'Rows': info['features'], 'Geometry': geometry,
+                     'CRS': info['crs']})
+    return pd.DataFrame(rows)
+
+
+def show_final(ctx, result):
+    """Keep transfer details together after the processing explanation."""
+    from IPython.display import display
+    import pandas as pd
+    display(pd.DataFrame([{'File': str(Path(result['file']).relative_to(ctx.root)),
+                           'Layer': result['layer'], 'Features': result['features'],
+                           'CRS': 'EPSG:' + str(result['epsg'])}]))
+    print('SHA-256:', result['sha256'])
+
+
+def show_figure(figure):
+    from IPython.display import display
+    import matplotlib.pyplot as plt
+    display(figure)
+    plt.close(figure)
+
+
+def show_image(ctx, relative):
+    from IPython.display import Image, display
+    display(Image(filename=str(ctx.require(ctx.root / relative))))
+
 
 def sha256(path):
     digest = hashlib.sha256()
@@ -24,17 +107,6 @@ def sha256(path):
         for block in iter(lambda: stream.read(8 * 1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
-
-
-def run_stage(project, stage):
-    executable = project / ".venv/bin/python"
-    if not executable.is_file():
-        raise FileNotFoundError("Create .venv and install datasets/requirements.lock; see datasets/run.py --help.")
-    environment = os.environ.copy()
-    environment["PYTHONPATH"] = str(project / "datasets/shared") + os.pathsep + environment.get("PYTHONPATH", "")
-    command = [str(executable), "-m", "brazil_project.cli", "run", stage,
-               "--config", str(project / "datasets/project.toml")]
-    subprocess.run(command, cwd=project, env=environment, check=True)
 
 
 def baseline_checksum(project, source):

@@ -16,7 +16,7 @@ def source_file(project):
     return project / "data/processed/ibge/Data/favelas_2022.gpkg"
 
 
-def build(project):
+def export_geopackage(project):
     """Keep the source intact; give its seven attributes clear English names."""
     source = source_file(project)
     expected = baseline_checksum(project, source)

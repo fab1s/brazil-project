@@ -12,9 +12,11 @@ From the repository root::
     .venv/bin/python datasets/run.py census
 
 Use ``obrasgov``, ``ibama``, or ``communities`` in place of ``census``.
-The output is a descriptively named GeoPackage in ``datasets/<name>/``, with
-English field names and documented original-to-English mappings. To copy all
-four verified files into one folder::
+The command executes that dataset's build.ipynb in a fresh kernel and saves its
+tables and figures after all cells and final-file checks pass. Add --from-saved
+to refresh evidence from existing verified outputs without processing. The
+output is a descriptively named GeoPackage in datasets/<name>/. To copy all four
+verified files into one folder::
 
     .venv/bin/python datasets/run.py handoff --output-dir /path/to/handoff
 
@@ -24,7 +26,6 @@ run it again; copies already matching their sources are skipped.
 """
 
 import argparse
-import importlib.util
 import json
 import os
 from pathlib import Path
@@ -131,14 +132,72 @@ def handoff(root, output_dir):
     return result
 
 
+def execute_notebook(root, dataset, from_saved=False):
+    """Execute the same ordered cells a reader runs, then save results atomically."""
+    import nbformat
+    from nbclient import NotebookClient
+
+    folder = root / 'datasets' / dataset
+    path = folder / 'build.ipynb'
+    lock = folder / '.build.ipynb.lock'
+    try:
+        descriptor = os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
+    except FileExistsError as error:
+        raise RuntimeError('Notebook is already running, or an interrupted run left ' + str(lock) +
+                           '. Remove that lock only after confirming no run is active.') from error
+    os.close(descriptor)
+    staged = None
+    try:
+        source = path.read_bytes()
+        notebook = nbformat.reads(source.decode(), as_version=4)
+        nbformat.validate(notebook)
+        environment = os.environ.copy()
+        environment['BRAZIL_NOTEBOOK_FROM_SAVED'] = '1' if from_saved else '0'
+        def progress(cell, cell_index):
+            if cell.cell_type != 'code':
+                return
+            heading = 'Setup'
+            for previous in reversed(notebook.cells[:cell_index]):
+                lines = [line.strip('# ') for line in previous.source.splitlines() if line.startswith('## ')]
+                if lines:
+                    heading = lines[0]
+                    break
+            print('  ' + heading, flush=True)
+        # CONTRACT: Each notebook gets its own kernel and its own working folder.
+        NotebookClient(notebook, timeout=7200, kernel_name='python3',
+                       resources={'metadata': {'path': str(folder)}}, on_cell_start=progress).execute(env=environment)
+        checked_final(root, dataset, HANDOFF[dataset])
+        for cell in notebook.cells:
+            for output in cell.get('outputs', []):
+                if output.output_type == 'stream':
+                    output.text = output.text.replace(str(root) + os.sep, '')
+        nbformat.validate(notebook)
+        if path.read_bytes() != source:
+            raise RuntimeError('Notebook source changed during execution; saved results were preserved.')
+        with tempfile.NamedTemporaryFile(prefix='.build-', suffix='.ipynb', dir=folder, delete=False) as stream:
+            staged = Path(stream.name)
+        nbformat.write(notebook, staged)
+        if path.read_bytes() != source:
+            raise RuntimeError('Notebook source changed before publication; saved results were preserved.')
+        os.replace(staged, path)
+        return path
+    finally:
+        if staged is not None:
+            staged.unlink(missing_ok=True)
+        lock.unlink(missing_ok=True)
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("dataset", choices=(*HANDOFF, "handoff"))
     parser.add_argument("--output-dir", type=Path, help="Existing directory for named handoff copies")
+    parser.add_argument('--from-saved', action='store_true', help='Refresh notebook evidence from verified local outputs without processing')
     args = parser.parse_args(argv)
     root = Path(__file__).resolve().parents[1]
     if args.dataset == "handoff":
+        if args.from_saved:
+            parser.error('--from-saved applies to dataset notebooks, not handoff')
         if args.output_dir is None:
             parser.error("handoff requires --output-dir")
         sys.path.insert(0, str(root / "datasets"))
@@ -146,16 +205,13 @@ def main(argv=None):
         return
     if args.output_dir is not None:
         parser.error("--output-dir is only used with handoff")
-    folder = root / "datasets" / args.dataset
     sys.path.insert(0, str(root / "datasets" / "shared"))
     cache = root / ".cache" / "matplotlib"
     cache.mkdir(parents=True, exist_ok=True)
     os.environ.setdefault("MPLCONFIGDIR", str(cache))
     sys.path.insert(0, str(root / "datasets"))
-    spec = importlib.util.spec_from_file_location("dataset_processing", folder / "processing.py")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    print(module.build(root))
+    print('Executing ' + args.dataset + ' notebook', flush=True)
+    print('Updated ' + str(execute_notebook(root, args.dataset, args.from_saved).relative_to(root)))
 
 
 if __name__ == "__main__":
