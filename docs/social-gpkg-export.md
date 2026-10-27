@@ -24,7 +24,7 @@ Run from the project root:
 .venv/bin/python code/scripts/build_web_map.py --config project.toml --work .cache/map-update/build --gpkg-only --gpkg-output outputs/maps/social-clean/social.gpkg
 ```
 
-The mode uses the existing map preparation functions and checks the national harmonisation bundle, every saved indicator checksum, and the prepared map database. Choose a new output path for another run; it refuses to overwrite an existing file. It stages the complete GeoPackage beside its destination and publishes it only after all checks. A crash can leave `.gpkg.lock`; confirm no export is active before removing that stale lock and retrying. The final verified copy is `/Users/fa4850sc/Documents/Data/social.gpkg`.
+The mode uses the existing map preparation functions and checks the national harmonisation bundle, every saved indicator checksum, and the prepared map database. Choose a new output path for another run; it refuses to overwrite an existing file. It stages the complete GeoPackage beside its destination and publishes it only after all checks. A crash can leave `.gpkg.lock`; confirm no export is active before removing that stale lock and retrying. An external comparison copy was verified.
 
 ## Code output and verification
 
