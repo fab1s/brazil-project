@@ -1,4 +1,20 @@
-"""Build one of the four final GeoPackages without opening Jupyter."""
+"""Build one of the four final GeoPackages without opening Jupyter.
+
+Restore the configured local ``data/`` inputs first; their paths are in
+``datasets/project.toml``. The baseline inventory is preserved on the
+``archive/full-project-2026-10-27`` branch. Neither this command nor the
+notebooks download source data or publish the website.
+
+From the repository root::
+
+    python3 -m venv .venv
+    .venv/bin/python -m pip install -r datasets/requirements.lock
+    .venv/bin/python datasets/run.py census
+
+Use ``obrasgov``, ``ibama``, or ``communities`` in place of ``census``.
+The output is the local ``datasets/<name>/final.gpkg``; transfer it separately
+from GitHub and compare its SHA-256 with the value in the dataset notebook.
+"""
 
 import argparse
 import importlib.util
