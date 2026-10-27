@@ -6,12 +6,12 @@ This research project studies changes in population, housing, income, and basic 
 
 Start with a dataset notebook. It explains the source, processing decisions, checks, and final file. The notebook calls the adjacent `processing.py` and shared code; these are parts of the same workflow. Each `final.gpkg` is stored locally in its dataset folder, outside GitHub.
 
-- **[Census](datasets/census/build.ipynb):** 2010–2022 comparison areas and social indicators.
-- **[Obrasgov](datasets/obrasgov/build.ipynb):** screened infrastructure project locations.
-- **[IBAMA](datasets/ibama/build.ipynb):** environmental licensing records.
-- **[Communities](datasets/communities/build.ipynb):** IBGE favela and urban community boundaries.
+- **[Census](datasets/census/build.ipynb):** match 2010 and 2022 tracts → calculate indicators → export merged comparison areas.
+- **[Obrasgov](datasets/obrasgov/build.ipynb):** translate projects → check locations and primary state → export retained points/lines and exclusions.
+- **[IBAMA](datasets/ibama/build.ipynb):** translate licensing sectors → verify the preserved records → export.
+- **[Communities](datasets/communities/build.ipynb):** verify the preserved IBGE polygons → copy them unchanged.
 
-Each notebook traces its preserved local input through processing to `final.gpkg`. It does not recreate the original download; the notebooks state what is known about retrieval and what remains unknown. The [build command](datasets/run.py) runs the same processing without Jupyter. Input locations are in [project settings](datasets/project.toml); [shared code](datasets/shared/) and [locked dependencies](datasets/requirements.lock) support all four folders.
+Each notebook follows its preserved input through processing to `final.gpkg`. The [build command](datasets/run.py) runs the same processing without Jupyter. Input locations are in [project settings](datasets/project.toml); [shared code](datasets/shared/) and [locked dependencies](datasets/requirements.lock) support all four folders.
 
 ## 2. Interactive map
 
