@@ -56,7 +56,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=("run",))
     parser.add_argument("stage", choices=("harmonisation", "indicators", "ibama", "obrasgov", *OBRAS_FLOW))
-    parser.add_argument("--config", default="project.toml")
+    parser.add_argument("--config", default="datasets/project.toml")
     args = parser.parse_args(argv)
     try:
         ctx = Context(args.config)

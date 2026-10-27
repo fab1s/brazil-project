@@ -99,12 +99,12 @@ def code_hashes(root):
     """Fingerprint the code that actually produces the census export."""
     root = Path(root)
     paths = [root / name for name in (
-        'code/brazil_project/io.py',
-        'code/brazil_project/acquisition/census.py',
-        'code/brazil_project/harmonisation/census.py',
-        'code/brazil_project/indicators/temporal.py',
-        'code/scripts/build_web_map.py',
-        'code/scripts/export_social_gpkg.py',
+        'datasets/shared/brazil_project/io.py',
+        'datasets/shared/brazil_project/acquisition/census.py',
+        'datasets/shared/brazil_project/harmonisation/census.py',
+        'datasets/shared/brazil_project/indicators/temporal.py',
+        'datasets/shared/scripts/build_web_map.py',
+        'datasets/shared/scripts/export_social_gpkg.py',
     )]
     result = {}
     for path in paths:

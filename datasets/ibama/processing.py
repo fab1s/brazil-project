@@ -40,7 +40,7 @@ def verify_translation(ctx):
 
 def build(project):
     run_stage(project, "ibama")
-    ctx = Context(project / "project.toml")
+    ctx = Context(project / "datasets/project.toml")
     source = verify_translation(ctx)
     destination = project / "outputs/maps/notebook-exports/ibama.gpkg"
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -59,7 +59,7 @@ def build(project):
 
 
 def inspect_final(project, preview=False):
-    ctx = Context(project / "project.toml")
+    ctx = Context(project / "datasets/project.toml")
     source = ctx.require(ctx.path("infrastructure", "ibama"))
     baseline = baseline_checksum(project, source)
     path = project / "outputs/maps/notebook-exports/ibama.gpkg"

@@ -15,7 +15,7 @@ def build(project):
 
 
 def inspect_final(project):
-    ctx = Context(project / "project.toml")
+    ctx = Context(project / "datasets/project.toml")
     if ctx.municipality:
         raise WorkflowError("This derivative requires national scope.")
     path = project / "outputs/maps/obrasgov-primary-state-filter/locations.gpkg"

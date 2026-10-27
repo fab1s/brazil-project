@@ -94,7 +94,7 @@ def plot_comparison(export, municipalities, path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--config', default='project.toml')
+    parser.add_argument('--config', default='datasets/project.toml')
     args = parser.parse_args()
     ctx = Context(args.config)
     return run(ctx)

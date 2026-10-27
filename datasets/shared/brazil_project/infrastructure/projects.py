@@ -62,7 +62,7 @@ def run(ctx,source):
         mapping=frame.to_crs(4326).explore(column='tp_sector_en',name='IBAMA licensed projects',legend=True)
         out=ctx.root/'outputs/maps/ibama.html';out.parent.mkdir(parents=True,exist_ok=True);mapping.save(out)
         return ctx.report(source,{'records':len(frame),'unknown_sectors':int(frame.tp_sector_en.isna().sum()),'source':'copied_snapshot'})
-    translations=json.loads((ctx.root/'code/config/obrasgov_translations.json').read_text())
+    translations=json.loads((ctx.root/'datasets/shared/config/obrasgov_translations.json').read_text())
     for field,target,kind in [('tipo','type_en','type'),('subtipo','subtype_en','subtype')]:
         if field not in frame: raise WorkflowError(f'Obrasgov {field} missing')
         frame[target]=frame[field].map(translations[kind])

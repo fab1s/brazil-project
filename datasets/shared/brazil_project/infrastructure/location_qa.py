@@ -222,7 +222,7 @@ def run(ctx):
     source = ctx.require(ctx.path('location_qa','source'))
     root = ctx.path('location_qa','references')
     if not (root/'manifest.json').is_file():
-        raise WorkflowError('Missing local references manifest.json. Run .venv/bin/python code/scripts/acquire_location_references.py explicitly, then rerun QA.')
+        raise WorkflowError('Missing local references manifest.json. Run .venv/bin/python datasets/shared/scripts/acquire_location_references.py explicitly, then rerun QA.')
     manifest = json.loads((root/'manifest.json').read_text())
     references = {}
     for name in ('municipalities','land','coastline'):

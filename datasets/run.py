@@ -13,7 +13,7 @@ def main(argv=None):
     args = parser.parse_args(argv)
     root = Path(__file__).resolve().parents[1]
     folder = root / "datasets" / args.dataset
-    sys.path.insert(0, str(root / "code"))
+    sys.path.insert(0, str(root / "datasets" / "shared"))
     cache = root / ".cache" / "matplotlib"
     cache.mkdir(parents=True, exist_ok=True)
     os.environ.setdefault("MPLCONFIGDIR", str(cache))

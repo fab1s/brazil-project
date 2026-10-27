@@ -27,7 +27,7 @@ def build(project):
 
 def prepare_map_geometries(ctx, source):
     """Build the same merged areas and display overview used by build_web_map.py."""
-    web = runpy.run_path(str(ctx.root / "code/scripts/build_web_map.py"))
+    web = runpy.run_path(str(ctx.root / "datasets/shared/scripts/build_web_map.py"))
     bundle, manifest = load_bundle(ctx, names=["comparison_geometry"])
     metrics = web["measure_fields"](ctx, bundle["common_geometry_2022"])
     members = bundle["lookup_2022"][["id_2022", "common_id"]].copy()
@@ -56,14 +56,14 @@ def prepare_map_geometries(ctx, source):
 
 def export_geopackage(project):
     """Export concise English fields after checking the original map calculations."""
-    ctx = Context(project / "project.toml")
+    ctx = Context(project / "datasets/project.toml")
     if ctx.municipality:
         raise WorkflowError("The collaborator GeoPackage requires national scope.")
     destination = project / "outputs/maps/notebook-exports/social.gpkg"
     destination.parent.mkdir(parents=True, exist_ok=True)
     cache = project / ".cache/dataset-notebooks"
     cache.mkdir(parents=True, exist_ok=True)
-    exporter = runpy.run_path(str(project / "code/scripts/export_social_gpkg.py"))
+    exporter = runpy.run_path(str(project / "datasets/shared/scripts/export_social_gpkg.py"))
     with tempfile.TemporaryDirectory(prefix="census-", dir=cache) as temporary:
         source = Path(temporary) / "social.gpkg"
         prepare_map_geometries(ctx, source)

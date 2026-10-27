@@ -122,7 +122,7 @@ def tiles(source, destination, layer, sql, minimum, maximum, simplify=None):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--config',type=Path,default=Path('project.toml'))
+    parser.add_argument('--config',type=Path,default=Path('datasets/project.toml'))
     parser.add_argument('--output',type=Path,default=Path('outputs/maps/website'))
     parser.add_argument('--work',type=Path,default=Path('.cache/map-update/build'))
     parser.add_argument('--reuse-prepared',action='store_true',help='Resume tiles only after checking the prepared database input fingerprints.')

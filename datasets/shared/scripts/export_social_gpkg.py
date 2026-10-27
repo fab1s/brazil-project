@@ -193,7 +193,7 @@ def run(ctx, output, source=None):
     provenance = dict(exported_at=datetime.now(timezone.utc).isoformat(), scope='Brazil',
                       original_inputs=before, contract=contract, indicator_checksums=checksums,
                       policy='single-english-field-per-distinct-measure-v2',
-                      original_code='code/scripts/build_web_map.py:measure_fields; overview_metrics',
+                      original_code='datasets/shared/scripts/build_web_map.py:measure_fields; overview_metrics',
                       limitations=['No recalculation of research methods, missingness, CRS or group identifiers.',
                                    'Shares are fractions; share changes are percentage points; density/income changes are relative percent.',
                                    'Source field codes are mapped in field_dictionary; exact equal fields share one English column.',

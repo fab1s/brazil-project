@@ -23,9 +23,9 @@ def run_stage(project, stage):
     if not executable.is_file():
         raise FileNotFoundError("Install the locked environment using the root README first.")
     environment = os.environ.copy()
-    environment["PYTHONPATH"] = str(project / "code") + os.pathsep + environment.get("PYTHONPATH", "")
+    environment["PYTHONPATH"] = str(project / "datasets/shared") + os.pathsep + environment.get("PYTHONPATH", "")
     command = [str(executable), "-m", "brazil_project.cli", "run", stage,
-               "--config", str(project / "project.toml")]
+               "--config", str(project / "datasets/project.toml")]
     subprocess.run(command, cwd=project, env=environment, check=True)
 
 

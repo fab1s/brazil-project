@@ -27,7 +27,7 @@ def verified_plot_inputs(ctx):
 
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--config',default='project.toml');a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--config',default='datasets/project.toml');a=p.parse_args()
     ctx=Context(a.config)
     return run(ctx)
 
