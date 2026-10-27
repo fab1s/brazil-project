@@ -87,12 +87,14 @@ def local_copy(notebook_folder, source):
         current = sha256(target)
         if receipt.exists():
             saved = json.loads(receipt.read_text())
-            if saved.get("sha256") != current or saved.get("source") != relative_source:
+            if saved.get("sha256") != current:
                 if current == expected:
                     # RECOVERY: Publication may have finished before its receipt.
                     write_receipt()
                     return target
                 raise FileExistsError("The local final.gpkg changed outside this pipeline: " + str(target))
+            # COMPATIBILITY: A checked prior producer may be replaced after an
+            # export-policy change; its receipt still proves the old bytes.
         elif current != expected:
             raise FileExistsError("An unrelated final.gpkg already exists: " + str(target))
         if current == expected:

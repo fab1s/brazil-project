@@ -3,7 +3,6 @@
 import json
 import os
 from pathlib import Path
-import shutil
 import sqlite3
 import tempfile
 
@@ -12,7 +11,8 @@ import pandas as pd
 import pyogrio
 import shapely
 
-from _shared import baseline_checksum, geopackage_summary, local_copy, run_stage, sha256
+from _shared import baseline_checksum, geopackage_summary, local_copy, run_stage
+from english_export import export, verify_export
 from brazil_project.io import Context, WorkflowError
 
 
@@ -46,11 +46,11 @@ def build(project):
     destination.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(prefix=".ibama-", suffix=".gpkg", dir=destination.parent, delete=False) as temp:
         staged = Path(temp.name)
+    staged.unlink()
     try:
-        shutil.copyfile(source, staged)
-        if sha256(staged) != sha256(source):
-            raise WorkflowError("IBAMA GeoPackage copy failed checksum verification.")
-        geopackage_summary(staged, "licensed_projects_st", expected_crs=4674)
+        export(source, staged, "ibama", baseline_checksum(project, source))
+        geopackage_summary(staged, "licensed_projects_st", expected_crs=4674, unique_key="record_id")
+        verify_export(source, staged, "ibama", baseline_checksum(project, source))
         os.replace(staged, destination)
     finally:
         staged.unlink(missing_ok=True)
@@ -64,10 +64,9 @@ def inspect_final(project, preview=False):
     baseline = baseline_checksum(project, source)
     path = project / "outputs/maps/notebook-exports/ibama.gpkg"
     if preview and not path.exists():
-        path = source
-    summary = geopackage_summary(path, "licensed_projects_st", expected_crs=4674)
-    if summary["sha256"] != baseline:
-        raise WorkflowError("IBAMA final file differs from the preserved, verified baseline.")
+        raise WorkflowError("Build the English export before previewing it.")
+    summary = geopackage_summary(path, "licensed_projects_st", expected_crs=4674, unique_key="record_id")
+    verify_export(source, path, "ibama", baseline)
     if not preview:
         local_copy(project / "datasets/ibama", path)
     return summary

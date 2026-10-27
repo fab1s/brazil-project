@@ -12,7 +12,8 @@ From the repository root::
     .venv/bin/python datasets/run.py census
 
 Use ``obrasgov``, ``ibama``, or ``communities`` in place of ``census``.
-The output is the local ``datasets/<name>/final.gpkg``. To copy all four under
+The output is the local ``datasets/<name>/final.gpkg`` with English field names
+and documented original-to-English mappings. To copy all four under
 descriptive names after building them::
 
     .venv/bin/python datasets/run.py handoff --output-dir /path/to/handoff
@@ -37,17 +38,17 @@ HANDOFF = {
     "census": ("census_comparison_areas_2010_2022.gpkg", "social", 5880, "common_id",
                ("overview", "field_dictionary", "export_metadata")),
     "obrasgov": ("obrasgov_screened_locations.gpkg", "map_components", 4674,
-                 "component_id", ("excluded_primary_state",)),
+                 "component_id", ("excluded_primary_state", "field_dictionary", "export_metadata")),
     "ibama": ("ibama_licensed_projects.gpkg", "licensed_projects_st", 4674,
-              "objectid", ()),
+              "record_id", ("field_dictionary", "export_metadata")),
     "communities": ("ibge_favelas_communities_2022.gpkg", "favelas_2022", 4674,
-                    "cd_fcu", ()),
+                    "community_code", ("field_dictionary", "export_metadata")),
 }
 
 
 def checked_final(root, dataset, specification):
     """Require a current producer receipt and the expected GeoPackage schema."""
-    from _shared import geopackage_summary, sha256
+    from _shared import baseline_checksum, geopackage_summary, sha256
 
     folder = root / "datasets" / dataset
     final = folder / "final.gpkg"
@@ -66,6 +67,21 @@ def checked_final(root, dataset, specification):
         layers = {row[0] for row in connection.execute("SELECT table_name FROM gpkg_contents")}
     if not set(other_layers).issubset(layers):
         raise ValueError(f"{dataset}: a required GeoPackage layer is missing")
+    if dataset != "census":
+        from english_export import verify_export
+        sources = {
+            "obrasgov": root / "outputs/maps/obrasgov-primary-state-filter/locations.gpkg",
+            "ibama": root / "data/processed/ibama/licensed_projects_st.gpkg",
+            "communities": root / "data/processed/ibge/Data/favelas_2022.gpkg",
+        }
+        source = sources[dataset]
+        if dataset in ("ibama", "communities"):
+            baseline_checksum(root, source)
+        else:
+            report = json.loads((root / "data/intermediate/obrasgov-primary-state-filter/report.json").read_text())
+            if report.get("status") != "completed" or report.get("gis_outputs", {}).get("locations.gpkg") != sha256(source):
+                raise ValueError("Obrasgov handoff producer differs from its completed filter report")
+        verify_export(source, final, dataset, sha256(source))
     return final, summary
 
 
