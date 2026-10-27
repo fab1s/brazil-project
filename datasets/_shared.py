@@ -29,7 +29,7 @@ def sha256(path):
 def run_stage(project, stage):
     executable = project / ".venv/bin/python"
     if not executable.is_file():
-        raise FileNotFoundError("Install the locked environment using the root README first.")
+        raise FileNotFoundError("Create .venv and install datasets/requirements.lock; see datasets/run.py --help.")
     environment = os.environ.copy()
     environment["PYTHONPATH"] = str(project / "datasets/shared") + os.pathsep + environment.get("PYTHONPATH", "")
     command = [str(executable), "-m", "brazil_project.cli", "run", stage,

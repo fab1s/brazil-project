@@ -104,7 +104,7 @@ def code_hashes(root):
         'datasets/shared/brazil_project/harmonisation/census.py',
         'datasets/shared/brazil_project/indicators/temporal.py',
         'datasets/shared/scripts/build_web_map.py',
-        'datasets/shared/scripts/export_social_gpkg.py',
+        'datasets/shared/scripts/export_census_gpkg.py',
     )]
     result = {}
     for path in paths:

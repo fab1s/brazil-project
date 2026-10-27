@@ -170,7 +170,14 @@ def run(ctx, output, source=None):
     source_record = json.loads(ctx.require(prepared).read_text())
     ctx.require(source)
     original_code = Path(__file__).with_name('build_web_map.py')
-    before = {str(p): sha256(p) for p in (ctx.config_path, source, prepared, original_code, Path(__file__))}
+    inputs = {
+        'project_configuration': ctx.config_path,
+        'prepared_map_geopackage': source,
+        'prepared_map_record': prepared,
+        'map_processing_code': original_code,
+        'census_export_code': Path(__file__),
+    }
+    before = {str(path): sha256(path) for path in inputs.values()}
     package_code = code_hashes(ctx.root)
     # CONTRACT: Revalidate the exact census inputs and original exporter below;
     # unrelated report/quality-audit code may change after the map build.
@@ -184,14 +191,17 @@ def run(ctx, output, source=None):
             source_record['database_sha256'] != before[str(source)]):
         raise WorkflowError('Prepared map database differs from current validated inputs; rebuild it first.')
     metrics = WEB['measure_fields'](ctx, bundle['common_geometry_2022'])
-    original_social = gpd.read_file(source, layer='social')
+    # COMPATIBILITY: The public map's prepared layer is still named `social`.
+    # Its research GeoPackage export has the clearer `comparison_areas` layer.
+    original_areas = gpd.read_file(source, layer='social')
     keys(metrics, 'common_id')
     # COMPATIBILITY: GeoPackage promotes Polygon members to MultiPolygon in a mixed layer.
-    verify_frame(metrics, original_social, allow_multipart_promotion=True)
+    verify_frame(metrics, original_areas, allow_multipart_promotion=True)
     del bundle, metrics
-    layers = {'social': original_social, 'overview': gpd.read_file(source, layer='overview')}
+    layers = {'comparison_areas': original_areas, 'overview': gpd.read_file(source, layer='overview')}
     provenance = dict(exported_at=datetime.now(timezone.utc).isoformat(), scope='Brazil',
-                      original_inputs=before, contract=contract, indicator_checksums=checksums,
+                      original_inputs={name: before[str(path)] for name, path in inputs.items()},
+                      contract=contract, indicator_checksums=checksums,
                       policy='single-english-field-per-distinct-measure-v2',
                       original_code='datasets/shared/scripts/build_web_map.py:measure_fields; overview_metrics',
                       limitations=['No recalculation of research methods, missingness, CRS or group identifiers.',

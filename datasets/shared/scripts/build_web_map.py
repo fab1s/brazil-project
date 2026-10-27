@@ -132,7 +132,7 @@ def main():
     if args.gpkg_only:
         if args.reuse_prepared or not args.gpkg_output:
             raise WorkflowError('Use --gpkg-only with --gpkg-output, without --reuse-prepared.')
-        export = runpy.run_path(str(Path(__file__).with_name('export_social_gpkg.py')))
+        export = runpy.run_path(str(Path(__file__).with_name('export_census_gpkg.py')))
         result = export['run'](ctx,args.gpkg_output,source=args.work/'census_comparison_areas_2010_2022.gpkg')
         print(json.dumps(result,indent=2),flush=True)
         return

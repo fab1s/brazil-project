@@ -37,7 +37,7 @@ from _shared import FINAL_FILENAMES
 
 
 HANDOFF = {
-    "census": (FINAL_FILENAMES["census"], "social", 5880, "common_id",
+    "census": (FINAL_FILENAMES["census"], "comparison_areas", 5880, "common_id",
                ("overview", "field_dictionary", "export_metadata")),
     "obrasgov": (FINAL_FILENAMES["obrasgov"], "map_components", 4674,
                  "component_id", ("excluded_primary_state", "field_dictionary", "export_metadata")),
@@ -69,6 +69,8 @@ def checked_final(root, dataset, specification):
         layers = {row[0] for row in connection.execute("SELECT table_name FROM gpkg_contents")}
     if not set(other_layers).issubset(layers):
         raise ValueError(f"{dataset}: a required GeoPackage layer is missing")
+    if dataset == "census" and "social" in layers:
+        raise ValueError("census: obsolete social layer remains in the final GeoPackage")
     if dataset != "census":
         from english_export import verify_export
         sources = {

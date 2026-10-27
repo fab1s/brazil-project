@@ -37,7 +37,7 @@ def prepare_map_geometries(ctx, source):
     reference = reference[reference.common_id.notna()][["id_2022", "geometry"]].copy()
     reference["code_muni"] = reference.id_2022.str[:7]
     # COMPATIBILITY: The public map simplifies only municipality display boundaries.
-    # The analytical common-area geometry in `social` stays full resolution.
+    # The analytical comparison-area geometry stays full resolution.
     reference.geometry = shapely.make_valid(shapely.simplify(reference.geometry.array, 500, preserve_topology=True))
     overview = reference[["code_muni", "geometry"]].dissolve(by="code_muni", as_index=False)
     overview = overview.merge(web["overview_metrics"](metrics, members), on="code_muni", validate="one_to_one")
@@ -63,14 +63,14 @@ def export_geopackage(project):
     destination.parent.mkdir(parents=True, exist_ok=True)
     cache = project / ".cache/dataset-notebooks"
     cache.mkdir(parents=True, exist_ok=True)
-    exporter = runpy.run_path(str(project / "datasets/shared/scripts/export_social_gpkg.py"))
+    exporter = runpy.run_path(str(project / "datasets/shared/scripts/export_census_gpkg.py"))
     with tempfile.TemporaryDirectory(prefix="census-", dir=cache) as temporary:
         source = Path(temporary) / "census_source.gpkg"
         prepare_map_geometries(ctx, source)
         staged = destination.with_name(".census-export-" + uuid.uuid4().hex + ".gpkg")
         try:
             exporter["run"](ctx, staged, source=source)
-            result = geopackage_summary(staged, "social", expected_crs=5880, unique_key="common_id")
+            result = geopackage_summary(staged, "comparison_areas", expected_crs=5880, unique_key="common_id")
             os.replace(staged, destination)
         finally:
             staged.unlink(missing_ok=True)
@@ -82,10 +82,12 @@ def inspect_final(project, preview=False):
     path = project / "outputs/maps/notebook-exports" / FINAL_FILENAMES["census"]
     if preview and not path.exists():
         raise WorkflowError("Build the named census export before previewing it.")
-    summary = geopackage_summary(path, "social", expected_crs=5880, unique_key="common_id")
+    summary = geopackage_summary(path, "comparison_areas", expected_crs=5880, unique_key="common_id")
     # The other tables are part of the same deliverable, not separate datasets.
     import sqlite3
     with sqlite3.connect(f"file:{path}?mode=ro", uri=True) as connection:
+        if connection.execute("SELECT 1 FROM gpkg_contents WHERE table_name='social'").fetchone():
+            raise WorkflowError("Obsolete social layer remains in the final census GeoPackage.")
         for layer in ("overview", "field_dictionary", "export_metadata"):
             summary[layer + "_rows"] = connection.execute(f'SELECT COUNT(*) FROM "{layer}"').fetchone()[0]
     if not preview:

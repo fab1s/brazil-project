@@ -4,9 +4,9 @@ This research project studies changes in population, housing, income, and basic 
 
 ## 1. Datasets and their methods
 
-Each dataset folder contains a codebook, a runnable processing notebook, and its descriptively named GeoPackage stored locally outside GitHub. Final spatial fields use English names; each GeoPackage also contains a `field_dictionary` for original provider names. Reviewed categories have original and English values; place names and free-form descriptions retain their original wording.
+Each dataset folder contains a codebook, a runnable processing notebook, and its descriptively named GeoPackage stored locally outside GitHub. Final spatial fields use English names; each GeoPackage also contains a `field_dictionary` connecting source and output fields. Reviewed categories have original and English values; place names and free-form descriptions retain their original wording.
 
-- **Census:** `census_comparison_areas_2010_2022.gpkg` · [codebook](datasets/census/CODEBOOK.md) · [processing notebook](datasets/census/build.ipynb).
+- **Census:** `census_comparison_areas_2010_2022.gpkg`, layer `comparison_areas` · [codebook](datasets/census/CODEBOOK.md) · [processing notebook](datasets/census/build.ipynb).
 - **Obrasgov:** `obrasgov_screened_locations.gpkg` · [codebook](datasets/obrasgov/CODEBOOK.md) · [processing notebook](datasets/obrasgov/build.ipynb).
 - **IBAMA:** `ibama_licensed_projects.gpkg` · [codebook](datasets/ibama/CODEBOOK.md) · [processing notebook](datasets/ibama/build.ipynb).
 - **Communities:** `ibge_favelas_communities_2022.gpkg` · [codebook](datasets/communities/CODEBOOK.md) · [processing notebook](datasets/communities/build.ipynb).
